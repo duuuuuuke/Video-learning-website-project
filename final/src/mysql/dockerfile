@@ -1,0 +1,8 @@
+FROM mysql
+
+ENV MYSQL_ROOT_PASSWORD=MyDBRoot123
+ENV MYSQL_DATABASE=cloud_computing
+ENV MYSQL_USER=php
+ENV MYSQL_PASSWORD=php
+
+COPY ./src/mysql/myProject.sql /docker-entrypoint-initdb.d/init.sql

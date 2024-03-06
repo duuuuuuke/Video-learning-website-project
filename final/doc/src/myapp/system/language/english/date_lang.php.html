@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>date_lang.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../doc-style.css" />
+  <script src="../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../";
+    var thisFile = "src\\myapp\\system\\language\\english\\date_lang.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>date_lang.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+$lang[<span class="hljs-string">'date_year'</span>] = <span class="hljs-string">'Year'</span>;
+$lang[<span class="hljs-string">'date_years'</span>] = <span class="hljs-string">'Years'</span>;
+$lang[<span class="hljs-string">'date_month'</span>] = <span class="hljs-string">'Month'</span>;
+$lang[<span class="hljs-string">'date_months'</span>] = <span class="hljs-string">'Months'</span>;
+$lang[<span class="hljs-string">'date_week'</span>] = <span class="hljs-string">'Week'</span>;
+$lang[<span class="hljs-string">'date_weeks'</span>] = <span class="hljs-string">'Weeks'</span>;
+$lang[<span class="hljs-string">'date_day'</span>] = <span class="hljs-string">'Day'</span>;
+$lang[<span class="hljs-string">'date_days'</span>] = <span class="hljs-string">'Days'</span>;
+$lang[<span class="hljs-string">'date_hour'</span>] = <span class="hljs-string">'Hour'</span>;
+$lang[<span class="hljs-string">'date_hours'</span>] = <span class="hljs-string">'Hours'</span>;
+$lang[<span class="hljs-string">'date_minute'</span>] = <span class="hljs-string">'Minute'</span>;
+$lang[<span class="hljs-string">'date_minutes'</span>] = <span class="hljs-string">'Minutes'</span>;
+$lang[<span class="hljs-string">'date_second'</span>] = <span class="hljs-string">'Second'</span>;
+$lang[<span class="hljs-string">'date_seconds'</span>] = <span class="hljs-string">'Seconds'</span>;
+
+$lang[<span class="hljs-string">'UM12'</span>]	= <span class="hljs-string">'(UTC -12:00) Baker/Howland Island'</span>;
+$lang[<span class="hljs-string">'UM11'</span>]	= <span class="hljs-string">'(UTC -11:00) Niue'</span>;
+$lang[<span class="hljs-string">'UM10'</span>]	= <span class="hljs-string">'(UTC -10:00) Hawaii-Aleutian Standard Time, Cook Islands, Tahiti'</span>;
+$lang[<span class="hljs-string">'UM95'</span>]	= <span class="hljs-string">'(UTC -9:30) Marquesas Islands'</span>;
+$lang[<span class="hljs-string">'UM9'</span>]	= <span class="hljs-string">'(UTC -9:00) Alaska Standard Time, Gambier Islands'</span>;
+$lang[<span class="hljs-string">'UM8'</span>]	= <span class="hljs-string">'(UTC -8:00) Pacific Standard Time, Clipperton Island'</span>;
+$lang[<span class="hljs-string">'UM7'</span>]	= <span class="hljs-string">'(UTC -7:00) Mountain Standard Time'</span>;
+$lang[<span class="hljs-string">'UM6'</span>]	= <span class="hljs-string">'(UTC -6:00) Central Standard Time'</span>;
+$lang[<span class="hljs-string">'UM5'</span>]	= <span class="hljs-string">'(UTC -5:00) Eastern Standard Time, Western Caribbean Standard Time'</span>;
+$lang[<span class="hljs-string">'UM45'</span>]	= <span class="hljs-string">'(UTC -4:30) Venezuelan Standard Time'</span>;
+$lang[<span class="hljs-string">'UM4'</span>]	= <span class="hljs-string">'(UTC -4:00) Atlantic Standard Time, Eastern Caribbean Standard Time'</span>;
+$lang[<span class="hljs-string">'UM35'</span>]	= <span class="hljs-string">'(UTC -3:30) Newfoundland Standard Time'</span>;
+$lang[<span class="hljs-string">'UM3'</span>]	= <span class="hljs-string">'(UTC -3:00) Argentina, Brazil, French Guiana, Uruguay'</span>;
+$lang[<span class="hljs-string">'UM2'</span>]	= <span class="hljs-string">'(UTC -2:00) South Georgia/South Sandwich Islands'</span>;
+$lang[<span class="hljs-string">'UM1'</span>]	= <span class="hljs-string">'(UTC -1:00) Azores, Cape Verde Islands'</span>;
+$lang[<span class="hljs-string">'UTC'</span>]	= <span class="hljs-string">'(UTC) Greenwich Mean Time, Western European Time'</span>;
+$lang[<span class="hljs-string">'UP1'</span>]	= <span class="hljs-string">'(UTC +1:00) Central European Time, West Africa Time'</span>;
+$lang[<span class="hljs-string">'UP2'</span>]	= <span class="hljs-string">'(UTC +2:00) Central Africa Time, Eastern European Time, Kaliningrad Time'</span>;
+$lang[<span class="hljs-string">'UP3'</span>]	= <span class="hljs-string">'(UTC +3:00) Moscow Time, East Africa Time, Arabia Standard Time'</span>;
+$lang[<span class="hljs-string">'UP35'</span>]	= <span class="hljs-string">'(UTC +3:30) Iran Standard Time'</span>;
+$lang[<span class="hljs-string">'UP4'</span>]	= <span class="hljs-string">'(UTC +4:00) Azerbaijan Standard Time, Samara Time'</span>;
+$lang[<span class="hljs-string">'UP45'</span>]	= <span class="hljs-string">'(UTC +4:30) Afghanistan'</span>;
+$lang[<span class="hljs-string">'UP5'</span>]	= <span class="hljs-string">'(UTC +5:00) Pakistan Standard Time, Yekaterinburg Time'</span>;
+$lang[<span class="hljs-string">'UP55'</span>]	= <span class="hljs-string">'(UTC +5:30) Indian Standard Time, Sri Lanka Time'</span>;
+$lang[<span class="hljs-string">'UP575'</span>]	= <span class="hljs-string">'(UTC +5:45) Nepal Time'</span>;
+$lang[<span class="hljs-string">'UP6'</span>]	= <span class="hljs-string">'(UTC +6:00) Bangladesh Standard Time, Bhutan Time, Omsk Time'</span>;
+$lang[<span class="hljs-string">'UP65'</span>]	= <span class="hljs-string">'(UTC +6:30) Cocos Islands, Myanmar'</span>;
+$lang[<span class="hljs-string">'UP7'</span>]	= <span class="hljs-string">'(UTC +7:00) Krasnoyarsk Time, Cambodia, Laos, Thailand, Vietnam'</span>;
+$lang[<span class="hljs-string">'UP8'</span>]	= <span class="hljs-string">'(UTC +8:00) Australian Western Standard Time, Beijing Time, Irkutsk Time'</span>;
+$lang[<span class="hljs-string">'UP875'</span>]	= <span class="hljs-string">'(UTC +8:45) Australian Central Western Standard Time'</span>;
+$lang[<span class="hljs-string">'UP9'</span>]	= <span class="hljs-string">'(UTC +9:00) Japan Standard Time, Korea Standard Time, Yakutsk Time'</span>;
+$lang[<span class="hljs-string">'UP95'</span>]	= <span class="hljs-string">'(UTC +9:30) Australian Central Standard Time'</span>;
+$lang[<span class="hljs-string">'UP10'</span>]	= <span class="hljs-string">'(UTC +10:00) Australian Eastern Standard Time, Vladivostok Time'</span>;
+$lang[<span class="hljs-string">'UP105'</span>]	= <span class="hljs-string">'(UTC +10:30) Lord Howe Island'</span>;
+$lang[<span class="hljs-string">'UP11'</span>]	= <span class="hljs-string">'(UTC +11:00) Srednekolymsk Time, Solomon Islands, Vanuatu'</span>;
+$lang[<span class="hljs-string">'UP115'</span>]	= <span class="hljs-string">'(UTC +11:30) Norfolk Island'</span>;
+$lang[<span class="hljs-string">'UP12'</span>]	= <span class="hljs-string">'(UTC +12:00) Fiji, Gilbert Islands, Kamchatka Time, New Zealand Standard Time'</span>;
+$lang[<span class="hljs-string">'UP1275'</span>]	= <span class="hljs-string">'(UTC +12:45) Chatham Islands Standard Time'</span>;
+$lang[<span class="hljs-string">'UP13'</span>]	= <span class="hljs-string">'(UTC +13:00) Samoa Time Zone, Phoenix Islands Time, Tonga'</span>;
+$lang[<span class="hljs-string">'UP14'</span>]	= <span class="hljs-string">'(UTC +14:00) Line Islands'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

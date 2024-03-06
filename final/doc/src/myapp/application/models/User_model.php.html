@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User_model.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\models\\User_model.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>User_model.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">if</span> (!defined(<span class="hljs-string">'BASEPATH'</span>)) <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>put your code here</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User_model</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Model</span>
+</span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Log in</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">login</span><span class="hljs-params">($username, $password)</span>
+    </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Validate</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'username'</span>, $username);
+        $query = <span class="hljs-keyword">$this</span>-&gt;db-&gt;get(<span class="hljs-string">'users'</span>);
+        <span class="hljs-keyword">if</span> ($query-&gt;num_rows() == <span class="hljs-number">1</span>) {
+            $result = $query-&gt;result();
+            <span class="hljs-keyword">foreach</span> ($result <span class="hljs-keyword">as</span> $row) {
+                $hashed = $row-&gt;password;
+                $is_verified = $row-&gt;verified;
+            }
+
+            <span class="hljs-keyword">if</span> (password_verify($password, $hashed)) {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add_new_user</span><span class="hljs-params">($new_user)</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;insert(<span class="hljs-string">'users'</span>, $new_user); <span class="hljs-comment">// return true on success, false on failure</span>
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">verify_email</span><span class="hljs-params">($hash)</span>
+    </span>{
+        $username = <span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>);
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;select(<span class="hljs-string">'email'</span>);
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'username'</span>, $username);
+        $query = <span class="hljs-keyword">$this</span>-&gt;db-&gt;get(<span class="hljs-string">'users'</span>);
+
+        <span class="hljs-keyword">if</span> ($query-&gt;num_rows() == <span class="hljs-number">1</span>) {
+
+            $result = $query-&gt;result();
+
+            <span class="hljs-keyword">foreach</span> ($result <span class="hljs-keyword">as</span> $row) {
+                $email = $row-&gt;email;
+            }
+
+            <span class="hljs-keyword">if</span> ($hash == md5($email)) {
+                $set_verified = <span class="hljs-keyword">$this</span>-&gt;verify_account($email);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+
+            <span class="hljs-keyword">if</span> ($set_verified == <span class="hljs-keyword">true</span>) {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            }
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">verify_account</span><span class="hljs-params">($email)</span>
+    </span>{
+        $data = <span class="hljs-keyword">array</span>(
+            <span class="hljs-string">'verified'</span> =&gt; <span class="hljs-number">1</span>
+        );
+
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'email'</span>, $email);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;update(<span class="hljs-string">'users'</span>, $data);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_userinfo</span><span class="hljs-params">($username)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'username'</span>, $username);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;get(<span class="hljs-string">'users'</span>)-&gt;result_array();
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update_userinfo</span><span class="hljs-params">($old_username, $new_userinfo)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'username'</span>, $old_username);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;update(<span class="hljs-string">'users'</span>, $new_userinfo);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateToken</span><span class="hljs-params">($username, $data)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'username'</span>, $username);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;update(<span class="hljs-string">'users'</span>, $data);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getToken</span><span class="hljs-params">($reset_token)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'reset_token'</span>, $reset_token);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;get(<span class="hljs-string">'users'</span>)-&gt;result_array();
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updatePassword</span><span class="hljs-params">($reset_token, $data)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'reset_token'</span>, $reset_token);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;update(<span class="hljs-string">'users'</span>, $data);
+    }
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

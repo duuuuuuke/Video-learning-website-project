@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>database.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\database.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>database.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>DATABASE CONNECTIVITY SETTINGS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This file will contain the settings needed to access your database.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>For complete instructions please consult the 'Database Connection'</td>
+</tr>
+<tr>
+<td>page of the User Guide.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>-------------------------------------------------------------------</td>
+</tr>
+<tr>
+<td>EXPLANATION OF VARIABLES</td>
+</tr>
+<tr>
+<td>-------------------------------------------------------------------</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>['dsn']      The full DSN string describe a connection to the database.</td>
+</tr>
+<tr>
+<td>['hostname'] The hostname of your database server.</td>
+</tr>
+<tr>
+<td>['username'] The username used to connect to the database</td>
+</tr>
+<tr>
+<td>['password'] The password used to connect to the database</td>
+</tr>
+<tr>
+<td>['database'] The name of the database you want to connect to</td>
+</tr>
+<tr>
+<td>['dbdriver'] The database driver. e.g.: mysqli.</td>
+</tr>
+<tr>
+<td>Currently supported:</td>
+</tr>
+<tr>
+<td>cubrid, ibase, mssql, mysql, mysqli, oci8,</td>
+</tr>
+<tr>
+<td>odbc, pdo, postgre, sqlite, sqlite3, sqlsrv</td>
+</tr>
+<tr>
+<td>['dbprefix'] You can add an optional prefix, which will be added</td>
+</tr>
+<tr>
+<td>to the table name when using the  Query Builder class</td>
+</tr>
+<tr>
+<td>['pconnect'] TRUE/FALSE - Whether to use a persistent connection</td>
+</tr>
+<tr>
+<td>['db_debug'] TRUE/FALSE - Whether database errors should be displayed.</td>
+</tr>
+<tr>
+<td>['cache_on'] TRUE/FALSE - Enables/disables query caching</td>
+</tr>
+<tr>
+<td>['cachedir'] The path to the folder where cache files should be stored</td>
+</tr>
+<tr>
+<td>['char_set'] The character set used in communicating with the database</td>
+</tr>
+<tr>
+<td>['dbcollat'] The character collation used in communicating with the database</td>
+</tr>
+<tr>
+<td>NOTE: For MySQL and MySQLi databases, this setting is only used</td>
+</tr>
+<tr>
+<td>as a backup if your server is running PHP &lt; 5.2.3 or MySQL &lt; 5.0.7</td>
+</tr>
+<tr>
+<td>(and in table creation queries made with DB Forge).</td>
+</tr>
+<tr>
+<td>There is an incompatibility in PHP with mysql_real_escape_string() which</td>
+</tr>
+<tr>
+<td>can make your site vulnerable to SQL injection if you are using a</td>
+</tr>
+<tr>
+<td>multi-byte character set and are running versions lower than these.</td>
+</tr>
+<tr>
+<td>Sites using Latin-1 or UTF-8 database character set and collation are unaffected.</td>
+</tr>
+<tr>
+<td>['swap_pre'] A default table prefix that should be swapped with the dbprefix</td>
+</tr>
+<tr>
+<td>['encrypt']  Whether or not to use an encrypted connection.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'mysql' (deprecated), 'sqlsrv' and 'pdo/sqlsrv' drivers accept TRUE/FALSE</td>
+</tr>
+<tr>
+<td>'mysqli' and 'pdo/mysql' drivers accept an array with the following options:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'ssl_key'    - Path to the private key file</td>
+</tr>
+<tr>
+<td>'ssl_cert'   - Path to the public key certificate file</td>
+</tr>
+<tr>
+<td>'ssl_ca'     - Path to the certificate authority file</td>
+</tr>
+<tr>
+<td>'ssl_capath' - Path to a directory containing trusted CA certificates in PEM format</td>
+</tr>
+<tr>
+<td>'ssl_cipher' - List of <em>allowed</em> ciphers to be used for the encryption, separated by colons (':')</td>
+</tr>
+<tr>
+<td>'ssl_verify' - TRUE/FALSE; Whether verify the server certificate or not</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>['compress'] Whether or not to use client compression (MySQL only)</td>
+</tr>
+<tr>
+<td>['stricton'] TRUE/FALSE - forces 'Strict Mode' connections</td>
+</tr>
+<tr>
+<td>- good for ensuring strict SQL while developing</td>
+</tr>
+<tr>
+<td>['ssl_options']	Used to set various SSL options that can be used when making SSL connections.</td>
+</tr>
+<tr>
+<td>['failover'] array - A array with 0 or more data for connections if the main should fail.</td>
+</tr>
+<tr>
+<td>['save_queries'] TRUE/FALSE - Whether to &quot;save&quot; all executed queries.</td>
+</tr>
+<tr>
+<td>NOTE: Disabling this will also effectively disable both</td>
+</tr>
+<tr>
+<td>$this-&gt;db-&gt;last_query() and profiling of DB queries.</td>
+</tr>
+<tr>
+<td>When you run a query, with this setting set to TRUE (default),</td>
+</tr>
+<tr>
+<td>CodeIgniter will store the SQL statement for debugging purposes.</td>
+</tr>
+<tr>
+<td>However, this may cause high memory usage, especially if you run</td>
+</tr>
+<tr>
+<td>a lot of SQL queries ... disable this to avoid that problem.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The $active_group variable lets you choose which connection group to</td>
+</tr>
+<tr>
+<td>make active.  By default there is only one group (the 'default' group).</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The $query_builder variables lets you determine whether or not to load</td>
+</tr>
+<tr>
+<td>the query builder class.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$active_group = <span class="hljs-string">'default'</span>;
+$query_builder = <span class="hljs-keyword">TRUE</span>;
+
+$db[<span class="hljs-string">'default'</span>] = <span class="hljs-keyword">array</span>(
+	<span class="hljs-string">'dsn'</span>	=&gt; <span class="hljs-string">''</span>,
+	<span class="hljs-string">'hostname'</span> =&gt; <span class="hljs-string">'mysql'</span>,
+	<span class="hljs-string">'username'</span> =&gt; <span class="hljs-string">'php'</span>,
+	<span class="hljs-string">'password'</span> =&gt; <span class="hljs-string">'php'</span>,
+	<span class="hljs-string">'database'</span> =&gt; <span class="hljs-string">'cloud_computing'</span>,
+	<span class="hljs-string">'dbdriver'</span> =&gt; <span class="hljs-string">'mysqli'</span>,
+	<span class="hljs-string">'dbprefix'</span> =&gt; <span class="hljs-string">''</span>,
+	<span class="hljs-string">'pconnect'</span> =&gt; <span class="hljs-keyword">FALSE</span>,
+	<span class="hljs-string">'db_debug'</span> =&gt; (ENVIRONMENT !== <span class="hljs-string">'production'</span>),
+	<span class="hljs-string">'cache_on'</span> =&gt; <span class="hljs-keyword">FALSE</span>,
+	<span class="hljs-string">'cachedir'</span> =&gt; <span class="hljs-string">''</span>,
+	<span class="hljs-string">'char_set'</span> =&gt; <span class="hljs-string">'utf8'</span>,
+	<span class="hljs-string">'dbcollat'</span> =&gt; <span class="hljs-string">'utf8_general_ci'</span>,
+	<span class="hljs-string">'swap_pre'</span> =&gt; <span class="hljs-string">''</span>,
+	<span class="hljs-string">'encrypt'</span> =&gt; <span class="hljs-keyword">FALSE</span>,
+	<span class="hljs-string">'compress'</span> =&gt; <span class="hljs-keyword">FALSE</span>,
+	<span class="hljs-string">'stricton'</span> =&gt; <span class="hljs-keyword">FALSE</span>,
+	<span class="hljs-string">'failover'</span> =&gt; <span class="hljs-keyword">array</span>(),
+	<span class="hljs-string">'save_queries'</span> =&gt; <span class="hljs-keyword">TRUE</span>
+);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

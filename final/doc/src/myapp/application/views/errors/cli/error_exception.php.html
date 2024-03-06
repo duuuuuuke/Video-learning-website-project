@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>error_exception.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../../doc-style.css" />
+  <script src="../../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../../";
+    var thisFile = "src\\myapp\\application\\views\\errors\\cli\\error_exception.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>error_exception.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;?php defined('BASEPATH') OR exit('No direct script access allowed'); ?&gt;
+
+An uncaught Exception was encountered
+
+Type:        &lt;?php echo get_class($exception), "\n"; ?&gt;
+Message:     &lt;?php echo $message, "\n"; ?&gt;
+Filename:    &lt;?php echo $exception-&gt;getFile(), "\n"; ?&gt;
+Line Number: &lt;?php echo $exception-&gt;getLine(); ?&gt;
+
+&lt;?php if (defined('SHOW_DEBUG_BACKTRACE') &amp;&amp; SHOW_DEBUG_BACKTRACE === TRUE): ?&gt;
+
+Backtrace:
+&lt;?php	foreach ($exception-&gt;getTrace() as $error): ?&gt;
+&lt;?php		if (isset($error['file']) &amp;&amp; strpos($error['file'], realpath(BASEPATH)) !== 0): ?&gt;
+	File: &lt;?php echo $error['file'], "\n"; ?&gt;
+	Line: &lt;?php echo $error['line'], "\n"; ?&gt;
+	Function: &lt;?php echo $error['function'], "\n\n"; ?&gt;
+&lt;?php		endif ?&gt;
+&lt;?php	endforeach ?&gt;
+
+&lt;?php endif ?&gt;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>cookie_helper.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\helpers\\cookie_helper.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>cookie_helper.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Cookie Helpers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'set_cookie'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set cookie</p>
+</div>
+<div class="body">
+<p>Accepts seven parameters, or you can submit an associative
+array in the first parameter containing all the values.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the value of the cookie
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the number of seconds until expiration
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the cookie domain. Usually: .yourdomain.com
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the cookie path
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the cookie prefix
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>true makes the cookie secure
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>true makes the cookie accessible via http(s) only (no javascript)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_cookie</span><span class="hljs-params">($name, $value = <span class="hljs-string">''</span>, $expire = <span class="hljs-string">''</span>, $domain = <span class="hljs-string">''</span>, $path = <span class="hljs-string">'/'</span>, $prefix = <span class="hljs-string">''</span>, $secure = NULL, $httponly = NULL)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Set the config file options</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		get_instance()-&gt;input-&gt;set_cookie($name, $value, $expire, $domain, $path, $prefix, $secure, $httponly);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'get_cookie'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from the COOKIE array</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_cookie</span><span class="hljs-params">($index, $xss_clean = NULL)</span>
+	</span>{
+		is_bool($xss_clean) <span class="hljs-keyword">OR</span> $xss_clean = (config_item(<span class="hljs-string">'global_xss_filtering'</span>) === <span class="hljs-keyword">TRUE</span>);
+		$prefix = <span class="hljs-keyword">isset</span>($_COOKIE[$index]) ? <span class="hljs-string">''</span> : config_item(<span class="hljs-string">'cookie_prefix'</span>);
+		<span class="hljs-keyword">return</span> get_instance()-&gt;input-&gt;cookie($prefix.$index, $xss_clean);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'delete_cookie'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Delete a COOKIE</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the cookie domain. Usually: .yourdomain.com
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the cookie path
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the cookie prefix
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delete_cookie</span><span class="hljs-params">($name, $domain = <span class="hljs-string">''</span>, $path = <span class="hljs-string">'/'</span>, $prefix = <span class="hljs-string">''</span>)</span>
+	</span>{
+		set_cookie($name, <span class="hljs-string">''</span>, <span class="hljs-string">''</span>, $domain, $path, $prefix);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

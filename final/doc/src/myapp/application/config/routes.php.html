@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>routes.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\routes.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>routes.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>URI ROUTING</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This file lets you re-map URI requests to specific controller functions.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Typically there is a one-to-one relationship between a URL string</td>
+</tr>
+<tr>
+<td>and its corresponding controller class/method. The segments in a</td>
+</tr>
+<tr>
+<td>URL normally follow this pattern:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>example.com/class/method/id/</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>In some instances, however, you may want to remap this relationship</td>
+</tr>
+<tr>
+<td>so that a different class/function is called than the one</td>
+</tr>
+<tr>
+<td>corresponding to the URL.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Please see the user guide for complete details:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>https://codeigniter.com/user_guide/general/routing.html</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>-------------------------------------------------------------------------</td>
+</tr>
+<tr>
+<td>RESERVED ROUTES</td>
+</tr>
+<tr>
+<td>-------------------------------------------------------------------------</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>There are three reserved routes:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$route['default_controller'] = 'welcome';</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This route indicates which controller class should be loaded if the</td>
+</tr>
+<tr>
+<td>URI contains no data. In the above example, the &quot;welcome&quot; class</td>
+</tr>
+<tr>
+<td>would be loaded.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$route['404_override'] = 'errors/page_missing';</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This route will tell the Router which controller/method to use if those</td>
+</tr>
+<tr>
+<td>provided in the URL cannot be matched to a valid route.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$route['translate_uri_dashes'] = FALSE;</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This is not exactly a route, but allows you to automatically route</td>
+</tr>
+<tr>
+<td>controller and method names that contain dashes. '-' isn't a valid</td>
+</tr>
+<tr>
+<td>class or method name character, so it requires translation.</td>
+</tr>
+<tr>
+<td>When you set this option to TRUE, it will replace ALL dashes in the</td>
+</tr>
+<tr>
+<td>controller and method URI segments.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Examples:	my-controller/index	-&gt; my_controller/index</td>
+</tr>
+<tr>
+<td>my-controller/my-method	-&gt; my_controller/my_method</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$route[<span class="hljs-string">'default_controller'</span>] = <span class="hljs-string">'welcome'</span>;
+$route[<span class="hljs-string">'404_override'</span>] = <span class="hljs-string">''</span>;
+$route[<span class="hljs-string">'translate_uri_dashes'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

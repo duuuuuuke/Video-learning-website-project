@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>search.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\views\\search.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>search.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;div class="container my-5"&gt;
+
+    &lt;div class="col-md-12 col-md-offset-12 centered mb-0"&gt;
+        &lt;h1 class="text-center"&gt;Search&lt;/h1&gt;
+
+        &lt;?php echo form_open(base_url() . 'index.php?/search/check'); ?&gt;
+        &lt;div class="input-group mt-5"&gt;
+            &lt;input class="form-control" type="text" id="search_text" placeholder="Search" name="search" aria-label="Search"&gt;
+            &lt;!-- &lt;div class="input-group-append"&gt;
+                &lt;button class="btn btn-primary" type="submit"&gt;Search&lt;/button&gt;
+            &lt;/div&gt; --&gt;
+        &lt;/div&gt;
+        &lt;?php echo form_close(); ?&gt;
+    &lt;/div&gt;
+
+    &lt;div class="col-md-8 centered ml-3 bg-light rounded"&gt;
+        &lt;div class="list-group mb-5 mt-0" id="result"&gt;
+
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    $(document).ready(function() {
+        load_data();
+
+        function load_data(query) {
+            $.ajax({
+                url: "&lt;?php echo base_url(); ?&gt;index.php?/ajax/fatch",
+		method: "GET",
+                data: {
+                    query: query
+                },
+                success: function(response) {
+                    $('#result').html("");
+                    if (response == "") {
+                        $('#result').html(response);
+                    } else {
+                        var obj = JSON.parse(response);
+                        if (obj.length &gt; 0) {
+                            var items = [];
+                            $.each(obj, function(i, val) {
+                                items.push($('&lt;a id="links" herf="' + '&lt;?php echo base_url(); ?&gt;index.php?/detail?productId=' + val.id + '"/&gt;').text('Title:' + val.title + ' | ' + 'product id:' + val.id));
+                                $('#result').append.apply($('#result'), items);
+                            });
+
+                        } else {
+                            $('#result').html("Not Found!");
+                        }
+                    }
+                }
+            });
+        }
+        $('#search_text').keyup(function() {
+
+            var search = $(this).val();
+            if (search != '') {
+                load_data(search);
+            } else {
+                load_data();
+            }
+        });
+
+        $(document).on('click', 'a', function() {
+
+            var data = $('#links').text();
+            var productId = data.split(":")[data.split(":").length - 1];
+            window.location.href = '&lt;?php echo base_url(); ?&gt;index.php?/detail?productId=' + productId;
+        });
+    });
+&lt;/script&gt;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

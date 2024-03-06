@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>inflector_helper.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\helpers\\inflector_helper.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>inflector_helper.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Inflector Helpers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'singular'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Singular</p>
+</div>
+<div class="body">
+<p>Takes a plural word and makes it singular</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input string
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">singular</span><span class="hljs-params">($str)</span>
+	</span>{
+		$result = strval($str);
+
+		<span class="hljs-keyword">if</span> ( ! word_is_countable($result))
+		{
+			<span class="hljs-keyword">return</span> $result;
+		}
+
+		$singular_rules = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'/(matr)ices$/'</span>		=&gt; <span class="hljs-string">'\1ix'</span>,
+			<span class="hljs-string">'/(vert|ind)ices$/'</span>	=&gt; <span class="hljs-string">'\1ex'</span>,
+			<span class="hljs-string">'/^(ox)en/'</span>		=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/(alias)es$/'</span>		=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/([octop|vir])i$/'</span>	=&gt; <span class="hljs-string">'\1us'</span>,
+			<span class="hljs-string">'/(cris|ax|test)es$/'</span>	=&gt; <span class="hljs-string">'\1is'</span>,
+			<span class="hljs-string">'/(shoe)s$/'</span>		=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/(o)es$/'</span>		=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/(bus|campus)es$/'</span>	=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/([m|l])ice$/'</span>		=&gt; <span class="hljs-string">'\1ouse'</span>,
+			<span class="hljs-string">'/(x|ch|ss|sh)es$/'</span>	=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/(m)ovies$/'</span>		=&gt; <span class="hljs-string">'\1\2ovie'</span>,
+			<span class="hljs-string">'/(s)eries$/'</span>		=&gt; <span class="hljs-string">'\1\2eries'</span>,
+			<span class="hljs-string">'/([^aeiouy]|qu)ies$/'</span>	=&gt; <span class="hljs-string">'\1y'</span>,
+			<span class="hljs-string">'/([lr])ves$/'</span>		=&gt; <span class="hljs-string">'\1f'</span>,
+			<span class="hljs-string">'/(tive)s$/'</span>		=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/(hive)s$/'</span>		=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/([^f])ves$/'</span>		=&gt; <span class="hljs-string">'\1fe'</span>,
+			<span class="hljs-string">'/(^analy)ses$/'</span>	=&gt; <span class="hljs-string">'\1sis'</span>,
+			<span class="hljs-string">'/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/'</span> =&gt; <span class="hljs-string">'\1\2sis'</span>,
+			<span class="hljs-string">'/([ti])a$/'</span>		=&gt; <span class="hljs-string">'\1um'</span>,
+			<span class="hljs-string">'/(p)eople$/'</span>		=&gt; <span class="hljs-string">'\1\2erson'</span>,
+			<span class="hljs-string">'/(m)en$/'</span>		=&gt; <span class="hljs-string">'\1an'</span>,
+			<span class="hljs-string">'/(s)tatuses$/'</span>		=&gt; <span class="hljs-string">'\1\2tatus'</span>,
+			<span class="hljs-string">'/(c)hildren$/'</span>		=&gt; <span class="hljs-string">'\1\2hild'</span>,
+			<span class="hljs-string">'/(n)ews$/'</span>		=&gt; <span class="hljs-string">'\1\2ews'</span>,
+			<span class="hljs-string">'/(quiz)zes$/'</span>		=&gt; <span class="hljs-string">'\1'</span>,
+			<span class="hljs-string">'/([^us])s$/'</span>		=&gt; <span class="hljs-string">'\1'</span>
+		);
+
+		<span class="hljs-keyword">foreach</span> ($singular_rules <span class="hljs-keyword">as</span> $rule =&gt; $replacement)
+		{
+			<span class="hljs-keyword">if</span> (preg_match($rule, $result))
+			{
+				$result = preg_replace($rule, $replacement, $result);
+				<span class="hljs-keyword">break</span>;
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $result;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'plural'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Plural</p>
+</div>
+<div class="body">
+<p>Takes a singular word and makes it plural</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input string
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plural</span><span class="hljs-params">($str)</span>
+	</span>{
+		$result = strval($str);
+
+		<span class="hljs-keyword">if</span> ( ! word_is_countable($result))
+		{
+			<span class="hljs-keyword">return</span> $result;
+		}
+
+		$plural_rules = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'/(quiz)$/'</span>                =&gt; <span class="hljs-string">'\1zes'</span>,      <span class="hljs-comment">// quizzes</span>
+			<span class="hljs-string">'/^(ox)$/'</span>                 =&gt; <span class="hljs-string">'\1\2en'</span>,     <span class="hljs-comment">// ox</span>
+			<span class="hljs-string">'/([m|l])ouse$/'</span>           =&gt; <span class="hljs-string">'\1ice'</span>,      <span class="hljs-comment">// mouse, louse</span>
+			<span class="hljs-string">'/(matr|vert|ind)ix|ex$/'</span>  =&gt; <span class="hljs-string">'\1ices'</span>,     <span class="hljs-comment">// matrix, vertex, index</span>
+			<span class="hljs-string">'/(x|ch|ss|sh)$/'</span>          =&gt; <span class="hljs-string">'\1es'</span>,       <span class="hljs-comment">// search, switch, fix, box, process, address</span>
+			<span class="hljs-string">'/([^aeiouy]|qu)y$/'</span>       =&gt; <span class="hljs-string">'\1ies'</span>,      <span class="hljs-comment">// query, ability, agency</span>
+			<span class="hljs-string">'/(hive)$/'</span>                =&gt; <span class="hljs-string">'\1s'</span>,        <span class="hljs-comment">// archive, hive</span>
+			<span class="hljs-string">'/(?:([^f])fe|([lr])f)$/'</span>  =&gt; <span class="hljs-string">'\1\2ves'</span>,    <span class="hljs-comment">// half, safe, wife</span>
+			<span class="hljs-string">'/sis$/'</span>                   =&gt; <span class="hljs-string">'ses'</span>,        <span class="hljs-comment">// basis, diagnosis</span>
+			<span class="hljs-string">'/([ti])um$/'</span>              =&gt; <span class="hljs-string">'\1a'</span>,        <span class="hljs-comment">// datum, medium</span>
+			<span class="hljs-string">'/(p)erson$/'</span>              =&gt; <span class="hljs-string">'\1eople'</span>,    <span class="hljs-comment">// person, salesperson</span>
+			<span class="hljs-string">'/(m)an$/'</span>                 =&gt; <span class="hljs-string">'\1en'</span>,       <span class="hljs-comment">// man, woman, spokesman</span>
+			<span class="hljs-string">'/(c)hild$/'</span>               =&gt; <span class="hljs-string">'\1hildren'</span>,  <span class="hljs-comment">// child</span>
+			<span class="hljs-string">'/(buffal|tomat)o$/'</span>       =&gt; <span class="hljs-string">'\1\2oes'</span>,    <span class="hljs-comment">// buffalo, tomato</span>
+			<span class="hljs-string">'/(bu|campu)s$/'</span>           =&gt; <span class="hljs-string">'\1\2ses'</span>,    <span class="hljs-comment">// bus, campus</span>
+			<span class="hljs-string">'/(alias|status|virus)$/'</span>  =&gt; <span class="hljs-string">'\1es'</span>,       <span class="hljs-comment">// alias</span>
+			<span class="hljs-string">'/(octop)us$/'</span>             =&gt; <span class="hljs-string">'\1i'</span>,        <span class="hljs-comment">// octopus</span>
+			<span class="hljs-string">'/(ax|cris|test)is$/'</span>      =&gt; <span class="hljs-string">'\1es'</span>,       <span class="hljs-comment">// axis, crisis</span>
+			<span class="hljs-string">'/s$/'</span>                     =&gt; <span class="hljs-string">'s'</span>,          <span class="hljs-comment">// no change (compatibility)</span>
+			<span class="hljs-string">'/$/'</span>                      =&gt; <span class="hljs-string">'s'</span>,
+		);
+
+		<span class="hljs-keyword">foreach</span> ($plural_rules <span class="hljs-keyword">as</span> $rule =&gt; $replacement)
+		{
+			<span class="hljs-keyword">if</span> (preg_match($rule, $result))
+			{
+				$result = preg_replace($rule, $replacement, $result);
+				<span class="hljs-keyword">break</span>;
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $result;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'camelize'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Camelize</p>
+</div>
+<div class="body">
+<p>Takes multiple words separated by spaces or underscores and camelizes them</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input string
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">camelize</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> strtolower($str[<span class="hljs-number">0</span>]).substr(str_replace(<span class="hljs-string">' '</span>, <span class="hljs-string">''</span>, ucwords(preg_replace(<span class="hljs-string">'/[\s_]+/'</span>, <span class="hljs-string">' '</span>, $str))), <span class="hljs-number">1</span>);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'underscore'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Underscore</p>
+</div>
+<div class="body">
+<p>Takes multiple words separated by spaces and underscores them</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input string
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">underscore</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> preg_replace(<span class="hljs-string">'/[\s]+/'</span>, <span class="hljs-string">'_'</span>, trim(MB_ENABLED ? mb_strtolower($str) : strtolower($str)));
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'humanize'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Humanize</p>
+</div>
+<div class="body">
+<p>Takes multiple words separated by the separator and changes them to spaces</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input string
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$separator Input separator
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">humanize</span><span class="hljs-params">($str, $separator = <span class="hljs-string">'_'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> ucwords(preg_replace(<span class="hljs-string">'/['</span>.preg_quote($separator).<span class="hljs-string">']+/'</span>, <span class="hljs-string">' '</span>, trim(MB_ENABLED ? mb_strtolower($str) : strtolower($str))));
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'word_is_countable'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Checks if the given word has a plural version.</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$word Word to check
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">word_is_countable</span><span class="hljs-params">($word)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> ! in_array(
+			strtolower($word),
+			<span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'audio'</span>,
+				<span class="hljs-string">'bison'</span>,
+				<span class="hljs-string">'chassis'</span>,
+				<span class="hljs-string">'compensation'</span>,
+				<span class="hljs-string">'coreopsis'</span>,
+				<span class="hljs-string">'data'</span>,
+				<span class="hljs-string">'deer'</span>,
+				<span class="hljs-string">'education'</span>,
+				<span class="hljs-string">'emoji'</span>,
+				<span class="hljs-string">'equipment'</span>,
+				<span class="hljs-string">'fish'</span>,
+				<span class="hljs-string">'furniture'</span>,
+				<span class="hljs-string">'gold'</span>,
+				<span class="hljs-string">'information'</span>,
+				<span class="hljs-string">'knowledge'</span>,
+				<span class="hljs-string">'love'</span>,
+				<span class="hljs-string">'rain'</span>,
+				<span class="hljs-string">'money'</span>,
+				<span class="hljs-string">'moose'</span>,
+				<span class="hljs-string">'nutrition'</span>,
+				<span class="hljs-string">'offspring'</span>,
+				<span class="hljs-string">'plankton'</span>,
+				<span class="hljs-string">'pokemon'</span>,
+				<span class="hljs-string">'police'</span>,
+				<span class="hljs-string">'rice'</span>,
+				<span class="hljs-string">'series'</span>,
+				<span class="hljs-string">'sheep'</span>,
+				<span class="hljs-string">'species'</span>,
+				<span class="hljs-string">'swine'</span>,
+				<span class="hljs-string">'traffic'</span>,
+				<span class="hljs-string">'wheat'</span>
+			)
+		);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'is_countable'</span>))
+{
+	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_countable</span><span class="hljs-params">($word)</span>
+	</span>{
+		trigger_error(<span class="hljs-string">'is_countable() is a native PHP function since version 7.3.0; use word_is_countable() instead'</span>, E_USER_WARNING);
+		<span class="hljs-keyword">return</span> word_is_countable($word);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

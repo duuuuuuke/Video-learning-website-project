@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>constants.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\constants.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>constants.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Display Debug backtrace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If set to TRUE, a backtrace will be displayed along with php errors. If</td>
+</tr>
+<tr>
+<td>error_reporting is disabled, the backtrace will not display, regardless</td>
+</tr>
+<tr>
+<td>of this setting</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'SHOW_DEBUG_BACKTRACE'</span>) <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'SHOW_DEBUG_BACKTRACE'</span>, <span class="hljs-keyword">TRUE</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>File and Directory Modes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>These prefs are used when checking and setting modes when working</td>
+</tr>
+<tr>
+<td>with the file system.  The defaults are fine on servers with proper</td>
+</tr>
+<tr>
+<td>security, but you may wish (or even need) to change the values in</td>
+</tr>
+<tr>
+<td>certain environments (Apache running a separate process for each</td>
+</tr>
+<tr>
+<td>user, PHP under CGI with Apache suEXEC, etc.).  Octal values should</td>
+</tr>
+<tr>
+<td>always be used to set the mode correctly.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'FILE_READ_MODE'</span>)  <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FILE_READ_MODE'</span>, <span class="hljs-number">0644</span>);
+defined(<span class="hljs-string">'FILE_WRITE_MODE'</span>) <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FILE_WRITE_MODE'</span>, <span class="hljs-number">0666</span>);
+defined(<span class="hljs-string">'DIR_READ_MODE'</span>)   <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'DIR_READ_MODE'</span>, <span class="hljs-number">0755</span>);
+defined(<span class="hljs-string">'DIR_WRITE_MODE'</span>)  <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'DIR_WRITE_MODE'</span>, <span class="hljs-number">0755</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>File Stream Modes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>These modes are used when working with fopen()/popen()</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'FOPEN_READ'</span>)                           <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_READ'</span>, <span class="hljs-string">'rb'</span>);
+defined(<span class="hljs-string">'FOPEN_READ_WRITE'</span>)                     <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_READ_WRITE'</span>, <span class="hljs-string">'r+b'</span>);
+defined(<span class="hljs-string">'FOPEN_WRITE_CREATE_DESTRUCTIVE'</span>)       <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_WRITE_CREATE_DESTRUCTIVE'</span>, <span class="hljs-string">'wb'</span>); <span class="hljs-comment">// truncates existing file data, use with care</span>
+defined(<span class="hljs-string">'FOPEN_READ_WRITE_CREATE_DESTRUCTIVE'</span>)  <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_READ_WRITE_CREATE_DESTRUCTIVE'</span>, <span class="hljs-string">'w+b'</span>); <span class="hljs-comment">// truncates existing file data, use with care</span>
+defined(<span class="hljs-string">'FOPEN_WRITE_CREATE'</span>)                   <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_WRITE_CREATE'</span>, <span class="hljs-string">'ab'</span>);
+defined(<span class="hljs-string">'FOPEN_READ_WRITE_CREATE'</span>)              <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_READ_WRITE_CREATE'</span>, <span class="hljs-string">'a+b'</span>);
+defined(<span class="hljs-string">'FOPEN_WRITE_CREATE_STRICT'</span>)            <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_WRITE_CREATE_STRICT'</span>, <span class="hljs-string">'xb'</span>);
+defined(<span class="hljs-string">'FOPEN_READ_WRITE_CREATE_STRICT'</span>)       <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'FOPEN_READ_WRITE_CREATE_STRICT'</span>, <span class="hljs-string">'x+b'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Exit Status Codes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Used to indicate the conditions under which the script is exit()ing.</td>
+</tr>
+<tr>
+<td>While there is no universal standard for error codes, there are some</td>
+</tr>
+<tr>
+<td>broad conventions.  Three such conventions are mentioned below, for</td>
+</tr>
+<tr>
+<td>those who wish to make use of them.  The CodeIgniter defaults were</td>
+</tr>
+<tr>
+<td>chosen for the least overlap with these conventions, while still</td>
+</tr>
+<tr>
+<td>leaving room for others to be defined in future versions and user</td>
+</tr>
+<tr>
+<td>applications.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The three main conventions used for determining exit status codes</td>
+</tr>
+<tr>
+<td>are as follows:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Standard C/C++ Library (stdlibc):</td>
+</tr>
+<tr>
+<td>http://www.gnu.org/software/libc/manual/html_node/Exit-Status.html</td>
+</tr>
+<tr>
+<td>(This link also contains other GNU-specific conventions)</td>
+</tr>
+<tr>
+<td>BSD sysexits.h:</td>
+</tr>
+<tr>
+<td>http://www.gsp.com/cgi-bin/man.cgi?section=3&amp;topic=sysexits</td>
+</tr>
+<tr>
+<td>Bash scripting:</td>
+</tr>
+<tr>
+<td>http://tldp.org/LDP/abs/html/exitcodes.html</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'EXIT_SUCCESS'</span>)        <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_SUCCESS'</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// no errors</span>
+defined(<span class="hljs-string">'EXIT_ERROR'</span>)          <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_ERROR'</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// generic error</span>
+defined(<span class="hljs-string">'EXIT_CONFIG'</span>)         <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_CONFIG'</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">// configuration error</span>
+defined(<span class="hljs-string">'EXIT_UNKNOWN_FILE'</span>)   <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_UNKNOWN_FILE'</span>, <span class="hljs-number">4</span>); <span class="hljs-comment">// file not found</span>
+defined(<span class="hljs-string">'EXIT_UNKNOWN_CLASS'</span>)  <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_UNKNOWN_CLASS'</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// unknown class</span>
+defined(<span class="hljs-string">'EXIT_UNKNOWN_METHOD'</span>) <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_UNKNOWN_METHOD'</span>, <span class="hljs-number">6</span>); <span class="hljs-comment">// unknown class member</span>
+defined(<span class="hljs-string">'EXIT_USER_INPUT'</span>)     <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_USER_INPUT'</span>, <span class="hljs-number">7</span>); <span class="hljs-comment">// invalid user input</span>
+defined(<span class="hljs-string">'EXIT_DATABASE'</span>)       <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT_DATABASE'</span>, <span class="hljs-number">8</span>); <span class="hljs-comment">// database error</span>
+defined(<span class="hljs-string">'EXIT__AUTO_MIN'</span>)      <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT__AUTO_MIN'</span>, <span class="hljs-number">9</span>); <span class="hljs-comment">// lowest automatically-assigned error code</span>
+defined(<span class="hljs-string">'EXIT__AUTO_MAX'</span>)      <span class="hljs-keyword">OR</span> define(<span class="hljs-string">'EXIT__AUTO_MAX'</span>, <span class="hljs-number">125</span>); <span class="hljs-comment">// highest automatically-assigned error code</span>
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

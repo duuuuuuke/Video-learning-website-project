@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\controllers\\Upload.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Upload.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Upload</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Controller</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/header'</span>);
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'logged_in'</span>)) <span class="hljs-comment">//check if user already login</span>
+        {
+            <span class="hljs-keyword">if</span> (get_cookie(<span class="hljs-string">'remember'</span>)) { <span class="hljs-comment">// check if user activate the "remember me" feature  </span>
+                $username = get_cookie(<span class="hljs-string">'username'</span>); <span class="hljs-comment">//get the username from cookie</span>
+                $password = get_cookie(<span class="hljs-string">'password'</span>); <span class="hljs-comment">//get the username from cookie</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;user_model-&gt;login($username, $password)) <span class="hljs-comment">//check username and password correct</span>
+                {
+                    $user_data = <span class="hljs-keyword">array</span>(<span class="hljs-string">'username'</span> =&gt; $username, <span class="hljs-string">'logged_in'</span> =&gt; <span class="hljs-keyword">true</span>);
+                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data); <span class="hljs-comment">//set user status to login in session</span>
+                    <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'file'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-string">'error'</span> =&gt; <span class="hljs-string">' '</span>)); <span class="hljs-comment">//if user already logined show upload page</span>
+                }
+            } <span class="hljs-keyword">else</span> {
+                redirect(base_url().<span class="hljs-string">'index.php?/login'</span>); <span class="hljs-comment">//if user already logined direct user to home page</span>
+            }
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'file'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-string">'error'</span> =&gt; <span class="hljs-string">' '</span>)); <span class="hljs-comment">//if user already logined show login page</span>
+        }
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/footer'</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">uploadFile</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;model(<span class="hljs-string">'file_model'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>username can be changed, so get user id as the user upload folder.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">        $username = <span class="hljs-string">''</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>)) {
+            $username = <span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>);
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (get_cookie(<span class="hljs-string">'username'</span>)) {
+            $username = get_cookie(<span class="hljs-string">'username'</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">$this</span>-&gt;index();
+        }
+        $userinfo = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;get_userinfo($username);
+        $userid = $userinfo[<span class="hljs-number">0</span>][<span class="hljs-string">'id'</span>];
+        
+
+        $title = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'title'</span>);
+        $description = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'description'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>multiple files upload</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">        $file_count = count($_FILES[<span class="hljs-string">'userfiles'</span>][<span class="hljs-string">'name'</span>]);
+        $success = <span class="hljs-number">0</span>;
+        $fail = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span>($i = <span class="hljs-number">0</span>; $i &lt; $file_count; $i++) {
+            $_FILES[<span class="hljs-string">'userfile'</span>][<span class="hljs-string">'name'</span>] = $_FILES[<span class="hljs-string">'userfiles'</span>][<span class="hljs-string">'name'</span>][$i];
+            $_FILES[<span class="hljs-string">'userfile'</span>][<span class="hljs-string">'type'</span>] = $_FILES[<span class="hljs-string">'userfiles'</span>][<span class="hljs-string">'type'</span>][$i];
+            $_FILES[<span class="hljs-string">'userfile'</span>][<span class="hljs-string">'tmp_name'</span>] = $_FILES[<span class="hljs-string">'userfiles'</span>][<span class="hljs-string">'tmp_name'</span>][$i];
+            $_FILES[<span class="hljs-string">'userfile'</span>][<span class="hljs-string">'error'</span>] = $_FILES[<span class="hljs-string">'userfiles'</span>][<span class="hljs-string">'error'</span>][$i];
+            $_FILES[<span class="hljs-string">'userfile'</span>][<span class="hljs-string">'size'</span>] = $_FILES[<span class="hljs-string">'userfiles'</span>][<span class="hljs-string">'size'</span>][$i];
+
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;upload_config($userid, $title) != <span class="hljs-keyword">false</span>) {
+                <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;upload(<span class="hljs-keyword">$this</span>-&gt;upload-&gt;data(<span class="hljs-string">'file_name'</span>), <span class="hljs-keyword">$this</span>-&gt;upload-&gt;data(<span class="hljs-string">'full_path'</span>), <span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>), $userid, $_FILES[<span class="hljs-string">'userfile'</span>][<span class="hljs-string">'type'</span>], $title, $description);
+                $success++;
+            } <span class="hljs-keyword">else</span> {
+                $fail++;
+            }
+
+        }
+        <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'upload_result'</span>, $success. <span class="hljs-string">' files upload successfully, '</span>.$fail.<span class="hljs-string">' files upload failed. '</span>.<span class="hljs-keyword">$this</span>-&gt;upload-&gt;display_errors());
+        redirect(base_url().<span class="hljs-string">'index.php?/upload'</span>);
+        
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">upload_config</span><span class="hljs-params">($userid, $title)</span> </span>{
+        $config[<span class="hljs-string">'upload_path'</span>] = <span class="hljs-string">'./uploads/'</span> . $userid . <span class="hljs-string">'/'</span> . $title;
+        $config[<span class="hljs-string">'allowed_types'</span>] = <span class="hljs-string">'jpg|mp4|mkv|pdf'</span>;
+        $config[<span class="hljs-string">'max_size'</span>] = <span class="hljs-number">8000000000</span>; 
+        $config[<span class="hljs-string">'max_width'</span>] = <span class="hljs-number">1024</span>;
+        $config[<span class="hljs-string">'max_height'</span>] = <span class="hljs-number">768</span>;
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;library(<span class="hljs-string">'upload'</span>, $config);
+        <span class="hljs-keyword">$this</span>-&gt;upload-&gt;initialize($config);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>make directory if it did not exist.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">        <span class="hljs-keyword">if</span> (!is_dir(<span class="hljs-string">'./uploads/'</span> . $userid . <span class="hljs-string">'/'</span> . $title)) {
+            mkdir(<span class="hljs-string">'./uploads/'</span> . $userid . <span class="hljs-string">'/'</span> . $title, <span class="hljs-number">0777</span>, <span class="hljs-keyword">true</span>); <span class="hljs-comment">// 0777 allow the folder to be written, true allows recursive.</span>
+        }
+
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">$this</span>-&gt;upload-&gt;do_upload(<span class="hljs-string">'userfile'</span>)) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;upload-&gt;data(<span class="hljs-string">'file_name'</span>);
+        }
+    }
+ 
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

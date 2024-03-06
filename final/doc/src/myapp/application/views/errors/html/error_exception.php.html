@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>error_exception.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../../doc-style.css" />
+  <script src="../../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../../";
+    var thisFile = "src\\myapp\\application\\views\\errors\\html\\error_exception.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>error_exception.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?&gt;
+
+&lt;div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;"&gt;
+
+&lt;h4&gt;An uncaught Exception was encountered&lt;/h4&gt;
+
+&lt;p&gt;Type: &lt;?php echo get_class($exception); ?&gt;&lt;/p&gt;
+&lt;p&gt;Message: &lt;?php echo $message; ?&gt;&lt;/p&gt;
+&lt;p&gt;Filename: &lt;?php echo $exception-&gt;getFile(); ?&gt;&lt;/p&gt;
+&lt;p&gt;Line Number: &lt;?php echo $exception-&gt;getLine(); ?&gt;&lt;/p&gt;
+
+&lt;?php if (defined('SHOW_DEBUG_BACKTRACE') &amp;&amp; SHOW_DEBUG_BACKTRACE === TRUE): ?&gt;
+
+	&lt;p&gt;Backtrace:&lt;/p&gt;
+	&lt;?php foreach ($exception-&gt;getTrace() as $error): ?&gt;
+
+		&lt;?php if (isset($error['file']) &amp;&amp; strpos($error['file'], realpath(BASEPATH)) !== 0): ?&gt;
+
+			&lt;p style="margin-left:10px"&gt;
+			File: &lt;?php echo $error['file']; ?&gt;&lt;br /&gt;
+			Line: &lt;?php echo $error['line']; ?&gt;&lt;br /&gt;
+			Function: &lt;?php echo $error['function']; ?&gt;
+			&lt;/p&gt;
+		&lt;?php endif ?&gt;
+
+	&lt;?php endforeach ?&gt;
+
+&lt;?php endif ?&gt;
+
+&lt;/div&gt;
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

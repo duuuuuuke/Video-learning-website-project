@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>smiley_helper.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\helpers\\smiley_helper.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>smiley_helper.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Smiley Helpers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'smiley_js'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Smiley Javascript</p>
+</div>
+<div class="body">
+<p>Returns the javascript required for the smiley insertion.  Optionally takes
+an array of aliases to loosely couple the smiley array to the view.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>alias name or array of alias-&gt;field_id pairs
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>field_id if alias name was passed in
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">smiley_js</span><span class="hljs-params">($alias = <span class="hljs-string">''</span>, $field_id = <span class="hljs-string">''</span>, $inline = TRUE)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $do_setup = <span class="hljs-keyword">TRUE</span>;
+		$r = <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">if</span> ($alias !== <span class="hljs-string">''</span> &amp;&amp; ! is_array($alias))
+		{
+			$alias = <span class="hljs-keyword">array</span>($alias =&gt; $field_id);
+		}
+
+		<span class="hljs-keyword">if</span> ($do_setup === <span class="hljs-keyword">TRUE</span>)
+		{
+			$do_setup = <span class="hljs-keyword">FALSE</span>;
+			$m = <span class="hljs-keyword">array</span>();
+
+			<span class="hljs-keyword">if</span> (is_array($alias))
+			{
+				<span class="hljs-keyword">foreach</span> ($alias <span class="hljs-keyword">as</span> $name =&gt; $id)
+				{
+					$m[] = <span class="hljs-string">'"'</span>.$name.<span class="hljs-string">'" : "'</span>.$id.<span class="hljs-string">'"'</span>;
+				}
+			}
+
+			$m = <span class="hljs-string">'{'</span>.implode(<span class="hljs-string">','</span>, $m).<span class="hljs-string">'}'</span>;
+
+			$r .= <span class="hljs-string">&lt;&lt;&lt;EOF
+			var smiley_map = <span class="hljs-subst">{$m}</span>;
+
+			function insert_smiley(smiley, field_id) {
+				var el = document.getElementById(field_id), newStart;
+
+				if ( ! el &amp;&amp; smiley_map[field_id]) {
+					el = document.getElementById(smiley_map[field_id]);
+
+					if ( ! el)
+						return false;
+				}
+
+				el.focus();
+				smiley = " " + smiley;
+
+				if ('selectionStart' in el) {
+					newStart = el.selectionStart + smiley.length;
+
+					el.value = el.value.substr(0, el.selectionStart) +
+									smiley +
+									el.value.substr(el.selectionEnd, el.value.length);
+					el.setSelectionRange(newStart, newStart);
+				}
+				else if (document.selection) {
+					document.selection.createRange().text = smiley;
+				}
+			}
+EOF;</span>
+		}
+		<span class="hljs-keyword">elseif</span> (is_array($alias))
+		{
+			<span class="hljs-keyword">foreach</span> ($alias <span class="hljs-keyword">as</span> $name =&gt; $id)
+			{
+				$r .= <span class="hljs-string">'smiley_map["'</span>.$name.<span class="hljs-string">'"] = "'</span>.$id.<span class="hljs-string">"\";\n"</span>;
+			}
+		}
+
+		<span class="hljs-keyword">return</span> ($inline)
+			? <span class="hljs-string">'&lt;script type="text/javascript" charset="utf-8"&gt;/*&lt;![CDATA[ */'</span>.$r.<span class="hljs-string">'// ]]&gt;&lt;/script&gt;'</span>
+			: $r;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'get_clickable_smileys'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Clickable Smileys</p>
+</div>
+<div class="body">
+<p>Returns an array of image tag links that can be clicked to be inserted
+into a form field.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the URL to the folder containing the smiley images
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_clickable_smileys</span><span class="hljs-params">($image_url, $alias = <span class="hljs-string">''</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>For backward compatibility with js_insert_smiley</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_array($alias))
+		{
+			$smileys = $alias;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">FALSE</span> === ($smileys = _get_smiley_array()))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Add a trailing slash to the file path if needed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$image_url = rtrim($image_url, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>;
+
+		$used = <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">foreach</span> ($smileys <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Keep duplicates from being used, which can happen if the
+mapping array contains multiple identical replacements. For example:
+:-) and :) might be replaced with the same image so both smileys
+will be in the array.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($used[$smileys[$key][<span class="hljs-number">0</span>]]))
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			$link[] = <span class="hljs-string">'&lt;a href="javascript:void(0);" onclick="insert_smiley(\''</span>.$key.<span class="hljs-string">'\', \''</span>.$alias.<span class="hljs-string">'\')"&gt;&lt;img src="'</span>.$image_url.$smileys[$key][<span class="hljs-number">0</span>].<span class="hljs-string">'" alt="'</span>.$smileys[$key][<span class="hljs-number">3</span>].<span class="hljs-string">'" style="width: '</span>.$smileys[$key][<span class="hljs-number">1</span>].<span class="hljs-string">'; height: '</span>.$smileys[$key][<span class="hljs-number">2</span>].<span class="hljs-string">'; border: 0;" /&gt;&lt;/a&gt;'</span>;
+			$used[$smileys[$key][<span class="hljs-number">0</span>]] = <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $link;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'parse_smileys'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Parse Smileys</p>
+</div>
+<div class="body">
+<p>Takes a string as input and swaps any contained smileys for the actual image</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the text to be parsed
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the URL to the folder containing the smiley images
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parse_smileys</span><span class="hljs-params">($str = <span class="hljs-string">''</span>, $image_url = <span class="hljs-string">''</span>, $smileys = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($image_url === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> ( ! is_array($smileys) &amp;&amp; <span class="hljs-keyword">FALSE</span> === ($smileys = _get_smiley_array())))
+		{
+			<span class="hljs-keyword">return</span> $str;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Add a trailing slash to the file path if needed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$image_url = rtrim($image_url, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>;
+
+		<span class="hljs-keyword">foreach</span> ($smileys <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			$str = str_replace($key, <span class="hljs-string">'&lt;img src="'</span>.$image_url.$smileys[$key][<span class="hljs-number">0</span>].<span class="hljs-string">'" alt="'</span>.$smileys[$key][<span class="hljs-number">3</span>].<span class="hljs-string">'" style="width: '</span>.$smileys[$key][<span class="hljs-number">1</span>].<span class="hljs-string">'; height: '</span>.$smileys[$key][<span class="hljs-number">2</span>].<span class="hljs-string">'; border: 0;" /&gt;'</span>, $str);
+		}
+
+		<span class="hljs-keyword">return</span> $str;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_get_smiley_array'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Smiley Array</p>
+</div>
+<div class="body">
+<p>Fetches the config/smiley.php file</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_get_smiley_array</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_smileys;
+
+		<span class="hljs-keyword">if</span> ( ! is_array($_smileys))
+		{
+			<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/smileys.php'</span>))
+			{
+				<span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/smileys.php'</span>);
+			}
+
+			<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/smileys.php'</span>))
+			{
+				<span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/smileys.php'</span>);
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($smileys) <span class="hljs-keyword">OR</span> ! is_array($smileys))
+			{
+				$_smileys = <span class="hljs-keyword">array</span>();
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			$_smileys = $smileys;
+		}
+
+		<span class="hljs-keyword">return</span> $_smileys;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

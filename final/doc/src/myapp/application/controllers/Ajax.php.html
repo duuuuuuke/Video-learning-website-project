@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ajax.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\controllers\\Ajax.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Ajax.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Ajax</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Controller</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fatch</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;model(<span class="hljs-string">'file_model'</span>); <span class="hljs-comment">// load file_model </span>
+        $output = <span class="hljs-string">''</span>;
+        $query = <span class="hljs-string">''</span>;
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;input-&gt;get(<span class="hljs-string">'query'</span>)) {
+            $query = <span class="hljs-keyword">$this</span>-&gt;input-&gt;get(<span class="hljs-string">'query'</span>); <span class="hljs-comment">// get search query send from ajax search form</span>
+        }
+        $data = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;fetch_data($query); <span class="hljs-comment">//send query to file_model and put result to $data</span>
+        <span class="hljs-keyword">if</span> (!$data == <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">echo</span> json_encode($data-&gt;result()); <span class="hljs-comment">//send result back</span>
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">echo</span>  <span class="hljs-string">""</span>; <span class="hljs-comment">// no result found</span>
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scroll_fetch</span><span class="hljs-params">()</span>
+    </span>{
+        $output = <span class="hljs-string">''</span>;
+        $data = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;fetch_all(<span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'limit'</span>), <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'start'</span>));
+        <span class="hljs-keyword">if</span> ($data-&gt;num_rows() &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">foreach</span> ($data-&gt;result() <span class="hljs-keyword">as</span> $row) {
+                $output .= <span class="hljs-string">'
+                &lt;div class="card mt-5"&gt;
+                    &lt;div class="card-body"&gt;
+                        &lt;h5 class="card-title"&gt;'</span> . $row-&gt;title . <span class="hljs-string">'&lt;/h5&gt;
+                        &lt;p class="card-text"&gt;'</span> . $row-&gt;description . <span class="hljs-string">'&lt;/p&gt;
+                        &lt;p class="card-text"&gt;'</span> . <span class="hljs-string">'ID: '</span> . $row-&gt;id . <span class="hljs-string">'&lt;/p&gt;
+                        &lt;a href="'</span> . base_url() . <span class="hljs-string">'index.php?/detail?productId='</span> . $row-&gt;id . <span class="hljs-string">'" class="btn btn-primary"&gt;Detail&lt;/a&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                '</span>;
+            }
+        }
+        <span class="hljs-keyword">echo</span> $output;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addComment</span><span class="hljs-params">()</span>
+    </span>{
+        $data[<span class="hljs-string">'product_id'</span>] = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'product_id'</span>);
+        $data[<span class="hljs-string">'username'</span>] = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'username'</span>);
+        $data[<span class="hljs-string">'comments'</span>] = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'comments'</span>);
+        $data[<span class="hljs-string">'date'</span>] = date(<span class="hljs-string">'Y-m-d H:i:s'</span>);
+        $result = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;addNewComment($data);
+        <span class="hljs-keyword">if</span> (is_integer($result)) {
+            $newComment = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;getCommentByID($result);
+            <span class="hljs-keyword">if</span> (count($newComment) === <span class="hljs-number">1</span>) {
+                <span class="hljs-keyword">echo</span> json_encode($newComment);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">echo</span> <span class="hljs-string">'error, please try again'</span>;
+            }
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">'error, please try again'</span>;
+        }
+    }
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

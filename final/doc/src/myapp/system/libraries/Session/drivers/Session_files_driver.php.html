@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Session_files_driver.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../../doc-style.css" />
+  <script src="../../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Session\\drivers\\Session_files_driver.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Session_files_driver.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Session Files Driver</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Session_files_driver</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Session_driver</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">SessionHandlerInterface</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Save path</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_save_path;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File handle</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_file_handle;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File name</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_file_path;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File new flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_file_new;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate SID regular expression</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_sid_regexp;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>mbstring.func_overload flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> $func_overload;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Configuration parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(&amp;$params)</span>
+	</span>{
+		<span class="hljs-keyword">parent</span>::__construct($params);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>] = rtrim(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>], <span class="hljs-string">'/\\'</span>);
+			ini_set(<span class="hljs-string">'session.save_path'</span>, <span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>]);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			log_message(<span class="hljs-string">'debug'</span>, <span class="hljs-string">'Session: "sess_save_path" is empty; using "session.save_path" value from php.ini.'</span>);
+			<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>] = rtrim(ini_get(<span class="hljs-string">'session.save_path'</span>), <span class="hljs-string">'/\\'</span>);
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_sid_regexp = <span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'_sid_regexp'</span>];
+
+		<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">self</span>::$func_overload) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">self</span>::$func_overload = (extension_loaded(<span class="hljs-string">'mbstring'</span>) &amp;&amp; ini_get(<span class="hljs-string">'mbstring.func_overload'</span>));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Open</p>
+</div>
+<div class="body">
+<p>Sanitizes the save_path directory.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$save_path Path to session files' directory
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$name Session cookie name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">open</span><span class="hljs-params">($save_path, $name)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_dir($save_path))
+		{
+			<span class="hljs-keyword">if</span> ( ! mkdir($save_path, <span class="hljs-number">0700</span>, <span class="hljs-keyword">TRUE</span>))
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">"Session: Configured save path '"</span>.<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>].<span class="hljs-string">"' is not a directory, doesn't exist or cannot be created."</span>);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+			}
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_writable($save_path))
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">"Session: Configured save path '"</span>.<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>].<span class="hljs-string">"' is not writable by the PHP process."</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>] = $save_path;
+		<span class="hljs-keyword">$this</span>-&gt;_file_path = <span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>].DIRECTORY_SEPARATOR
+			.$name <span class="hljs-comment">// we'll use the session cookie name as a prefix to avoid collisions</span>
+			.(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'match_ip'</span>] ? md5($_SERVER[<span class="hljs-string">'REMOTE_ADDR'</span>]) : <span class="hljs-string">''</span>);
+
+		<span class="hljs-keyword">$this</span>-&gt;php5_validate_id();
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_success;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Read</p>
+</div>
+<div class="body">
+<p>Reads session data and acquires a lock</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$session_id Session ID
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string Serialized session data
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">read</span><span class="hljs-params">($session_id)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>This might seem weird, but PHP 5.6 introduces session_reset(),
+which re-reads session data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_file_handle === <span class="hljs-keyword">NULL</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_file_new = ! file_exists(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id);
+
+			<span class="hljs-keyword">if</span> ((<span class="hljs-keyword">$this</span>-&gt;_file_handle = fopen(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id, <span class="hljs-string">'c+b'</span>)) === <span class="hljs-keyword">FALSE</span>)
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">"Session: Unable to open file '"</span>.<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id.<span class="hljs-string">"'."</span>);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+			}
+
+			<span class="hljs-keyword">if</span> (flock(<span class="hljs-keyword">$this</span>-&gt;_file_handle, LOCK_EX) === <span class="hljs-keyword">FALSE</span>)
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">"Session: Unable to obtain lock for file '"</span>.<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id.<span class="hljs-string">"'."</span>);
+				fclose(<span class="hljs-keyword">$this</span>-&gt;_file_handle);
+				<span class="hljs-keyword">$this</span>-&gt;_file_handle = <span class="hljs-keyword">NULL</span>;
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>Needed by write() to detect session_regenerate_id() calls</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;_session_id = $session_id;
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_file_new)
+			{
+				chmod(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id, <span class="hljs-number">0600</span>);
+				<span class="hljs-keyword">$this</span>-&gt;_fingerprint = md5(<span class="hljs-string">''</span>);
+				<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+			}
+		}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>We shouldn't need this, but apparently we do ...
+See https://github.com/bcit-ci/CodeIgniter/issues/4039</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;_file_handle === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			rewind(<span class="hljs-keyword">$this</span>-&gt;_file_handle);
+		}
+
+		$session_data = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">for</span> ($read = <span class="hljs-number">0</span>, $length = filesize(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id); $read &lt; $length; $read += <span class="hljs-keyword">self</span>::strlen($buffer))
+		{
+			<span class="hljs-keyword">if</span> (($buffer = fread(<span class="hljs-keyword">$this</span>-&gt;_file_handle, $length - $read)) === <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">break</span>;
+			}
+
+			$session_data .= $buffer;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_fingerprint = md5($session_data);
+		<span class="hljs-keyword">return</span> $session_data;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Write</p>
+</div>
+<div class="body">
+<p>Writes (create / update) session data</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$session_id Session ID
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$session_data Serialized session data
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">write</span><span class="hljs-params">($session_id, $session_data)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>If the two IDs don't match, we have a session_regenerate_id() call
+and we need to close the old handle and open a new one</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($session_id !== <span class="hljs-keyword">$this</span>-&gt;_session_id &amp;&amp; (<span class="hljs-keyword">$this</span>-&gt;close() === <span class="hljs-keyword">$this</span>-&gt;_failure <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;read($session_id) === <span class="hljs-keyword">$this</span>-&gt;_failure))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! is_resource(<span class="hljs-keyword">$this</span>-&gt;_file_handle))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;_fingerprint === md5($session_data))
+		{
+			<span class="hljs-keyword">return</span> ( ! <span class="hljs-keyword">$this</span>-&gt;_file_new &amp;&amp; ! touch(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id))
+				? <span class="hljs-keyword">$this</span>-&gt;_failure
+				: <span class="hljs-keyword">$this</span>-&gt;_success;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;_file_new)
+		{
+			ftruncate(<span class="hljs-keyword">$this</span>-&gt;_file_handle, <span class="hljs-number">0</span>);
+			rewind(<span class="hljs-keyword">$this</span>-&gt;_file_handle);
+		}
+
+		<span class="hljs-keyword">if</span> (($length = strlen($session_data)) &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">for</span> ($written = <span class="hljs-number">0</span>; $written &lt; $length; $written += $result)
+			{
+				<span class="hljs-keyword">if</span> (($result = fwrite(<span class="hljs-keyword">$this</span>-&gt;_file_handle, substr($session_data, $written))) === <span class="hljs-keyword">FALSE</span>)
+				{
+					<span class="hljs-keyword">break</span>;
+				}
+			}
+
+			<span class="hljs-keyword">if</span> ( ! is_int($result))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_fingerprint = md5(substr($session_data, <span class="hljs-number">0</span>, $written));
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Session: Unable to write data.'</span>);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+			}
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_fingerprint = md5($session_data);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_success;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Close</p>
+</div>
+<div class="body">
+<p>Releases locks and closes file descriptor.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">close</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_resource(<span class="hljs-keyword">$this</span>-&gt;_file_handle))
+		{
+			flock(<span class="hljs-keyword">$this</span>-&gt;_file_handle, LOCK_UN);
+			fclose(<span class="hljs-keyword">$this</span>-&gt;_file_handle);
+
+			<span class="hljs-keyword">$this</span>-&gt;_file_handle = <span class="hljs-keyword">$this</span>-&gt;_file_new = <span class="hljs-keyword">$this</span>-&gt;_session_id = <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_success;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Destroy</p>
+</div>
+<div class="body">
+<p>Destroys the current session.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$session_id Session ID
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">destroy</span><span class="hljs-params">($session_id)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;close() === <span class="hljs-keyword">$this</span>-&gt;_success)
+		{
+			<span class="hljs-keyword">if</span> (file_exists(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_cookie_destroy();
+				<span class="hljs-keyword">return</span> unlink(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id)
+					? <span class="hljs-keyword">$this</span>-&gt;_success
+					: <span class="hljs-keyword">$this</span>-&gt;_failure;
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_success;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;_file_path !== <span class="hljs-keyword">NULL</span>)
+		{
+			clearstatcache();
+			<span class="hljs-keyword">if</span> (file_exists(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_cookie_destroy();
+				<span class="hljs-keyword">return</span> unlink(<span class="hljs-keyword">$this</span>-&gt;_file_path.$session_id)
+					? <span class="hljs-keyword">$this</span>-&gt;_success
+					: <span class="hljs-keyword">$this</span>-&gt;_failure;
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_success;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Garbage Collector</p>
+</div>
+<div class="body">
+<p>Deletes expired sessions</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$maxlifetime Maximum lifetime of sessions
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gc</span><span class="hljs-params">($maxlifetime)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_dir(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>]) <span class="hljs-keyword">OR</span> ($directory = opendir(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>])) === <span class="hljs-keyword">FALSE</span>)
+		{
+			log_message(<span class="hljs-string">'debug'</span>, <span class="hljs-string">"Session: Garbage collector couldn't list files under directory '"</span>.<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>].<span class="hljs-string">"'."</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_failure;
+		}
+
+		$ts = time() - $maxlifetime;
+
+		$pattern = (<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'match_ip'</span>] === <span class="hljs-keyword">TRUE</span>)
+			? <span class="hljs-string">'[0-9a-f]{32}'</span>
+			: <span class="hljs-string">''</span>;
+
+		$pattern = sprintf(
+			<span class="hljs-string">'#\A%s'</span>.$pattern.<span class="hljs-keyword">$this</span>-&gt;_sid_regexp.<span class="hljs-string">'\z#'</span>,
+			preg_quote(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'cookie_name'</span>])
+		);
+
+		<span class="hljs-keyword">while</span> (($file = readdir($directory)) !== <span class="hljs-keyword">FALSE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>If the filename doesn't match this pattern, it's either not a session file or is not ours</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ( ! preg_match($pattern, $file)
+				<span class="hljs-keyword">OR</span> ! is_file(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>].DIRECTORY_SEPARATOR.$file)
+				<span class="hljs-keyword">OR</span> ($mtime = filemtime(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>].DIRECTORY_SEPARATOR.$file)) === <span class="hljs-keyword">FALSE</span>
+				<span class="hljs-keyword">OR</span> $mtime &gt; $ts)
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			unlink(<span class="hljs-keyword">$this</span>-&gt;_config[<span class="hljs-string">'save_path'</span>].DIRECTORY_SEPARATOR.$file);
+		}
+
+		closedir($directory);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_success;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate ID</p>
+</div>
+<div class="body">
+<p>Checks whether a session ID record exists server-side,
+to enforce session.use_strict_mode.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$id
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateSessionId</span><span class="hljs-params">($id)</span>
+	</span>{
+		$result = is_file(<span class="hljs-keyword">$this</span>-&gt;_file_path.$id);
+		clearstatcache(<span class="hljs-keyword">TRUE</span>, <span class="hljs-keyword">$this</span>-&gt;_file_path.$id);
+		<span class="hljs-keyword">return</span> $result;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Byte-safe strlen()</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strlen</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">self</span>::$func_overload)
+			? mb_strlen($str, <span class="hljs-string">'8bit'</span>)
+			: strlen($str);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

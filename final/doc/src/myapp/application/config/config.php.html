@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>config.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\config.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>config.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Base Site URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>URL to your CodeIgniter root. Typically this will be your base URL,</td>
+</tr>
+<tr>
+<td>WITH a trailing slash:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>http://example.com/</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>WARNING: You MUST set this value!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If it is not set, then CodeIgniter will try guess the protocol and path</td>
+</tr>
+<tr>
+<td>your installation, but due to security concerns the hostname will be set</td>
+</tr>
+<tr>
+<td>to $_SERVER['SERVER_ADDR'] if available, or localhost otherwise.</td>
+</tr>
+<tr>
+<td>The auto-detection mechanism exists only for convenience during</td>
+</tr>
+<tr>
+<td>development and MUST NOT be used in production!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If you need to allow multiple domains, remember that this file is still</td>
+</tr>
+<tr>
+<td>a PHP script and you can easily do that on your own.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'base_url'</span>] = <span class="hljs-string">'http://125.253.55.143:8080/myapp/'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Index File</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Typically this will be your index.php file, unless you've renamed it to</td>
+</tr>
+<tr>
+<td>something else. If you are using mod_rewrite to remove the page set this</td>
+</tr>
+<tr>
+<td>variable so that it is blank.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'index_page'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>URI PROTOCOL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This item determines which server global should be used to retrieve the</td>
+</tr>
+<tr>
+<td>URI string.  The default setting of 'REQUEST_URI' works for most servers.</td>
+</tr>
+<tr>
+<td>If your links do not seem to work, try one of the other delicious flavors:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'REQUEST_URI'    Uses $_SERVER['REQUEST_URI']</td>
+</tr>
+<tr>
+<td>'QUERY_STRING'   Uses $_SERVER['QUERY_STRING']</td>
+</tr>
+<tr>
+<td>'PATH_INFO'      Uses $_SERVER['PATH_INFO']</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'uri_protocol'</span>]	= <span class="hljs-string">'REQUEST_URI'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>URL suffix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This option allows you to add a suffix to all URLs generated by CodeIgniter.</td>
+</tr>
+<tr>
+<td>For more information please see the user guide:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>https://codeigniter.com/user_guide/general/urls.html</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'url_suffix'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Default Language</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This determines which set of language files should be used. Make sure</td>
+</tr>
+<tr>
+<td>there is an available translation if you intend to use something other</td>
+</tr>
+<tr>
+<td>than english.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'language'</span>]	= <span class="hljs-string">'english'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Default Character Set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This determines which character set is used by default in various methods</td>
+</tr>
+<tr>
+<td>that require a character set to be provided.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>See http://php.net/htmlspecialchars for a list of supported charsets.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'charset'</span>] = <span class="hljs-string">'UTF-8'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Enable/Disable System Hooks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If you would like to use the 'hooks' feature you must enable it by</td>
+</tr>
+<tr>
+<td>setting this variable to TRUE (boolean).  See the user guide for details.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'enable_hooks'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Class Extension Prefix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This item allows you to set the filename/classname prefix when extending</td>
+</tr>
+<tr>
+<td>native libraries.  For more information please see the user guide:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>https://codeigniter.com/user_guide/general/core_classes.html</td>
+</tr>
+<tr>
+<td>https://codeigniter.com/user_guide/general/creating_libraries.html</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'subclass_prefix'</span>] = <span class="hljs-string">'MY_'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Composer auto-loading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Enabling this setting will tell CodeIgniter to look for a Composer</td>
+</tr>
+<tr>
+<td>package auto-loader script in application/vendor/autoload.php.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$config['composer_autoload'] = TRUE;</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Or if you have your vendor/ directory located somewhere else, you</td>
+</tr>
+<tr>
+<td>can opt to set a specific path as well:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$config['composer_autoload'] = '/path/to/vendor/autoload.php';</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>For more information about Composer, please visit http://getcomposer.org/</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Note: This will NOT disable or override the CodeIgniter-specific</td>
+</tr>
+<tr>
+<td>autoloading (application/config/autoload.php)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'composer_autoload'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Allowed URL Characters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This lets you specify which characters are permitted within your URLs.</td>
+</tr>
+<tr>
+<td>When someone tries to submit a URL with disallowed characters they will</td>
+</tr>
+<tr>
+<td>get a warning message.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>As a security measure you are STRONGLY encouraged to restrict URLs to</td>
+</tr>
+<tr>
+<td>as few characters as possible.  By default only these are allowed: a-z 0-9~%.:_-</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Leave blank to allow all characters -- but only if you are insane.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The configured value is actually a regular expression character group</td>
+</tr>
+<tr>
+<td>and it will be executed as: ! preg_match('/^[&lt;permitted_uri_chars&gt;]+$/i</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'permitted_uri_chars'</span>] = <span class="hljs-string">'a-z 0-9~%.:_\-'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Enable Query Strings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>By default CodeIgniter uses search-engine friendly segment based URLs:</td>
+</tr>
+<tr>
+<td>example.com/who/what/where/</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>You can optionally enable standard query string based URLs:</td>
+</tr>
+<tr>
+<td>example.com?who=me&amp;what=something&amp;where=here</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Options are: TRUE or FALSE (boolean)</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The other items let you set the query string 'words' that will</td>
+</tr>
+<tr>
+<td>invoke your controllers and its functions:</td>
+</tr>
+<tr>
+<td>example.com/index.php?c=controller&amp;m=function</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Please note that some of the helpers won't work as expected when</td>
+</tr>
+<tr>
+<td>this feature is enabled, since CodeIgniter is designed primarily to</td>
+</tr>
+<tr>
+<td>use segment based URLs.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'enable_query_strings'</span>] = <span class="hljs-keyword">FALSE</span>;
+$config[<span class="hljs-string">'controller_trigger'</span>] = <span class="hljs-string">'c'</span>;
+$config[<span class="hljs-string">'function_trigger'</span>] = <span class="hljs-string">'m'</span>;
+$config[<span class="hljs-string">'directory_trigger'</span>] = <span class="hljs-string">'d'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Allow $_GET array</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>By default CodeIgniter enables access to the $_GET array.  If for some</td>
+</tr>
+<tr>
+<td>reason you would like to disable it, set 'allow_get_array' to FALSE.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>WARNING: This feature is DEPRECATED and currently available only</td>
+</tr>
+<tr>
+<td>for backwards compatibility purposes!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'allow_get_array'</span>] = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Error Logging Threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>You can enable error logging by setting a threshold over zero. The</td>
+</tr>
+<tr>
+<td>threshold determines what gets logged. Threshold options are:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>0 = Disables logging, Error logging TURNED OFF</td>
+</tr>
+<tr>
+<td>1 = Error Messages (including PHP errors)</td>
+</tr>
+<tr>
+<td>2 = Debug Messages</td>
+</tr>
+<tr>
+<td>3 = Informational Messages</td>
+</tr>
+<tr>
+<td>4 = All Messages</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>You can also pass an array with threshold levels to show individual error types</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>array(2) = Debug Messages, without Error Messages</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>For a live site you'll usually only enable Errors (1) to be logged otherwise</td>
+</tr>
+<tr>
+<td>your log files will fill up very fast.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'log_threshold'</span>] = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Error Logging Directory Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Leave this BLANK unless you would like to set something other than the default</td>
+</tr>
+<tr>
+<td>application/logs/ directory. Use a full server path with trailing slash.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'log_path'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Log File Extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The default filename extension for log files. The default 'php' allows for</td>
+</tr>
+<tr>
+<td>protecting the log files via basic scripting, when they are to be stored</td>
+</tr>
+<tr>
+<td>under a publicly accessible directory.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Note: Leaving it blank will default to 'php'.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'log_file_extension'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Log File Permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The file system permissions to be applied on newly created log files.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>IMPORTANT: This MUST be an integer (no quotes) and you MUST use octal</td>
+</tr>
+<tr>
+<td>integer notation (i.e. 0700, 0644, etc.)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'log_file_permissions'</span>] = <span class="hljs-number">0644</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Date Format for Logs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Each item that is logged has an associated date. You can use PHP date</td>
+</tr>
+<tr>
+<td>codes to set your own date formatting</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'log_date_format'</span>] = <span class="hljs-string">'Y-m-d H:i:s'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Error Views Directory Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Leave this BLANK unless you would like to set something other than the default</td>
+</tr>
+<tr>
+<td>application/views/errors/ directory.  Use a full server path with trailing slash.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'error_views_path'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Cache Directory Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Leave this BLANK unless you would like to set something other than the default</td>
+</tr>
+<tr>
+<td>application/cache/ directory.  Use a full server path with trailing slash.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'cache_path'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Cache Include Query String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Whether to take the URL query string into consideration when generating</td>
+</tr>
+<tr>
+<td>output cache files. Valid options are:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>FALSE      = Disabled</td>
+</tr>
+<tr>
+<td>TRUE       = Enabled, take all query parameters into account.</td>
+</tr>
+<tr>
+<td>Please be aware that this may result in numerous cache</td>
+</tr>
+<tr>
+<td>files generated for the same page over and over again.</td>
+</tr>
+<tr>
+<td>array('q') = Enabled, but only take into account the specified list</td>
+</tr>
+<tr>
+<td>of query parameters.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'cache_query_string'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Encryption Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If you use the Encryption class, you must set an encryption key.</td>
+</tr>
+<tr>
+<td>See the user guide for more info.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>https://codeigniter.com/user_guide/libraries/encryption.html</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'encryption_key'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Session Variables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sess_driver'</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The storage driver to use: files, database, redis, memcached</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sess_cookie_name'</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The session cookie name, must contain only [0-9a-z_-] characters</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sess_expiration'</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The number of SECONDS you want the session to last.</td>
+</tr>
+<tr>
+<td>Setting to 0 (zero) means expire when the browser is closed.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sess_save_path'</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>The location to save sessions to, driver dependent.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>For the 'files' driver, it's a path to a writable directory.</td>
+</tr>
+<tr>
+<td>WARNING: Only absolute paths are supported!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>For the 'database' driver, it's a table name.</td>
+</tr>
+<tr>
+<td>Please read up the manual for the format with other session drivers.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>IMPORTANT: You are REQUIRED to set a valid save path!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sess_match_ip'</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Whether to match the user's IP address when reading the session data.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>WARNING: If you're using the database driver, don't forget to update</td>
+</tr>
+<tr>
+<td>your session table's PRIMARY KEY when changing this setting.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sess_time_to_update'</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>How many seconds between CI regenerating the session ID.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sess_regenerate_destroy'</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Whether to destroy session data associated with the old session ID</td>
+</tr>
+<tr>
+<td>when auto-regenerating the session ID. When set to FALSE, the data</td>
+</tr>
+<tr>
+<td>will be later deleted by the garbage collector.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Other session cookie settings are shared with the rest of the application,</td>
+</tr>
+<tr>
+<td>except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'sess_driver'</span>] = <span class="hljs-string">'files'</span>;
+$config[<span class="hljs-string">'sess_cookie_name'</span>] = <span class="hljs-string">'ci_session'</span>;
+$config[<span class="hljs-string">'sess_expiration'</span>] = <span class="hljs-number">7200</span>;
+$config[<span class="hljs-string">'sess_save_path'</span>] = FCPATH . <span class="hljs-string">'application/cache/'</span>;
+$config[<span class="hljs-string">'sess_match_ip'</span>] = <span class="hljs-keyword">FALSE</span>;
+$config[<span class="hljs-string">'sess_time_to_update'</span>] = <span class="hljs-number">300</span>;
+$config[<span class="hljs-string">'sess_regenerate_destroy'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Cookie Related Variables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'cookie_prefix'   = Set a cookie name prefix if you need to avoid collisions</td>
+</tr>
+<tr>
+<td>'cookie_domain'   = Set to .your-domain.com for site-wide cookies</td>
+</tr>
+<tr>
+<td>'cookie_path'     = Typically will be a forward slash</td>
+</tr>
+<tr>
+<td>'cookie_secure'   = Cookie will only be set if a secure HTTPS connection exists.</td>
+</tr>
+<tr>
+<td>'cookie_httponly' = Cookie will only be accessible via HTTP(S) (no javascript)</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Note: These settings (with the exception of 'cookie_prefix' and</td>
+</tr>
+<tr>
+<td>'cookie_httponly') will also affect sessions.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'cookie_prefix'</span>]	= <span class="hljs-string">''</span>;
+$config[<span class="hljs-string">'cookie_domain'</span>]	= <span class="hljs-string">''</span>;
+$config[<span class="hljs-string">'cookie_path'</span>]		= <span class="hljs-string">'/'</span>;
+$config[<span class="hljs-string">'cookie_secure'</span>]	= <span class="hljs-keyword">FALSE</span>;
+$config[<span class="hljs-string">'cookie_httponly'</span>] 	= <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Standardize newlines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Determines whether to standardize newline characters in input data,</td>
+</tr>
+<tr>
+<td>meaning to replace \r\n, \r, \n occurrences with the PHP_EOL value.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>WARNING: This feature is DEPRECATED and currently available only</td>
+</tr>
+<tr>
+<td>for backwards compatibility purposes!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'standardize_newlines'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Global XSS Filtering</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Determines whether the XSS filter is always active when GET, POST or</td>
+</tr>
+<tr>
+<td>COOKIE data is encountered</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>WARNING: This feature is DEPRECATED and currently available only</td>
+</tr>
+<tr>
+<td>for backwards compatibility purposes!</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'global_xss_filtering'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Cross Site Request Forgery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enables a CSRF cookie token to be set. When set to TRUE, token will be</td>
+</tr>
+<tr>
+<td>checked on a submitted form. If you are accepting user data, it is strongly</td>
+</tr>
+<tr>
+<td>recommended CSRF protection be enabled.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'csrf_token_name' = The token name</td>
+</tr>
+<tr>
+<td>'csrf_cookie_name' = The cookie name</td>
+</tr>
+<tr>
+<td>'csrf_expire' = The number in seconds the token should expire.</td>
+</tr>
+<tr>
+<td>'csrf_regenerate' = Regenerate token on every submission</td>
+</tr>
+<tr>
+<td>'csrf_exclude_uris' = Array of URIs which ignore CSRF checks</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'csrf_protection'</span>] = <span class="hljs-keyword">FALSE</span>;
+$config[<span class="hljs-string">'csrf_token_name'</span>] = <span class="hljs-string">'csrf_test_name'</span>;
+$config[<span class="hljs-string">'csrf_cookie_name'</span>] = <span class="hljs-string">'csrf_cookie_name'</span>;
+$config[<span class="hljs-string">'csrf_expire'</span>] = <span class="hljs-number">7200</span>;
+$config[<span class="hljs-string">'csrf_regenerate'</span>] = <span class="hljs-keyword">TRUE</span>;
+$config[<span class="hljs-string">'csrf_exclude_uris'</span>] = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Output Compression</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Enables Gzip output compression for faster page loads.  When enabled,</td>
+</tr>
+<tr>
+<td>the output class will test whether your server supports Gzip.</td>
+</tr>
+<tr>
+<td>Even if it does, however, not all browsers support compression</td>
+</tr>
+<tr>
+<td>so enable only if you are reasonably sure your visitors can handle it.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Only used if zlib.output_compression is turned off in your php.ini.</td>
+</tr>
+<tr>
+<td>Please do not use it together with httpd-level output compression.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>VERY IMPORTANT:  If you are getting a blank page when compression is enabled it</td>
+</tr>
+<tr>
+<td>means you are prematurely outputting something to your browser. It could</td>
+</tr>
+<tr>
+<td>even be a line of whitespace at the end of one of your scripts.  For</td>
+</tr>
+<tr>
+<td>compression to work, nothing can be sent before the output buffer is called</td>
+</tr>
+<tr>
+<td>by the output class.  Do not 'echo' any values with compression enabled.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'compress_output'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Master Time Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Options are 'local' or any PHP supported timezone. This preference tells</td>
+</tr>
+<tr>
+<td>the system whether to use your server's local time as the master 'now'</td>
+</tr>
+<tr>
+<td>reference, or convert it to the configured one timezone. See the 'date</td>
+</tr>
+<tr>
+<td>helper' page of the user guide for information regarding date handling.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'time_reference'</span>] = <span class="hljs-string">'local'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Rewrite PHP Short Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If your PHP installation does not have short tag support enabled CI</td>
+</tr>
+<tr>
+<td>can rewrite the tags on-the-fly, enabling you to utilize that syntax</td>
+</tr>
+<tr>
+<td>in your view files.  Options are TRUE or FALSE (boolean)</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Note: You need to have eval() enabled for this to work.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'rewrite_short_tags'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Reverse Proxy IPs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If your server is behind a reverse proxy, you must whitelist the proxy</td>
+</tr>
+<tr>
+<td>IP addresses from which CodeIgniter should trust headers such as</td>
+</tr>
+<tr>
+<td>HTTP_X_FORWARDED_FOR and HTTP_CLIENT_IP in order to properly identify</td>
+</tr>
+<tr>
+<td>the visitor's IP address.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>You can use both an array or a comma-separated list of proxy addresses,</td>
+</tr>
+<tr>
+<td>as well as specifying whole subnets. Here are a few examples:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Comma-separated:	'10.0.1.200,192.168.5.0/24'</td>
+</tr>
+<tr>
+<td>Array:		array('10.0.1.200', '192.168.5.0/24')</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'proxy_ips'</span>] = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

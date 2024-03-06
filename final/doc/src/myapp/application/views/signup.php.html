@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>signup.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\views\\signup.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>signup.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;div class="container mt-5"&gt;
+	&lt;div class="col-4 offset-4 my-5"&gt;
+		&lt;?php if ($this-&gt;session-&gt;flashdata('message')) : ?&gt;
+			&lt;div class="alert alert-danger" role="alert"&gt;
+				&lt;?php echo $this-&gt;session-&gt;flashdata('message'); ?&gt;
+			&lt;/div&gt;
+		&lt;?php endif ?&gt;
+		&lt;?php if ($this-&gt;session-&gt;flashdata('fail verified')) : ?&gt;
+			&lt;div class="alert alert-danger" role="alert"&gt;
+				&lt;?php echo $this-&gt;session-&gt;flashdata('fail verified'); ?&gt;
+			&lt;/div&gt;
+		&lt;?php endif ?&gt;
+
+		&lt;?php if (validation_errors()) : ?&gt;
+			&lt;div class="alert alert-danger" role="alert"&gt;
+				&lt;button type="button" class="close" data-dismiss="alert" aria-label="Close"&gt;
+					&lt;span aria-hidden="true"&gt;&amp;times;&lt;/span&gt;
+				&lt;/button&gt;
+				&lt;?php echo validation_errors(); ?&gt;
+			&lt;/div&gt;
+		&lt;?php endif ?&gt;
+
+		&lt;?php echo form_open(base_url() . 'index.php?/signup/register'); ?&gt;
+		&lt;h2 class="text-center my-5"&gt;Sign up&lt;/h2&gt;
+		&lt;div class="form-group"&gt;
+			&lt;input type="text" class="form-control" placeholder="Username" required="required" name="username"&gt;
+		&lt;/div&gt;
+		&lt;div class="form-group mt-5"&gt;
+			&lt;input type="email" class="form-control" placeholder="Email" required="required" name="email"&gt;
+		&lt;/div&gt;
+		&lt;div class="form-group mt-5"&gt;
+			&lt;input type="password" class="form-control" placeholder="Password" required="required" name="password"&gt;
+		&lt;/div&gt;
+		&lt;div class="form-group mt-5"&gt;
+			&lt;input type="password" class="form-control" placeholder="Confirm your password" required="required" name="confirmed_password"&gt;
+		&lt;/div&gt;
+		
+		&lt;div class="form-group"&gt;
+			&lt;?php echo $error; ?&gt;
+		&lt;/div&gt;
+		&lt;div class="form-group mt-5"&gt;
+			&lt;button type="submit" class="btn btn-primary btn-block"&gt;Sign up&lt;/button&gt;
+		&lt;/div&gt;
+		&lt;div class="clearfix"&gt;
+			&lt;p&gt;Have an account? &lt;a href="&lt;?php echo base_url(); ?&gt;index.php?/login" class="ml-2"&gt;Login&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;?php echo form_close(); ?&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

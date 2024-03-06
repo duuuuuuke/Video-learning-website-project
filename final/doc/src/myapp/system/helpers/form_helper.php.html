@@ -1,0 +1,2467 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>form_helper.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\helpers\\form_helper.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>form_helper.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Form Helpers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_open'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Declaration</p>
+</div>
+<div class="body">
+<p>Creates the opening portion of the form.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the URI segments of the form destination
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>a key/value pair of attributes
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>a key/value pair hidden data
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_open</span><span class="hljs-params">($action = <span class="hljs-string">''</span>, $attributes = array<span class="hljs-params">()</span>, $hidden = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		$CI =&amp; get_instance();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>If no action is provided then set to the current url</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! $action)
+		{
+			$action = $CI-&gt;config-&gt;site_url($CI-&gt;uri-&gt;uri_string());
+		}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>If an action is not a full URL then turn it into one</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">elseif</span> (strpos($action, <span class="hljs-string">'://'</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			$action = $CI-&gt;config-&gt;site_url($action);
+		}
+
+		$attributes = _attributes_to_string($attributes);
+
+		<span class="hljs-keyword">if</span> (stripos($attributes, <span class="hljs-string">'method='</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			$attributes .= <span class="hljs-string">' method="post"'</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (stripos($attributes, <span class="hljs-string">'accept-charset='</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			$attributes .= <span class="hljs-string">' accept-charset="'</span>.strtolower(config_item(<span class="hljs-string">'charset'</span>)).<span class="hljs-string">'"'</span>;
+		}
+
+		$form = <span class="hljs-string">'&lt;form action="'</span>.$action.<span class="hljs-string">'"'</span>.$attributes.<span class="hljs-string">"&gt;\n"</span>;
+
+		<span class="hljs-keyword">if</span> (is_array($hidden))
+		{
+			<span class="hljs-keyword">foreach</span> ($hidden <span class="hljs-keyword">as</span> $name =&gt; $value)
+			{
+				$form .= <span class="hljs-string">'&lt;input type="hidden" name="'</span>.$name.<span class="hljs-string">'" value="'</span>.html_escape($value).<span class="hljs-string">'" /&gt;'</span>.<span class="hljs-string">"\n"</span>;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Add CSRF field if enabled, but leave it out for GET requests and requests to external websites</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($CI-&gt;config-&gt;item(<span class="hljs-string">'csrf_protection'</span>) === <span class="hljs-keyword">TRUE</span> &amp;&amp; strpos($action, $CI-&gt;config-&gt;base_url()) !== <span class="hljs-keyword">FALSE</span> &amp;&amp; ! stripos($form, <span class="hljs-string">'method="get"'</span>))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Prepend/append random-length &quot;white noise&quot; around the CSRF
+token input, as a form of protection against BREACH attacks</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">FALSE</span> !== ($noise = $CI-&gt;security-&gt;get_random_bytes(<span class="hljs-number">1</span>)))
+			{
+				<span class="hljs-keyword">list</span>(, $noise) = unpack(<span class="hljs-string">'c'</span>, $noise);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$noise = mt_rand(<span class="hljs-number">-128</span>, <span class="hljs-number">127</span>);
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Prepend if $noise has a negative value, append if positive, do nothing for zero</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$prepend = $append = <span class="hljs-string">''</span>;
+			<span class="hljs-keyword">if</span> ($noise &lt; <span class="hljs-number">0</span>)
+			{
+				$prepend = str_repeat(<span class="hljs-string">" "</span>, abs($noise));
+			}
+			<span class="hljs-keyword">elseif</span> ($noise &gt; <span class="hljs-number">0</span>)
+			{
+				$append  = str_repeat(<span class="hljs-string">" "</span>, $noise);
+			}
+
+			$form .= sprintf(
+				<span class="hljs-string">'%s&lt;input type="hidden" name="%s" value="%s" /&gt;%s%s'</span>,
+				$prepend,
+				$CI-&gt;security-&gt;get_csrf_token_name(),
+				$CI-&gt;security-&gt;get_csrf_hash(),
+				$append,
+				<span class="hljs-string">"\n"</span>
+			);
+		}
+
+		<span class="hljs-keyword">return</span> $form;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_open_multipart'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Declaration - Multipart type</p>
+</div>
+<div class="body">
+<p>Creates the opening portion of the form, but with &quot;multipart/form-data&quot;.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the URI segments of the form destination
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>a key/value pair of attributes
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>a key/value pair hidden data
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_open_multipart</span><span class="hljs-params">($action = <span class="hljs-string">''</span>, $attributes = array<span class="hljs-params">()</span>, $hidden = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_string($attributes))
+		{
+			$attributes .= <span class="hljs-string">' enctype="multipart/form-data"'</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$attributes[<span class="hljs-string">'enctype'</span>] = <span class="hljs-string">'multipart/form-data'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> form_open($action, $attributes, $hidden);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_hidden'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Hidden Input Field</p>
+</div>
+<div class="body">
+<p>Generates hidden fields. You can pass a simple key/value string or
+an associative array with multiple values.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$name Field name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$value Field value
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$recursing
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_hidden</span><span class="hljs-params">($name, $value = <span class="hljs-string">''</span>, $recursing = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $form;
+
+		<span class="hljs-keyword">if</span> ($recursing === <span class="hljs-keyword">FALSE</span>)
+		{
+			$form = <span class="hljs-string">"\n"</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (is_array($name))
+		{
+			<span class="hljs-keyword">foreach</span> ($name <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				form_hidden($key, $val, <span class="hljs-keyword">TRUE</span>);
+			}
+
+			<span class="hljs-keyword">return</span> $form;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! is_array($value))
+		{
+			$form .= <span class="hljs-string">'&lt;input type="hidden" name="'</span>.$name.<span class="hljs-string">'" value="'</span>.html_escape($value).<span class="hljs-string">"\" /&gt;\n"</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">foreach</span> ($value <span class="hljs-keyword">as</span> $k =&gt; $v)
+			{
+				$k = is_int($k) ? <span class="hljs-string">''</span> : $k;
+				form_hidden($name.<span class="hljs-string">'['</span>.$k.<span class="hljs-string">']'</span>, $v, <span class="hljs-keyword">TRUE</span>);
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $form;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_input'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Text Input Field</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_input</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'text'</span>,
+			<span class="hljs-string">'name'</span> =&gt; is_array($data) ? <span class="hljs-string">''</span> : $data,
+			<span class="hljs-string">'value'</span> =&gt; $value
+		);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;input '</span>._parse_form_attributes($data, $defaults)._attributes_to_string($extra).<span class="hljs-string">" /&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_password'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Password Field</p>
+</div>
+<div class="body">
+<p>Identical to the input function but adds the &quot;password&quot; type</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_password</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		is_array($data) <span class="hljs-keyword">OR</span> $data = <span class="hljs-keyword">array</span>(<span class="hljs-string">'name'</span> =&gt; $data);
+		$data[<span class="hljs-string">'type'</span>] = <span class="hljs-string">'password'</span>;
+		<span class="hljs-keyword">return</span> form_input($data, $value, $extra);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_upload'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Upload Field</p>
+</div>
+<div class="body">
+<p>Identical to the input function but adds the &quot;file&quot; type</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_upload</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(<span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'file'</span>, <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">''</span>);
+		is_array($data) <span class="hljs-keyword">OR</span> $data = <span class="hljs-keyword">array</span>(<span class="hljs-string">'name'</span> =&gt; $data);
+		$data[<span class="hljs-string">'type'</span>] = <span class="hljs-string">'file'</span>;
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;input '</span>._parse_form_attributes($data, $defaults)._attributes_to_string($extra).<span class="hljs-string">" /&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_textarea'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Textarea field</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$value
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$extra
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_textarea</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'name'</span> =&gt; is_array($data) ? <span class="hljs-string">''</span> : $data,
+			<span class="hljs-string">'cols'</span> =&gt; <span class="hljs-string">'40'</span>,
+			<span class="hljs-string">'rows'</span> =&gt; <span class="hljs-string">'10'</span>
+		);
+
+		<span class="hljs-keyword">if</span> ( ! is_array($data) <span class="hljs-keyword">OR</span> ! <span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'value'</span>]))
+		{
+			$val = $value;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$val = $data[<span class="hljs-string">'value'</span>];
+			<span class="hljs-keyword">unset</span>($data[<span class="hljs-string">'value'</span>]); <span class="hljs-comment">// textareas don't use the value attribute</span>
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;textarea '</span>._parse_form_attributes($data, $defaults)._attributes_to_string($extra).<span class="hljs-string">'&gt;'</span>
+			.html_escape($val)
+			.<span class="hljs-string">"&lt;/textarea&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_multiselect'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Multi-select menu</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_multiselect</span><span class="hljs-params">($name = <span class="hljs-string">''</span>, $options = array<span class="hljs-params">()</span>, $selected = array<span class="hljs-params">()</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$extra = _attributes_to_string($extra);
+		<span class="hljs-keyword">if</span> (stripos($extra, <span class="hljs-string">'multiple'</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			$extra .= <span class="hljs-string">' multiple="multiple"'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> form_dropdown($name, $options, $selected, $extra);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_dropdown'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Drop-down Menu</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$options
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$selected
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$extra
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_dropdown</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $options = array<span class="hljs-params">()</span>, $selected = array<span class="hljs-params">()</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>();
+
+		<span class="hljs-keyword">if</span> (is_array($data))
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'selected'</span>]))
+			{
+				$selected = $data[<span class="hljs-string">'selected'</span>];
+				<span class="hljs-keyword">unset</span>($data[<span class="hljs-string">'selected'</span>]); <span class="hljs-comment">// select tags don't have a selected attribute</span>
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'options'</span>]))
+			{
+				$options = $data[<span class="hljs-string">'options'</span>];
+				<span class="hljs-keyword">unset</span>($data[<span class="hljs-string">'options'</span>]); <span class="hljs-comment">// select tags don't use an options attribute</span>
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$defaults = <span class="hljs-keyword">array</span>(<span class="hljs-string">'name'</span> =&gt; $data);
+		}
+
+		is_array($selected) <span class="hljs-keyword">OR</span> $selected = <span class="hljs-keyword">array</span>($selected);
+		is_array($options) <span class="hljs-keyword">OR</span> $options = <span class="hljs-keyword">array</span>($options);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>If no selected state was submitted we will attempt to set it automatically</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($selected))
+		{
+			<span class="hljs-keyword">if</span> (is_array($data))
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'name'</span>], $_POST[$data[<span class="hljs-string">'name'</span>]]))
+				{
+					$selected = <span class="hljs-keyword">array</span>($_POST[$data[<span class="hljs-string">'name'</span>]]);
+				}
+			}
+			<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">isset</span>($_POST[$data]))
+			{
+				$selected = <span class="hljs-keyword">array</span>($_POST[$data]);
+			}
+		}
+
+		$extra = _attributes_to_string($extra);
+
+		$multiple = (count($selected) &gt; <span class="hljs-number">1</span> &amp;&amp; stripos($extra, <span class="hljs-string">'multiple'</span>) === <span class="hljs-keyword">FALSE</span>) ? <span class="hljs-string">' multiple="multiple"'</span> : <span class="hljs-string">''</span>;
+
+		$form = <span class="hljs-string">'&lt;select '</span>.rtrim(_parse_form_attributes($data, $defaults)).$extra.$multiple.<span class="hljs-string">"&gt;\n"</span>;
+
+		<span class="hljs-keyword">foreach</span> ($options <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			$key = (string) $key;
+
+			<span class="hljs-keyword">if</span> (is_array($val))
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($val))
+				{
+					<span class="hljs-keyword">continue</span>;
+				}
+
+				$form .= <span class="hljs-string">'&lt;optgroup label="'</span>.$key.<span class="hljs-string">"\"&gt;\n"</span>;
+
+				<span class="hljs-keyword">foreach</span> ($val <span class="hljs-keyword">as</span> $optgroup_key =&gt; $optgroup_val)
+				{
+					$sel = in_array($optgroup_key, $selected) ? <span class="hljs-string">' selected="selected"'</span> : <span class="hljs-string">''</span>;
+					$form .= <span class="hljs-string">'&lt;option value="'</span>.html_escape($optgroup_key).<span class="hljs-string">'"'</span>.$sel.<span class="hljs-string">'&gt;'</span>
+						.(string) $optgroup_val.<span class="hljs-string">"&lt;/option&gt;\n"</span>;
+				}
+
+				$form .= <span class="hljs-string">"&lt;/optgroup&gt;\n"</span>;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$form .= <span class="hljs-string">'&lt;option value="'</span>.html_escape($key).<span class="hljs-string">'"'</span>
+					.(in_array($key, $selected) ? <span class="hljs-string">' selected="selected"'</span> : <span class="hljs-string">''</span>).<span class="hljs-string">'&gt;'</span>
+					.(string) $val.<span class="hljs-string">"&lt;/option&gt;\n"</span>;
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $form.<span class="hljs-string">"&lt;/select&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_checkbox'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Checkbox Field</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_checkbox</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $checked = FALSE, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(<span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'checkbox'</span>, <span class="hljs-string">'name'</span> =&gt; ( ! is_array($data) ? $data : <span class="hljs-string">''</span>), <span class="hljs-string">'value'</span> =&gt; $value);
+
+		<span class="hljs-keyword">if</span> (is_array($data) &amp;&amp; array_key_exists(<span class="hljs-string">'checked'</span>, $data))
+		{
+			$checked = $data[<span class="hljs-string">'checked'</span>];
+
+			<span class="hljs-keyword">if</span> ($checked == <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">unset</span>($data[<span class="hljs-string">'checked'</span>]);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$data[<span class="hljs-string">'checked'</span>] = <span class="hljs-string">'checked'</span>;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($checked == <span class="hljs-keyword">TRUE</span>)
+		{
+			$defaults[<span class="hljs-string">'checked'</span>] = <span class="hljs-string">'checked'</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">unset</span>($defaults[<span class="hljs-string">'checked'</span>]);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;input '</span>._parse_form_attributes($data, $defaults)._attributes_to_string($extra).<span class="hljs-string">" /&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_radio'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Radio Button</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_radio</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $checked = FALSE, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		is_array($data) <span class="hljs-keyword">OR</span> $data = <span class="hljs-keyword">array</span>(<span class="hljs-string">'name'</span> =&gt; $data);
+		$data[<span class="hljs-string">'type'</span>] = <span class="hljs-string">'radio'</span>;
+
+		<span class="hljs-keyword">return</span> form_checkbox($data, $value, $checked, $extra);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_submit'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Submit Button</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_submit</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'submit'</span>,
+			<span class="hljs-string">'name'</span> =&gt; is_array($data) ? <span class="hljs-string">''</span> : $data,
+			<span class="hljs-string">'value'</span> =&gt; $value
+		);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;input '</span>._parse_form_attributes($data, $defaults)._attributes_to_string($extra).<span class="hljs-string">" /&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_reset'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Reset Button</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_reset</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $value = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'reset'</span>,
+			<span class="hljs-string">'name'</span> =&gt; is_array($data) ? <span class="hljs-string">''</span> : $data,
+			<span class="hljs-string">'value'</span> =&gt; $value
+		);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;input '</span>._parse_form_attributes($data, $defaults)._attributes_to_string($extra).<span class="hljs-string">" /&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_button'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Button</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_button</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $content = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'name'</span> =&gt; is_array($data) ? <span class="hljs-string">''</span> : $data,
+			<span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'button'</span>
+		);
+
+		<span class="hljs-keyword">if</span> (is_array($data) &amp;&amp; <span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'content'</span>]))
+		{
+			$content = $data[<span class="hljs-string">'content'</span>];
+			<span class="hljs-keyword">unset</span>($data[<span class="hljs-string">'content'</span>]); <span class="hljs-comment">// content is not an attribute</span>
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;button '</span>._parse_form_attributes($data, $defaults)._attributes_to_string($extra).<span class="hljs-string">'&gt;'</span>
+			.$content
+			.<span class="hljs-string">"&lt;/button&gt;\n"</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_label'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Label Tag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The text to appear onscreen
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The id the label applies to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>Additional attributes
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_label</span><span class="hljs-params">($label_text = <span class="hljs-string">''</span>, $id = <span class="hljs-string">''</span>, $attributes = array<span class="hljs-params">()</span>)</span>
+	</span>{
+
+		$label = <span class="hljs-string">'&lt;label'</span>;
+
+		<span class="hljs-keyword">if</span> ($id !== <span class="hljs-string">''</span>)
+		{
+			$label .= <span class="hljs-string">' for="'</span>.$id.<span class="hljs-string">'"'</span>;
+		}
+
+		$label .= _attributes_to_string($attributes);
+
+		<span class="hljs-keyword">return</span> $label.<span class="hljs-string">'&gt;'</span>.$label_text.<span class="hljs-string">'&lt;/label&gt;'</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_fieldset'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fieldset Tag</p>
+</div>
+<div class="body">
+<p>Used to produce <fieldset><legend>text</legend>.  To close fieldset
+use form_fieldset_close()</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The legend text
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>Additional attributes
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_fieldset</span><span class="hljs-params">($legend_text = <span class="hljs-string">''</span>, $attributes = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		$fieldset = <span class="hljs-string">'&lt;fieldset'</span>._attributes_to_string($attributes).<span class="hljs-string">"&gt;\n"</span>;
+		<span class="hljs-keyword">if</span> ($legend_text !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> $fieldset.<span class="hljs-string">'&lt;legend&gt;'</span>.$legend_text.<span class="hljs-string">"&lt;/legend&gt;\n"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $fieldset;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_fieldset_close'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fieldset Close Tag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_fieldset_close</span><span class="hljs-params">($extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;/fieldset&gt;'</span>.$extra;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_close'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Close Tag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_close</span><span class="hljs-params">($extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;/form&gt;'</span>.$extra;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_prep'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Prep</p>
+</div>
+<div class="body">
+<p>Formats text so that it can be safely placed in a form field in the event it has HTML tags.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$str Value to escape
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string|string[] Escaped values
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_prep</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> html_escape($str, <span class="hljs-keyword">TRUE</span>);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'set_value'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Value</p>
+</div>
+<div class="body">
+<p>Grabs a value from the POST array for the specified field so you can
+re-populate an input field or textarea. If Form Validation
+is active it retrieves the info from the validation class</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$field Field name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$default Default value
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$html_escape Whether to escape HTML special characters or not
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_value</span><span class="hljs-params">($field, $default = <span class="hljs-string">''</span>, $html_escape = TRUE)</span>
+	</span>{
+		$CI =&amp; get_instance();
+
+		$value = (<span class="hljs-keyword">isset</span>($CI-&gt;form_validation) &amp;&amp; is_object($CI-&gt;form_validation) &amp;&amp; $CI-&gt;form_validation-&gt;has_rule($field))
+			? $CI-&gt;form_validation-&gt;set_value($field, $default)
+			: $CI-&gt;input-&gt;post($field, <span class="hljs-keyword">FALSE</span>);
+
+		<span class="hljs-keyword">isset</span>($value) <span class="hljs-keyword">OR</span> $value = $default;
+		<span class="hljs-keyword">return</span> ($html_escape) ? html_escape($value) : $value;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'set_select'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Select</p>
+</div>
+<div class="body">
+<p>Let's you set the selected value of a <select> menu via data in the POST array.
+If Form Validation is active it retrieves the info from the validation class</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_select</span><span class="hljs-params">($field, $value = <span class="hljs-string">''</span>, $default = FALSE)</span>
+	</span>{
+		$CI =&amp; get_instance();
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($CI-&gt;form_validation) &amp;&amp; is_object($CI-&gt;form_validation) &amp;&amp; $CI-&gt;form_validation-&gt;has_rule($field))
+		{
+			<span class="hljs-keyword">return</span> $CI-&gt;form_validation-&gt;set_select($field, $value, $default);
+		}
+		<span class="hljs-keyword">elseif</span> (($input = $CI-&gt;input-&gt;post($field, <span class="hljs-keyword">FALSE</span>)) === <span class="hljs-keyword">NULL</span>)
+		{
+			<span class="hljs-keyword">return</span> ($default === <span class="hljs-keyword">TRUE</span>) ? <span class="hljs-string">' selected="selected"'</span> : <span class="hljs-string">''</span>;
+		}
+
+		$value = (string) $value;
+		<span class="hljs-keyword">if</span> (is_array($input))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<p>Note: in_array('', array(0)) returns TRUE, do not use it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">foreach</span> ($input <span class="hljs-keyword">as</span> &amp;$v)
+			{
+				<span class="hljs-keyword">if</span> ($value === $v)
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-string">' selected="selected"'</span>;
+				}
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">return</span> ($input === $value) ? <span class="hljs-string">' selected="selected"'</span> : <span class="hljs-string">''</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'set_checkbox'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Checkbox</p>
+</div>
+<div class="body">
+<p>Let's you set the selected value of a checkbox via the value in the POST array.
+If Form Validation is active it retrieves the info from the validation class</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_checkbox</span><span class="hljs-params">($field, $value = <span class="hljs-string">''</span>, $default = FALSE)</span>
+	</span>{
+		$CI =&amp; get_instance();
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($CI-&gt;form_validation) &amp;&amp; is_object($CI-&gt;form_validation) &amp;&amp; $CI-&gt;form_validation-&gt;has_rule($field))
+		{
+			<span class="hljs-keyword">return</span> $CI-&gt;form_validation-&gt;set_checkbox($field, $value, $default);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<p>Form inputs are always strings ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$value = (string) $value;
+		$input = $CI-&gt;input-&gt;post($field, <span class="hljs-keyword">FALSE</span>);
+
+		<span class="hljs-keyword">if</span> (is_array($input))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<p>Note: in_array('', array(0)) returns TRUE, do not use it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">foreach</span> ($input <span class="hljs-keyword">as</span> &amp;$v)
+			{
+				<span class="hljs-keyword">if</span> ($value === $v)
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-string">' checked="checked"'</span>;
+				}
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<p>Unchecked checkbox and radio inputs are not even submitted by browsers ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($CI-&gt;input-&gt;method() === <span class="hljs-string">'post'</span>)
+		{
+			<span class="hljs-keyword">return</span> ($input === $value) ? <span class="hljs-string">' checked="checked"'</span> : <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">return</span> ($default === <span class="hljs-keyword">TRUE</span>) ? <span class="hljs-string">' checked="checked"'</span> : <span class="hljs-string">''</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'set_radio'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Radio</p>
+</div>
+<div class="body">
+<p>Let's you set the selected value of a radio field via info in the POST array.
+If Form Validation is active it retrieves the info from the validation class</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$field
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$value
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$default
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_radio</span><span class="hljs-params">($field, $value = <span class="hljs-string">''</span>, $default = FALSE)</span>
+	</span>{
+		$CI =&amp; get_instance();
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($CI-&gt;form_validation) &amp;&amp; is_object($CI-&gt;form_validation) &amp;&amp; $CI-&gt;form_validation-&gt;has_rule($field))
+		{
+			<span class="hljs-keyword">return</span> $CI-&gt;form_validation-&gt;set_radio($field, $value, $default);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<p>Form inputs are always strings ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$value = (string) $value;
+		$input = $CI-&gt;input-&gt;post($field, <span class="hljs-keyword">FALSE</span>);
+
+		<span class="hljs-keyword">if</span> (is_array($input))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<p>Note: in_array('', array(0)) returns TRUE, do not use it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">foreach</span> ($input <span class="hljs-keyword">as</span> &amp;$v)
+			{
+				<span class="hljs-keyword">if</span> ($value === $v)
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-string">' checked="checked"'</span>;
+				}
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<p>Unchecked checkbox and radio inputs are not even submitted by browsers ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($CI-&gt;input-&gt;method() === <span class="hljs-string">'post'</span>)
+		{
+			<span class="hljs-keyword">return</span> ($input === $value) ? <span class="hljs-string">' checked="checked"'</span> : <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">return</span> ($default === <span class="hljs-keyword">TRUE</span>) ? <span class="hljs-string">' checked="checked"'</span> : <span class="hljs-string">''</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'form_error'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Form Error</p>
+</div>
+<div class="body">
+<p>Returns the error for a specific form field. This is a helper for the
+form validation class.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">form_error</span><span class="hljs-params">($field = <span class="hljs-string">''</span>, $prefix = <span class="hljs-string">''</span>, $suffix = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">FALSE</span> === ($OBJ =&amp; _get_validation_object()))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $OBJ-&gt;error($field, $prefix, $suffix);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'validation_errors'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validation Error String</p>
+</div>
+<div class="body">
+<p>Returns all the errors associated with a form submission. This is a helper
+function for the form validation class.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validation_errors</span><span class="hljs-params">($prefix = <span class="hljs-string">''</span>, $suffix = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">FALSE</span> === ($OBJ =&amp; _get_validation_object()))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $OBJ-&gt;error_string($prefix, $suffix);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_parse_form_attributes'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Parse the form attributes</p>
+</div>
+<div class="body">
+<p>Helper function used by some of the form helpers</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$attributes List of attributes
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$default Default values
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_parse_form_attributes</span><span class="hljs-params">($attributes, $default)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_array($attributes))
+		{
+			<span class="hljs-keyword">foreach</span> ($default <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($attributes[$key]))
+				{
+					$default[$key] = $attributes[$key];
+					<span class="hljs-keyword">unset</span>($attributes[$key]);
+				}
+			}
+
+			<span class="hljs-keyword">if</span> (count($attributes) &gt; <span class="hljs-number">0</span>)
+			{
+				$default = array_merge($default, $attributes);
+			}
+		}
+
+		$att = <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">foreach</span> ($default <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			<span class="hljs-keyword">if</span> ($key === <span class="hljs-string">'value'</span>)
+			{
+				$val = html_escape($val);
+			}
+			<span class="hljs-keyword">elseif</span> ($key === <span class="hljs-string">'name'</span> &amp;&amp; ! strlen($default[<span class="hljs-string">'name'</span>]))
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			$att .= $key.<span class="hljs-string">'="'</span>.$val.<span class="hljs-string">'" '</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $att;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_attributes_to_string'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Attributes To String</p>
+</div>
+<div class="body">
+<p>Helper function used by some of the form helpers</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_attributes_to_string</span><span class="hljs-params">($attributes)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($attributes))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (is_object($attributes))
+		{
+			$attributes = (<span class="hljs-keyword">array</span>) $attributes;
+		}
+
+		<span class="hljs-keyword">if</span> (is_array($attributes))
+		{
+			$atts = <span class="hljs-string">''</span>;
+
+			<span class="hljs-keyword">foreach</span> ($attributes <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				$atts .= <span class="hljs-string">' '</span>.$key.<span class="hljs-string">'="'</span>.$val.<span class="hljs-string">'"'</span>;
+			}
+
+			<span class="hljs-keyword">return</span> $atts;
+		}
+
+		<span class="hljs-keyword">if</span> (is_string($attributes))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.$attributes;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_get_validation_object'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validation Object</p>
+</div>
+<div class="body">
+<p>Determines what the form validation class was instantiated as, fetches
+the object and returns it.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">_get_validation_object</span><span class="hljs-params">()</span>
+	</span>{
+		$CI =&amp; get_instance();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<p>We set this as a variable since we're returning by reference.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$return = <span class="hljs-keyword">FALSE</span>;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">FALSE</span> !== ($object = $CI-&gt;load-&gt;is_loaded(<span class="hljs-string">'Form_validation'</span>)))
+		{
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($CI-&gt;$object) <span class="hljs-keyword">OR</span> ! is_object($CI-&gt;$object))
+			{
+				<span class="hljs-keyword">return</span> $return;
+			}
+
+			<span class="hljs-keyword">return</span> $CI-&gt;$object;
+		}
+
+		<span class="hljs-keyword">return</span> $return;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

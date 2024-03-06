@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Encryption.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Encryption.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Encryption.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Encryption Class</p>
+</div>
+<div class="body">
+<p>Provides two-way keyed encryption via PHP's MCrypt and/or OpenSSL extensions.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Encryption</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Encryption cipher</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_cipher = <span class="hljs-string">'aes-128'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Cipher mode</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_mode = <span class="hljs-string">'cbc'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Cipher handle</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_handle;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Encryption key</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_key;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>PHP extension to be used</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_driver;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of usable drivers (PHP extensions)</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_drivers = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of available modes</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_modes = <span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'mcrypt'</span> =&gt; <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'cbc'</span> =&gt; <span class="hljs-string">'cbc'</span>,
+			<span class="hljs-string">'ecb'</span> =&gt; <span class="hljs-string">'ecb'</span>,
+			<span class="hljs-string">'ofb'</span> =&gt; <span class="hljs-string">'nofb'</span>,
+			<span class="hljs-string">'ofb8'</span> =&gt; <span class="hljs-string">'ofb'</span>,
+			<span class="hljs-string">'cfb'</span> =&gt; <span class="hljs-string">'ncfb'</span>,
+			<span class="hljs-string">'cfb8'</span> =&gt; <span class="hljs-string">'cfb'</span>,
+			<span class="hljs-string">'ctr'</span> =&gt; <span class="hljs-string">'ctr'</span>,
+			<span class="hljs-string">'stream'</span> =&gt; <span class="hljs-string">'stream'</span>
+		),
+		<span class="hljs-string">'openssl'</span> =&gt; <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'cbc'</span> =&gt; <span class="hljs-string">'cbc'</span>,
+			<span class="hljs-string">'ecb'</span> =&gt; <span class="hljs-string">'ecb'</span>,
+			<span class="hljs-string">'ofb'</span> =&gt; <span class="hljs-string">'ofb'</span>,
+			<span class="hljs-string">'cfb'</span> =&gt; <span class="hljs-string">'cfb'</span>,
+			<span class="hljs-string">'cfb8'</span> =&gt; <span class="hljs-string">'cfb8'</span>,
+			<span class="hljs-string">'ctr'</span> =&gt; <span class="hljs-string">'ctr'</span>,
+			<span class="hljs-string">'stream'</span> =&gt; <span class="hljs-string">''</span>,
+			<span class="hljs-string">'xts'</span> =&gt; <span class="hljs-string">'xts'</span>
+		)
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of supported HMAC algorithms</p>
+</div>
+<div class="body">
+<p>name =&gt; digest size pairs</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_digests = <span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'sha224'</span> =&gt; <span class="hljs-number">28</span>,
+		<span class="hljs-string">'sha256'</span> =&gt; <span class="hljs-number">32</span>,
+		<span class="hljs-string">'sha384'</span> =&gt; <span class="hljs-number">48</span>,
+		<span class="hljs-string">'sha512'</span> =&gt; <span class="hljs-number">64</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>mbstring.func_overload flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> $func_overload;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Configuration parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(array $params = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_drivers = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'mcrypt'</span>  =&gt; defined(<span class="hljs-string">'MCRYPT_DEV_URANDOM'</span>),
+			<span class="hljs-string">'openssl'</span> =&gt; extension_loaded(<span class="hljs-string">'openssl'</span>)
+		);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;_drivers[<span class="hljs-string">'mcrypt'</span>] &amp;&amp; ! <span class="hljs-keyword">$this</span>-&gt;_drivers[<span class="hljs-string">'openssl'</span>])
+		{
+			show_error(<span class="hljs-string">'Encryption: Unable to find an available encryption driver.'</span>);
+		}
+
+		<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">self</span>::$func_overload) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">self</span>::$func_overload = (extension_loaded(<span class="hljs-string">'mbstring'</span>) &amp;&amp; ini_get(<span class="hljs-string">'mbstring.func_overload'</span>));
+		<span class="hljs-keyword">$this</span>-&gt;initialize($params);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_key) &amp;&amp; <span class="hljs-keyword">self</span>::strlen($key = config_item(<span class="hljs-string">'encryption_key'</span>)) &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_key = $key;
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Encryption Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Configuration parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Encryption
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">(array $params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'driver'</span>]))
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_drivers[$params[<span class="hljs-string">'driver'</span>]]))
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_drivers[$params[<span class="hljs-string">'driver'</span>]])
+				{
+					<span class="hljs-keyword">$this</span>-&gt;_driver = $params[<span class="hljs-string">'driver'</span>];
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">"Encryption: Driver '"</span>.$params[<span class="hljs-string">'driver'</span>].<span class="hljs-string">"' is not available."</span>);
+				}
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">"Encryption: Unknown driver '"</span>.$params[<span class="hljs-string">'driver'</span>].<span class="hljs-string">"' cannot be configured."</span>);
+			}
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;_driver))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_driver = (<span class="hljs-keyword">$this</span>-&gt;_drivers[<span class="hljs-string">'openssl'</span>] === <span class="hljs-keyword">TRUE</span>)
+				? <span class="hljs-string">'openssl'</span>
+				: <span class="hljs-string">'mcrypt'</span>;
+
+			log_message(<span class="hljs-string">'debug'</span>, <span class="hljs-string">"Encryption: Auto-configured driver '"</span>.<span class="hljs-keyword">$this</span>-&gt;_driver.<span class="hljs-string">"'."</span>);
+		}
+
+		<span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'cipher'</span>]) &amp;&amp; $params[<span class="hljs-string">'cipher'</span>] = <span class="hljs-keyword">$this</span>-&gt;_cipher;
+		<span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'key'</span>]) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;_key = $params[<span class="hljs-string">'key'</span>];
+		<span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'_'</span>.<span class="hljs-keyword">$this</span>-&gt;_driver.<span class="hljs-string">'_initialize'</span>}($params);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize MCrypt</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Configuration parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mcrypt_initialize</span><span class="hljs-params">($params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'cipher'</span>]))
+		{
+			$params[<span class="hljs-string">'cipher'</span>] = strtolower($params[<span class="hljs-string">'cipher'</span>]);
+			<span class="hljs-keyword">$this</span>-&gt;_cipher_alias($params[<span class="hljs-string">'cipher'</span>]);
+
+			<span class="hljs-keyword">if</span> ( ! in_array($params[<span class="hljs-string">'cipher'</span>], mcrypt_list_algorithms(), <span class="hljs-keyword">TRUE</span>))
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Encryption: MCrypt cipher '</span>.strtoupper($params[<span class="hljs-string">'cipher'</span>]).<span class="hljs-string">' is not available.'</span>);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_cipher = $params[<span class="hljs-string">'cipher'</span>];
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'mode'</span>]))
+		{
+			$params[<span class="hljs-string">'mode'</span>] = strtolower($params[<span class="hljs-string">'mode'</span>]);
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_modes[<span class="hljs-string">'mcrypt'</span>][$params[<span class="hljs-string">'mode'</span>]]))
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Encryption: MCrypt mode '</span>.strtoupper($params[<span class="hljs-string">'mode'</span>]).<span class="hljs-string">' is not available.'</span>);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_mode = <span class="hljs-keyword">$this</span>-&gt;_modes[<span class="hljs-string">'mcrypt'</span>][$params[<span class="hljs-string">'mode'</span>]];
+			}
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_cipher, <span class="hljs-keyword">$this</span>-&gt;_mode))
+		{
+			<span class="hljs-keyword">if</span> (is_resource(<span class="hljs-keyword">$this</span>-&gt;_handle)
+				&amp;&amp; (strtolower(mcrypt_enc_get_algorithms_name(<span class="hljs-keyword">$this</span>-&gt;_handle)) !== <span class="hljs-keyword">$this</span>-&gt;_cipher
+					<span class="hljs-keyword">OR</span> strtolower(mcrypt_enc_get_modes_name(<span class="hljs-keyword">$this</span>-&gt;_handle)) !== <span class="hljs-keyword">$this</span>-&gt;_mode)
+			)
+			{
+				mcrypt_module_close(<span class="hljs-keyword">$this</span>-&gt;_handle);
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_handle = mcrypt_module_open(<span class="hljs-keyword">$this</span>-&gt;_cipher, <span class="hljs-string">''</span>, <span class="hljs-keyword">$this</span>-&gt;_mode, <span class="hljs-string">''</span>))
+			{
+				log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Encryption: MCrypt cipher '</span>.strtoupper(<span class="hljs-keyword">$this</span>-&gt;_cipher).<span class="hljs-string">' initialized in '</span>.strtoupper(<span class="hljs-keyword">$this</span>-&gt;_mode).<span class="hljs-string">' mode.'</span>);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Encryption: Unable to initialize MCrypt with cipher '</span>.strtoupper(<span class="hljs-keyword">$this</span>-&gt;_cipher).<span class="hljs-string">' in '</span>.strtoupper(<span class="hljs-keyword">$this</span>-&gt;_mode).<span class="hljs-string">' mode.'</span>);
+			}
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize OpenSSL</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Configuration parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_openssl_initialize</span><span class="hljs-params">($params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'cipher'</span>]))
+		{
+			$params[<span class="hljs-string">'cipher'</span>] = strtolower($params[<span class="hljs-string">'cipher'</span>]);
+			<span class="hljs-keyword">$this</span>-&gt;_cipher_alias($params[<span class="hljs-string">'cipher'</span>]);
+			<span class="hljs-keyword">$this</span>-&gt;_cipher = $params[<span class="hljs-string">'cipher'</span>];
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'mode'</span>]))
+		{
+			$params[<span class="hljs-string">'mode'</span>] = strtolower($params[<span class="hljs-string">'mode'</span>]);
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_modes[<span class="hljs-string">'openssl'</span>][$params[<span class="hljs-string">'mode'</span>]]))
+			{
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Encryption: OpenSSL mode '</span>.strtoupper($params[<span class="hljs-string">'mode'</span>]).<span class="hljs-string">' is not available.'</span>);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_mode = <span class="hljs-keyword">$this</span>-&gt;_modes[<span class="hljs-string">'openssl'</span>][$params[<span class="hljs-string">'mode'</span>]];
+			}
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_cipher, <span class="hljs-keyword">$this</span>-&gt;_mode))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>This is mostly for the stream mode, which doesn't get suffixed in OpenSSL</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$handle = <span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;_mode)
+				? <span class="hljs-keyword">$this</span>-&gt;_cipher
+				: <span class="hljs-keyword">$this</span>-&gt;_cipher.<span class="hljs-string">'-'</span>.<span class="hljs-keyword">$this</span>-&gt;_mode;
+
+			<span class="hljs-keyword">if</span> ( ! in_array($handle, openssl_get_cipher_methods(), <span class="hljs-keyword">TRUE</span>))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_handle = <span class="hljs-keyword">NULL</span>;
+				log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Encryption: Unable to initialize OpenSSL with method '</span>.strtoupper($handle).<span class="hljs-string">'.'</span>);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_handle = $handle;
+				log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Encryption: OpenSSL initialized with method '</span>.strtoupper($handle).<span class="hljs-string">'.'</span>);
+			}
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Create a random key</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$length Output length
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create_key</span><span class="hljs-params">($length)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'random_bytes'</span>))
+		{
+			<span class="hljs-keyword">try</span>
+			{
+				<span class="hljs-keyword">return</span> random_bytes((int) $length);
+			}
+			<span class="hljs-keyword">catch</span> (<span class="hljs-keyword">Exception</span> $e)
+			{
+				log_message(<span class="hljs-string">'error'</span>, $e-&gt;getMessage());
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+		}
+		<span class="hljs-keyword">elseif</span> (defined(<span class="hljs-string">'MCRYPT_DEV_URANDOM'</span>))
+		{
+			<span class="hljs-keyword">return</span> mcrypt_create_iv($length, MCRYPT_DEV_URANDOM);
+		}
+
+		$is_secure = <span class="hljs-keyword">NULL</span>;
+		$key = openssl_random_pseudo_bytes($length, $is_secure);
+		<span class="hljs-keyword">return</span> ($is_secure === <span class="hljs-keyword">TRUE</span>)
+			? $key
+			: <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Encrypt</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$data Input data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Input parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">encrypt</span><span class="hljs-params">($data, array $params = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (($params = <span class="hljs-keyword">$this</span>-&gt;_get_params($params)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'key'</span>]) <span class="hljs-keyword">OR</span> $params[<span class="hljs-string">'key'</span>] = <span class="hljs-keyword">$this</span>-&gt;hkdf(<span class="hljs-keyword">$this</span>-&gt;_key, <span class="hljs-string">'sha512'</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">self</span>::strlen(<span class="hljs-keyword">$this</span>-&gt;_key), <span class="hljs-string">'encryption'</span>);
+
+		<span class="hljs-keyword">if</span> (($data = <span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'_'</span>.<span class="hljs-keyword">$this</span>-&gt;_driver.<span class="hljs-string">'_encrypt'</span>}($data, $params)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$params[<span class="hljs-string">'base64'</span>] &amp;&amp; $data = base64_encode($data);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'hmac_digest'</span>]))
+		{
+			<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'hmac_key'</span>]) <span class="hljs-keyword">OR</span> $params[<span class="hljs-string">'hmac_key'</span>] = <span class="hljs-keyword">$this</span>-&gt;hkdf(<span class="hljs-keyword">$this</span>-&gt;_key, <span class="hljs-string">'sha512'</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-string">'authentication'</span>);
+			<span class="hljs-keyword">return</span> hash_hmac($params[<span class="hljs-string">'hmac_digest'</span>], $data, $params[<span class="hljs-string">'hmac_key'</span>], ! $params[<span class="hljs-string">'base64'</span>]).$data;
+		}
+
+		<span class="hljs-keyword">return</span> $data;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Encrypt via MCrypt</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$data Input data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Input parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mcrypt_encrypt</span><span class="hljs-params">($data, $params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_resource($params[<span class="hljs-string">'handle'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>The greater-than-1 comparison is mostly a work-around for a bug,
+where 1 is returned for ARCFour instead of 0.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$iv = (($iv_size = mcrypt_enc_get_iv_size($params[<span class="hljs-string">'handle'</span>])) &gt; <span class="hljs-number">1</span>)
+			? <span class="hljs-keyword">$this</span>-&gt;create_key($iv_size)
+			: <span class="hljs-keyword">NULL</span>;
+
+		<span class="hljs-keyword">if</span> (mcrypt_generic_init($params[<span class="hljs-string">'handle'</span>], $params[<span class="hljs-string">'key'</span>], $iv) &lt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">if</span> ($params[<span class="hljs-string">'handle'</span>] !== <span class="hljs-keyword">$this</span>-&gt;_handle)
+			{
+				mcrypt_module_close($params[<span class="hljs-string">'handle'</span>]);
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<p>Use PKCS#7 padding in order to ensure compatibility with OpenSSL
+and other implementations outside of PHP.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (in_array(strtolower(mcrypt_enc_get_modes_name($params[<span class="hljs-string">'handle'</span>])), <span class="hljs-keyword">array</span>(<span class="hljs-string">'cbc'</span>, <span class="hljs-string">'ecb'</span>), <span class="hljs-keyword">TRUE</span>))
+		{
+			$block_size = mcrypt_enc_get_block_size($params[<span class="hljs-string">'handle'</span>]);
+			$pad = $block_size - (<span class="hljs-keyword">self</span>::strlen($data) % $block_size);
+			$data .= str_repeat(chr($pad), $pad);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>Work-around for yet another strange behavior in MCrypt.</p>
+<p>When encrypting in ECB mode, the IV is ignored. Yet
+mcrypt_enc_get_iv_size() returns a value larger than 0
+even if ECB is used AND mcrypt_generic_init() complains
+if you don't pass an IV with length equal to the said
+return value.</p>
+<p>This probably would've been fine (even though still wasteful),
+but OpenSSL isn't that dumb and we need to make the process
+portable, so ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$data = (mcrypt_enc_get_modes_name($params[<span class="hljs-string">'handle'</span>]) !== <span class="hljs-string">'ECB'</span>)
+			? $iv.mcrypt_generic($params[<span class="hljs-string">'handle'</span>], $data)
+			: mcrypt_generic($params[<span class="hljs-string">'handle'</span>], $data);
+
+		mcrypt_generic_deinit($params[<span class="hljs-string">'handle'</span>]);
+		<span class="hljs-keyword">if</span> ($params[<span class="hljs-string">'handle'</span>] !== <span class="hljs-keyword">$this</span>-&gt;_handle)
+		{
+			mcrypt_module_close($params[<span class="hljs-string">'handle'</span>]);
+		}
+
+		<span class="hljs-keyword">return</span> $data;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Encrypt via OpenSSL</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$data Input data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Input parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_openssl_encrypt</span><span class="hljs-params">($data, $params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'handle'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$iv = ($iv_size = openssl_cipher_iv_length($params[<span class="hljs-string">'handle'</span>]))
+			? <span class="hljs-keyword">$this</span>-&gt;create_key($iv_size)
+			: <span class="hljs-keyword">NULL</span>;
+
+		$data = openssl_encrypt(
+			$data,
+			$params[<span class="hljs-string">'handle'</span>],
+			$params[<span class="hljs-string">'key'</span>],
+			<span class="hljs-number">1</span>, <span class="hljs-comment">// DO NOT TOUCH!</span>
+			$iv
+		);
+
+		<span class="hljs-keyword">if</span> ($data === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $iv.$data;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Decrypt</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$data Encrypted data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Input parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decrypt</span><span class="hljs-params">($data, array $params = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (($params = <span class="hljs-keyword">$this</span>-&gt;_get_params($params)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'hmac_digest'</span>]))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<p>This might look illogical, but it is done during encryption as well ...
+The 'base64' value is effectively an inverted &quot;raw data&quot; parameter</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$digest_size = ($params[<span class="hljs-string">'base64'</span>])
+				? <span class="hljs-keyword">$this</span>-&gt;_digests[$params[<span class="hljs-string">'hmac_digest'</span>]] * <span class="hljs-number">2</span>
+				: <span class="hljs-keyword">$this</span>-&gt;_digests[$params[<span class="hljs-string">'hmac_digest'</span>]];
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>::strlen($data) &lt;= $digest_size)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			$hmac_input = <span class="hljs-keyword">self</span>::substr($data, <span class="hljs-number">0</span>, $digest_size);
+			$data = <span class="hljs-keyword">self</span>::substr($data, $digest_size);
+
+			<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'hmac_key'</span>]) <span class="hljs-keyword">OR</span> $params[<span class="hljs-string">'hmac_key'</span>] = <span class="hljs-keyword">$this</span>-&gt;hkdf(<span class="hljs-keyword">$this</span>-&gt;_key, <span class="hljs-string">'sha512'</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-string">'authentication'</span>);
+			$hmac_check = hash_hmac($params[<span class="hljs-string">'hmac_digest'</span>], $data, $params[<span class="hljs-string">'hmac_key'</span>], ! $params[<span class="hljs-string">'base64'</span>]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<p>Time-attack-safe comparison</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$diff = <span class="hljs-number">0</span>;
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $digest_size; $i++)
+			{
+				$diff |= ord($hmac_input[$i]) ^ ord($hmac_check[$i]);
+			}
+
+			<span class="hljs-keyword">if</span> ($diff !== <span class="hljs-number">0</span>)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($params[<span class="hljs-string">'base64'</span>])
+		{
+			$data = base64_decode($data);
+		}
+
+		<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'key'</span>]) <span class="hljs-keyword">OR</span> $params[<span class="hljs-string">'key'</span>] = <span class="hljs-keyword">$this</span>-&gt;hkdf(<span class="hljs-keyword">$this</span>-&gt;_key, <span class="hljs-string">'sha512'</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">self</span>::strlen(<span class="hljs-keyword">$this</span>-&gt;_key), <span class="hljs-string">'encryption'</span>);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'_'</span>.<span class="hljs-keyword">$this</span>-&gt;_driver.<span class="hljs-string">'_decrypt'</span>}($data, $params);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Decrypt via MCrypt</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$data Encrypted data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Input parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mcrypt_decrypt</span><span class="hljs-params">($data, $params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_resource($params[<span class="hljs-string">'handle'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<p>The greater-than-1 comparison is mostly a work-around for a bug,
+where 1 is returned for ARCFour instead of 0.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (($iv_size = mcrypt_enc_get_iv_size($params[<span class="hljs-string">'handle'</span>])) &gt; <span class="hljs-number">1</span>)
+		{
+			<span class="hljs-keyword">if</span> (mcrypt_enc_get_modes_name($params[<span class="hljs-string">'handle'</span>]) !== <span class="hljs-string">'ECB'</span>)
+			{
+				$iv = <span class="hljs-keyword">self</span>::substr($data, <span class="hljs-number">0</span>, $iv_size);
+				$data = <span class="hljs-keyword">self</span>::substr($data, $iv_size);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<p>MCrypt is dumb and this is ignored, only size matters</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				$iv = str_repeat(<span class="hljs-string">"\x0"</span>, $iv_size);
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$iv = <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (mcrypt_generic_init($params[<span class="hljs-string">'handle'</span>], $params[<span class="hljs-string">'key'</span>], $iv) &lt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">if</span> ($params[<span class="hljs-string">'handle'</span>] !== <span class="hljs-keyword">$this</span>-&gt;_handle)
+			{
+				mcrypt_module_close($params[<span class="hljs-string">'handle'</span>]);
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$data = mdecrypt_generic($params[<span class="hljs-string">'handle'</span>], $data);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<p>Remove PKCS#7 padding, if necessary</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (in_array(strtolower(mcrypt_enc_get_modes_name($params[<span class="hljs-string">'handle'</span>])), <span class="hljs-keyword">array</span>(<span class="hljs-string">'cbc'</span>, <span class="hljs-string">'ecb'</span>), <span class="hljs-keyword">TRUE</span>))
+		{
+			$data = <span class="hljs-keyword">self</span>::substr($data, <span class="hljs-number">0</span>, -ord($data[<span class="hljs-keyword">self</span>::strlen($data)<span class="hljs-number">-1</span>]));
+		}
+
+		mcrypt_generic_deinit($params[<span class="hljs-string">'handle'</span>]);
+		<span class="hljs-keyword">if</span> ($params[<span class="hljs-string">'handle'</span>] !== <span class="hljs-keyword">$this</span>-&gt;_handle)
+		{
+			mcrypt_module_close($params[<span class="hljs-string">'handle'</span>]);
+		}
+
+		<span class="hljs-keyword">return</span> $data;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Decrypt via OpenSSL</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$data Encrypted data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Input parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_openssl_decrypt</span><span class="hljs-params">($data, $params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($iv_size = openssl_cipher_iv_length($params[<span class="hljs-string">'handle'</span>]))
+		{
+			$iv = <span class="hljs-keyword">self</span>::substr($data, <span class="hljs-number">0</span>, $iv_size);
+			$data = <span class="hljs-keyword">self</span>::substr($data, $iv_size);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$iv = <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'handle'</span>])
+			? <span class="hljs-keyword">FALSE</span>
+			: openssl_decrypt(
+				$data,
+				$params[<span class="hljs-string">'handle'</span>],
+				$params[<span class="hljs-string">'key'</span>],
+				<span class="hljs-number">1</span>, <span class="hljs-comment">// DO NOT TOUCH!</span>
+				$iv
+			);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get params</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Input parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_get_params</span><span class="hljs-params">($params)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($params))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_cipher, <span class="hljs-keyword">$this</span>-&gt;_mode, <span class="hljs-keyword">$this</span>-&gt;_key, <span class="hljs-keyword">$this</span>-&gt;_handle)
+				? <span class="hljs-keyword">array</span>(
+					<span class="hljs-string">'handle'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;_handle,
+					<span class="hljs-string">'cipher'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;_cipher,
+					<span class="hljs-string">'mode'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;_mode,
+					<span class="hljs-string">'key'</span> =&gt; <span class="hljs-keyword">NULL</span>,
+					<span class="hljs-string">'base64'</span> =&gt; <span class="hljs-keyword">TRUE</span>,
+					<span class="hljs-string">'hmac_digest'</span> =&gt; <span class="hljs-string">'sha512'</span>,
+					<span class="hljs-string">'hmac_key'</span> =&gt; <span class="hljs-keyword">NULL</span>
+				)
+				: <span class="hljs-keyword">FALSE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'cipher'</span>], $params[<span class="hljs-string">'mode'</span>], $params[<span class="hljs-string">'key'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'mode'</span>]))
+		{
+			$params[<span class="hljs-string">'mode'</span>] = strtolower($params[<span class="hljs-string">'mode'</span>]);
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_modes[<span class="hljs-keyword">$this</span>-&gt;_driver][$params[<span class="hljs-string">'mode'</span>]]))
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			$params[<span class="hljs-string">'mode'</span>] = <span class="hljs-keyword">$this</span>-&gt;_modes[<span class="hljs-keyword">$this</span>-&gt;_driver][$params[<span class="hljs-string">'mode'</span>]];
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'hmac'</span>]) &amp;&amp; $params[<span class="hljs-string">'hmac'</span>] === <span class="hljs-keyword">FALSE</span>)
+		{
+			$params[<span class="hljs-string">'hmac_digest'</span>] = $params[<span class="hljs-string">'hmac_key'</span>] = <span class="hljs-keyword">NULL</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'hmac_key'</span>]))
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+			<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'hmac_digest'</span>]))
+			{
+				$params[<span class="hljs-string">'hmac_digest'</span>] = strtolower($params[<span class="hljs-string">'hmac_digest'</span>]);
+				<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_digests[$params[<span class="hljs-string">'hmac_digest'</span>]]))
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$params[<span class="hljs-string">'hmac_digest'</span>] = <span class="hljs-string">'sha512'</span>;
+			}
+		}
+
+		$params = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'handle'</span> =&gt; <span class="hljs-keyword">NULL</span>,
+			<span class="hljs-string">'cipher'</span> =&gt; $params[<span class="hljs-string">'cipher'</span>],
+			<span class="hljs-string">'mode'</span> =&gt; $params[<span class="hljs-string">'mode'</span>],
+			<span class="hljs-string">'key'</span> =&gt; $params[<span class="hljs-string">'key'</span>],
+			<span class="hljs-string">'base64'</span> =&gt; <span class="hljs-keyword">isset</span>($params[<span class="hljs-string">'raw_data'</span>]) ? ! $params[<span class="hljs-string">'raw_data'</span>] : <span class="hljs-keyword">FALSE</span>,
+			<span class="hljs-string">'hmac_digest'</span> =&gt; $params[<span class="hljs-string">'hmac_digest'</span>],
+			<span class="hljs-string">'hmac_key'</span> =&gt; $params[<span class="hljs-string">'hmac_key'</span>]
+		);
+
+		<span class="hljs-keyword">$this</span>-&gt;_cipher_alias($params[<span class="hljs-string">'cipher'</span>]);
+		$params[<span class="hljs-string">'handle'</span>] = ($params[<span class="hljs-string">'cipher'</span>] !== <span class="hljs-keyword">$this</span>-&gt;_cipher <span class="hljs-keyword">OR</span> $params[<span class="hljs-string">'mode'</span>] !== <span class="hljs-keyword">$this</span>-&gt;_mode)
+			? <span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'_'</span>.<span class="hljs-keyword">$this</span>-&gt;_driver.<span class="hljs-string">'_get_handle'</span>}($params[<span class="hljs-string">'cipher'</span>], $params[<span class="hljs-string">'mode'</span>])
+			: <span class="hljs-keyword">$this</span>-&gt;_handle;
+
+		<span class="hljs-keyword">return</span> $params;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get MCrypt handle</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$cipher Cipher name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$mode Encryption mode
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>resource
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mcrypt_get_handle</span><span class="hljs-params">($cipher, $mode)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> mcrypt_module_open($cipher, <span class="hljs-string">''</span>, $mode, <span class="hljs-string">''</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get OpenSSL handle</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$cipher Cipher name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$mode Encryption mode
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_openssl_get_handle</span><span class="hljs-params">($cipher, $mode)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<p>OpenSSL methods aren't suffixed with '-stream' for this mode</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> ($mode === <span class="hljs-string">'stream'</span>)
+			? $cipher
+			: $cipher.<span class="hljs-string">'-'</span>.$mode;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Cipher alias</p>
+</div>
+<div class="body">
+<p>Tries to translate cipher names between MCrypt and OpenSSL's &quot;dialects&quot;.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$cipher Cipher name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_cipher_alias</span><span class="hljs-params">(&amp;$cipher)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $dictionary;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($dictionary))
+		{
+			$dictionary = <span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'mcrypt'</span> =&gt; <span class="hljs-keyword">array</span>(
+					<span class="hljs-string">'aes-128'</span> =&gt; <span class="hljs-string">'rijndael-128'</span>,
+					<span class="hljs-string">'aes-192'</span> =&gt; <span class="hljs-string">'rijndael-128'</span>,
+					<span class="hljs-string">'aes-256'</span> =&gt; <span class="hljs-string">'rijndael-128'</span>,
+					<span class="hljs-string">'des3-ede3'</span> =&gt; <span class="hljs-string">'tripledes'</span>,
+					<span class="hljs-string">'bf'</span> =&gt; <span class="hljs-string">'blowfish'</span>,
+					<span class="hljs-string">'cast5'</span> =&gt; <span class="hljs-string">'cast-128'</span>,
+					<span class="hljs-string">'rc4'</span> =&gt; <span class="hljs-string">'arcfour'</span>,
+					<span class="hljs-string">'rc4-40'</span> =&gt; <span class="hljs-string">'arcfour'</span>
+				),
+				<span class="hljs-string">'openssl'</span> =&gt; <span class="hljs-keyword">array</span>(
+					<span class="hljs-string">'rijndael-128'</span> =&gt; <span class="hljs-string">'aes-128'</span>,
+					<span class="hljs-string">'tripledes'</span> =&gt; <span class="hljs-string">'des-ede3'</span>,
+					<span class="hljs-string">'blowfish'</span> =&gt; <span class="hljs-string">'bf'</span>,
+					<span class="hljs-string">'cast-128'</span> =&gt; <span class="hljs-string">'cast5'</span>,
+					<span class="hljs-string">'arcfour'</span> =&gt; <span class="hljs-string">'rc4-40'</span>,
+					<span class="hljs-string">'rc4'</span> =&gt; <span class="hljs-string">'rc4-40'</span>
+				)
+			);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<p>Notes:</p>
+<ul>
+<li>
+<p>Rijndael-128 is, at the same time all three of AES-128,
+AES-192 and AES-256. The only difference between them is
+the key size. Rijndael-192, Rijndael-256 on the other hand
+also have different block sizes and are NOT AES-compatible.</p>
+</li>
+<li>
+<p>Blowfish is said to be supporting key sizes between
+4 and 56 bytes, but it appears that between MCrypt and
+OpenSSL, only those of 16 and more bytes are compatible.
+Also, don't know what MCrypt's 'blowfish-compat' is.</p>
+</li>
+<li>
+<p>CAST-128/CAST5 produces a longer cipher when encrypted via
+OpenSSL, but (strangely enough) can be decrypted by either
+extension anyway.
+Also, it appears that OpenSSL uses 16 rounds regardless of
+the key size, while RFC2144 says that for key sizes lower
+than 11 bytes, only 12 rounds should be used. This makes
+it portable only with keys of between 11 and 16 bytes.</p>
+</li>
+<li>
+<p>RC4 (ARCFour) has a strange implementation under OpenSSL.
+Its 'rc4-40' cipher method seems to work flawlessly, yet
+there's another one, 'rc4' that only works with a 16-byte key.</p>
+</li>
+<li>
+<p>DES is compatible, but doesn't need an alias.</p>
+</li>
+</ul>
+<p>Other seemingly matching ciphers between MCrypt, OpenSSL:</p>
+<ul>
+<li>RC2 is NOT compatible and only an obscure forum post
+confirms that it is MCrypt's fault.</li>
+</ul>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($dictionary[<span class="hljs-keyword">$this</span>-&gt;_driver][$cipher]))
+		{
+			$cipher = $dictionary[<span class="hljs-keyword">$this</span>-&gt;_driver][$cipher];
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>HKDF</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">$key</span>
+<span>Input key
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">$digest</span>
+<span>A SHA-2 hashing algorithm
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">$salt</span>
+<span>Optional salt
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">$length</span>
+<span>Output length (defaults to the selected digest size)
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">$info</span>
+<span>Optional context/application-specific info
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string A pseudo-random key
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hkdf</span><span class="hljs-params">($key, $digest = <span class="hljs-string">'sha512'</span>, $salt = NULL, $length = NULL, $info = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_digests[$digest]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($length) <span class="hljs-keyword">OR</span> ! is_int($length))
+		{
+			$length = <span class="hljs-keyword">$this</span>-&gt;_digests[$digest];
+		}
+		<span class="hljs-keyword">elseif</span> ($length &gt; (<span class="hljs-number">255</span> * <span class="hljs-keyword">$this</span>-&gt;_digests[$digest]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">self</span>::strlen($salt) <span class="hljs-keyword">OR</span> $salt = str_repeat(<span class="hljs-string">"\0"</span>, <span class="hljs-keyword">$this</span>-&gt;_digests[$digest]);
+
+		$prk = hash_hmac($digest, $key, $salt, <span class="hljs-keyword">TRUE</span>);
+		$key = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">for</span> ($key_block = <span class="hljs-string">''</span>, $block_index = <span class="hljs-number">1</span>; <span class="hljs-keyword">self</span>::strlen($key) &lt; $length; $block_index++)
+		{
+			$key_block = hash_hmac($digest, $key_block.$info.chr($block_index), $prk, <span class="hljs-keyword">TRUE</span>);
+			$key .= $key_block;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>::substr($key, <span class="hljs-number">0</span>, $length);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>__get() magic</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$key Property name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__get</span><span class="hljs-params">($key)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<p>Because aliases</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($key === <span class="hljs-string">'mode'</span>)
+		{
+			<span class="hljs-keyword">return</span> array_search(<span class="hljs-keyword">$this</span>-&gt;_mode, <span class="hljs-keyword">$this</span>-&gt;_modes[<span class="hljs-keyword">$this</span>-&gt;_driver], <span class="hljs-keyword">TRUE</span>);
+		}
+		<span class="hljs-keyword">elseif</span> (in_array($key, <span class="hljs-keyword">array</span>(<span class="hljs-string">'cipher'</span>, <span class="hljs-string">'driver'</span>, <span class="hljs-string">'drivers'</span>, <span class="hljs-string">'digests'</span>), <span class="hljs-keyword">TRUE</span>))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'_'</span>.$key};
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">NULL</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Byte-safe strlen()</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strlen</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">self</span>::$func_overload)
+			? mb_strlen($str, <span class="hljs-string">'8bit'</span>)
+			: strlen($str);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Byte-safe substr()</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$start
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$length
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">substr</span><span class="hljs-params">($str, $start, $length = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>::$func_overload)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<p>mb_substr($str, $start, null, '8bit') returns an empty
+string on PHP 5.3</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">isset</span>($length) <span class="hljs-keyword">OR</span> $length = ($start &gt;= <span class="hljs-number">0</span> ? <span class="hljs-keyword">self</span>::strlen($str) - $start : -$start);
+			<span class="hljs-keyword">return</span> mb_substr($str, $start, $length, <span class="hljs-string">'8bit'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($length)
+			? substr($str, $start, $length)
+			: substr($str, $start);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

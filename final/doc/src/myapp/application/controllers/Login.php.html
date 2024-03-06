@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\controllers\\Login.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Login.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">login</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Controller</span>
+</span>{
+
+	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">parent</span>::__construct();
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;library(<span class="hljs-string">'session'</span>); <span class="hljs-comment">//enable session</span>
+	}
+
+	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+	</span>{
+		$data[<span class="hljs-string">'error'</span>] = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;helper(<span class="hljs-string">'form'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;helper(<span class="hljs-string">'url'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/header'</span>);
+
+		<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'logged_in'</span>)) {
+			<span class="hljs-keyword">if</span> (get_cookie(<span class="hljs-string">'remember'</span>)) {
+				$username = get_cookie(<span class="hljs-string">'username'</span>); <span class="hljs-comment">//getting username from cookie</span>
+				$password = get_cookie(<span class="hljs-string">'password'</span>); <span class="hljs-comment">//getting password from cookie</span>
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;user_model-&gt;login($username, $password)) {
+					$user_data = <span class="hljs-keyword">array</span>(
+						<span class="hljs-string">'username'</span> =&gt; $username,
+						<span class="hljs-string">'logged_in'</span> =&gt; <span class="hljs-keyword">true</span>
+					);
+					<span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data);
+					<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'home'</span>);
+				}
+			} <span class="hljs-keyword">else</span> {
+				<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'login'</span>, $data);
+			}
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'home'</span>);
+		}
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/footer'</span>);
+	}
+
+
+	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">check_login</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;model(<span class="hljs-string">'user_model'</span>);
+
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;helper(<span class="hljs-string">'form'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;helper(<span class="hljs-string">'url'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/header'</span>);
+		$username = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'username'</span>); <span class="hljs-comment">//getting username from login form</span>
+		$password = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'password'</span>); <span class="hljs-comment">//getting password from login form</span>
+		$remember = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'remember'</span>); <span class="hljs-comment">//getting remember status from login form</span>
+
+		<span class="hljs-keyword">if</span> (!<span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'logged_in'</span>)) {
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;user_model-&gt;login($username, $password)) {
+				$user_data = <span class="hljs-keyword">array</span>(
+					<span class="hljs-string">'username'</span> =&gt; $username,
+					<span class="hljs-string">'logged_in'</span> =&gt; <span class="hljs-keyword">true</span>
+				);
+
+				<span class="hljs-keyword">if</span> ($remember) {
+					set_cookie(<span class="hljs-string">'username'</span>, $username, <span class="hljs-string">'3000'</span>);
+					set_cookie(<span class="hljs-string">'password'</span>, $password, <span class="hljs-string">'3000'</span>);
+					set_cookie(<span class="hljs-string">'remember'</span>, $remember, <span class="hljs-string">'3000'</span>);
+				}
+				<span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data);
+				redirect(base_url().<span class="hljs-string">'index.php?/login'</span>);
+			} <span class="hljs-keyword">else</span> {
+				<span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'error'</span>, <span class="hljs-string">"&lt;div class=\"alert alert-danger\" role=\"alert\"&gt; Incorrect username or passwrod!! &lt;/div&gt;"</span>);
+				redirect(base_url().<span class="hljs-string">'index.php?/login'</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>$this-&gt;load-&gt;view('login', $data);
+$this-&gt;load-&gt;view('template/footer');</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			}
+		} <span class="hljs-keyword">else</span> {
+			redirect(base_url().<span class="hljs-string">'index.php?/login'</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>$this-&gt;load-&gt;view('template/footer');</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		}
+	}
+
+	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logout</span><span class="hljs-params">()</span>
+	</span>{
+		delete_cookie(<span class="hljs-string">'username'</span>);
+		delete_cookie(<span class="hljs-string">'password'</span>);
+		delete_cookie(<span class="hljs-string">'remember'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;session-&gt;unset_userdata(<span class="hljs-string">'logged_in'</span>);
+		redirect(base_url().<span class="hljs-string">'index.php?/login'</span>);
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

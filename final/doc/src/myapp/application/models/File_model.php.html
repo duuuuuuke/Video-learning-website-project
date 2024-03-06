@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File_model.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\models\\File_model.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>File_model.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span> <span class="hljs-keyword">if</span> (!defined(<span class="hljs-string">'BASEPATH'</span>)) <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>put your code here</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">File_model</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Model</span>
+</span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>upload file</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">upload</span><span class="hljs-params">($filename, $path, $username, $userid, $type, $title, $description)</span>
+    </span>{
+
+        $data = <span class="hljs-keyword">array</span>(
+            <span class="hljs-string">'filename'</span> =&gt; $filename,
+            <span class="hljs-string">'path'</span> =&gt; $path,
+            <span class="hljs-string">'username'</span> =&gt; $username,
+            <span class="hljs-string">'userid'</span> =&gt; $userid,
+            <span class="hljs-string">'type'</span> =&gt; $type,
+            <span class="hljs-string">'title'</span> =&gt; $title,
+            <span class="hljs-string">'description'</span> =&gt; $description
+        );
+        $query = <span class="hljs-keyword">$this</span>-&gt;db-&gt;insert(<span class="hljs-string">'files'</span>, $data);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetch_data</span><span class="hljs-params">($query)</span>
+    </span>{
+        <span class="hljs-keyword">if</span> ($query == <span class="hljs-string">''</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">$this</span>-&gt;db-&gt;select(<span class="hljs-string">"*"</span>);
+            <span class="hljs-keyword">$this</span>-&gt;db-&gt;from(<span class="hljs-string">"files"</span>);
+            <span class="hljs-keyword">$this</span>-&gt;db-&gt;like(<span class="hljs-string">'title'</span>, $query);
+            <span class="hljs-keyword">$this</span>-&gt;db-&gt;order_by(<span class="hljs-string">'title'</span>, <span class="hljs-string">'DESC'</span>);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;get();
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetch_id</span><span class="hljs-params">($id)</span>
+    </span>{
+        <span class="hljs-keyword">if</span> ($id == <span class="hljs-string">''</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">$this</span>-&gt;db-&gt;select(<span class="hljs-string">"*"</span>);
+            <span class="hljs-keyword">$this</span>-&gt;db-&gt;from(<span class="hljs-string">"files"</span>);
+            <span class="hljs-keyword">$this</span>-&gt;db-&gt;like(<span class="hljs-string">'id'</span>, $id);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;get();
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetch_all</span><span class="hljs-params">($limit, $start)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;select(<span class="hljs-string">'*'</span>);
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;from(<span class="hljs-string">'files'</span>);
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;order_by(<span class="hljs-string">'id'</span>, <span class="hljs-string">'DESC'</span>);
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;limit($limit, $start);
+        $query = <span class="hljs-keyword">$this</span>-&gt;db-&gt;get();
+        <span class="hljs-keyword">return</span> $query;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addNewComment</span><span class="hljs-params">($data)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;insert(<span class="hljs-string">'all_comments'</span>, $data);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;insert_id();
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getAllComments</span><span class="hljs-params">($product_id)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'product_id'</span>, $product_id);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;get(<span class="hljs-string">'all_comments'</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCommentByID</span><span class="hljs-params">($id)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'id'</span>, $id);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;get(<span class="hljs-string">'all_comments'</span>)-&gt;result_array();
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addWishlist</span><span class="hljs-params">($data)</span>
+    </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;insert(<span class="hljs-string">'wishlist'</span>, $data);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getWishlist</span><span class="hljs-params">($username)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'username'</span>, $username);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;get(<span class="hljs-string">'wishlist'</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isAdded</span><span class="hljs-params">($username, $title)</span>
+    </span>{
+        $result = <span class="hljs-keyword">$this</span>-&gt;db-&gt;query(<span class="hljs-string">"SELECT title, username
+        FROM wishlist
+        WHERE username = '$username'
+        AND title = '$title'"</span>);
+        <span class="hljs-keyword">if</span> (count($result-&gt;result_array()) == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fetchProductId</span><span class="hljs-params">($title)</span>
+    </span>{
+        $result = <span class="hljs-keyword">$this</span>-&gt;db-&gt;query(<span class="hljs-string">"SELECT id
+        FROM files
+        WHERE title = '$title'
+        LIMIT 1"</span>);
+        <span class="hljs-keyword">return</span> $result;
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delete</span><span class="hljs-params">($username, $title)</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'username'</span>, $username);
+        <span class="hljs-keyword">$this</span>-&gt;db-&gt;where(<span class="hljs-string">'title'</span>, $title);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;delete(<span class="hljs-string">'wishlist'</span>);
+    }
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

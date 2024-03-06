@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>migration.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\migration.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>migration.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Enable/Disable Migrations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Migrations are disabled by default for security reasons.</td>
+</tr>
+<tr>
+<td>You should enable migrations whenever you intend to do a schema migration</td>
+</tr>
+<tr>
+<td>and disable it back when you're done.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'migration_enabled'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Migration Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Migration file names may be based on a sequential identifier or on</td>
+</tr>
+<tr>
+<td>a timestamp. Options are:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>'sequential' = Sequential migration naming (001_add_blog.php)</td>
+</tr>
+<tr>
+<td>'timestamp'  = Timestamp migration naming (20121031104401_add_blog.php)</td>
+</tr>
+<tr>
+<td>Use timestamp format YYYYMMDDHHIISS.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Note: If this configuration value is missing the Migration library</td>
+</tr>
+<tr>
+<td>defaults to 'sequential' for backward compatibility with CI2.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'migration_type'</span>] = <span class="hljs-string">'timestamp'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Migrations table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This is the name of the table that will store the current migrations state.</td>
+</tr>
+<tr>
+<td>When migrations runs it will store in a database table which migration</td>
+</tr>
+<tr>
+<td>level the system is at. It then compares the migration level in this</td>
+</tr>
+<tr>
+<td>table to the $config['migration_version'] if they are not the same it</td>
+</tr>
+<tr>
+<td>will migrate up. This must be set.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'migration_table'</span>] = <span class="hljs-string">'migrations'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto Migrate To Latest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>If this is set to TRUE when you load the migrations class and have</td>
+</tr>
+<tr>
+<td>$config['migration_enabled'] set to TRUE the system will auto migrate</td>
+</tr>
+<tr>
+<td>to your latest migration (whatever $config['migration_version'] is</td>
+</tr>
+<tr>
+<td>set to). This way you do not have to call migrations anywhere else</td>
+</tr>
+<tr>
+<td>in your code to have the latest migration.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'migration_auto_latest'</span>] = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Migrations version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>This is used to set migration version that the file system should be on.</td>
+</tr>
+<tr>
+<td>If you run $this-&gt;migration-&gt;current() this is the version that schema will</td>
+</tr>
+<tr>
+<td>be upgraded / downgraded to.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'migration_version'</span>] = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>|--------------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Migrations Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Path to your migrations folder.</td>
+</tr>
+<tr>
+<td>Typically, it will be within your application path.</td>
+</tr>
+<tr>
+<td>Also, writing permission is required within the migrations path.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$config[<span class="hljs-string">'migration_path'</span>] = APPPATH.<span class="hljs-string">'migrations/'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

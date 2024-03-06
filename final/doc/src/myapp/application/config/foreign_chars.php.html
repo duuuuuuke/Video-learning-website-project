@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>foreign_chars.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\foreign_chars.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>foreign_chars.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Foreign Characters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This file contains an array of foreign characters for transliteration</td>
+</tr>
+<tr>
+<td>conversion used by the Text helper</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$foreign_characters = <span class="hljs-keyword">array</span>(
+	<span class="hljs-string">'/ä|æ|ǽ/'</span> =&gt; <span class="hljs-string">'ae'</span>,
+	<span class="hljs-string">'/ö|œ/'</span> =&gt; <span class="hljs-string">'oe'</span>,
+	<span class="hljs-string">'/ü/'</span> =&gt; <span class="hljs-string">'ue'</span>,
+	<span class="hljs-string">'/Ä/'</span> =&gt; <span class="hljs-string">'Ae'</span>,
+	<span class="hljs-string">'/Ü/'</span> =&gt; <span class="hljs-string">'Ue'</span>,
+	<span class="hljs-string">'/Ö/'</span> =&gt; <span class="hljs-string">'Oe'</span>,
+	<span class="hljs-string">'/À|Á|Â|Ã|Ä|Å|Ǻ|Ā|Ă|Ą|Ǎ|Α|Ά|Ả|Ạ|Ầ|Ẫ|Ẩ|Ậ|Ằ|Ắ|Ẵ|Ẳ|Ặ|А/'</span> =&gt; <span class="hljs-string">'A'</span>,
+	<span class="hljs-string">'/à|á|â|ã|å|ǻ|ā|ă|ą|ǎ|ª|α|ά|ả|ạ|ầ|ấ|ẫ|ẩ|ậ|ằ|ắ|ẵ|ẳ|ặ|а/'</span> =&gt; <span class="hljs-string">'a'</span>,
+	<span class="hljs-string">'/Б/'</span> =&gt; <span class="hljs-string">'B'</span>,
+	<span class="hljs-string">'/б/'</span> =&gt; <span class="hljs-string">'b'</span>,
+	<span class="hljs-string">'/Ç|Ć|Ĉ|Ċ|Č/'</span> =&gt; <span class="hljs-string">'C'</span>,
+	<span class="hljs-string">'/ç|ć|ĉ|ċ|č/'</span> =&gt; <span class="hljs-string">'c'</span>,
+	<span class="hljs-string">'/Д|Δ/'</span> =&gt; <span class="hljs-string">'D'</span>,
+	<span class="hljs-string">'/д|δ/'</span> =&gt; <span class="hljs-string">'d'</span>,
+	<span class="hljs-string">'/Ð|Ď|Đ/'</span> =&gt; <span class="hljs-string">'Dj'</span>,
+	<span class="hljs-string">'/ð|ď|đ/'</span> =&gt; <span class="hljs-string">'dj'</span>,
+	<span class="hljs-string">'/È|É|Ê|Ë|Ē|Ĕ|Ė|Ę|Ě|Ε|Έ|Ẽ|Ẻ|Ẹ|Ề|Ế|Ễ|Ể|Ệ|Е|Э/'</span> =&gt; <span class="hljs-string">'E'</span>,
+	<span class="hljs-string">'/è|é|ê|ë|ē|ĕ|ė|ę|ě|έ|ε|ẽ|ẻ|ẹ|ề|ế|ễ|ể|ệ|е|э/'</span> =&gt; <span class="hljs-string">'e'</span>,
+	<span class="hljs-string">'/Ф/'</span> =&gt; <span class="hljs-string">'F'</span>,
+	<span class="hljs-string">'/ф/'</span> =&gt; <span class="hljs-string">'f'</span>,
+	<span class="hljs-string">'/Ĝ|Ğ|Ġ|Ģ|Γ|Г|Ґ/'</span> =&gt; <span class="hljs-string">'G'</span>,
+	<span class="hljs-string">'/ĝ|ğ|ġ|ģ|γ|г|ґ/'</span> =&gt; <span class="hljs-string">'g'</span>,
+	<span class="hljs-string">'/Ĥ|Ħ/'</span> =&gt; <span class="hljs-string">'H'</span>,
+	<span class="hljs-string">'/ĥ|ħ/'</span> =&gt; <span class="hljs-string">'h'</span>,
+	<span class="hljs-string">'/Ì|Í|Î|Ï|Ĩ|Ī|Ĭ|Ǐ|Į|İ|Η|Ή|Ί|Ι|Ϊ|Ỉ|Ị|И|Ы/'</span> =&gt; <span class="hljs-string">'I'</span>,
+	<span class="hljs-string">'/ì|í|î|ï|ĩ|ī|ĭ|ǐ|į|ı|η|ή|ί|ι|ϊ|ỉ|ị|и|ы|ї/'</span> =&gt; <span class="hljs-string">'i'</span>,
+	<span class="hljs-string">'/Ĵ/'</span> =&gt; <span class="hljs-string">'J'</span>,
+	<span class="hljs-string">'/ĵ/'</span> =&gt; <span class="hljs-string">'j'</span>,
+	<span class="hljs-string">'/Θ/'</span> =&gt; <span class="hljs-string">'TH'</span>,
+	<span class="hljs-string">'/θ/'</span> =&gt; <span class="hljs-string">'th'</span>,
+	<span class="hljs-string">'/Ķ|Κ|К/'</span> =&gt; <span class="hljs-string">'K'</span>,
+	<span class="hljs-string">'/ķ|κ|к/'</span> =&gt; <span class="hljs-string">'k'</span>,
+	<span class="hljs-string">'/Ĺ|Ļ|Ľ|Ŀ|Ł|Λ|Л/'</span> =&gt; <span class="hljs-string">'L'</span>,
+	<span class="hljs-string">'/ĺ|ļ|ľ|ŀ|ł|λ|л/'</span> =&gt; <span class="hljs-string">'l'</span>,
+	<span class="hljs-string">'/М/'</span> =&gt; <span class="hljs-string">'M'</span>,
+	<span class="hljs-string">'/м/'</span> =&gt; <span class="hljs-string">'m'</span>,
+	<span class="hljs-string">'/Ñ|Ń|Ņ|Ň|Ν|Н/'</span> =&gt; <span class="hljs-string">'N'</span>,
+	<span class="hljs-string">'/ñ|ń|ņ|ň|ŉ|ν|н/'</span> =&gt; <span class="hljs-string">'n'</span>,
+	<span class="hljs-string">'/Ò|Ó|Ô|Õ|Ō|Ŏ|Ǒ|Ő|Ơ|Ø|Ǿ|Ο|Ό|Ω|Ώ|Ỏ|Ọ|Ồ|Ố|Ỗ|Ổ|Ộ|Ờ|Ớ|Ỡ|Ở|Ợ|О/'</span> =&gt; <span class="hljs-string">'O'</span>,
+	<span class="hljs-string">'/ò|ó|ô|õ|ō|ŏ|ǒ|ő|ơ|ø|ǿ|º|ο|ό|ω|ώ|ỏ|ọ|ồ|ố|ỗ|ổ|ộ|ờ|ớ|ỡ|ở|ợ|о/'</span> =&gt; <span class="hljs-string">'o'</span>,
+	<span class="hljs-string">'/П/'</span> =&gt; <span class="hljs-string">'P'</span>,
+	<span class="hljs-string">'/п/'</span> =&gt; <span class="hljs-string">'p'</span>,
+	<span class="hljs-string">'/Ŕ|Ŗ|Ř|Ρ|Р/'</span> =&gt; <span class="hljs-string">'R'</span>,
+	<span class="hljs-string">'/ŕ|ŗ|ř|ρ|р/'</span> =&gt; <span class="hljs-string">'r'</span>,
+	<span class="hljs-string">'/Ś|Ŝ|Ş|Ș|Š|Σ|С/'</span> =&gt; <span class="hljs-string">'S'</span>,
+	<span class="hljs-string">'/ś|ŝ|ş|ș|š|ſ|σ|ς|с/'</span> =&gt; <span class="hljs-string">'s'</span>,
+	<span class="hljs-string">'/Ț|Ţ|Ť|Ŧ|Τ|Т/'</span> =&gt; <span class="hljs-string">'T'</span>,
+	<span class="hljs-string">'/ț|ţ|ť|ŧ|τ|т/'</span> =&gt; <span class="hljs-string">'t'</span>,
+	<span class="hljs-string">'/Þ|þ/'</span> =&gt; <span class="hljs-string">'th'</span>,
+	<span class="hljs-string">'/Ù|Ú|Û|Ũ|Ū|Ŭ|Ů|Ű|Ų|Ư|Ǔ|Ǖ|Ǘ|Ǚ|Ǜ|Ũ|Ủ|Ụ|Ừ|Ứ|Ữ|Ử|Ự|У/'</span> =&gt; <span class="hljs-string">'U'</span>,
+	<span class="hljs-string">'/ù|ú|û|ũ|ū|ŭ|ů|ű|ų|ư|ǔ|ǖ|ǘ|ǚ|ǜ|υ|ύ|ϋ|ủ|ụ|ừ|ứ|ữ|ử|ự|у/'</span> =&gt; <span class="hljs-string">'u'</span>,
+	<span class="hljs-string">'/Ƴ|Ɏ|Ỵ|Ẏ|Ӳ|Ӯ|Ў|Ý|Ÿ|Ŷ|Υ|Ύ|Ϋ|Ỳ|Ỹ|Ỷ|Ỵ|Й/'</span> =&gt; <span class="hljs-string">'Y'</span>,
+	<span class="hljs-string">'/ẙ|ʏ|ƴ|ɏ|ỵ|ẏ|ӳ|ӯ|ў|ý|ÿ|ŷ|ỳ|ỹ|ỷ|ỵ|й/'</span> =&gt; <span class="hljs-string">'y'</span>,
+	<span class="hljs-string">'/В/'</span> =&gt; <span class="hljs-string">'V'</span>,
+	<span class="hljs-string">'/в/'</span> =&gt; <span class="hljs-string">'v'</span>,
+	<span class="hljs-string">'/Ŵ/'</span> =&gt; <span class="hljs-string">'W'</span>,
+	<span class="hljs-string">'/ŵ/'</span> =&gt; <span class="hljs-string">'w'</span>,
+	<span class="hljs-string">'/Φ/'</span> =&gt; <span class="hljs-string">'F'</span>,
+	<span class="hljs-string">'/φ/'</span> =&gt; <span class="hljs-string">'f'</span>,
+	<span class="hljs-string">'/Χ/'</span> =&gt; <span class="hljs-string">'CH'</span>,
+	<span class="hljs-string">'/χ/'</span> =&gt; <span class="hljs-string">'ch'</span>,
+	<span class="hljs-string">'/Ź|Ż|Ž|Ζ|З/'</span> =&gt; <span class="hljs-string">'Z'</span>,
+	<span class="hljs-string">'/ź|ż|ž|ζ|з/'</span> =&gt; <span class="hljs-string">'z'</span>,
+	<span class="hljs-string">'/Æ|Ǽ/'</span> =&gt; <span class="hljs-string">'AE'</span>,
+	<span class="hljs-string">'/ß/'</span> =&gt; <span class="hljs-string">'ss'</span>,
+	<span class="hljs-string">'/Ĳ/'</span> =&gt; <span class="hljs-string">'IJ'</span>,
+	<span class="hljs-string">'/ĳ/'</span> =&gt; <span class="hljs-string">'ij'</span>,
+	<span class="hljs-string">'/Œ/'</span> =&gt; <span class="hljs-string">'OE'</span>,
+	<span class="hljs-string">'/ƒ/'</span> =&gt; <span class="hljs-string">'f'</span>,
+	<span class="hljs-string">'/Ξ/'</span> =&gt; <span class="hljs-string">'KS'</span>,
+	<span class="hljs-string">'/ξ/'</span> =&gt; <span class="hljs-string">'ks'</span>,
+	<span class="hljs-string">'/Π/'</span> =&gt; <span class="hljs-string">'P'</span>,
+	<span class="hljs-string">'/π/'</span> =&gt; <span class="hljs-string">'p'</span>,
+	<span class="hljs-string">'/Β/'</span> =&gt; <span class="hljs-string">'V'</span>,
+	<span class="hljs-string">'/β/'</span> =&gt; <span class="hljs-string">'v'</span>,
+	<span class="hljs-string">'/Μ/'</span> =&gt; <span class="hljs-string">'M'</span>,
+	<span class="hljs-string">'/μ/'</span> =&gt; <span class="hljs-string">'m'</span>,
+	<span class="hljs-string">'/Ψ/'</span> =&gt; <span class="hljs-string">'PS'</span>,
+	<span class="hljs-string">'/ψ/'</span> =&gt; <span class="hljs-string">'ps'</span>,
+	<span class="hljs-string">'/Ё/'</span> =&gt; <span class="hljs-string">'Yo'</span>,
+	<span class="hljs-string">'/ё/'</span> =&gt; <span class="hljs-string">'yo'</span>,
+	<span class="hljs-string">'/Є/'</span> =&gt; <span class="hljs-string">'Ye'</span>,
+	<span class="hljs-string">'/є/'</span> =&gt; <span class="hljs-string">'ye'</span>,
+	<span class="hljs-string">'/Ї/'</span> =&gt; <span class="hljs-string">'Yi'</span>,
+	<span class="hljs-string">'/Ж/'</span> =&gt; <span class="hljs-string">'Zh'</span>,
+	<span class="hljs-string">'/ж/'</span> =&gt; <span class="hljs-string">'zh'</span>,
+	<span class="hljs-string">'/Х/'</span> =&gt; <span class="hljs-string">'Kh'</span>,
+	<span class="hljs-string">'/х/'</span> =&gt; <span class="hljs-string">'kh'</span>,
+	<span class="hljs-string">'/Ц/'</span> =&gt; <span class="hljs-string">'Ts'</span>,
+	<span class="hljs-string">'/ц/'</span> =&gt; <span class="hljs-string">'ts'</span>,
+	<span class="hljs-string">'/Ч/'</span> =&gt; <span class="hljs-string">'Ch'</span>,
+	<span class="hljs-string">'/ч/'</span> =&gt; <span class="hljs-string">'ch'</span>,
+	<span class="hljs-string">'/Ш/'</span> =&gt; <span class="hljs-string">'Sh'</span>,
+	<span class="hljs-string">'/ш/'</span> =&gt; <span class="hljs-string">'sh'</span>,
+	<span class="hljs-string">'/Щ/'</span> =&gt; <span class="hljs-string">'Shch'</span>,
+	<span class="hljs-string">'/щ/'</span> =&gt; <span class="hljs-string">'shch'</span>,
+	<span class="hljs-string">'/Ъ|ъ|Ь|ь/'</span> =&gt; <span class="hljs-string">''</span>,
+	<span class="hljs-string">'/Ю/'</span> =&gt; <span class="hljs-string">'Yu'</span>,
+	<span class="hljs-string">'/ю/'</span> =&gt; <span class="hljs-string">'yu'</span>,
+	<span class="hljs-string">'/Я/'</span> =&gt; <span class="hljs-string">'Ya'</span>,
+	<span class="hljs-string">'/я/'</span> =&gt; <span class="hljs-string">'ya'</span>
+);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

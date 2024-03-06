@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>mysqli_forge.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../../doc-style.css" />
+  <script src="../../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../../";
+    var thisFile = "src\\myapp\\system\\database\\drivers\\mysqli\\mysqli_forge.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>mysqli_forge.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>MySQLi Forge Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_DB_mysqli_forge</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_DB_forge</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CREATE DATABASE statement</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_create_database	= <span class="hljs-string">'CREATE DATABASE %s CHARACTER SET %s COLLATE %s'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CREATE TABLE keys flag</p>
+</div>
+<div class="body">
+<p>Whether table keys are created from within the
+CREATE TABLE statement.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_create_table_keys	= <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>UNSIGNED support</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_unsigned		= <span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'TINYINT'</span>,
+		<span class="hljs-string">'SMALLINT'</span>,
+		<span class="hljs-string">'MEDIUMINT'</span>,
+		<span class="hljs-string">'INT'</span>,
+		<span class="hljs-string">'INTEGER'</span>,
+		<span class="hljs-string">'BIGINT'</span>,
+		<span class="hljs-string">'REAL'</span>,
+		<span class="hljs-string">'DOUBLE'</span>,
+		<span class="hljs-string">'DOUBLE PRECISION'</span>,
+		<span class="hljs-string">'FLOAT'</span>,
+		<span class="hljs-string">'DECIMAL'</span>,
+		<span class="hljs-string">'NUMERIC'</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>NULL value representation in CREATE/ALTER TABLE statements</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_null = <span class="hljs-string">'NULL'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CREATE TABLE attributes</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$attributes Associative array of table attributes
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_create_table_attr</span><span class="hljs-params">($attributes)</span>
+	</span>{
+		$sql = <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">foreach</span> (array_keys($attributes) <span class="hljs-keyword">as</span> $key)
+		{
+			<span class="hljs-keyword">if</span> (is_string($key))
+			{
+				$sql .= <span class="hljs-string">' '</span>.strtoupper($key).<span class="hljs-string">' = '</span>.$attributes[$key];
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;db-&gt;char_set) &amp;&amp; ! strpos($sql, <span class="hljs-string">'CHARACTER SET'</span>) &amp;&amp; ! strpos($sql, <span class="hljs-string">'CHARSET'</span>))
+		{
+			$sql .= <span class="hljs-string">' DEFAULT CHARACTER SET = '</span>.<span class="hljs-keyword">$this</span>-&gt;db-&gt;char_set;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;db-&gt;dbcollat) &amp;&amp; ! strpos($sql, <span class="hljs-string">'COLLATE'</span>))
+		{
+			$sql .= <span class="hljs-string">' COLLATE = '</span>.<span class="hljs-keyword">$this</span>-&gt;db-&gt;dbcollat;
+		}
+
+		<span class="hljs-keyword">return</span> $sql;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>ALTER TABLE</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$alter_type ALTER type
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table Table name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$field Column definition
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string|string[]
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_alter_table</span><span class="hljs-params">($alter_type, $table, $field)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($alter_type === <span class="hljs-string">'DROP'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">parent</span>::_alter_table($alter_type, $table, $field);
+		}
+
+		$sql = <span class="hljs-string">'ALTER TABLE '</span>.<span class="hljs-keyword">$this</span>-&gt;db-&gt;escape_identifiers($table);
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($field); $i &lt; $c; $i++)
+		{
+			<span class="hljs-keyword">if</span> ($field[$i][<span class="hljs-string">'_literal'</span>] !== <span class="hljs-keyword">FALSE</span>)
+			{
+				$field[$i] = ($alter_type === <span class="hljs-string">'ADD'</span>)
+						? <span class="hljs-string">"\n\tADD "</span>.$field[$i][<span class="hljs-string">'_literal'</span>]
+						: <span class="hljs-string">"\n\tMODIFY "</span>.$field[$i][<span class="hljs-string">'_literal'</span>];
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">if</span> ($alter_type === <span class="hljs-string">'ADD'</span>)
+				{
+					$field[$i][<span class="hljs-string">'_literal'</span>] = <span class="hljs-string">"\n\tADD "</span>;
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					$field[$i][<span class="hljs-string">'_literal'</span>] = <span class="hljs-keyword">empty</span>($field[$i][<span class="hljs-string">'new_name'</span>]) ? <span class="hljs-string">"\n\tMODIFY "</span> : <span class="hljs-string">"\n\tCHANGE "</span>;
+				}
+
+				$field[$i] = $field[$i][<span class="hljs-string">'_literal'</span>].<span class="hljs-keyword">$this</span>-&gt;_process_column($field[$i]);
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>($sql.implode(<span class="hljs-string">','</span>, $field));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Process column</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$field
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_process_column</span><span class="hljs-params">($field)</span>
+	</span>{
+		$extra_clause = <span class="hljs-keyword">isset</span>($field[<span class="hljs-string">'after'</span>])
+			? <span class="hljs-string">' AFTER '</span>.<span class="hljs-keyword">$this</span>-&gt;db-&gt;escape_identifiers($field[<span class="hljs-string">'after'</span>]) : <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($extra_clause) &amp;&amp; <span class="hljs-keyword">isset</span>($field[<span class="hljs-string">'first'</span>]) &amp;&amp; $field[<span class="hljs-string">'first'</span>] === <span class="hljs-keyword">TRUE</span>)
+		{
+			$extra_clause = <span class="hljs-string">' FIRST'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;db-&gt;escape_identifiers($field[<span class="hljs-string">'name'</span>])
+			.(<span class="hljs-keyword">empty</span>($field[<span class="hljs-string">'new_name'</span>]) ? <span class="hljs-string">''</span> : <span class="hljs-string">' '</span>.<span class="hljs-keyword">$this</span>-&gt;db-&gt;escape_identifiers($field[<span class="hljs-string">'new_name'</span>]))
+			.<span class="hljs-string">' '</span>.$field[<span class="hljs-string">'type'</span>].$field[<span class="hljs-string">'length'</span>]
+			.$field[<span class="hljs-string">'unsigned'</span>]
+			.$field[<span class="hljs-string">'null'</span>]
+			.$field[<span class="hljs-string">'default'</span>]
+			.$field[<span class="hljs-string">'auto_increment'</span>]
+			.$field[<span class="hljs-string">'unique'</span>]
+			.(<span class="hljs-keyword">empty</span>($field[<span class="hljs-string">'comment'</span>]) ? <span class="hljs-string">''</span> : <span class="hljs-string">' COMMENT '</span>.$field[<span class="hljs-string">'comment'</span>])
+			.$extra_clause;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Process indexes</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table (ignored)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_process_indexes</span><span class="hljs-params">($table)</span>
+	</span>{
+		$sql = <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count(<span class="hljs-keyword">$this</span>-&gt;keys); $i &lt; $c; $i++)
+		{
+			<span class="hljs-keyword">if</span> (is_array(<span class="hljs-keyword">$this</span>-&gt;keys[$i]))
+			{
+				<span class="hljs-keyword">for</span> ($i2 = <span class="hljs-number">0</span>, $c2 = count(<span class="hljs-keyword">$this</span>-&gt;keys[$i]); $i2 &lt; $c2; $i2++)
+				{
+					<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;fields[<span class="hljs-keyword">$this</span>-&gt;keys[$i][$i2]]))
+					{
+						<span class="hljs-keyword">unset</span>(<span class="hljs-keyword">$this</span>-&gt;keys[$i][$i2]);
+						<span class="hljs-keyword">continue</span>;
+					}
+				}
+			}
+			<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;fields[<span class="hljs-keyword">$this</span>-&gt;keys[$i]]))
+			{
+				<span class="hljs-keyword">unset</span>(<span class="hljs-keyword">$this</span>-&gt;keys[$i]);
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			is_array(<span class="hljs-keyword">$this</span>-&gt;keys[$i]) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;keys[$i] = <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;keys[$i]);
+
+			$sql .= <span class="hljs-string">",\n\tKEY "</span>.<span class="hljs-keyword">$this</span>-&gt;db-&gt;escape_identifiers(implode(<span class="hljs-string">'_'</span>, <span class="hljs-keyword">$this</span>-&gt;keys[$i]))
+				.<span class="hljs-string">' ('</span>.implode(<span class="hljs-string">', '</span>, <span class="hljs-keyword">$this</span>-&gt;db-&gt;escape_identifiers(<span class="hljs-keyword">$this</span>-&gt;keys[$i])).<span class="hljs-string">')'</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;keys = <span class="hljs-keyword">array</span>();
+
+		<span class="hljs-keyword">return</span> $sql;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>docker-compose.yml</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "docker-compose.yml";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>docker-compose.yml</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">"3.3"</span>
+
+<span class="hljs-attr">services:</span>
+    <span class="hljs-attr">mysql:</span>
+        <span class="hljs-attr">build:</span>
+            <span class="hljs-attr">context:</span> <span class="hljs-string">.</span>
+            <span class="hljs-attr">dockerfile:</span> <span class="hljs-string">./src/mysql/dockerfile</span>
+        <span class="hljs-attr">volumes:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">database:/var/lib/mysql/</span>
+        <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+        <span class="hljs-attr">environment:</span>
+            <span class="hljs-attr">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">MyDBRoot123</span>
+            <span class="hljs-attr">MYSQL_DATABASE:</span> <span class="hljs-string">cloud_computing</span>
+            <span class="hljs-attr">MYSQL_USER:</span> <span class="hljs-string">php</span>
+            <span class="hljs-attr">MYSQL_PASSWORD:</span> <span class="hljs-string">php</span>
+        <span class="hljs-attr">networks:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">mynet</span>
+
+    <span class="hljs-attr">myredis:</span>
+        <span class="hljs-attr">image:</span> <span class="hljs-string">redis:latest</span>
+        <span class="hljs-attr">networks:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">mynet</span>
+
+    <span class="hljs-attr">myphp:</span>
+        <span class="hljs-attr">depends_on:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">mysql</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">myredis</span>
+
+        <span class="hljs-attr">build:</span> <span class="hljs-string">./src/php</span>
+        <span class="hljs-attr">ports:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">"9000"</span>
+        <span class="hljs-attr">volumes:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">./src/:/var/www/html/</span>
+        <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+        <span class="hljs-attr">networks:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">mynet</span>
+
+    <span class="hljs-attr">mynginx:</span>
+        <span class="hljs-attr">depends_on:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">myphp</span>
+        <span class="hljs-attr">image:</span> <span class="hljs-string">nginx</span>
+        <span class="hljs-attr">ports:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">"8080:80"</span>
+        <span class="hljs-attr">volumes:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">./src/nginx.ini:/etc/nginx/conf.d/default.conf</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">./src/:/var/www/html/</span>
+        <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+        <span class="hljs-attr">networks:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">mynet</span>
+
+    <span class="hljs-attr">phpMyAdmin:</span>
+        <span class="hljs-attr">depends_on:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">mysql</span>
+        <span class="hljs-attr">image:</span> <span class="hljs-string">phpmyadmin:latest</span>
+        <span class="hljs-attr">ports:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">"8082:80"</span>
+        <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+        <span class="hljs-attr">environment:</span>
+            <span class="hljs-attr">PMA_HOST:</span> <span class="hljs-string">mysql</span>
+        <span class="hljs-attr">networks:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-string">mynet</span>
+
+<span class="hljs-attr">volumes:</span>
+    <span class="hljs-attr">database:</span> <span class="hljs-string">{}</span>
+
+<span class="hljs-attr">networks:</span>
+    <span class="hljs-attr">mynet:</span>
+        <span class="hljs-attr">driver:</span> <span class="hljs-string">bridge</span>
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>string_helper.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\helpers\\string_helper.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>string_helper.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter String Helpers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'trim_slashes'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Trim Slashes</p>
+</div>
+<div class="body">
+<p>Removes any leading/trailing slashes from a string:</p>
+<p>/this/that/theother/</p>
+<p>becomes:</p>
+<p>this/that/theother</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">trim_slashes</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> trim($str, <span class="hljs-string">'/'</span>);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'strip_slashes'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Strip Slashes</p>
+</div>
+<div class="body">
+<p>Removes slashes contained in a string or in an array</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>string or array
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed string or array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strip_slashes</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_array($str))
+		{
+			<span class="hljs-keyword">return</span> stripslashes($str);
+		}
+
+		<span class="hljs-keyword">foreach</span> ($str <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			$str[$key] = strip_slashes($val);
+		}
+
+		<span class="hljs-keyword">return</span> $str;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'strip_quotes'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Strip Quotes</p>
+</div>
+<div class="body">
+<p>Removes single and double quotes from a string</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strip_quotes</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'"'</span>, <span class="hljs-string">"'"</span>), <span class="hljs-string">''</span>, $str);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'quotes_to_entities'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Quotes to Entities</p>
+</div>
+<div class="body">
+<p>Converts single and double quotes to entities</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">quotes_to_entities</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">"\'"</span>,<span class="hljs-string">"\""</span>,<span class="hljs-string">"'"</span>,<span class="hljs-string">'"'</span>), <span class="hljs-keyword">array</span>(<span class="hljs-string">"&amp;#39;"</span>,<span class="hljs-string">"&amp;quot;"</span>,<span class="hljs-string">"&amp;#39;"</span>,<span class="hljs-string">"&amp;quot;"</span>), $str);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'reduce_double_slashes'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Reduce Double Slashes</p>
+</div>
+<div class="body">
+<p>Converts double slashes in a string to a single slash,
+except those found in http://</p>
+<p>http://www.some-site.com//index.php</p>
+<p>becomes:</p>
+<p>http://www.some-site.com/index.php</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reduce_double_slashes</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> preg_replace(<span class="hljs-string">'#(^|[^:])//+#'</span>, <span class="hljs-string">'\\1/'</span>, $str);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'reduce_multiples'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Reduce Multiples</p>
+</div>
+<div class="body">
+<p>Reduces multiple instances of a particular character.  Example:</p>
+<p>Fred, Bill,, Joe, Jimmy</p>
+<p>becomes:</p>
+<p>Fred, Bill, Joe, Jimmy</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the character you wish to reduce
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>TRUE/FALSE - whether to trim the character from the beginning/end
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reduce_multiples</span><span class="hljs-params">($str, $character = <span class="hljs-string">','</span>, $trim = FALSE)</span>
+	</span>{
+		$str = preg_replace(<span class="hljs-string">'#'</span>.preg_quote($character, <span class="hljs-string">'#'</span>).<span class="hljs-string">'{2,}#'</span>, $character, $str);
+		<span class="hljs-keyword">return</span> ($trim === <span class="hljs-keyword">TRUE</span>) ? trim($str, $character) : $str;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'random_string'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Create a &quot;Random&quot; String</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>type of random string. basic, alpha, alnum, numeric, nozero, unique, md5, encrypt and sha1
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>number of characters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">random_string</span><span class="hljs-params">($type = <span class="hljs-string">'alnum'</span>, $len = <span class="hljs-number">8</span>)</span>
+	</span>{
+		<span class="hljs-keyword">switch</span> ($type)
+		{
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'basic'</span>:
+				<span class="hljs-keyword">return</span> mt_rand();
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'alnum'</span>:
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'numeric'</span>:
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'nozero'</span>:
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'alpha'</span>:
+				<span class="hljs-keyword">switch</span> ($type)
+				{
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'alpha'</span>:
+						$pool = <span class="hljs-string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>;
+						<span class="hljs-keyword">break</span>;
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'alnum'</span>:
+						$pool = <span class="hljs-string">'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>;
+						<span class="hljs-keyword">break</span>;
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'numeric'</span>:
+						$pool = <span class="hljs-string">'0123456789'</span>;
+						<span class="hljs-keyword">break</span>;
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'nozero'</span>:
+						$pool = <span class="hljs-string">'123456789'</span>;
+						<span class="hljs-keyword">break</span>;
+				}
+				<span class="hljs-keyword">return</span> substr(str_shuffle(str_repeat($pool, ceil($len / strlen($pool)))), <span class="hljs-number">0</span>, $len);
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'unique'</span>: <span class="hljs-comment">// <span class="hljs-doctag">todo:</span> remove in 3.1+</span>
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'md5'</span>:
+				<span class="hljs-keyword">return</span> md5(uniqid(mt_rand()));
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'encrypt'</span>: <span class="hljs-comment">// <span class="hljs-doctag">todo:</span> remove in 3.1+</span>
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'sha1'</span>:
+				<span class="hljs-keyword">return</span> sha1(uniqid(mt_rand(), <span class="hljs-keyword">TRUE</span>));
+		}
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'increment_string'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Add's _1 to a string or increment the ending number to allow _2, _3, etc</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>required
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>What should the duplicate number be appended with
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>Which number should be used for the first dupe increment
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">increment_string</span><span class="hljs-params">($str, $separator = <span class="hljs-string">'_'</span>, $first = <span class="hljs-number">1</span>)</span>
+	</span>{
+		preg_match(<span class="hljs-string">'/(.+)'</span>.preg_quote($separator, <span class="hljs-string">'/'</span>).<span class="hljs-string">'([0-9]+)$/'</span>, $str, $match);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($match[<span class="hljs-number">2</span>]) ? $match[<span class="hljs-number">1</span>].$separator.($match[<span class="hljs-number">2</span>] + <span class="hljs-number">1</span>) : $str.$separator.$first;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'alternator'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Alternator</p>
+</div>
+<div class="body">
+<p>Allows strings to be alternated. See docs...</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>(as many parameters as needed)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">alternator</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $i;
+
+		<span class="hljs-keyword">if</span> (func_num_args() === <span class="hljs-number">0</span>)
+		{
+			$i = <span class="hljs-number">0</span>;
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+		$args = func_get_args();
+		<span class="hljs-keyword">return</span> $args[($i++ % count($args))];
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'repeater'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Repeater function</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$data String to repeat
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$num Number of repeats
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">repeater</span><span class="hljs-params">($data, $num = <span class="hljs-number">1</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> ($num &gt; <span class="hljs-number">0</span>) ? str_repeat($data, $num) : <span class="hljs-string">''</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cache_file.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../../doc-style.css" />
+  <script src="../../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Cache\\drivers\\Cache_file.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Cache_file.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter File Caching Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Cache_file</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Driver</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Directory in which to save cache files</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_cache_path;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize file-based cache</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		$CI =&amp; get_instance();
+		$CI-&gt;load-&gt;helper(<span class="hljs-string">'file'</span>);
+		$path = $CI-&gt;config-&gt;item(<span class="hljs-string">'cache_path'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;_cache_path = ($path === <span class="hljs-string">''</span>) ? APPPATH.<span class="hljs-string">'cache/'</span> : $path;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch from cache</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$id Cache ID
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed Data on success, FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span><span class="hljs-params">($id)</span>
+	</span>{
+		$data = <span class="hljs-keyword">$this</span>-&gt;_get($id);
+		<span class="hljs-keyword">return</span> is_array($data) ? $data[<span class="hljs-string">'data'</span>] : <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Save into cache</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$id Cache ID
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$data Data to store
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$ttl Time to live in seconds
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$raw Whether to store the raw value (unused)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool TRUE on success, FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">save</span><span class="hljs-params">($id, $data, $ttl = <span class="hljs-number">60</span>, $raw = FALSE)</span>
+	</span>{
+		$contents = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'time'</span>		=&gt; time(),
+			<span class="hljs-string">'ttl'</span>		=&gt; $ttl,
+			<span class="hljs-string">'data'</span>		=&gt; $data
+		);
+
+		<span class="hljs-keyword">if</span> (write_file(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id, serialize($contents)))
+		{
+			chmod(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id, <span class="hljs-number">0640</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Delete from Cache</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>unique identifier of item in cache
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool true on success/false on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delete</span><span class="hljs-params">($id)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> is_file(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id) ? unlink(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id) : <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Increment a raw value</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$id Cache ID
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$offset Step/value to add
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>New value on success, FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">increment</span><span class="hljs-params">($id, $offset = <span class="hljs-number">1</span>)</span>
+	</span>{
+		$data = <span class="hljs-keyword">$this</span>-&gt;_get($id);
+
+		<span class="hljs-keyword">if</span> ($data === <span class="hljs-keyword">FALSE</span>)
+		{
+			$data = <span class="hljs-keyword">array</span>(<span class="hljs-string">'data'</span> =&gt; <span class="hljs-number">0</span>, <span class="hljs-string">'ttl'</span> =&gt; <span class="hljs-number">60</span>);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_int($data[<span class="hljs-string">'data'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$new_value = $data[<span class="hljs-string">'data'</span>] + $offset;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;save($id, $new_value, $data[<span class="hljs-string">'ttl'</span>])
+			? $new_value
+			: <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Decrement a raw value</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$id Cache ID
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$offset Step/value to reduce by
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>New value on success, FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decrement</span><span class="hljs-params">($id, $offset = <span class="hljs-number">1</span>)</span>
+	</span>{
+		$data = <span class="hljs-keyword">$this</span>-&gt;_get($id);
+
+		<span class="hljs-keyword">if</span> ($data === <span class="hljs-keyword">FALSE</span>)
+		{
+			$data = <span class="hljs-keyword">array</span>(<span class="hljs-string">'data'</span> =&gt; <span class="hljs-number">0</span>, <span class="hljs-string">'ttl'</span> =&gt; <span class="hljs-number">60</span>);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_int($data[<span class="hljs-string">'data'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$new_value = $data[<span class="hljs-string">'data'</span>] - $offset;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;save($id, $new_value, $data[<span class="hljs-string">'ttl'</span>])
+			? $new_value
+			: <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Clean the Cache</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool false on failure/true on success
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">clean</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> delete_files(<span class="hljs-keyword">$this</span>-&gt;_cache_path, <span class="hljs-keyword">FALSE</span>, <span class="hljs-keyword">TRUE</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Cache Info</p>
+</div>
+<div class="body">
+<p>Not supported by file-based caching</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>user/filehits
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed FALSE
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cache_info</span><span class="hljs-params">($type = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> get_dir_file_info(<span class="hljs-keyword">$this</span>-&gt;_cache_path);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Cache Metadata</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>key to get cache metadata on
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed FALSE on failure, array on success.
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_metadata</span><span class="hljs-params">($id)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_file(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$data = unserialize(file_get_contents(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id));
+
+		<span class="hljs-keyword">if</span> (is_array($data))
+		{
+			$mtime = filemtime(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id);
+
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'ttl'</span>], $data[<span class="hljs-string">'time'</span>]))
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'expire'</span> =&gt; $data[<span class="hljs-string">'time'</span>] + $data[<span class="hljs-string">'ttl'</span>],
+				<span class="hljs-string">'mtime'</span>	 =&gt; $mtime
+			);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is supported</p>
+</div>
+<div class="body">
+<p>In the file driver, check to see that the cache directory is indeed writable</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_supported</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> is_really_writable(<span class="hljs-keyword">$this</span>-&gt;_cache_path);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get all data</p>
+</div>
+<div class="body">
+<p>Internal method to get all the relevant data about a cache item</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$id Cache ID
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed Data array on success or FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_get</span><span class="hljs-params">($id)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_file(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$data = unserialize(file_get_contents(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id));
+
+		<span class="hljs-keyword">if</span> ($data[<span class="hljs-string">'ttl'</span>] &gt; <span class="hljs-number">0</span> &amp;&amp; time() &gt; $data[<span class="hljs-string">'time'</span>] + $data[<span class="hljs-string">'ttl'</span>])
+		{
+			file_exists(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id) &amp;&amp; unlink(<span class="hljs-keyword">$this</span>-&gt;_cache_path.$id);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $data;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

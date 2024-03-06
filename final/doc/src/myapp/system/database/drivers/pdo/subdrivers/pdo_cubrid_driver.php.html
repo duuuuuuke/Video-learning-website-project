@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>pdo_cubrid_driver.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../../../doc-style.css" />
+  <script src="../../../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../../../";
+    var thisFile = "src\\myapp\\system\\database\\drivers\\pdo\\subdrivers\\pdo_cubrid_driver.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>pdo_cubrid_driver.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>PDO CUBRID Database Adapter Class</p>
+</div>
+<div class="body">
+<p>Note: _DB is an extender class that the app controller
+creates dynamically based on whether the query builder
+class is being used or not.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_DB_pdo_cubrid_driver</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_DB_pdo_driver</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sub-driver</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $subdriver = <span class="hljs-string">'cubrid'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Identifier escape character</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_escape_char = <span class="hljs-string">'`'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>ORDER BY random keyword</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_random_keyword = <span class="hljs-keyword">array</span>(<span class="hljs-string">'RANDOM()'</span>, <span class="hljs-string">'RANDOM(%d)'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+<p>Builds the DSN if not already set.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($params)</span>
+	</span>{
+		<span class="hljs-keyword">parent</span>::__construct($params);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;dsn))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;dsn = <span class="hljs-string">'cubrid:host='</span>.(<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;hostname) ? <span class="hljs-string">'127.0.0.1'</span> : <span class="hljs-keyword">$this</span>-&gt;hostname);
+
+			<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;port) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;dsn .= <span class="hljs-string">';port='</span>.<span class="hljs-keyword">$this</span>-&gt;port;
+			<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;database) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;dsn .= <span class="hljs-string">';dbname='</span>.<span class="hljs-keyword">$this</span>-&gt;database;
+			<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;char_set) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;dsn .= <span class="hljs-string">';charset='</span>.<span class="hljs-keyword">$this</span>-&gt;char_set;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show table query</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific query string so that the table names can be fetched</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$prefix_limit
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_list_tables</span><span class="hljs-params">($prefix_limit = FALSE)</span>
+	</span>{
+		$sql = <span class="hljs-string">'SHOW TABLES'</span>;
+
+		<span class="hljs-keyword">if</span> ($prefix_limit === <span class="hljs-keyword">TRUE</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;dbprefix !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> $sql.<span class="hljs-string">" LIKE '"</span>.<span class="hljs-keyword">$this</span>-&gt;escape_like_str(<span class="hljs-keyword">$this</span>-&gt;dbprefix).<span class="hljs-string">"%'"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $sql;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show column query</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific query string so that the column names can be fetched</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_list_columns</span><span class="hljs-params">($table = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'SHOW COLUMNS FROM '</span>.<span class="hljs-keyword">$this</span>-&gt;protect_identifiers($table, <span class="hljs-keyword">TRUE</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">FALSE</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Returns an object with field data</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">field_data</span><span class="hljs-params">($table)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (($query = <span class="hljs-keyword">$this</span>-&gt;query(<span class="hljs-string">'SHOW COLUMNS FROM '</span>.<span class="hljs-keyword">$this</span>-&gt;protect_identifiers($table, <span class="hljs-keyword">TRUE</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">FALSE</span>))) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+		$query = $query-&gt;result_object();
+
+		$retval = <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($query); $i &lt; $c; $i++)
+		{
+			$retval[$i]			= <span class="hljs-keyword">new</span> stdClass();
+			$retval[$i]-&gt;name		= $query[$i]-&gt;Field;
+
+			sscanf($query[$i]-&gt;Type, <span class="hljs-string">'%[a-z](%d)'</span>,
+				$retval[$i]-&gt;type,
+				$retval[$i]-&gt;max_length
+			);
+
+			$retval[$i]-&gt;default		= $query[$i]-&gt;Default;
+			$retval[$i]-&gt;primary_key	= (int) ($query[$i]-&gt;Key === <span class="hljs-string">'PRI'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> $retval;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Truncate statement</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific truncate string from the supplied data</p>
+<p>If the database does not support the TRUNCATE statement,
+then this method maps to 'DELETE FROM table'</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_truncate</span><span class="hljs-params">($table)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'TRUNCATE '</span>.$table;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>FROM tables</p>
+</div>
+<div class="body">
+<p>Groups tables in FROM clauses if needed, so there is no confusion
+about operator precedence.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_from_tables</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;qb_join) &amp;&amp; count(<span class="hljs-keyword">$this</span>-&gt;qb_from) &gt; <span class="hljs-number">1</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">'('</span>.implode(<span class="hljs-string">', '</span>, <span class="hljs-keyword">$this</span>-&gt;qb_from).<span class="hljs-string">')'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> implode(<span class="hljs-string">', '</span>, <span class="hljs-keyword">$this</span>-&gt;qb_from);
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

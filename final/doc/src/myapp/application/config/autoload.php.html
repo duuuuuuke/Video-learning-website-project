@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>autoload.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\autoload.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>autoload.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>AUTO-LOADER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This file specifies which systems should be loaded by default.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>In order to keep the framework as light-weight as possible only the</td>
+</tr>
+<tr>
+<td>absolute minimal resources are loaded by default. For example,</td>
+</tr>
+<tr>
+<td>the database is not connected to automatically since no assumption</td>
+</tr>
+<tr>
+<td>is made regarding whether you intend to use it.  This file lets</td>
+</tr>
+<tr>
+<td>you globally define which systems you would like loaded with every</td>
+</tr>
+<tr>
+<td>request.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>-------------------------------------------------------------------</td>
+</tr>
+<tr>
+<td>Instructions</td>
+</tr>
+<tr>
+<td>-------------------------------------------------------------------</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>These are the things you can load automatically:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>1. Packages</td>
+</tr>
+<tr>
+<td>2. Libraries</td>
+</tr>
+<tr>
+<td>3. Drivers</td>
+</tr>
+<tr>
+<td>4. Helper files</td>
+</tr>
+<tr>
+<td>5. Custom config files</td>
+</tr>
+<tr>
+<td>6. Language files</td>
+</tr>
+<tr>
+<td>7. Models</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto-load Packages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototype:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['packages'] = array(APPPATH.'third_party', '/usr/local/shared');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$autoload[<span class="hljs-string">'packages'</span>] = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto-load Libraries</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>These are the classes located in system/libraries/ or your</td>
+</tr>
+<tr>
+<td>application/libraries/ directory, with the addition of the</td>
+</tr>
+<tr>
+<td>'database' library, which is somewhat of a special case.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Prototype:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['libraries'] = array('database', 'email', 'session');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>You can also supply an alternative library name to be assigned</td>
+</tr>
+<tr>
+<td>in the controller:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['libraries'] = array('user_agent' =&gt; 'ua');</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$autoload[<span class="hljs-string">'libraries'</span>] = <span class="hljs-keyword">array</span>(<span class="hljs-string">'session'</span>, <span class="hljs-string">'database'</span>, <span class="hljs-string">'table'</span>, <span class="hljs-string">'form_validation'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto-load Drivers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>These classes are located in system/libraries/ or in your</td>
+</tr>
+<tr>
+<td>application/libraries/ directory, but are also placed inside their</td>
+</tr>
+<tr>
+<td>own subdirectory and they extend the CI_Driver_Library class. They</td>
+</tr>
+<tr>
+<td>offer multiple interchangeable driver options.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Prototype:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['drivers'] = array('cache');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>You can also supply an alternative property name to be assigned in</td>
+</tr>
+<tr>
+<td>the controller:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['drivers'] = array('cache' =&gt; 'cch');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$autoload[<span class="hljs-string">'drivers'</span>] = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto-load Helper Files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototype:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['helper'] = array('url', 'file');</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$autoload[<span class="hljs-string">'helper'</span>] = <span class="hljs-keyword">array</span>(<span class="hljs-string">'url'</span>, <span class="hljs-string">'form'</span>, <span class="hljs-string">'file'</span>, <span class="hljs-string">'string'</span>, <span class="hljs-string">'security'</span>, <span class="hljs-string">'cookie'</span>, <span class="hljs-string">'captcha'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto-load Config files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototype:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['config'] = array('config1', 'config2');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>NOTE: This item is intended for use ONLY if you have created custom</td>
+</tr>
+<tr>
+<td>config files.  Otherwise, leave it blank.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$autoload[<span class="hljs-string">'config'</span>] = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto-load Language files</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototype:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['language'] = array('lang1', 'lang2');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>NOTE: Do not include the &quot;_lang&quot; part of your file.  For example</td>
+</tr>
+<tr>
+<td>&quot;codeigniter_lang.php&quot; would be referenced as array('codeigniter');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$autoload[<span class="hljs-string">'language'</span>] = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>Auto-load Models</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototype:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['model'] = array('first_model', 'second_model');</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>You can also supply an alternative model name to be assigned</td>
+</tr>
+<tr>
+<td>in the controller:</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>$autoload['model'] = array('first_model' =&gt; 'first');</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$autoload[<span class="hljs-string">'model'</span>] = <span class="hljs-keyword">array</span>(<span class="hljs-string">'user_model'</span>, <span class="hljs-string">'file_model'</span>, <span class="hljs-string">'product_model'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

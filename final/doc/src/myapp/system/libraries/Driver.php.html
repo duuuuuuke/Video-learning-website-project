@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Driver.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Driver.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Driver.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Driver Library Class</p>
+</div>
+<div class="body">
+<p>This class enables you to create &quot;Driver&quot; libraries that add runtime ability
+to extend the capabilities of a class via additional driver objects</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Driver_Library</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Array of drivers that are available to use with the driver class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $valid_drivers = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Name of the current class - usually the driver class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $lib_name;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get magic method</p>
+</div>
+<div class="body">
+<p>The first time a child is used it won't exist, so we instantiate it
+subsequents calls will go straight to the proper child.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>Child class name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object Child class
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__get</span><span class="hljs-params">($child)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Try to load the driver</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;load_driver($child);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Load driver</p>
+</div>
+<div class="body">
+<p>Separate load_driver call to support explicit driver load by library or user</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>Driver name (w/o parent prefix)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object Child class
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load_driver</span><span class="hljs-params">($child)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Get CodeIgniter instance and subclass prefix</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$prefix = config_item(<span class="hljs-string">'subclass_prefix'</span>);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;lib_name))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Get library name without any prefix</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;lib_name = str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'CI_'</span>, $prefix), <span class="hljs-string">''</span>, get_class(<span class="hljs-keyword">$this</span>));
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>The child will be prefixed with the parent lib</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$child_name = <span class="hljs-keyword">$this</span>-&gt;lib_name.<span class="hljs-string">'_'</span>.$child;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>See if requested child is a valid driver</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! in_array($child, <span class="hljs-keyword">$this</span>-&gt;valid_drivers))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>The requested driver isn't valid!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$msg = <span class="hljs-string">'Invalid driver requested: '</span>.$child_name;
+			log_message(<span class="hljs-string">'error'</span>, $msg);
+			show_error($msg);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Get package paths and filename case variations to search</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$CI = get_instance();
+		$paths = $CI-&gt;load-&gt;get_package_paths(<span class="hljs-keyword">TRUE</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Is there an extension?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$class_name = $prefix.$child_name;
+		$found = class_exists($class_name, <span class="hljs-keyword">FALSE</span>);
+		<span class="hljs-keyword">if</span> ( ! $found)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Check for subclass file</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">foreach</span> ($paths <span class="hljs-keyword">as</span> $path)
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>Does the file exist?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				$file = $path.<span class="hljs-string">'libraries/'</span>.<span class="hljs-keyword">$this</span>-&gt;lib_name.<span class="hljs-string">'/drivers/'</span>.$prefix.$child_name.<span class="hljs-string">'.php'</span>;
+				<span class="hljs-keyword">if</span> (file_exists($file))
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>Yes - require base class from BASEPATH</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					$basepath = BASEPATH.<span class="hljs-string">'libraries/'</span>.<span class="hljs-keyword">$this</span>-&gt;lib_name.<span class="hljs-string">'/drivers/'</span>.$child_name.<span class="hljs-string">'.php'</span>;
+					<span class="hljs-keyword">if</span> ( ! file_exists($basepath))
+					{
+						$msg = <span class="hljs-string">'Unable to load the requested class: CI_'</span>.$child_name;
+						log_message(<span class="hljs-string">'error'</span>, $msg);
+						show_error($msg);
+					}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<p>Include both sources and mark found</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">include_once</span>($basepath);
+					<span class="hljs-keyword">include_once</span>($file);
+					$found = <span class="hljs-keyword">TRUE</span>;
+					<span class="hljs-keyword">break</span>;
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>Do we need to search for the class?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! $found)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>Use standard class name</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$class_name = <span class="hljs-string">'CI_'</span>.$child_name;
+			<span class="hljs-keyword">if</span> ( ! class_exists($class_name, <span class="hljs-keyword">FALSE</span>))
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>Check package paths</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">foreach</span> ($paths <span class="hljs-keyword">as</span> $path)
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>Does the file exist?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					$file = $path.<span class="hljs-string">'libraries/'</span>.<span class="hljs-keyword">$this</span>-&gt;lib_name.<span class="hljs-string">'/drivers/'</span>.$child_name.<span class="hljs-string">'.php'</span>;
+					<span class="hljs-keyword">if</span> (file_exists($file))
+					{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>Include source</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">						<span class="hljs-keyword">include_once</span>($file);
+						<span class="hljs-keyword">break</span>;
+					}
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<p>Did we finally find the class?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! class_exists($class_name, <span class="hljs-keyword">FALSE</span>))
+		{
+			<span class="hljs-keyword">if</span> (class_exists($child_name, <span class="hljs-keyword">FALSE</span>))
+			{
+				$class_name = $child_name;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$msg = <span class="hljs-string">'Unable to load the requested driver: '</span>.$class_name;
+				log_message(<span class="hljs-string">'error'</span>, $msg);
+				show_error($msg);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<p>Instantiate, decorate and add child</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$obj = <span class="hljs-keyword">new</span> $class_name();
+		$obj-&gt;decorate(<span class="hljs-keyword">$this</span>);
+		<span class="hljs-keyword">$this</span>-&gt;$child = $obj;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;$child;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Driver Class</p>
+</div>
+<div class="body">
+<p>This class enables you to create drivers for a Library based on the Driver Library.
+It handles the drivers' access to the parent library</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Driver</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Instance of the parent class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_parent;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of methods in the parent class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_methods = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of properties in the parent class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_properties = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Array of methods and properties for the parent class(es)</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> $_reflections = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Decorate</p>
+</div>
+<div class="body">
+<p>Decorates the child with the parent driver lib's methods and properties</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">object</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">decorate</span><span class="hljs-params">($parent)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_parent = $parent;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<p>Lock down attributes to what is defined in the class
+and speed up references in magic methods</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$class_name = get_class($parent);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">self</span>::$_reflections[$class_name]))
+		{
+			$r = <span class="hljs-keyword">new</span> ReflectionObject($parent);
+
+			<span class="hljs-keyword">foreach</span> ($r-&gt;getMethods() <span class="hljs-keyword">as</span> $method)
+			{
+				<span class="hljs-keyword">if</span> ($method-&gt;isPublic())
+				{
+					<span class="hljs-keyword">$this</span>-&gt;_methods[] = $method-&gt;getName();
+				}
+			}
+
+			<span class="hljs-keyword">foreach</span> ($r-&gt;getProperties() <span class="hljs-keyword">as</span> $prop)
+			{
+				<span class="hljs-keyword">if</span> ($prop-&gt;isPublic())
+				{
+					<span class="hljs-keyword">$this</span>-&gt;_properties[] = $prop-&gt;getName();
+				}
+			}
+
+			<span class="hljs-keyword">self</span>::$_reflections[$class_name] = <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;_methods, <span class="hljs-keyword">$this</span>-&gt;_properties);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">list</span>(<span class="hljs-keyword">$this</span>-&gt;_methods, <span class="hljs-keyword">$this</span>-&gt;_properties) = <span class="hljs-keyword">self</span>::$_reflections[$class_name];
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>__call magic method</p>
+</div>
+<div class="body">
+<p>Handles access to the parent driver library's methods</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__call</span><span class="hljs-params">($method, $args = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (in_array($method, <span class="hljs-keyword">$this</span>-&gt;_methods))
+		{
+			<span class="hljs-keyword">return</span> call_user_func_array(<span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;_parent, $method), $args);
+		}
+
+		<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> BadMethodCallException(<span class="hljs-string">'No such method: '</span>.$method.<span class="hljs-string">'()'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>__get magic method</p>
+</div>
+<div class="body">
+<p>Handles reading of the parent driver library's properties</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__get</span><span class="hljs-params">($var)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (in_array($var, <span class="hljs-keyword">$this</span>-&gt;_properties))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_parent-&gt;$var;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>__set magic method</p>
+</div>
+<div class="body">
+<p>Handles writing to the parent driver library's properties</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__set</span><span class="hljs-params">($var, $val)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (in_array($var, <span class="hljs-keyword">$this</span>-&gt;_properties))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_parent-&gt;$var = $val;
+		}
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

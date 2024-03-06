@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hooks.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Hooks.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h2">
+        <a href="#safety-prevents-run-away-loops">Safety - Prevents run-away loops</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#set-file-path">Set file path</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Hooks.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Hooks Class</p>
+</div>
+<div class="body">
+<p>Provides a mechanism to extend the base system without hacking.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Hooks</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Determines whether hooks are enabled</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $enabled = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of all hooks set in config/hooks.php</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $hooks =	<span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Array with class objects to use hooks methods</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_objects = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>In progress flag</p>
+</div>
+<div class="body">
+<p>Determines whether hook is in progress, used to prevent infinte loops</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_in_progress = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		$CFG =&amp; load_class(<span class="hljs-string">'Config'</span>, <span class="hljs-string">'core'</span>);
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Hooks Class Initialized'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>If hooks are not enabled in the config file
+there is nothing else to do</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($CFG-&gt;item(<span class="hljs-string">'enable_hooks'</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Grab the &quot;hooks&quot; definition file.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/hooks.php'</span>))
+		{
+			<span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/hooks.php'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/hooks.php'</span>))
+		{
+			<span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/hooks.php'</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>If there are no hooks, we're done.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($hook) <span class="hljs-keyword">OR</span> ! is_array($hook))
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;hooks =&amp; $hook;
+		<span class="hljs-keyword">$this</span>-&gt;enabled = <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Call Hook</p>
+</div>
+<div class="body">
+<p>Calls a particular hook. Called by CodeIgniter.php.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$which Hook name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool TRUE on success or FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">call_hook</span><span class="hljs-params">($which = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;enabled <span class="hljs-keyword">OR</span> ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;hooks[$which]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (is_array(<span class="hljs-keyword">$this</span>-&gt;hooks[$which]) &amp;&amp; ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;hooks[$which][<span class="hljs-string">'function'</span>]))
+		{
+			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;hooks[$which] <span class="hljs-keyword">as</span> $val)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_run_hook($val);
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_run_hook(<span class="hljs-keyword">$this</span>-&gt;hooks[$which]);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Run Hook</p>
+</div>
+<div class="body">
+<p>Runs a particular hook</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$data Hook details
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool TRUE on success or FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_run_hook</span><span class="hljs-params">($data)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Closures/lambda functions and array($object, 'method') callables</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_callable($data))
+		{
+			is_array($data)
+				? $data[<span class="hljs-number">0</span>]-&gt;{$data[<span class="hljs-number">1</span>]}()
+				: $data();
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_array($data))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="safety-prevents-run-away-loops">
+  <h2>
+    <a href="#safety-prevents-run-away-loops" name="safety-prevents-run-away-loops" class="pilcrow"></a>
+Safety - Prevents run-away loops
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>If the script being called happens to have the same
+hook call within it a loop can happen</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_in_progress === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="set-file-path">
+  <h2>
+    <a href="#set-file-path" name="set-file-path" class="pilcrow"></a>
+Set file path
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'filepath'</span>], $data[<span class="hljs-string">'filename'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$filepath = APPPATH.$data[<span class="hljs-string">'filepath'</span>].<span class="hljs-string">'/'</span>.$data[<span class="hljs-string">'filename'</span>];
+
+		<span class="hljs-keyword">if</span> ( ! file_exists($filepath))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>Determine and class and/or function names</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$class		= <span class="hljs-keyword">empty</span>($data[<span class="hljs-string">'class'</span>]) ? <span class="hljs-keyword">FALSE</span> : $data[<span class="hljs-string">'class'</span>];
+		$function	= <span class="hljs-keyword">empty</span>($data[<span class="hljs-string">'function'</span>]) ? <span class="hljs-keyword">FALSE</span> : $data[<span class="hljs-string">'function'</span>];
+		$params		= <span class="hljs-keyword">isset</span>($data[<span class="hljs-string">'params'</span>]) ? $data[<span class="hljs-string">'params'</span>] : <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($function))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>Set the _in_progress flag</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_in_progress = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>Call the requested class and/or function</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($class !== <span class="hljs-keyword">FALSE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>The object is stored?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_objects[$class]))
+			{
+				<span class="hljs-keyword">if</span> (method_exists(<span class="hljs-keyword">$this</span>-&gt;_objects[$class], $function))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;_objects[$class]-&gt;$function($params);
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_in_progress = <span class="hljs-keyword">FALSE</span>;
+				}
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				class_exists($class, <span class="hljs-keyword">FALSE</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">require_once</span>($filepath);
+
+				<span class="hljs-keyword">if</span> ( ! class_exists($class, <span class="hljs-keyword">FALSE</span>) <span class="hljs-keyword">OR</span> ! method_exists($class, $function))
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_in_progress = <span class="hljs-keyword">FALSE</span>;
+				}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>Store the object and execute the method</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">$this</span>-&gt;_objects[$class] = <span class="hljs-keyword">new</span> $class();
+				<span class="hljs-keyword">$this</span>-&gt;_objects[$class]-&gt;$function($params);
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			function_exists($function) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">require_once</span>($filepath);
+
+			<span class="hljs-keyword">if</span> ( ! function_exists($function))
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_in_progress = <span class="hljs-keyword">FALSE</span>;
+			}
+
+			$function($params);
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_in_progress = <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

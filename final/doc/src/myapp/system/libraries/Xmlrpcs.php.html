@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Xmlrpcs.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Xmlrpcs.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h2">
+        <a href="#get-data">Get Data</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#set-up-xml-parser">Set up XML Parser</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#parse-+-process-xml-data">PARSE + PROCESS XML DATA</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#set-debugging-message">SET DEBUGGING MESSAGE</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#valid-method">Valid Method</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#check-for-method-and-object">Check for Method (and Object)</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#checking-methods-signature">Checking Methods Signature</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#calls-the-function">Calls the Function</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Xmlrpcs.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'xml_parser_create'</span>))
+{
+	show_error(<span class="hljs-string">'Your PHP installation does not support XML'</span>);
+}
+
+<span class="hljs-keyword">if</span> ( ! class_exists(<span class="hljs-string">'CI_Xmlrpc'</span>, <span class="hljs-keyword">FALSE</span>))
+{
+	show_error(<span class="hljs-string">'You must load the Xmlrpc class before loading the Xmlrpcs class in order to create a server.'</span>);
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>XML-RPC server class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Xmlrpcs</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Xmlrpc</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Array of methods mapped to function names and signatures</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $methods = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Debug Message</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $debug_msg = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>XML RPC Server methods</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $system_methods	= <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Configuration object</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $object = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize XMLRPC class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$config
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($config = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">parent</span>::__construct();
+		<span class="hljs-keyword">$this</span>-&gt;set_system_methods();
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($config[<span class="hljs-string">'functions'</span>]) &amp;&amp; is_array($config[<span class="hljs-string">'functions'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;methods = array_merge(<span class="hljs-keyword">$this</span>-&gt;methods, $config[<span class="hljs-string">'functions'</span>]);
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'XML-RPC Server Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize Prefs and Serve</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">($config = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($config[<span class="hljs-string">'functions'</span>]) &amp;&amp; is_array($config[<span class="hljs-string">'functions'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;methods = array_merge(<span class="hljs-keyword">$this</span>-&gt;methods, $config[<span class="hljs-string">'functions'</span>]);
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($config[<span class="hljs-string">'debug'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;debug = $config[<span class="hljs-string">'debug'</span>];
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($config[<span class="hljs-string">'object'</span>]) &amp;&amp; is_object($config[<span class="hljs-string">'object'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;object = $config[<span class="hljs-string">'object'</span>];
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($config[<span class="hljs-string">'xss_clean'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;xss_clean = $config[<span class="hljs-string">'xss_clean'</span>];
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Setting of System Methods</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_system_methods</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;methods = <span class="hljs-keyword">array</span>(
+					<span class="hljs-string">'system.listMethods'</span>	 =&gt; <span class="hljs-keyword">array</span>(
+										<span class="hljs-string">'function'</span> =&gt; <span class="hljs-string">'this.listMethods'</span>,
+										<span class="hljs-string">'signature'</span> =&gt; <span class="hljs-keyword">array</span>(<span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;xmlrpcArray, <span class="hljs-keyword">$this</span>-&gt;xmlrpcString), <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;xmlrpcArray)),
+										<span class="hljs-string">'docstring'</span> =&gt; <span class="hljs-string">'Returns an array of available methods on this server'</span>),
+					<span class="hljs-string">'system.methodHelp'</span>	 =&gt; <span class="hljs-keyword">array</span>(
+										<span class="hljs-string">'function'</span> =&gt; <span class="hljs-string">'this.methodHelp'</span>,
+										<span class="hljs-string">'signature'</span> =&gt; <span class="hljs-keyword">array</span>(<span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;xmlrpcString, <span class="hljs-keyword">$this</span>-&gt;xmlrpcString)),
+										<span class="hljs-string">'docstring'</span> =&gt; <span class="hljs-string">'Returns a documentation string for the specified method'</span>),
+					<span class="hljs-string">'system.methodSignature'</span> =&gt; <span class="hljs-keyword">array</span>(
+										<span class="hljs-string">'function'</span> =&gt; <span class="hljs-string">'this.methodSignature'</span>,
+										<span class="hljs-string">'signature'</span> =&gt; <span class="hljs-keyword">array</span>(<span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;xmlrpcArray, <span class="hljs-keyword">$this</span>-&gt;xmlrpcString)),
+										<span class="hljs-string">'docstring'</span> =&gt; <span class="hljs-string">'Returns an array describing the return type and required parameters of a method'</span>),
+					<span class="hljs-string">'system.multicall'</span>	 =&gt; <span class="hljs-keyword">array</span>(
+										<span class="hljs-string">'function'</span> =&gt; <span class="hljs-string">'this.multicall'</span>,
+										<span class="hljs-string">'signature'</span> =&gt; <span class="hljs-keyword">array</span>(<span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>-&gt;xmlrpcArray, <span class="hljs-keyword">$this</span>-&gt;xmlrpcArray)),
+										<span class="hljs-string">'docstring'</span> =&gt; <span class="hljs-string">'Combine multiple RPC calls in one request. See http://www.xmlrpc.com/discuss/msgReader$1208 for details'</span>)
+				);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Main Server Function</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">serve</span><span class="hljs-params">()</span>
+	</span>{
+		$r = <span class="hljs-keyword">$this</span>-&gt;parseRequest();
+		$payload = <span class="hljs-string">'&lt;?xml version="1.0" encoding="'</span>.<span class="hljs-keyword">$this</span>-&gt;xmlrpc_defencoding.<span class="hljs-string">'"?'</span>.<span class="hljs-string">'&gt;'</span>.<span class="hljs-string">"\n"</span>.<span class="hljs-keyword">$this</span>-&gt;debug_msg.$r-&gt;prepare_response();
+
+		header(<span class="hljs-string">'Content-Type: text/xml'</span>);
+		header(<span class="hljs-string">'Content-Length: '</span>.strlen($payload));
+		<span class="hljs-keyword">exit</span>($payload);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Add Method to Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>method name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>function
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>signature
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>docstring
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add_to_map</span><span class="hljs-params">($methodname, $function, $sig, $doc)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;methods[$methodname] = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'function'</span>	=&gt; $function,
+			<span class="hljs-string">'signature'</span>	=&gt; $sig,
+			<span class="hljs-string">'docstring'</span>	=&gt; $doc
+		);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Parse Server Request</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>data
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object xmlrpc response
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseRequest</span><span class="hljs-params">($data = <span class="hljs-string">''</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="get-data">
+  <h2>
+    <a href="#get-data" name="get-data" class="pilcrow"></a>
+Get Data
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> ($data === <span class="hljs-string">''</span>)
+		{
+			$CI =&amp; get_instance();
+			<span class="hljs-keyword">if</span> ($CI-&gt;input-&gt;method() === <span class="hljs-string">'post'</span>)
+			{
+				$data = $CI-&gt;input-&gt;raw_input_stream;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="set-up-xml-parser">
+  <h2>
+    <a href="#set-up-xml-parser" name="set-up-xml-parser" class="pilcrow"></a>
+Set up XML Parser
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$parser = xml_parser_create(<span class="hljs-keyword">$this</span>-&gt;xmlrpc_defencoding);
+		$parser_object = <span class="hljs-keyword">new</span> XML_RPC_Message(<span class="hljs-string">'filler'</span>);
+		$pname = (string) $parser;
+
+		$parser_object-&gt;xh[$pname] = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'isf'</span> =&gt; <span class="hljs-number">0</span>,
+			<span class="hljs-string">'isf_reason'</span> =&gt; <span class="hljs-string">''</span>,
+			<span class="hljs-string">'params'</span> =&gt; <span class="hljs-keyword">array</span>(),
+			<span class="hljs-string">'stack'</span> =&gt; <span class="hljs-keyword">array</span>(),
+			<span class="hljs-string">'valuestack'</span> =&gt; <span class="hljs-keyword">array</span>(),
+			<span class="hljs-string">'method'</span> =&gt; <span class="hljs-string">''</span>
+		);
+
+		xml_set_object($parser, $parser_object);
+		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, <span class="hljs-keyword">TRUE</span>);
+		xml_set_element_handler($parser, <span class="hljs-string">'open_tag'</span>, <span class="hljs-string">'closing_tag'</span>);
+		xml_set_character_data_handler($parser, <span class="hljs-string">'character_data'</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>xml_set_default_handler($parser, 'default_handler');</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="parse-+-process-xml-data">
+  <h2>
+    <a href="#parse-+-process-xml-data" name="parse-+-process-xml-data" class="pilcrow"></a>
+PARSE + PROCESS XML DATA
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> ( ! xml_parse($parser, $data, <span class="hljs-number">1</span>))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>Return XML error as a faultCode</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$r = <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>,
+				<span class="hljs-keyword">$this</span>-&gt;xmlrpcerrxml + xml_get_error_code($parser),
+				sprintf(<span class="hljs-string">'XML error: %s at line %d'</span>,
+				xml_error_string(xml_get_error_code($parser)),
+				xml_get_current_line_number($parser)));
+			xml_parser_free($parser);
+		}
+		<span class="hljs-keyword">elseif</span> ($parser_object-&gt;xh[$pname][<span class="hljs-string">'isf'</span>])
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'invalid_return'</span>], <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'invalid_return'</span>]);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			xml_parser_free($parser);
+
+			$m = <span class="hljs-keyword">new</span> XML_RPC_Message($parser_object-&gt;xh[$pname][<span class="hljs-string">'method'</span>]);
+			$plist = <span class="hljs-string">''</span>;
+
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($parser_object-&gt;xh[$pname][<span class="hljs-string">'params'</span>]); $i &lt; $c; $i++)
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;debug === <span class="hljs-keyword">TRUE</span>)
+				{
+					$plist .= $i.<span class="hljs-string">' - '</span>.print_r(get_object_vars($parser_object-&gt;xh[$pname][<span class="hljs-string">'params'</span>][$i]), <span class="hljs-keyword">TRUE</span>).<span class="hljs-string">";\n"</span>;
+				}
+
+				$m-&gt;addParam($parser_object-&gt;xh[$pname][<span class="hljs-string">'params'</span>][$i]);
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;debug === <span class="hljs-keyword">TRUE</span>)
+			{
+				<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;pre&gt;---PLIST---\n"</span>.$plist.<span class="hljs-string">"\n---PLIST END---\n\n&lt;/pre&gt;"</span>;
+			}
+
+			$r = <span class="hljs-keyword">$this</span>-&gt;_execute($m);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="set-debugging-message">
+  <h2>
+    <a href="#set-debugging-message" name="set-debugging-message" class="pilcrow"></a>
+SET DEBUGGING MESSAGE
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;debug === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;debug_msg = <span class="hljs-string">"&lt;!-- DEBUG INFO:\n\n"</span>.$plist.<span class="hljs-string">"\n END DEBUG--&gt;\n"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $r;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Executes the Method</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">object</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_execute</span><span class="hljs-params">($m)</span>
+	</span>{
+		$methName = $m-&gt;method_name;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>Check to see if it is a system call</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$system_call = (strpos($methName, <span class="hljs-string">'system'</span>) === <span class="hljs-number">0</span>);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;xss_clean === <span class="hljs-keyword">FALSE</span>)
+		{
+			$m-&gt;xss_clean = <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="valid-method">
+  <h2>
+    <a href="#valid-method" name="valid-method" class="pilcrow"></a>
+Valid Method
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;methods[$methName][<span class="hljs-string">'function'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'unknown_method'</span>], <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'unknown_method'</span>]);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="check-for-method-and-object">
+  <h2>
+    <a href="#check-for-method-and-object" name="check-for-method-and-object" class="pilcrow"></a>
+Check for Method (and Object)
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$method_parts = explode(<span class="hljs-string">'.'</span>, <span class="hljs-keyword">$this</span>-&gt;methods[$methName][<span class="hljs-string">'function'</span>]);
+		$objectCall   = ! <span class="hljs-keyword">empty</span>($method_parts[<span class="hljs-number">1</span>]);
+
+		<span class="hljs-keyword">if</span> ($system_call === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">if</span> ( ! is_callable(<span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, $method_parts[<span class="hljs-number">1</span>])))
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'unknown_method'</span>], <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'unknown_method'</span>]);
+			}
+		}
+		<span class="hljs-keyword">elseif</span> (($objectCall &amp;&amp; ! is_callable(<span class="hljs-keyword">array</span>($method_parts[<span class="hljs-number">0</span>], $method_parts[<span class="hljs-number">1</span>])))
+			<span class="hljs-keyword">OR</span> ( ! $objectCall &amp;&amp; ! is_callable(<span class="hljs-keyword">$this</span>-&gt;methods[$methName][<span class="hljs-string">'function'</span>]))
+		)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'unknown_method'</span>], <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'unknown_method'</span>]);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="checking-methods-signature">
+  <h2>
+    <a href="#checking-methods-signature" name="checking-methods-signature" class="pilcrow"></a>
+Checking Methods Signature
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;methods[$methName][<span class="hljs-string">'signature'</span>]))
+		{
+			$sig = <span class="hljs-keyword">$this</span>-&gt;methods[$methName][<span class="hljs-string">'signature'</span>];
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($sig); $i &lt; $c; $i++)
+			{
+				$current_sig = $sig[$i];
+
+				<span class="hljs-keyword">if</span> (count($current_sig) === count($m-&gt;params)+<span class="hljs-number">1</span>)
+				{
+					<span class="hljs-keyword">for</span> ($n = <span class="hljs-number">0</span>, $mc = count($m-&gt;params); $n &lt; $mc; $n++)
+					{
+						$p = $m-&gt;params[$n];
+						$pt = ($p-&gt;kindOf() === <span class="hljs-string">'scalar'</span>) ? $p-&gt;scalarval() : $p-&gt;kindOf();
+
+						<span class="hljs-keyword">if</span> ($pt !== $current_sig[$n+<span class="hljs-number">1</span>])
+						{
+							$pno = $n+<span class="hljs-number">1</span>;
+							$wanted = $current_sig[$n+<span class="hljs-number">1</span>];
+
+							<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>,
+								<span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'incorrect_params'</span>],
+								<span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'incorrect_params'</span>] .
+								<span class="hljs-string">': Wanted '</span>.$wanted.<span class="hljs-string">', got '</span>.$pt.<span class="hljs-string">' at param '</span>.$pno.<span class="hljs-string">')'</span>);
+						}
+					}
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="calls-the-function">
+  <h2>
+    <a href="#calls-the-function" name="calls-the-function" class="pilcrow"></a>
+Calls the Function
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> ($objectCall === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">if</span> ($method_parts[<span class="hljs-number">0</span>] === <span class="hljs-string">'this'</span> &amp;&amp; $system_call === <span class="hljs-keyword">TRUE</span>)
+			{
+				<span class="hljs-keyword">return</span> call_user_func(<span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, $method_parts[<span class="hljs-number">1</span>]), $m);
+			}
+			<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;object === <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">return</span> get_instance()-&gt;{$method_parts[<span class="hljs-number">1</span>]}($m);
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;object-&gt;{$method_parts[<span class="hljs-number">1</span>]}($m);
+		}
+
+		<span class="hljs-keyword">return</span> call_user_func(<span class="hljs-keyword">$this</span>-&gt;methods[$methName][<span class="hljs-string">'function'</span>], $m);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Server Function: List Methods</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">listMethods</span><span class="hljs-params">($m)</span>
+	</span>{
+		$v = <span class="hljs-keyword">new</span> XML_RPC_Values();
+		$output = <span class="hljs-keyword">array</span>();
+
+		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;methods <span class="hljs-keyword">as</span> $key =&gt; $value)
+		{
+			$output[] = <span class="hljs-keyword">new</span> XML_RPC_Values($key, <span class="hljs-string">'string'</span>);
+		}
+
+		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;system_methods <span class="hljs-keyword">as</span> $key =&gt; $value)
+		{
+			$output[] = <span class="hljs-keyword">new</span> XML_RPC_Values($key, <span class="hljs-string">'string'</span>);
+		}
+
+		$v-&gt;addArray($output);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response($v);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Server Function: Return Signature for Method</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">methodSignature</span><span class="hljs-params">($m)</span>
+	</span>{
+		$parameters = $m-&gt;output_parameters();
+		$method_name = $parameters[<span class="hljs-number">0</span>];
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;methods[$method_name]))
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;methods[$method_name][<span class="hljs-string">'signature'</span>])
+			{
+				$sigs = <span class="hljs-keyword">array</span>();
+				$signature = <span class="hljs-keyword">$this</span>-&gt;methods[$method_name][<span class="hljs-string">'signature'</span>];
+
+				<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($signature); $i &lt; $c; $i++)
+				{
+					$cursig = <span class="hljs-keyword">array</span>();
+					$inSig = $signature[$i];
+					<span class="hljs-keyword">for</span> ($j = <span class="hljs-number">0</span>, $jc = count($inSig); $j &lt; $jc; $j++)
+					{
+						$cursig[]= <span class="hljs-keyword">new</span> XML_RPC_Values($inSig[$j], <span class="hljs-string">'string'</span>);
+					}
+					$sigs[] = <span class="hljs-keyword">new</span> XML_RPC_Values($cursig, <span class="hljs-string">'array'</span>);
+				}
+
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-keyword">new</span> XML_RPC_Values($sigs, <span class="hljs-string">'array'</span>));
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-keyword">new</span> XML_RPC_Values(<span class="hljs-string">'undef'</span>, <span class="hljs-string">'string'</span>));
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'introspect_unknown'</span>], <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'introspect_unknown'</span>]);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Server Function: Doc String for Method</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">methodHelp</span><span class="hljs-params">($m)</span>
+	</span>{
+		$parameters = $m-&gt;output_parameters();
+		$method_name = $parameters[<span class="hljs-number">0</span>];
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;methods[$method_name]))
+		{
+			$docstring = <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;methods[$method_name][<span class="hljs-string">'docstring'</span>]) ? <span class="hljs-keyword">$this</span>-&gt;methods[$method_name][<span class="hljs-string">'docstring'</span>] : <span class="hljs-string">''</span>;
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-keyword">new</span> XML_RPC_Values($docstring, <span class="hljs-string">'string'</span>));
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'introspect_unknown'</span>], <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'introspect_unknown'</span>]);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Server Function: Multi-call</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">multicall</span><span class="hljs-params">($m)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<p>Disabled</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">'unknown_method'</span>], <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">'unknown_method'</span>]);
+
+		$parameters = $m-&gt;output_parameters();
+		$calls = $parameters[<span class="hljs-number">0</span>];
+
+		$result = <span class="hljs-keyword">array</span>();
+
+		<span class="hljs-keyword">foreach</span> ($calls <span class="hljs-keyword">as</span> $value)
+		{
+			$m = <span class="hljs-keyword">new</span> XML_RPC_Message($value[<span class="hljs-number">0</span>]);
+			$plist = <span class="hljs-string">''</span>;
+
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($value[<span class="hljs-number">1</span>]); $i &lt; $c; $i++)
+			{
+				$m-&gt;addParam(<span class="hljs-keyword">new</span> XML_RPC_Values($value[<span class="hljs-number">1</span>][$i], <span class="hljs-string">'string'</span>));
+			}
+
+			$attempt = <span class="hljs-keyword">$this</span>-&gt;_execute($m);
+
+			<span class="hljs-keyword">if</span> ($attempt-&gt;faultCode() !== <span class="hljs-number">0</span>)
+			{
+				<span class="hljs-keyword">return</span> $attempt;
+			}
+
+			$result[] = <span class="hljs-keyword">new</span> XML_RPC_Values(<span class="hljs-keyword">array</span>($attempt-&gt;value()), <span class="hljs-string">'array'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Response(<span class="hljs-keyword">new</span> XML_RPC_Values($result, <span class="hljs-string">'array'</span>));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Multi-call Function: Error Handling</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">multicall_error</span><span class="hljs-params">($err)</span>
+	</span>{
+		$str = is_string($err) ? <span class="hljs-keyword">$this</span>-&gt;xmlrpcstr[<span class="hljs-string">"multicall_${err}"</span>] : $err-&gt;faultString();
+		$code = is_string($err) ? <span class="hljs-keyword">$this</span>-&gt;xmlrpcerr[<span class="hljs-string">"multicall_${err}"</span>] : $err-&gt;faultCode();
+
+		$struct[<span class="hljs-string">'faultCode'</span>] = <span class="hljs-keyword">new</span> XML_RPC_Values($code, <span class="hljs-string">'int'</span>);
+		$struct[<span class="hljs-string">'faultString'</span>] = <span class="hljs-keyword">new</span> XML_RPC_Values($str, <span class="hljs-string">'string'</span>);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Values($struct, <span class="hljs-string">'struct'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Multi-call Function: Processes method</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">do_multicall</span><span class="hljs-params">($call)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($call-&gt;kindOf() !== <span class="hljs-string">'struct'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;multicall_error(<span class="hljs-string">'notstruct'</span>);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! $methName = $call-&gt;me[<span class="hljs-string">'struct'</span>][<span class="hljs-string">'methodName'</span>])
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;multicall_error(<span class="hljs-string">'nomethod'</span>);
+		}
+
+		<span class="hljs-keyword">list</span>($scalar_value, $scalar_type) = <span class="hljs-keyword">array</span>(reset($methName-&gt;me), key($methName-&gt;me));
+		$scalar_type = $scalar_type === <span class="hljs-keyword">$this</span>-&gt;xmlrpcI4 ? <span class="hljs-keyword">$this</span>-&gt;xmlrpcInt : $scalar_type;
+
+		<span class="hljs-keyword">if</span> ($methName-&gt;kindOf() !== <span class="hljs-string">'scalar'</span> <span class="hljs-keyword">OR</span> $scalar_type !== <span class="hljs-string">'string'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;multicall_error(<span class="hljs-string">'notstring'</span>);
+		}
+		<span class="hljs-keyword">elseif</span> ($scalar_value === <span class="hljs-string">'system.multicall'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;multicall_error(<span class="hljs-string">'recursion'</span>);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! $params = $call-&gt;me[<span class="hljs-string">'struct'</span>][<span class="hljs-string">'params'</span>])
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;multicall_error(<span class="hljs-string">'noparams'</span>);
+		}
+		<span class="hljs-keyword">elseif</span> ($params-&gt;kindOf() !== <span class="hljs-string">'array'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;multicall_error(<span class="hljs-string">'notarray'</span>);
+		}
+
+		<span class="hljs-keyword">list</span>($b, $a) = <span class="hljs-keyword">array</span>(reset($params-&gt;me), key($params-&gt;me));
+
+		$msg = <span class="hljs-keyword">new</span> XML_RPC_Message($scalar_value);
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $numParams = count($b); $i &lt; $numParams; $i++)
+		{
+			$msg-&gt;params[] = $params-&gt;me[<span class="hljs-string">'array'</span>][$i];
+		}
+
+		$result = <span class="hljs-keyword">$this</span>-&gt;_execute($msg);
+
+		<span class="hljs-keyword">if</span> ($result-&gt;faultCode() !== <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;multicall_error($result);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> XML_RPC_Values(<span class="hljs-keyword">array</span>($result-&gt;value()), <span class="hljs-string">'array'</span>);
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

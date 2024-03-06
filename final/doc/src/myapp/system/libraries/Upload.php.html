@@ -1,0 +1,3477 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Upload.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Upload.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File Uploading Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Upload</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Maximum file size</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $max_size = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Maximum image width</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $max_width = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Maximum image height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $max_height = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Minimum image width</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $min_width = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Minimum image height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $min_height = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Maximum filename length</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $max_filename = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Maximum duplicate filename increment ID</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $max_filename_increment = <span class="hljs-number">100</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Allowed file types</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $allowed_types = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Temporary filename</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $file_temp = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Filename</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $file_name = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Original filename</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $orig_name = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File type</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $file_type = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File size</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $file_size = <span class="hljs-keyword">NULL</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Filename extension</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $file_ext = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Force filename extension to lowercase</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $file_ext_tolower = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Upload path</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $upload_path = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Overwrite flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $overwrite = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Obfuscate filename flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $encrypt_name = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is image flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $is_image = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image width</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $image_width = <span class="hljs-keyword">NULL</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $image_height = <span class="hljs-keyword">NULL</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image type</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $image_type = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image size string</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $image_size_str = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error messages list</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $error_msg = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Remove spaces flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $remove_spaces = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>MIME detection flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $detect_mime = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>XSS filter flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $xss_clean = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Apache mod_mime fix flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $mod_mime_fix = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Temporary filename prefix</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $temp_prefix = <span class="hljs-string">'temp_file_'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Filename sent by the client</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $client_name = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Filename override</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_file_name_override = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>MIME types list</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_mimes = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CI Singleton</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_CI;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$config
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($config = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">empty</span>($config) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;initialize($config, <span class="hljs-keyword">FALSE</span>);
+
+		<span class="hljs-keyword">$this</span>-&gt;_mimes =&amp; get_mimes();
+		<span class="hljs-keyword">$this</span>-&gt;_CI =&amp; get_instance();
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Upload Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize preferences</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$config
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$reset
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">(array $config = array<span class="hljs-params">()</span>, $reset = TRUE)</span>
+	</span>{
+		$reflection = <span class="hljs-keyword">new</span> ReflectionClass(<span class="hljs-keyword">$this</span>);
+
+		<span class="hljs-keyword">if</span> ($reset === <span class="hljs-keyword">TRUE</span>)
+		{
+			$defaults = $reflection-&gt;getDefaultProperties();
+			<span class="hljs-keyword">foreach</span> (array_keys($defaults) <span class="hljs-keyword">as</span> $key)
+			{
+				<span class="hljs-keyword">if</span> ($key[<span class="hljs-number">0</span>] === <span class="hljs-string">'_'</span>)
+				{
+					<span class="hljs-keyword">continue</span>;
+				}
+
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($config[$key]))
+				{
+					<span class="hljs-keyword">if</span> ($reflection-&gt;hasMethod(<span class="hljs-string">'set_'</span>.$key))
+					{
+						<span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'set_'</span>.$key}($config[$key]);
+					}
+					<span class="hljs-keyword">else</span>
+					{
+						<span class="hljs-keyword">$this</span>-&gt;$key = $config[$key];
+					}
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					<span class="hljs-keyword">$this</span>-&gt;$key = $defaults[$key];
+				}
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">foreach</span> ($config <span class="hljs-keyword">as</span> $key =&gt; &amp;$value)
+			{
+				<span class="hljs-keyword">if</span> ($key[<span class="hljs-number">0</span>] !== <span class="hljs-string">'_'</span> &amp;&amp; $reflection-&gt;hasProperty($key))
+				{
+					<span class="hljs-keyword">if</span> ($reflection-&gt;hasMethod(<span class="hljs-string">'set_'</span>.$key))
+					{
+						<span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'set_'</span>.$key}($value);
+					}
+					<span class="hljs-keyword">else</span>
+					{
+						<span class="hljs-keyword">$this</span>-&gt;$key = $value;
+					}
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<p>if a file_name was provided in the config, use it instead of the user input
+supplied file name for all uploads until initialized again</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_file_name_override = <span class="hljs-keyword">$this</span>-&gt;file_name;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Perform the file upload</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$field
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">do_upload</span><span class="hljs-params">($field = <span class="hljs-string">'userfile'</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<p>Is $_FILES[$field] set? If not, no reason to continue.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_FILES[$field]))
+		{
+			$_file = $_FILES[$field];
+		}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<p>Does the field name contain array notation?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">elseif</span> (($c = preg_match_all(<span class="hljs-string">'/(?:^[^\[]+)|\[[^]]*\]/'</span>, $field, $matches)) &gt; <span class="hljs-number">1</span>)
+		{
+			$_file = $_FILES;
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $c; $i++)
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<p>We can't track numeric iterations, only full field names are accepted</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">if</span> (($field = trim($matches[<span class="hljs-number">0</span>][$i], <span class="hljs-string">'[]'</span>)) === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> ! <span class="hljs-keyword">isset</span>($_file[$field]))
+				{
+					$_file = <span class="hljs-keyword">NULL</span>;
+					<span class="hljs-keyword">break</span>;
+				}
+
+				$_file = $_file[$field];
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($_file))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_no_file_selected'</span>, <span class="hljs-string">'debug'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<p>Is the upload path valid?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;validate_upload_path())
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<p>errors will already be set by validate_upload_path() so just return FALSE</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<p>Was the file able to be uploaded? If not, determine the reason why.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_uploaded_file($_file[<span class="hljs-string">'tmp_name'</span>]))
+		{
+			$error = <span class="hljs-keyword">isset</span>($_file[<span class="hljs-string">'error'</span>]) ? $_file[<span class="hljs-string">'error'</span>] : <span class="hljs-number">4</span>;
+
+			<span class="hljs-keyword">switch</span> ($error)
+			{
+				<span class="hljs-keyword">case</span> UPLOAD_ERR_INI_SIZE:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_file_exceeds_limit'</span>, <span class="hljs-string">'info'</span>);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> UPLOAD_ERR_FORM_SIZE:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_file_exceeds_form_limit'</span>, <span class="hljs-string">'info'</span>);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> UPLOAD_ERR_PARTIAL:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_file_partial'</span>, <span class="hljs-string">'debug'</span>);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> UPLOAD_ERR_NO_FILE:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_no_file_selected'</span>, <span class="hljs-string">'debug'</span>);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> UPLOAD_ERR_NO_TMP_DIR:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_no_temp_directory'</span>, <span class="hljs-string">'error'</span>);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> UPLOAD_ERR_CANT_WRITE:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_unable_to_write_file'</span>, <span class="hljs-string">'error'</span>);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> UPLOAD_ERR_EXTENSION:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_stopped_by_extension'</span>, <span class="hljs-string">'debug'</span>);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">default</span>:
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_no_file_selected'</span>, <span class="hljs-string">'debug'</span>);
+					<span class="hljs-keyword">break</span>;
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<p>Set the uploaded data as class variables</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;file_temp = $_file[<span class="hljs-string">'tmp_name'</span>];
+		<span class="hljs-keyword">$this</span>-&gt;file_size = $_file[<span class="hljs-string">'size'</span>];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<p>Skip MIME type detection?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;detect_mime !== <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_file_mime_type($_file);
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;file_type = preg_replace(<span class="hljs-string">'/^(.+?);.*$/'</span>, <span class="hljs-string">'\\1'</span>, <span class="hljs-keyword">$this</span>-&gt;file_type);
+		<span class="hljs-keyword">$this</span>-&gt;file_type = strtolower(trim(stripslashes(<span class="hljs-keyword">$this</span>-&gt;file_type), <span class="hljs-string">'"'</span>));
+		<span class="hljs-keyword">$this</span>-&gt;file_name = <span class="hljs-keyword">$this</span>-&gt;_prep_filename($_file[<span class="hljs-string">'name'</span>]);
+		<span class="hljs-keyword">$this</span>-&gt;file_ext	 = <span class="hljs-keyword">$this</span>-&gt;get_extension(<span class="hljs-keyword">$this</span>-&gt;file_name);
+		<span class="hljs-keyword">$this</span>-&gt;client_name = <span class="hljs-keyword">$this</span>-&gt;file_name;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<p>Is the file type allowed to be uploaded?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;is_allowed_filetype())
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_invalid_filetype'</span>, <span class="hljs-string">'debug'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<p>if we're overriding, let's now make sure the new name and type is allowed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_file_name_override !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;file_name = <span class="hljs-keyword">$this</span>-&gt;_prep_filename(<span class="hljs-keyword">$this</span>-&gt;_file_name_override);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<p>If no extension was provided in the file_name config item, use the uploaded one</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (strpos(<span class="hljs-keyword">$this</span>-&gt;_file_name_override, <span class="hljs-string">'.'</span>) === <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;file_name .= <span class="hljs-keyword">$this</span>-&gt;file_ext;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<p>An extension was provided, let's have it!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">$this</span>-&gt;file_ext	= <span class="hljs-keyword">$this</span>-&gt;get_extension(<span class="hljs-keyword">$this</span>-&gt;_file_name_override);
+			}
+
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;is_allowed_filetype(<span class="hljs-keyword">TRUE</span>))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_invalid_filetype'</span>, <span class="hljs-string">'debug'</span>);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<p>Convert the file size to kilobytes</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;file_size &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;file_size = round(<span class="hljs-keyword">$this</span>-&gt;file_size/<span class="hljs-number">1024</span>, <span class="hljs-number">2</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<p>Is the file size within the allowed maximum?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;is_allowed_filesize())
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_invalid_filesize'</span>, <span class="hljs-string">'info'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<p>Are the image dimensions within the allowed size?
+Note: This can fail if the server has an open_basedir restriction.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;is_allowed_dimensions())
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_invalid_dimensions'</span>, <span class="hljs-string">'info'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<p>Sanitize the file name for security</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;file_name = <span class="hljs-keyword">$this</span>-&gt;_CI-&gt;security-&gt;sanitize_filename(<span class="hljs-keyword">$this</span>-&gt;file_name);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<p>Truncate the file name if it's too long</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;max_filename &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;file_name = <span class="hljs-keyword">$this</span>-&gt;limit_filename_length(<span class="hljs-keyword">$this</span>-&gt;file_name, <span class="hljs-keyword">$this</span>-&gt;max_filename);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<p>Remove white spaces in the name</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;remove_spaces === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;file_name = preg_replace(<span class="hljs-string">'/\s+/'</span>, <span class="hljs-string">'_'</span>, <span class="hljs-keyword">$this</span>-&gt;file_name);
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;file_ext_tolower &amp;&amp; ($ext_length = strlen(<span class="hljs-keyword">$this</span>-&gt;file_ext)))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<p>file_ext was previously lower-cased by a get_extension() call</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;file_name = substr(<span class="hljs-keyword">$this</span>-&gt;file_name, <span class="hljs-number">0</span>, -$ext_length).<span class="hljs-keyword">$this</span>-&gt;file_ext;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate the file name
+This function appends an number onto the end of
+the file if one with the same name already exists.
+If it returns false there was a problem.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;orig_name = <span class="hljs-keyword">$this</span>-&gt;file_name;
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">FALSE</span> === (<span class="hljs-keyword">$this</span>-&gt;file_name = <span class="hljs-keyword">$this</span>-&gt;set_filename(<span class="hljs-keyword">$this</span>-&gt;upload_path, <span class="hljs-keyword">$this</span>-&gt;file_name)))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Run the file through the XSS hacking filter
+This helps prevent malicious code from being
+embedded within a file. Scripts can easily
+be disguised as images or other file types.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;xss_clean &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;do_xss_clean() === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_unable_to_write_file'</span>, <span class="hljs-string">'error'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Move the file to the final destination
+To deal with different server configurations
+we'll attempt to use copy() first. If that fails
+we'll use move_uploaded_file(). One of the two should
+reliably work in most environments</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! @copy(<span class="hljs-keyword">$this</span>-&gt;file_temp, <span class="hljs-keyword">$this</span>-&gt;upload_path.<span class="hljs-keyword">$this</span>-&gt;file_name))
+		{
+			<span class="hljs-keyword">if</span> ( ! @move_uploaded_file(<span class="hljs-keyword">$this</span>-&gt;file_temp, <span class="hljs-keyword">$this</span>-&gt;upload_path.<span class="hljs-keyword">$this</span>-&gt;file_name))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_destination_error'</span>, <span class="hljs-string">'error'</span>);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set the finalized image dimensions
+This sets the image width/height (assuming the
+file was an image). We use this information
+in the &quot;data&quot; function.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;set_image_properties(<span class="hljs-keyword">$this</span>-&gt;upload_path.<span class="hljs-keyword">$this</span>-&gt;file_name);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Finalized Data Array</p>
+</div>
+<div class="body">
+<p>Returns an associative array containing all of the information
+related to the upload, allowing the developer easy access in one array.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$index
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">data</span><span class="hljs-params">($index = NULL)</span>
+	</span>{
+		$data = <span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'file_name'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;file_name,
+				<span class="hljs-string">'file_type'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;file_type,
+				<span class="hljs-string">'file_path'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;upload_path,
+				<span class="hljs-string">'full_path'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;upload_path.<span class="hljs-keyword">$this</span>-&gt;file_name,
+				<span class="hljs-string">'raw_name'</span>		=&gt; substr(<span class="hljs-keyword">$this</span>-&gt;file_name, <span class="hljs-number">0</span>, -strlen(<span class="hljs-keyword">$this</span>-&gt;file_ext)),
+				<span class="hljs-string">'orig_name'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;orig_name,
+				<span class="hljs-string">'client_name'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;client_name,
+				<span class="hljs-string">'file_ext'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;file_ext,
+				<span class="hljs-string">'file_size'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;file_size,
+				<span class="hljs-string">'is_image'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;is_image(),
+				<span class="hljs-string">'image_width'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;image_width,
+				<span class="hljs-string">'image_height'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;image_height,
+				<span class="hljs-string">'image_type'</span>		=&gt; <span class="hljs-keyword">$this</span>-&gt;image_type,
+				<span class="hljs-string">'image_size_str'</span>	=&gt; <span class="hljs-keyword">$this</span>-&gt;image_size_str,
+			);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($index))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($data[$index]) ? $data[$index] : <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $data;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Upload Path</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$path
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_upload_path</span><span class="hljs-params">($path)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<p>Make sure it has a trailing slash</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;upload_path = rtrim($path, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-74" id="section-74"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set the file name</p>
+</div>
+<div class="body">
+<p>This function takes a filename/path as input and looks for the
+existence of a file with the same name. If found, it will append a
+number to the end of the filename to avoid overwriting a pre-existing file.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$path
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$filename
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_filename</span><span class="hljs-params">($path, $filename)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;encrypt_name === <span class="hljs-keyword">TRUE</span>)
+		{
+			$filename = md5(uniqid(mt_rand())).<span class="hljs-keyword">$this</span>-&gt;file_ext;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;overwrite === <span class="hljs-keyword">TRUE</span> <span class="hljs-keyword">OR</span> ! file_exists($path.$filename))
+		{
+			<span class="hljs-keyword">return</span> $filename;
+		}
+
+		$filename = str_replace(<span class="hljs-keyword">$this</span>-&gt;file_ext, <span class="hljs-string">''</span>, $filename);
+
+		$new_filename = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">1</span>; $i &lt; <span class="hljs-keyword">$this</span>-&gt;max_filename_increment; $i++)
+		{
+			<span class="hljs-keyword">if</span> ( ! file_exists($path.$filename.$i.<span class="hljs-keyword">$this</span>-&gt;file_ext))
+			{
+				$new_filename = $filename.$i.<span class="hljs-keyword">$this</span>-&gt;file_ext;
+				<span class="hljs-keyword">break</span>;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($new_filename === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_bad_filename'</span>, <span class="hljs-string">'debug'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $new_filename;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-75" id="section-75"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-76" id="section-76"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Maximum File Size</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$n
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_max_filesize</span><span class="hljs-params">($n)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;max_size = ($n &lt; <span class="hljs-number">0</span>) ? <span class="hljs-number">0</span> : (int) $n;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-77" id="section-77"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-78" id="section-78"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Maximum File Size</p>
+</div>
+<div class="body">
+<p>An internal alias to set_max_filesize() to help with configuration
+as initialize() will look for a set_&lt;property_name&gt;() method ...</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$n
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_max_size</span><span class="hljs-params">($n)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;set_max_filesize($n);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-79" id="section-79"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-80" id="section-80"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Maximum File Name Length</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$n
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_max_filename</span><span class="hljs-params">($n)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;max_filename = ($n &lt; <span class="hljs-number">0</span>) ? <span class="hljs-number">0</span> : (int) $n;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-81" id="section-81"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-82" id="section-82"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Maximum Image Width</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$n
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_max_width</span><span class="hljs-params">($n)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;max_width = ($n &lt; <span class="hljs-number">0</span>) ? <span class="hljs-number">0</span> : (int) $n;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-83" id="section-83"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-84" id="section-84"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Maximum Image Height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$n
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_max_height</span><span class="hljs-params">($n)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;max_height = ($n &lt; <span class="hljs-number">0</span>) ? <span class="hljs-number">0</span> : (int) $n;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-85" id="section-85"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-86" id="section-86"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set minimum image width</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$n
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_min_width</span><span class="hljs-params">($n)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;min_width = ($n &lt; <span class="hljs-number">0</span>) ? <span class="hljs-number">0</span> : (int) $n;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-87" id="section-87"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-88" id="section-88"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set minimum image height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$n
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_min_height</span><span class="hljs-params">($n)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;min_height = ($n &lt; <span class="hljs-number">0</span>) ? <span class="hljs-number">0</span> : (int) $n;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-89" id="section-89"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-90" id="section-90"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Allowed File Types</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$types
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_allowed_types</span><span class="hljs-params">($types)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;allowed_types = (is_array($types) <span class="hljs-keyword">OR</span> $types === <span class="hljs-string">'*'</span>)
+			? $types
+			: explode(<span class="hljs-string">'|'</span>, $types);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-91" id="section-91"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-92" id="section-92"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Image Properties</p>
+</div>
+<div class="body">
+<p>Uses GD to determine the width/height/type of image</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$path
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_image_properties</span><span class="hljs-params">($path = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;is_image() &amp;&amp; function_exists(<span class="hljs-string">'getimagesize'</span>))
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">FALSE</span> !== ($D = @getimagesize($path)))
+			{
+				$types = <span class="hljs-keyword">array</span>(<span class="hljs-number">1</span> =&gt; <span class="hljs-string">'gif'</span>, <span class="hljs-number">2</span> =&gt; <span class="hljs-string">'jpeg'</span>, <span class="hljs-number">3</span> =&gt; <span class="hljs-string">'png'</span>);
+
+				<span class="hljs-keyword">$this</span>-&gt;image_width	= $D[<span class="hljs-number">0</span>];
+				<span class="hljs-keyword">$this</span>-&gt;image_height	= $D[<span class="hljs-number">1</span>];
+				<span class="hljs-keyword">$this</span>-&gt;image_type	= <span class="hljs-keyword">isset</span>($types[$D[<span class="hljs-number">2</span>]]) ? $types[$D[<span class="hljs-number">2</span>]] : <span class="hljs-string">'unknown'</span>;
+				<span class="hljs-keyword">$this</span>-&gt;image_size_str	= $D[<span class="hljs-number">3</span>]; <span class="hljs-comment">// string containing height and width</span>
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-93" id="section-93"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-94" id="section-94"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set XSS Clean</p>
+</div>
+<div class="body">
+<p>Enables the XSS flag so that the file that was uploaded
+will be run through the XSS filter.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$flag
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_xss_clean</span><span class="hljs-params">($flag = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;xss_clean = ($flag === <span class="hljs-keyword">TRUE</span>);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-95" id="section-95"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-96" id="section-96"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate the image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_image</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-97" id="section-97"></a>
+</div>
+<p>IE will sometimes return odd mime-types during upload, so here we just standardize all
+jpegs or pngs to the same file type.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$png_mimes  = <span class="hljs-keyword">array</span>(<span class="hljs-string">'image/x-png'</span>);
+		$jpeg_mimes = <span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jpg'</span>, <span class="hljs-string">'image/jpe'</span>, <span class="hljs-string">'image/jpeg'</span>, <span class="hljs-string">'image/pjpeg'</span>);
+
+		<span class="hljs-keyword">if</span> (in_array(<span class="hljs-keyword">$this</span>-&gt;file_type, $png_mimes))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;file_type = <span class="hljs-string">'image/png'</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (in_array(<span class="hljs-keyword">$this</span>-&gt;file_type, $jpeg_mimes))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;file_type = <span class="hljs-string">'image/jpeg'</span>;
+		}
+
+		$img_mimes = <span class="hljs-keyword">array</span>(<span class="hljs-string">'image/gif'</span>,	<span class="hljs-string">'image/jpeg'</span>, <span class="hljs-string">'image/png'</span>);
+
+		<span class="hljs-keyword">return</span> in_array(<span class="hljs-keyword">$this</span>-&gt;file_type, $img_mimes, <span class="hljs-keyword">TRUE</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-98" id="section-98"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-99" id="section-99"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Verify that the filetype is allowed</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$ignore_mime
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_allowed_filetype</span><span class="hljs-params">($ignore_mime = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;allowed_types === <span class="hljs-string">'*'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;allowed_types) <span class="hljs-keyword">OR</span> ! is_array(<span class="hljs-keyword">$this</span>-&gt;allowed_types))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_no_file_types'</span>, <span class="hljs-string">'debug'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$ext = strtolower(ltrim(<span class="hljs-keyword">$this</span>-&gt;file_ext, <span class="hljs-string">'.'</span>));
+
+		<span class="hljs-keyword">if</span> ( ! in_array($ext, <span class="hljs-keyword">$this</span>-&gt;allowed_types, <span class="hljs-keyword">TRUE</span>))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-100" id="section-100"></a>
+</div>
+<p>Images get some additional checks</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (in_array($ext, <span class="hljs-keyword">array</span>(<span class="hljs-string">'gif'</span>, <span class="hljs-string">'jpg'</span>, <span class="hljs-string">'jpeg'</span>, <span class="hljs-string">'jpe'</span>, <span class="hljs-string">'png'</span>), <span class="hljs-keyword">TRUE</span>) &amp;&amp; @getimagesize(<span class="hljs-keyword">$this</span>-&gt;file_temp) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ($ignore_mime === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_mimes[$ext]))
+		{
+			<span class="hljs-keyword">return</span> is_array(<span class="hljs-keyword">$this</span>-&gt;_mimes[$ext])
+				? in_array(<span class="hljs-keyword">$this</span>-&gt;file_type, <span class="hljs-keyword">$this</span>-&gt;_mimes[$ext], <span class="hljs-keyword">TRUE</span>)
+				: (<span class="hljs-keyword">$this</span>-&gt;_mimes[$ext] === <span class="hljs-keyword">$this</span>-&gt;file_type);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-101" id="section-101"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-102" id="section-102"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Verify that the file is within the allowed size</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_allowed_filesize</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">$this</span>-&gt;max_size === <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;max_size &gt; <span class="hljs-keyword">$this</span>-&gt;file_size);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-103" id="section-103"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-104" id="section-104"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Verify that the image is within the allowed width/height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_allowed_dimensions</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;is_image())
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'getimagesize'</span>))
+		{
+			$D = @getimagesize(<span class="hljs-keyword">$this</span>-&gt;file_temp);
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;max_width &gt; <span class="hljs-number">0</span> &amp;&amp; $D[<span class="hljs-number">0</span>] &gt; <span class="hljs-keyword">$this</span>-&gt;max_width)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;max_height &gt; <span class="hljs-number">0</span> &amp;&amp; $D[<span class="hljs-number">1</span>] &gt; <span class="hljs-keyword">$this</span>-&gt;max_height)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;min_width &gt; <span class="hljs-number">0</span> &amp;&amp; $D[<span class="hljs-number">0</span>] &lt; <span class="hljs-keyword">$this</span>-&gt;min_width)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;min_height &gt; <span class="hljs-number">0</span> &amp;&amp; $D[<span class="hljs-number">1</span>] &lt; <span class="hljs-keyword">$this</span>-&gt;min_height)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-105" id="section-105"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-106" id="section-106"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate Upload Path</p>
+</div>
+<div class="body">
+<p>Verifies that it is a valid upload path with proper permissions.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validate_upload_path</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;upload_path === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_no_filepath'</span>, <span class="hljs-string">'error'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (realpath(<span class="hljs-keyword">$this</span>-&gt;upload_path) !== <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;upload_path = str_replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>, realpath(<span class="hljs-keyword">$this</span>-&gt;upload_path));
+		}
+
+		<span class="hljs-keyword">if</span> ( ! is_dir(<span class="hljs-keyword">$this</span>-&gt;upload_path))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_no_filepath'</span>, <span class="hljs-string">'error'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! is_really_writable(<span class="hljs-keyword">$this</span>-&gt;upload_path))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'upload_not_writable'</span>, <span class="hljs-string">'error'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;upload_path = preg_replace(<span class="hljs-string">'/(.+?)\/*$/'</span>, <span class="hljs-string">'\\1/'</span>,  <span class="hljs-keyword">$this</span>-&gt;upload_path);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-107" id="section-107"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-108" id="section-108"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Extract the file extension</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$filename
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_extension</span><span class="hljs-params">($filename)</span>
+	</span>{
+		$x = explode(<span class="hljs-string">'.'</span>, $filename);
+
+		<span class="hljs-keyword">if</span> (count($x) === <span class="hljs-number">1</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+		$ext = (<span class="hljs-keyword">$this</span>-&gt;file_ext_tolower) ? strtolower(end($x)) : end($x);
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'.'</span>.$ext;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-109" id="section-109"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-110" id="section-110"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Limit the File Name Length</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$filename
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$length
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">limit_filename_length</span><span class="hljs-params">($filename, $length)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (strlen($filename) &lt; $length)
+		{
+			<span class="hljs-keyword">return</span> $filename;
+		}
+
+		$ext = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">if</span> (strpos($filename, <span class="hljs-string">'.'</span>) !== <span class="hljs-keyword">FALSE</span>)
+		{
+			$parts		= explode(<span class="hljs-string">'.'</span>, $filename);
+			$ext		= <span class="hljs-string">'.'</span>.array_pop($parts);
+			$filename	= implode(<span class="hljs-string">'.'</span>, $parts);
+		}
+
+		<span class="hljs-keyword">return</span> substr($filename, <span class="hljs-number">0</span>, ($length - strlen($ext))).$ext;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-111" id="section-111"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-112" id="section-112"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Runs the file through the XSS clean function</p>
+</div>
+<div class="body">
+<p>This prevents people from embedding malicious code in their files.
+I'm not sure that it won't negatively affect certain files in unexpected ways,
+but so far I haven't found that it causes trouble.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">do_xss_clean</span><span class="hljs-params">()</span>
+	</span>{
+		$file = <span class="hljs-keyword">$this</span>-&gt;file_temp;
+
+		<span class="hljs-keyword">if</span> (filesize($file) == <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (memory_get_usage() &amp;&amp; ($memory_limit = ini_get(<span class="hljs-string">'memory_limit'</span>)) &gt; <span class="hljs-number">0</span>)
+		{
+			$memory_limit = str_split($memory_limit, strspn($memory_limit, <span class="hljs-string">'1234567890'</span>));
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($memory_limit[<span class="hljs-number">1</span>]))
+			{
+				<span class="hljs-keyword">switch</span> ($memory_limit[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>])
+				{
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'g'</span>:
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'G'</span>:
+						$memory_limit[<span class="hljs-number">0</span>] *= <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>;
+						<span class="hljs-keyword">break</span>;
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'m'</span>:
+					<span class="hljs-keyword">case</span> <span class="hljs-string">'M'</span>:
+						$memory_limit[<span class="hljs-number">0</span>] *= <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>;
+						<span class="hljs-keyword">break</span>;
+					<span class="hljs-keyword">default</span>:
+						<span class="hljs-keyword">break</span>;
+				}
+			}
+
+			$memory_limit = (int) ceil(filesize($file) + $memory_limit[<span class="hljs-number">0</span>]);
+			ini_set(<span class="hljs-string">'memory_limit'</span>, $memory_limit); <span class="hljs-comment">// When an integer is used, the value is measured in bytes. - PHP.net</span>
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-113" id="section-113"></a>
+</div>
+<p>If the file being uploaded is an image, then we should have no problem with XSS attacks (in theory), but
+IE can be fooled into mime-type detecting a malformed image as an html file, thus executing an XSS attack on anyone
+using IE who looks at the image. It does this by inspecting the first 255 bytes of an image. To get around this
+CI will itself look at the first 255 bytes of an image to determine its relative safety. This can save a lot of
+processor power and time if it is actually a clean image, as it will be in nearly all instances <em>except</em> an
+attempted XSS attack.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'getimagesize'</span>) &amp;&amp; @getimagesize($file) !== <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">if</span> (($file = @fopen($file, <span class="hljs-string">'rb'</span>)) === <span class="hljs-keyword">FALSE</span>) <span class="hljs-comment">// "b" to force binary</span>
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>; <span class="hljs-comment">// Couldn't open the file, return FALSE</span>
+			}
+
+			$opening_bytes = fread($file, <span class="hljs-number">256</span>);
+			fclose($file);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-114" id="section-114"></a>
+</div>
+<p>These are known to throw IE into mime-type detection chaos
+&lt;a, &lt;body, &lt;head, &lt;html, &lt;img, &lt;plaintext, &lt;pre, &lt;script, &lt;table, &lt;title
+title is basically just in SVG, but we filter it anyhow</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-115" id="section-115"></a>
+</div>
+<p>if it's an image or no &quot;triggers&quot; detected in the first 256 bytes - we're good</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">return</span> ! preg_match(<span class="hljs-string">'/&lt;(a|body|head|html|img|plaintext|pre|script|table|title)[\s&gt;]/i'</span>, $opening_bytes);
+		}
+
+		<span class="hljs-keyword">if</span> (($data = @file_get_contents($file)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_CI-&gt;security-&gt;xss_clean($data, <span class="hljs-keyword">TRUE</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-116" id="section-116"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-117" id="section-117"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set an error message</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$msg
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Upload
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_error</span><span class="hljs-params">($msg, $log_level = <span class="hljs-string">'error'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_CI-&gt;lang-&gt;load(<span class="hljs-string">'upload'</span>);
+
+		is_array($msg) <span class="hljs-keyword">OR</span> $msg = <span class="hljs-keyword">array</span>($msg);
+		<span class="hljs-keyword">foreach</span> ($msg <span class="hljs-keyword">as</span> $val)
+		{
+			$msg = (<span class="hljs-keyword">$this</span>-&gt;_CI-&gt;lang-&gt;line($val) === <span class="hljs-keyword">FALSE</span>) ? $val : <span class="hljs-keyword">$this</span>-&gt;_CI-&gt;lang-&gt;line($val);
+			<span class="hljs-keyword">$this</span>-&gt;error_msg[] = $msg;
+			log_message($log_level, $msg);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-118" id="section-118"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-119" id="section-119"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Display the error message</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$open
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$close
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">display_errors</span><span class="hljs-params">($open = <span class="hljs-string">'&lt;p&gt;'</span>, $close = <span class="hljs-string">'&lt;/p&gt;'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (count(<span class="hljs-keyword">$this</span>-&gt;error_msg) &gt; <span class="hljs-number">0</span>) ? $open.implode($close.$open, <span class="hljs-keyword">$this</span>-&gt;error_msg).$close : <span class="hljs-string">''</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-120" id="section-120"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-121" id="section-121"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Prep Filename</p>
+</div>
+<div class="body">
+<p>Prevents possible script execution from Apache's handling
+of files' multiple extensions.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$filename
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_prep_filename</span><span class="hljs-params">($filename)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;mod_mime_fix === <span class="hljs-keyword">FALSE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;allowed_types === <span class="hljs-string">'*'</span> <span class="hljs-keyword">OR</span> ($ext_pos = strrpos($filename, <span class="hljs-string">'.'</span>)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> $filename;
+		}
+
+		$ext = substr($filename, $ext_pos);
+		$filename = substr($filename, <span class="hljs-number">0</span>, $ext_pos);
+		<span class="hljs-keyword">return</span> str_replace(<span class="hljs-string">'.'</span>, <span class="hljs-string">'_'</span>, $filename).$ext;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-122" id="section-122"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-123" id="section-123"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File MIME type</p>
+</div>
+<div class="body">
+<p>Detects the (actual) MIME type of the uploaded file, if possible.
+The input array is expected to be $_FILES[$field]</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$file
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_file_mime_type</span><span class="hljs-params">($file)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-124" id="section-124"></a>
+</div>
+<p>We'll need this to validate the MIME info string (e.g. text/plain; charset=us-ascii)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$regexp = <span class="hljs-string">'/^([a-z\-]+\/[a-z0-9\-\.\+]+)(;\s.+)?$/'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-125" id="section-125"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fileinfo extension - most reliable method</p>
+</div>
+<div class="body">
+<p>Apparently XAMPP, CentOS, cPanel and who knows what
+other PHP distribution channels EXPLICITLY DISABLE
+ext/fileinfo, which is otherwise enabled by default
+since PHP 5.3 ...</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'finfo_file'</span>))
+		{
+			$finfo = @finfo_open(FILEINFO_MIME);
+			<span class="hljs-keyword">if</span> (is_resource($finfo)) <span class="hljs-comment">// It is possible that a FALSE value is returned, if there is no magic MIME database file found on the system</span>
+			{
+				$mime = @finfo_file($finfo, $file[<span class="hljs-string">'tmp_name'</span>]);
+				finfo_close($finfo);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-126" id="section-126"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>According to the comments section of the PHP manual page,
+it is possible that this function returns an empty string
+for some files (e.g. if they don't exist in the magic MIME database)</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">if</span> (is_string($mime) &amp;&amp; preg_match($regexp, $mime, $matches))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;file_type = $matches[<span class="hljs-number">1</span>];
+					<span class="hljs-keyword">return</span>;
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-127" id="section-127"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>This is an ugly hack, but UNIX-type systems provide a &quot;native&quot; way to detect the file type,
+which is still more secure than depending on the value of $_FILES[$field]['type'], and as it
+was reported in issue #750 (https://github.com/EllisLab/CodeIgniter/issues/750) - it's better
+than mime_content_type() as well, hence the attempts to try calling the command line with
+three different functions.</p>
+</div>
+<div class="body">
+<p>Notes:
+	- the DIRECTORY_SEPARATOR comparison ensures that we're not on a Windows system
+	- many system admins would disable the exec(), shell_exec(), popen() and similar functions
+	  due to security concerns, hence the function_usable() checks</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (DIRECTORY_SEPARATOR !== <span class="hljs-string">'\\'</span>)
+		{
+			$cmd = function_exists(<span class="hljs-string">'escapeshellarg'</span>)
+				? <span class="hljs-string">'file --brief --mime '</span>.escapeshellarg($file[<span class="hljs-string">'tmp_name'</span>]).<span class="hljs-string">' 2&gt;&amp;1'</span>
+				: <span class="hljs-string">'file --brief --mime '</span>.$file[<span class="hljs-string">'tmp_name'</span>].<span class="hljs-string">' 2&gt;&amp;1'</span>;
+
+			<span class="hljs-keyword">if</span> (function_usable(<span class="hljs-string">'exec'</span>))
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-128" id="section-128"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>This might look confusing, as $mime is being populated with all of the output when set in the second parameter.
+However, we only need the last line, which is the actual return value of exec(), and as such - it overwrites
+anything that could already be set for $mime previously. This effectively makes the second parameter a dummy
+value, which is only put to allow us to get the return status code.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				$mime = @exec($cmd, $mime, $return_status);
+				<span class="hljs-keyword">if</span> ($return_status === <span class="hljs-number">0</span> &amp;&amp; is_string($mime) &amp;&amp; preg_match($regexp, $mime, $matches))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;file_type = $matches[<span class="hljs-number">1</span>];
+					<span class="hljs-keyword">return</span>;
+				}
+			}
+
+			<span class="hljs-keyword">if</span> ( ! ini_get(<span class="hljs-string">'safe_mode'</span>) &amp;&amp; function_usable(<span class="hljs-string">'shell_exec'</span>))
+			{
+				$mime = @shell_exec($cmd);
+				<span class="hljs-keyword">if</span> (strlen($mime) &gt; <span class="hljs-number">0</span>)
+				{
+					$mime = explode(<span class="hljs-string">"\n"</span>, trim($mime));
+					<span class="hljs-keyword">if</span> (preg_match($regexp, $mime[(count($mime) - <span class="hljs-number">1</span>)], $matches))
+					{
+						<span class="hljs-keyword">$this</span>-&gt;file_type = $matches[<span class="hljs-number">1</span>];
+						<span class="hljs-keyword">return</span>;
+					}
+				}
+			}
+
+			<span class="hljs-keyword">if</span> (function_usable(<span class="hljs-string">'popen'</span>))
+			{
+				$proc = @popen($cmd, <span class="hljs-string">'r'</span>);
+				<span class="hljs-keyword">if</span> (is_resource($proc))
+				{
+					$mime = @fread($proc, <span class="hljs-number">512</span>);
+					@pclose($proc);
+					<span class="hljs-keyword">if</span> ($mime !== <span class="hljs-keyword">FALSE</span>)
+					{
+						$mime = explode(<span class="hljs-string">"\n"</span>, trim($mime));
+						<span class="hljs-keyword">if</span> (preg_match($regexp, $mime[(count($mime) - <span class="hljs-number">1</span>)], $matches))
+						{
+							<span class="hljs-keyword">$this</span>-&gt;file_type = $matches[<span class="hljs-number">1</span>];
+							<span class="hljs-keyword">return</span>;
+						}
+					}
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-129" id="section-129"></a>
+</div>
+<p>Fall back to mime_content_type(), if available (still better than $_FILES[$field]['type'])</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'mime_content_type'</span>))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;file_type = @mime_content_type($file[<span class="hljs-string">'tmp_name'</span>]);
+			<span class="hljs-keyword">if</span> (strlen(<span class="hljs-keyword">$this</span>-&gt;file_type) &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">// It's possible that mime_content_type() returns FALSE or an empty string</span>
+			{
+				<span class="hljs-keyword">return</span>;
+			}
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;file_type = $file[<span class="hljs-string">'type'</span>];
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

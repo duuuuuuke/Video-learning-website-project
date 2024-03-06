@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>captcha_helper.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\helpers\\captcha_helper.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h2">
+        <a href="#remove-old-images">Remove old images</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#do-we-have-a-word-yet">Do we have a &amp;quot;word&amp;quot; yet?</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#determine-angle-and-position">Determine angle and position</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#assign-colors">Assign colors</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#create-the-spiral-pattern">Create the spiral pattern</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#write-the-text">Write the text</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#generate-the-image">Generate the image</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>captcha_helper.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter CAPTCHA Helper</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'create_captcha'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Create CAPTCHA</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$data Data for the CAPTCHA
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$img_path Path to create the image in (deprecated)
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$img_url URL to the CAPTCHA image folder (deprecated)
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$font_path Server path to font (deprecated)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create_captcha</span><span class="hljs-params">($data = <span class="hljs-string">''</span>, $img_path = <span class="hljs-string">''</span>, $img_url = <span class="hljs-string">''</span>, $font_path = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$defaults = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'word'</span>		=&gt; <span class="hljs-string">''</span>,
+			<span class="hljs-string">'img_path'</span>	=&gt; <span class="hljs-string">''</span>,
+			<span class="hljs-string">'img_url'</span>	=&gt; <span class="hljs-string">''</span>,
+			<span class="hljs-string">'img_width'</span>	=&gt; <span class="hljs-string">'150'</span>,
+			<span class="hljs-string">'img_height'</span>	=&gt; <span class="hljs-string">'30'</span>,
+			<span class="hljs-string">'font_path'</span>	=&gt; <span class="hljs-string">''</span>,
+			<span class="hljs-string">'expiration'</span>	=&gt; <span class="hljs-number">7200</span>,
+			<span class="hljs-string">'word_length'</span>	=&gt; <span class="hljs-number">8</span>,
+			<span class="hljs-string">'font_size'</span>	=&gt; <span class="hljs-number">16</span>,
+			<span class="hljs-string">'img_id'</span>	=&gt; <span class="hljs-string">''</span>,
+			<span class="hljs-string">'pool'</span>		=&gt; <span class="hljs-string">'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>,
+			<span class="hljs-string">'colors'</span>	=&gt; <span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'background'</span>	=&gt; <span class="hljs-keyword">array</span>(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>),
+				<span class="hljs-string">'border'</span>	=&gt; <span class="hljs-keyword">array</span>(<span class="hljs-number">153</span>,<span class="hljs-number">102</span>,<span class="hljs-number">102</span>),
+				<span class="hljs-string">'text'</span>		=&gt; <span class="hljs-keyword">array</span>(<span class="hljs-number">204</span>,<span class="hljs-number">153</span>,<span class="hljs-number">153</span>),
+				<span class="hljs-string">'grid'</span>		=&gt; <span class="hljs-keyword">array</span>(<span class="hljs-number">255</span>,<span class="hljs-number">182</span>,<span class="hljs-number">182</span>)
+			)
+		);
+
+		<span class="hljs-keyword">foreach</span> ($defaults <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			<span class="hljs-keyword">if</span> ( ! is_array($data) &amp;&amp; <span class="hljs-keyword">empty</span>($$key))
+			{
+				$$key = $val;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$$key = <span class="hljs-keyword">isset</span>($data[$key]) ? $data[$key] : $val;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($img_path === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> $img_url === <span class="hljs-string">''</span>
+			<span class="hljs-keyword">OR</span> ! is_dir($img_path) <span class="hljs-keyword">OR</span> ! is_really_writable($img_path)
+			<span class="hljs-keyword">OR</span> ! extension_loaded(<span class="hljs-string">'gd'</span>))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="remove-old-images">
+  <h2>
+    <a href="#remove-old-images" name="remove-old-images" class="pilcrow"></a>
+Remove old images
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$now = microtime(<span class="hljs-keyword">TRUE</span>);
+
+		$current_dir = @opendir($img_path);
+		<span class="hljs-keyword">while</span> ($filename = @readdir($current_dir))
+		{
+			<span class="hljs-keyword">if</span> (in_array(substr($filename, <span class="hljs-number">-4</span>), <span class="hljs-keyword">array</span>(<span class="hljs-string">'.jpg'</span>, <span class="hljs-string">'.png'</span>))
+				&amp;&amp; (str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'.jpg'</span>, <span class="hljs-string">'.png'</span>), <span class="hljs-string">''</span>, $filename) + $expiration) &lt; $now)
+			{
+				@unlink($img_path.$filename);
+			}
+		}
+
+		@closedir($current_dir);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="do-we-have-a-word-yet">
+  <h2>
+    <a href="#do-we-have-a-word-yet" name="do-we-have-a-word-yet" class="pilcrow"></a>
+Do we have a &quot;word&quot; yet?
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($word))
+		{
+			$word = <span class="hljs-string">''</span>;
+			$pool_length = strlen($pool);
+			$rand_max = $pool_length - <span class="hljs-number">1</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>PHP7 or a suitable polyfill</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'random_int'</span>))
+			{
+				<span class="hljs-keyword">try</span>
+				{
+					<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $word_length; $i++)
+					{
+						$word .= $pool[random_int(<span class="hljs-number">0</span>, $rand_max)];
+					}
+				}
+				<span class="hljs-keyword">catch</span> (<span class="hljs-keyword">Exception</span> $e)
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>This means fallback to the next possible
+alternative to random_int()</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					$word = <span class="hljs-string">''</span>;
+				}
+			}
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($word))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Nobody will have a larger character pool than
+256 characters, but let's handle it just in case ...</p>
+<p>No, I do not care that the fallback to mt_rand() can
+handle it; if you trigger this, you're very obviously
+trying to break it. -- Narf</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ($pool_length &gt; <span class="hljs-number">256</span>)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>We'll try using the operating system's PRNG first,
+which we can access through CI_Security::get_random_bytes()</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$security = get_instance()-&gt;security;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>To avoid numerous get_random_bytes() calls, we'll
+just try fetching as much bytes as we need at once.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (($bytes = $security-&gt;get_random_bytes($pool_length)) !== <span class="hljs-keyword">FALSE</span>)
+			{
+				$byte_index = $word_index = <span class="hljs-number">0</span>;
+				<span class="hljs-keyword">while</span> ($word_index &lt; $word_length)
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Do we have more random data to use?
+It could be exhausted by previous iterations
+ignoring bytes higher than $rand_max.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> ($byte_index === $pool_length)
+					{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>No failures should be possible if the
+first get_random_bytes() call didn't
+return FALSE, but still ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">						<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; <span class="hljs-number">5</span>; $i++)
+						{
+							<span class="hljs-keyword">if</span> (($bytes = $security-&gt;get_random_bytes($pool_length)) === <span class="hljs-keyword">FALSE</span>)
+							{
+								<span class="hljs-keyword">continue</span>;
+							}
+
+							$byte_index = <span class="hljs-number">0</span>;
+							<span class="hljs-keyword">break</span>;
+						}
+
+						<span class="hljs-keyword">if</span> ($bytes === <span class="hljs-keyword">FALSE</span>)
+						{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Sadly, this means fallback to mt_rand()</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">							$word = <span class="hljs-string">''</span>;
+							<span class="hljs-keyword">break</span>;
+						}
+					}
+
+					<span class="hljs-keyword">list</span>(, $rand_index) = unpack(<span class="hljs-string">'C'</span>, $bytes[$byte_index++]);
+					<span class="hljs-keyword">if</span> ($rand_index &gt; $rand_max)
+					{
+						<span class="hljs-keyword">continue</span>;
+					}
+
+					$word .= $pool[$rand_index];
+					$word_index++;
+				}
+			}
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($word))
+		{
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $word_length; $i++)
+			{
+				$word .= $pool[mt_rand(<span class="hljs-number">0</span>, $rand_max)];
+			}
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_string($word))
+		{
+			$word = (string) $word;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="determine-angle-and-position">
+  <h2>
+    <a href="#determine-angle-and-position" name="determine-angle-and-position" class="pilcrow"></a>
+Determine angle and position
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$length	= strlen($word);
+		$angle	= ($length &gt;= <span class="hljs-number">6</span>) ? mt_rand(-($length<span class="hljs-number">-6</span>), ($length<span class="hljs-number">-6</span>)) : <span class="hljs-number">0</span>;
+		$x_axis	= mt_rand(<span class="hljs-number">6</span>, (<span class="hljs-number">360</span>/$length)<span class="hljs-number">-16</span>);
+		$y_axis = ($angle &gt;= <span class="hljs-number">0</span>) ? mt_rand($img_height, $img_width) : mt_rand(<span class="hljs-number">6</span>, $img_height);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>Create image
+PHP.net recommends imagecreatetruecolor(), but it isn't always available</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$im = function_exists(<span class="hljs-string">'imagecreatetruecolor'</span>)
+			? imagecreatetruecolor($img_width, $img_height)
+			: imagecreate($img_width, $img_height);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="assign-colors">
+  <h2>
+    <a href="#assign-colors" name="assign-colors" class="pilcrow"></a>
+Assign colors
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		is_array($colors) <span class="hljs-keyword">OR</span> $colors = $defaults[<span class="hljs-string">'colors'</span>];
+
+		<span class="hljs-keyword">foreach</span> (array_keys($defaults[<span class="hljs-string">'colors'</span>]) <span class="hljs-keyword">as</span> $key)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<p>Check for a possible missing value</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			is_array($colors[$key]) <span class="hljs-keyword">OR</span> $colors[$key] = $defaults[<span class="hljs-string">'colors'</span>][$key];
+			$colors[$key] = imagecolorallocate($im, $colors[$key][<span class="hljs-number">0</span>], $colors[$key][<span class="hljs-number">1</span>], $colors[$key][<span class="hljs-number">2</span>]);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>Create the rectangle</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		ImageFilledRectangle($im, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, $img_width, $img_height, $colors[<span class="hljs-string">'background'</span>]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="create-the-spiral-pattern">
+  <h2>
+    <a href="#create-the-spiral-pattern" name="create-the-spiral-pattern" class="pilcrow"></a>
+Create the spiral pattern
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$theta		= <span class="hljs-number">1</span>;
+		$thetac		= <span class="hljs-number">7</span>;
+		$radius		= <span class="hljs-number">16</span>;
+		$circles	= <span class="hljs-number">20</span>;
+		$points		= <span class="hljs-number">32</span>;
+
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $cp = ($circles * $points) - <span class="hljs-number">1</span>; $i &lt; $cp; $i++)
+		{
+			$theta += $thetac;
+			$rad = $radius * ($i / $points);
+			$x = ($rad * cos($theta)) + $x_axis;
+			$y = ($rad * sin($theta)) + $y_axis;
+			$theta += $thetac;
+			$rad1 = $radius * (($i + <span class="hljs-number">1</span>) / $points);
+			$x1 = ($rad1 * cos($theta)) + $x_axis;
+			$y1 = ($rad1 * sin($theta)) + $y_axis;
+			imageline($im, $x, $y, $x1, $y1, $colors[<span class="hljs-string">'grid'</span>]);
+			$theta -= $thetac;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="write-the-text">
+  <h2>
+    <a href="#write-the-text" name="write-the-text" class="pilcrow"></a>
+Write the text
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$use_font = ($font_path !== <span class="hljs-string">''</span> &amp;&amp; file_exists($font_path) &amp;&amp; function_exists(<span class="hljs-string">'imagettftext'</span>));
+		<span class="hljs-keyword">if</span> ($use_font === <span class="hljs-keyword">FALSE</span>)
+		{
+			($font_size &gt; <span class="hljs-number">5</span>) &amp;&amp; $font_size = <span class="hljs-number">5</span>;
+			$x = mt_rand(<span class="hljs-number">0</span>, $img_width / ($length / <span class="hljs-number">3</span>));
+			$y = <span class="hljs-number">0</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			($font_size &gt; <span class="hljs-number">30</span>) &amp;&amp; $font_size = <span class="hljs-number">30</span>;
+			$x = mt_rand(<span class="hljs-number">0</span>, $img_width / ($length / <span class="hljs-number">1.5</span>));
+			$y = $font_size + <span class="hljs-number">2</span>;
+		}
+
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $length; $i++)
+		{
+			<span class="hljs-keyword">if</span> ($use_font === <span class="hljs-keyword">FALSE</span>)
+			{
+				$y = mt_rand(<span class="hljs-number">0</span> , $img_height / <span class="hljs-number">2</span>);
+				imagestring($im, $font_size, $x, $y, $word[$i], $colors[<span class="hljs-string">'text'</span>]);
+				$x += ($font_size * <span class="hljs-number">2</span>);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$y = mt_rand($img_height / <span class="hljs-number">2</span>, $img_height - <span class="hljs-number">3</span>);
+				imagettftext($im, $font_size, $angle, $x, $y, $colors[<span class="hljs-string">'text'</span>], $font_path, $word[$i]);
+				$x += $font_size;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>Create the border</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		imagerectangle($im, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, $img_width - <span class="hljs-number">1</span>, $img_height - <span class="hljs-number">1</span>, $colors[<span class="hljs-string">'border'</span>]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="generate-the-image">
+  <h2>
+    <a href="#generate-the-image" name="generate-the-image" class="pilcrow"></a>
+Generate the image
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$img_url = rtrim($img_url, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>;
+
+		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'imagejpeg'</span>))
+		{
+			$img_filename = $now.<span class="hljs-string">'.jpg'</span>;
+			imagejpeg($im, $img_path.$img_filename);
+		}
+		<span class="hljs-keyword">elseif</span> (function_exists(<span class="hljs-string">'imagepng'</span>))
+		{
+			$img_filename = $now.<span class="hljs-string">'.png'</span>;
+			imagepng($im, $img_path.$img_filename);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$img = <span class="hljs-string">'&lt;img '</span>.($img_id === <span class="hljs-string">''</span> ? <span class="hljs-string">''</span> : <span class="hljs-string">'id="'</span>.$img_id.<span class="hljs-string">'"'</span>).<span class="hljs-string">' src="'</span>.$img_url.$img_filename.<span class="hljs-string">'" style="width: '</span>.$img_width.<span class="hljs-string">'px; height: '</span>.$img_height .<span class="hljs-string">'px; border: 0;" alt=" " /&gt;'</span>;
+		ImageDestroy($im);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(<span class="hljs-string">'word'</span> =&gt; $word, <span class="hljs-string">'time'</span> =&gt; $now, <span class="hljs-string">'image'</span> =&gt; $img, <span class="hljs-string">'filename'</span> =&gt; $img_filename);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

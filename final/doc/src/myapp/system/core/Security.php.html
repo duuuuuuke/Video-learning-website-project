@@ -1,0 +1,2759 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Security.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Security.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Security.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Security Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Security</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of sanitize filename strings</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $filename_bad_chars =	<span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'../'</span>, <span class="hljs-string">'&lt;!--'</span>, <span class="hljs-string">'--&gt;'</span>, <span class="hljs-string">'&lt;'</span>, <span class="hljs-string">'&gt;'</span>,
+		<span class="hljs-string">"'"</span>, <span class="hljs-string">'"'</span>, <span class="hljs-string">'&amp;'</span>, <span class="hljs-string">'$'</span>, <span class="hljs-string">'#'</span>,
+		<span class="hljs-string">'{'</span>, <span class="hljs-string">'}'</span>, <span class="hljs-string">'['</span>, <span class="hljs-string">']'</span>, <span class="hljs-string">'='</span>,
+		<span class="hljs-string">';'</span>, <span class="hljs-string">'?'</span>, <span class="hljs-string">'%20'</span>, <span class="hljs-string">'%22'</span>,
+		<span class="hljs-string">'%3c'</span>,		<span class="hljs-comment">// &lt;</span>
+		<span class="hljs-string">'%253c'</span>,	<span class="hljs-comment">// &lt;</span>
+		<span class="hljs-string">'%3e'</span>,		<span class="hljs-comment">// &gt;</span>
+		<span class="hljs-string">'%0e'</span>,		<span class="hljs-comment">// &gt;</span>
+		<span class="hljs-string">'%28'</span>,		<span class="hljs-comment">// (</span>
+		<span class="hljs-string">'%29'</span>,		<span class="hljs-comment">// )</span>
+		<span class="hljs-string">'%2528'</span>,	<span class="hljs-comment">// (</span>
+		<span class="hljs-string">'%26'</span>,		<span class="hljs-comment">// &amp;</span>
+		<span class="hljs-string">'%24'</span>,		<span class="hljs-comment">// $</span>
+		<span class="hljs-string">'%3f'</span>,		<span class="hljs-comment">// ?</span>
+		<span class="hljs-string">'%3b'</span>,		<span class="hljs-comment">// ;</span>
+		<span class="hljs-string">'%3d'</span>		<span class="hljs-comment">// =</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Character set</p>
+</div>
+<div class="body">
+<p>Will be overridden by the constructor.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $charset = <span class="hljs-string">'UTF-8'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>XSS Hash</p>
+</div>
+<div class="body">
+<p>Random Hash for protecting URLs.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_xss_hash;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CSRF Hash</p>
+</div>
+<div class="body">
+<p>Random hash for Cross Site Request Forgery protection cookie</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_csrf_hash;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CSRF Expire time</p>
+</div>
+<div class="body">
+<p>Expiration time for Cross Site Request Forgery protection cookie.
+Defaults to two hours (in seconds).</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_csrf_expire =	<span class="hljs-number">7200</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CSRF Token name</p>
+</div>
+<div class="body">
+<p>Token name for Cross Site Request Forgery protection cookie.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_csrf_token_name =	<span class="hljs-string">'ci_csrf_token'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CSRF Cookie name</p>
+</div>
+<div class="body">
+<p>Cookie name for Cross Site Request Forgery protection cookie.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_csrf_cookie_name =	<span class="hljs-string">'ci_csrf_token'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of never allowed strings</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_never_allowed_str =	<span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'document.cookie'</span> =&gt; <span class="hljs-string">'[removed]'</span>,
+		<span class="hljs-string">'(document).cookie'</span> =&gt; <span class="hljs-string">'[removed]'</span>,
+		<span class="hljs-string">'document.write'</span>  =&gt; <span class="hljs-string">'[removed]'</span>,
+		<span class="hljs-string">'(document).write'</span>  =&gt; <span class="hljs-string">'[removed]'</span>,
+		<span class="hljs-string">'.parentNode'</span>     =&gt; <span class="hljs-string">'[removed]'</span>,
+		<span class="hljs-string">'.innerHTML'</span>      =&gt; <span class="hljs-string">'[removed]'</span>,
+		<span class="hljs-string">'-moz-binding'</span>    =&gt; <span class="hljs-string">'[removed]'</span>,
+		<span class="hljs-string">'&lt;!--'</span>            =&gt; <span class="hljs-string">'&amp;lt;!--'</span>,
+		<span class="hljs-string">'--&gt;'</span>             =&gt; <span class="hljs-string">'--&amp;gt;'</span>,
+		<span class="hljs-string">'&lt;![CDATA['</span>       =&gt; <span class="hljs-string">'&amp;lt;![CDATA['</span>,
+		<span class="hljs-string">'&lt;comment&gt;'</span>	  =&gt; <span class="hljs-string">'&amp;lt;comment&amp;gt;'</span>,
+		<span class="hljs-string">'&lt;%'</span>              =&gt; <span class="hljs-string">'&amp;lt;&amp;#37;'</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of never allowed regex replacements</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_never_allowed_regex = <span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'javascript\s*:'</span>,
+		<span class="hljs-string">'(\(?document\)?|\(?window\)?(\.document)?)\.(location|on\w*)'</span>,
+		<span class="hljs-string">'expression\s*(\(|&amp;\#40;)'</span>, <span class="hljs-comment">// CSS and IE</span>
+		<span class="hljs-string">'vbscript\s*:'</span>, <span class="hljs-comment">// IE, surprise!</span>
+		<span class="hljs-string">'wscript\s*:'</span>, <span class="hljs-comment">// IE</span>
+		<span class="hljs-string">'jscript\s*:'</span>, <span class="hljs-comment">// IE</span>
+		<span class="hljs-string">'vbs\s*:'</span>, <span class="hljs-comment">// IE</span>
+		<span class="hljs-string">'Redirect\s+30\d'</span>,
+		<span class="hljs-string">"([\"'])?data\s*:[^\\1]*?base64[^\\1]*?,[^\\1]*?\\1?"</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Is CSRF protection enabled?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (config_item(<span class="hljs-string">'csrf_protection'</span>))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>CSRF config</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'csrf_expire'</span>, <span class="hljs-string">'csrf_token_name'</span>, <span class="hljs-string">'csrf_cookie_name'</span>) <span class="hljs-keyword">as</span> $key)
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">NULL</span> !== ($val = config_item($key)))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'_'</span>.$key} = $val;
+				}
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Append application specific cookie prefix</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ($cookie_prefix = config_item(<span class="hljs-string">'cookie_prefix'</span>))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name = $cookie_prefix.<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name;
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>Set the CSRF hash</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;_csrf_set_hash();
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;charset = strtoupper(config_item(<span class="hljs-string">'charset'</span>));
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Security Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CSRF Verify</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Security
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csrf_verify</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>If it's not a POST request we will set the CSRF cookie</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (strtoupper($_SERVER[<span class="hljs-string">'REQUEST_METHOD'</span>]) !== <span class="hljs-string">'POST'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;csrf_set_cookie();
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>Check if URI has been whitelisted from CSRF checks</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($exclude_uris = config_item(<span class="hljs-string">'csrf_exclude_uris'</span>))
+		{
+			$uri = load_class(<span class="hljs-string">'URI'</span>, <span class="hljs-string">'core'</span>);
+			<span class="hljs-keyword">foreach</span> ($exclude_uris <span class="hljs-keyword">as</span> $excluded)
+			{
+				<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'#^'</span>.$excluded.<span class="hljs-string">'$#i'</span>.(UTF8_ENABLED ? <span class="hljs-string">'u'</span> : <span class="hljs-string">''</span>), $uri-&gt;uri_string()))
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>Check CSRF token validity, but don't error on mismatch just yet - we'll want to regenerate</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$valid = <span class="hljs-keyword">isset</span>($_POST[<span class="hljs-keyword">$this</span>-&gt;_csrf_token_name], $_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name])
+			&amp;&amp; is_string($_POST[<span class="hljs-keyword">$this</span>-&gt;_csrf_token_name]) &amp;&amp; is_string($_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name])
+			&amp;&amp; hash_equals($_POST[<span class="hljs-keyword">$this</span>-&gt;_csrf_token_name], $_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>We kill this since we're done and we don't want to pollute the _POST array</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">unset</span>($_POST[<span class="hljs-keyword">$this</span>-&gt;_csrf_token_name]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>Regenerate on every submission?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (config_item(<span class="hljs-string">'csrf_regenerate'</span>))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<p>Nothing should last forever</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">unset</span>($_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name]);
+			<span class="hljs-keyword">$this</span>-&gt;_csrf_hash = <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_csrf_set_hash();
+		<span class="hljs-keyword">$this</span>-&gt;csrf_set_cookie();
+
+		<span class="hljs-keyword">if</span> ($valid !== <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;csrf_show_error();
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'CSRF token verified'</span>);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CSRF Set Cookie</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Security
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csrf_set_cookie</span><span class="hljs-params">()</span>
+	</span>{
+		$expire = time() + <span class="hljs-keyword">$this</span>-&gt;_csrf_expire;
+		$secure_cookie = (bool) config_item(<span class="hljs-string">'cookie_secure'</span>);
+
+		<span class="hljs-keyword">if</span> ($secure_cookie &amp;&amp; ! is_https())
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		setcookie(
+			<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name,
+			<span class="hljs-keyword">$this</span>-&gt;_csrf_hash,
+			$expire,
+			config_item(<span class="hljs-string">'cookie_path'</span>),
+			config_item(<span class="hljs-string">'cookie_domain'</span>),
+			$secure_cookie,
+			config_item(<span class="hljs-string">'cookie_httponly'</span>)
+		);
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'CSRF cookie sent'</span>);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show CSRF Error</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">csrf_show_error</span><span class="hljs-params">()</span>
+	</span>{
+		show_error(<span class="hljs-string">'The action you have requested is not allowed.'</span>, <span class="hljs-number">403</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get CSRF Hash</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Security::$_csrf_hash</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string CSRF hash
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_csrf_hash</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_csrf_hash;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get CSRF Token Name</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Security::$_csrf_token_name</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string CSRF token name
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_csrf_token_name</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_csrf_token_name;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>XSS Clean</p>
+</div>
+<div class="body">
+<p>Sanitizes data so that Cross Site Scripting Hacks can be
+prevented.  This method does a fair amount of work but
+it is extremely thorough, designed to prevent even the
+most obscure XSS attempts.  Nothing is ever 100% foolproof,
+of course, but I haven't been able to get anything passed
+the filter.</p>
+<p>Note: Should only be used to deal with data upon submission.
+	 It's not something that should be used for general
+	 runtime processing.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$str Input data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$is_image Whether the input is an image
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">xss_clean</span><span class="hljs-params">($str, $is_image = FALSE)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<p>Is the string an array?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_array($str))
+		{
+			<span class="hljs-keyword">foreach</span> ($str <span class="hljs-keyword">as</span> $key =&gt; &amp;$value)
+			{
+				$str[$key] = <span class="hljs-keyword">$this</span>-&gt;xss_clean($value);
+			}
+
+			<span class="hljs-keyword">return</span> $str;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<p>Remove Invisible Characters</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = remove_invisible_characters($str);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>URL Decode</p>
+</div>
+<div class="body">
+<p>Just in case stuff like this is submitted:</p>
+<p><a href="http://%77%77%77%2E%67%6F%6F%67%6C%65%2E%63%6F%6D">Google</a></p>
+<p>Note: Use rawurldecode() so it does not remove plus signs</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (stripos($str, <span class="hljs-string">'%'</span>) !== <span class="hljs-keyword">false</span>)
+		{
+			<span class="hljs-keyword">do</span>
+			{
+				$oldstr = $str;
+				$str = rawurldecode($str);
+				$str = preg_replace_callback(<span class="hljs-string">'#%(?:\s*[0-9a-f]){2,}#i'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'_urldecodespaces'</span>), $str);
+			}
+			<span class="hljs-keyword">while</span> ($oldstr !== $str);
+			<span class="hljs-keyword">unset</span>($oldstr);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Convert character entities to ASCII</p>
+</div>
+<div class="body">
+<p>This permits our tests below to work reliably.
+We only convert entities that are within tags since
+these are the ones that will pose security problems.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = preg_replace_callback(<span class="hljs-string">"/[^a-z0-9&gt;]+[a-z0-9]+=([\'\"]).*?\\1/si"</span>, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'_convert_attribute'</span>), $str);
+		$str = preg_replace_callback(<span class="hljs-string">'/&lt;\w+.*/si'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'_decode_entity'</span>), $str);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<p>Remove Invisible Characters Again!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = remove_invisible_characters($str);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Convert all tabs to spaces</p>
+</div>
+<div class="body">
+<p>This prevents strings like this: ja	vascript
+NOTE: we deal with spaces between characters later.
+NOTE: preg_replace was found to be amazingly slow here on
+large blocks of data, so we use str_replace.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = str_replace(<span class="hljs-string">"\t"</span>, <span class="hljs-string">' '</span>, $str);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<p>Capture converted string for later comparison</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$converted_string = $str;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<p>Remove Strings that are never allowed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = <span class="hljs-keyword">$this</span>-&gt;_do_never_allowed($str);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Makes PHP tags safe</p>
+</div>
+<div class="body">
+<p>Note: XML tags are inadvertently replaced too:</p>
+<?xml
+<p>But it doesn't seem to pose a problem.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($is_image === <span class="hljs-keyword">TRUE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<p>Images have a tendency to have the PHP short opening and
+closing tags every so often so we skip those and only
+do the long opening tags.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$str = preg_replace(<span class="hljs-string">'/&lt;\?(php)/i'</span>, <span class="hljs-string">'&amp;lt;?\\1'</span>, $str);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$str = str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'&lt;?'</span>, <span class="hljs-string">'?'</span>.<span class="hljs-string">'&gt;'</span>), <span class="hljs-keyword">array</span>(<span class="hljs-string">'&amp;lt;?'</span>, <span class="hljs-string">'?&amp;gt;'</span>), $str);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Compact any exploded words</p>
+</div>
+<div class="body">
+<p>This corrects words like:  j a v a s c r i p t
+These words are compacted back to their correct state.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$words = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'javascript'</span>, <span class="hljs-string">'expression'</span>, <span class="hljs-string">'vbscript'</span>, <span class="hljs-string">'jscript'</span>, <span class="hljs-string">'wscript'</span>,
+			<span class="hljs-string">'vbs'</span>, <span class="hljs-string">'script'</span>, <span class="hljs-string">'base64'</span>, <span class="hljs-string">'applet'</span>, <span class="hljs-string">'alert'</span>, <span class="hljs-string">'document'</span>,
+			<span class="hljs-string">'write'</span>, <span class="hljs-string">'cookie'</span>, <span class="hljs-string">'window'</span>, <span class="hljs-string">'confirm'</span>, <span class="hljs-string">'prompt'</span>, <span class="hljs-string">'eval'</span>
+		);
+
+		<span class="hljs-keyword">foreach</span> ($words <span class="hljs-keyword">as</span> $word)
+		{
+			$word = implode(<span class="hljs-string">'\s*'</span>, str_split($word)).<span class="hljs-string">'\s*'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<p>We only want to do this when it is followed by a non-word character
+That way valid stuff like &quot;dealer to&quot; does not become &quot;dealerto&quot;</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$str = preg_replace_callback(<span class="hljs-string">'#('</span>.substr($word, <span class="hljs-number">0</span>, <span class="hljs-number">-3</span>).<span class="hljs-string">')(\W)#is'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'_compact_exploded_words'</span>), $str);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Remove disallowed Javascript in links or img tags
+We used to do some version comparisons and use of stripos(),
+but it is dog slow compared to these simplified non-capturing
+preg_match(), especially if the pattern exists in the string</p>
+</div>
+<div class="body">
+<p>Note: It was reported that not only space characters, but all in
+the following pattern can be parsed as separators between a tag name
+and its attributes: [\d\s&quot;'`;,/=(\x00\x0B\x09\x0C]
+... however, remove_invisible_characters() above already strips the
+hex-encoded ones, so we'll skip them below.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">do</span>
+		{
+			$original = $str;
+
+			<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/&lt;a/i'</span>, $str))
+			{
+				$str = preg_replace_callback(<span class="hljs-string">'#&lt;a(?:rea)?[^a-z0-9&gt;]+([^&gt;]*?)(?:&gt;|$)#si'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'_js_link_removal'</span>), $str);
+			}
+
+			<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/&lt;img/i'</span>, $str))
+			{
+				$str = preg_replace_callback(<span class="hljs-string">'#&lt;img[^a-z0-9]+([^&gt;]*?)(?:\s?/?&gt;|$)#si'</span>, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'_js_img_removal'</span>), $str);
+			}
+
+			<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/script|xss/i'</span>, $str))
+			{
+				$str = preg_replace(<span class="hljs-string">'#&lt;/*(?:script|xss).*?&gt;#si'</span>, <span class="hljs-string">'[removed]'</span>, $str);
+			}
+		}
+		<span class="hljs-keyword">while</span> ($original !== $str);
+		<span class="hljs-keyword">unset</span>($original);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sanitize naughty HTML elements</p>
+</div>
+<div class="body">
+<p>If a tag containing any of the words in the list
+below is found, the tag gets converted to entities.</p>
+<p>So this: <blink>
+Becomes: &lt;blink&gt;</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$pattern = <span class="hljs-string">'#'</span>
+			.<span class="hljs-string">'&lt;((?&lt;slash&gt;/*\s*)((?&lt;tagName&gt;[a-z0-9]+)(?=[^a-z0-9]|$)|.+)'</span> <span class="hljs-comment">// tag start and name, followed by a non-tag character</span>
+			.<span class="hljs-string">'[^\s\042\047a-z0-9&gt;/=]*'</span> <span class="hljs-comment">// a valid attribute character immediately after the tag would count as a separator</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<p>optional attributes</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			.<span class="hljs-string">'(?&lt;attributes&gt;(?:[\s\042\047/=]*'</span> <span class="hljs-comment">// non-attribute characters, excluding &gt; (tag close) for obvious reasons</span>
+			.<span class="hljs-string">'[^\s\042\047&gt;/=]+'</span> <span class="hljs-comment">// attribute characters</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<p>optional attribute-value</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				.<span class="hljs-string">'(?:\s*='</span> <span class="hljs-comment">// attribute-value separator</span>
+					.<span class="hljs-string">'(?:[^\s\042\047=&gt;&lt;`]+|\s*\042[^\042]*\042|\s*\047[^\047]*\047|\s*(?U:[^\s\042\047=&gt;&lt;`]*))'</span> <span class="hljs-comment">// single, double or non-quoted value</span>
+				.<span class="hljs-string">')?'</span> <span class="hljs-comment">// end optional attribute-value group</span>
+			.<span class="hljs-string">')*)'</span> <span class="hljs-comment">// end optional attributes group</span>
+			.<span class="hljs-string">'[^&gt;]*)(?&lt;closeTag&gt;\&gt;)?#isS'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<p>Note: It would be nice to optimize this for speed, BUT
+only matching the naughty elements here results in
+false positives and in turn - vulnerabilities!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">do</span>
+		{
+			$old_str = $str;
+			$str = preg_replace_callback($pattern, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'_sanitize_naughty_html'</span>), $str);
+		}
+		<span class="hljs-keyword">while</span> ($old_str !== $str);
+		<span class="hljs-keyword">unset</span>($old_str);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sanitize naughty scripting elements</p>
+</div>
+<div class="body">
+<p>Similar to above, only instead of looking for
+tags it looks for PHP and JavaScript commands
+that are disallowed. Rather than removing the
+code, it simply converts the parenthesis to entities
+rendering the code un-executable.</p>
+<p>For example:	eval('some code')
+Becomes:	eval('some code')</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = preg_replace(
+			<span class="hljs-string">'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)\((.*?)\)#si'</span>,
+			<span class="hljs-string">'\\1\\2&amp;#40;\\3&amp;#41;'</span>,
+			$str
+		);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<p>Same thing, but for &quot;tag functions&quot; (e.g. eval<code>some code</code>)
+See https://github.com/bcit-ci/CodeIgniter/issues/5420</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = preg_replace(
+			<span class="hljs-string">'#(alert|prompt|confirm|cmd|passthru|eval|exec|expression|system|fopen|fsockopen|file|file_get_contents|readfile|unlink)(\s*)`(.*?)`#si'</span>,
+			<span class="hljs-string">'\\1\\2&amp;#96;\\3&amp;#96;'</span>,
+			$str
+		);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<p>Final clean up
+This adds a bit of extra precaution in case
+something got through the above filters</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = <span class="hljs-keyword">$this</span>-&gt;_do_never_allowed($str);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Images are Handled in a Special Way</p>
+<ul>
+<li>Essentially, we want to know that after all of the character
+conversion is done whether any unwanted, likely XSS, code was found.
+If not, we return TRUE, as the image is clean.
+However, if the string post-conversion does not matched the
+string post-removal of XSS, then it fails, as there was unwanted XSS
+code found and removed/changed during processing.</li>
+</ul>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($is_image === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> ($str === $converted_string);
+		}
+
+		<span class="hljs-keyword">return</span> $str;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>XSS Hash</p>
+</div>
+<div class="body">
+<p>Generates the XSS hash if needed and returns it.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Security::$_xss_hash</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string XSS hash
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">xss_hash</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_xss_hash === <span class="hljs-keyword">NULL</span>)
+		{
+			$rand = <span class="hljs-keyword">$this</span>-&gt;get_random_bytes(<span class="hljs-number">16</span>);
+			<span class="hljs-keyword">$this</span>-&gt;_xss_hash = ($rand === <span class="hljs-keyword">FALSE</span>)
+				? md5(uniqid(mt_rand(), <span class="hljs-keyword">TRUE</span>))
+				: bin2hex($rand);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_xss_hash;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get random bytes</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$length Output length
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_random_bytes</span><span class="hljs-params">($length)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($length) <span class="hljs-keyword">OR</span> ! ctype_digit((string) $length))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'random_bytes'</span>))
+		{
+			<span class="hljs-keyword">try</span>
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<p>The cast is required to avoid TypeError</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">return</span> random_bytes((int) $length);
+			}
+			<span class="hljs-keyword">catch</span> (<span class="hljs-keyword">Exception</span> $e)
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<p>If random_bytes() can't do the job, we can't either ...
+There's no point in using fallbacks.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				log_message(<span class="hljs-string">'error'</span>, $e-&gt;getMessage());
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<p>Unfortunately, none of the following PRNGs is guaranteed to exist ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (defined(<span class="hljs-string">'MCRYPT_DEV_URANDOM'</span>) &amp;&amp; ($output = mcrypt_create_iv($length, MCRYPT_DEV_URANDOM)) !== <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> $output;
+		}
+
+
+		<span class="hljs-keyword">if</span> (is_readable(<span class="hljs-string">'/dev/urandom'</span>) &amp;&amp; ($fp = fopen(<span class="hljs-string">'/dev/urandom'</span>, <span class="hljs-string">'rb'</span>)) !== <span class="hljs-keyword">FALSE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<p>Try not to waste entropy ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			is_php(<span class="hljs-string">'5.4'</span>) &amp;&amp; stream_set_chunk_size($fp, $length);
+			$output = fread($fp, $length);
+			fclose($fp);
+			<span class="hljs-keyword">if</span> ($output !== <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">return</span> $output;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'openssl_random_pseudo_bytes'</span>))
+		{
+			<span class="hljs-keyword">return</span> openssl_random_pseudo_bytes($length);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>HTML Entities Decode</p>
+</div>
+<div class="body">
+<p>A replacement for html_entity_decode()</p>
+<p>The reason we are not using html_entity_decode() by itself is because
+while it is not technically correct to leave out the semicolon
+at the end of an entity most browsers will still interpret the entity
+correctly. html_entity_decode() does not convert entities without
+semicolons, so we are left with our own little solution here. Bummer.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$charset Character set
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">entity_decode</span><span class="hljs-params">($str, $charset = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (strpos($str, <span class="hljs-string">'&amp;'</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> $str;
+		}
+
+		<span class="hljs-keyword">static</span> $_entities;
+
+		<span class="hljs-keyword">isset</span>($charset) <span class="hljs-keyword">OR</span> $charset = <span class="hljs-keyword">$this</span>-&gt;charset;
+		$flag = is_php(<span class="hljs-string">'5.4'</span>)
+			? ENT_COMPAT | ENT_HTML5
+			: ENT_COMPAT;
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($_entities))
+		{
+			$_entities = array_map(<span class="hljs-string">'strtolower'</span>, get_html_translation_table(HTML_ENTITIES, $flag, $charset));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<p>If we're not on PHP 5.4+, add the possibly dangerous HTML 5
+entities to the array manually</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ($flag === ENT_COMPAT)
+			{
+				$_entities[<span class="hljs-string">':'</span>] = <span class="hljs-string">'&amp;colon;'</span>;
+				$_entities[<span class="hljs-string">'('</span>] = <span class="hljs-string">'&amp;lpar;'</span>;
+				$_entities[<span class="hljs-string">')'</span>] = <span class="hljs-string">'&amp;rpar;'</span>;
+				$_entities[<span class="hljs-string">"\n"</span>] = <span class="hljs-string">'&amp;NewLine;'</span>;
+				$_entities[<span class="hljs-string">"\t"</span>] = <span class="hljs-string">'&amp;Tab;'</span>;
+			}
+		}
+
+		<span class="hljs-keyword">do</span>
+		{
+			$str_compare = $str;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<p>Decode standard entities, avoiding false positives</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (preg_match_all(<span class="hljs-string">'/&amp;[a-z]{2,}(?![a-z;])/i'</span>, $str, $matches))
+			{
+				$replace = <span class="hljs-keyword">array</span>();
+				$matches = array_unique(array_map(<span class="hljs-string">'strtolower'</span>, $matches[<span class="hljs-number">0</span>]));
+				<span class="hljs-keyword">foreach</span> ($matches <span class="hljs-keyword">as</span> &amp;$match)
+				{
+					<span class="hljs-keyword">if</span> (($char = array_search($match.<span class="hljs-string">';'</span>, $_entities, <span class="hljs-keyword">TRUE</span>)) !== <span class="hljs-keyword">FALSE</span>)
+					{
+						$replace[$match] = $char;
+					}
+				}
+
+				$str = str_replace(array_keys($replace), array_values($replace), $str);
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<p>Decode numeric &amp; UTF16 two byte entities</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$str = html_entity_decode(
+				preg_replace(<span class="hljs-string">'/(&amp;#(?:x0*[0-9a-f]{2,5}(?![0-9a-f;])|(?:0*\d{2,4}(?![0-9;]))))/iS'</span>, <span class="hljs-string">'$1;'</span>, $str),
+				$flag,
+				$charset
+			);
+
+			<span class="hljs-keyword">if</span> ($flag === ENT_COMPAT)
+			{
+				$str = str_replace(array_values($_entities), array_keys($_entities), $str);
+			}
+		}
+		<span class="hljs-keyword">while</span> ($str_compare !== $str);
+		<span class="hljs-keyword">return</span> $str;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sanitize Filename</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input file name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$relative_path Whether to preserve paths
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sanitize_filename</span><span class="hljs-params">($str, $relative_path = FALSE)</span>
+	</span>{
+		$bad = <span class="hljs-keyword">$this</span>-&gt;filename_bad_chars;
+
+		<span class="hljs-keyword">if</span> ( ! $relative_path)
+		{
+			$bad[] = <span class="hljs-string">'./'</span>;
+			$bad[] = <span class="hljs-string">'/'</span>;
+		}
+
+		$str = remove_invisible_characters($str, <span class="hljs-keyword">FALSE</span>);
+
+		<span class="hljs-keyword">do</span>
+		{
+			$old = $str;
+			$str = str_replace($bad, <span class="hljs-string">''</span>, $str);
+		}
+		<span class="hljs-keyword">while</span> ($old !== $str);
+
+		<span class="hljs-keyword">return</span> stripslashes($str);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Strip Image Tags</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strip_image_tags</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> preg_replace(
+			<span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'#&lt;img[\s/]+.*?src\s*=\s*(["\'])([^\\1]+?)\\1.*?\&gt;#i'</span>,
+				<span class="hljs-string">'#&lt;img[\s/]+.*?src\s*=\s*?(([^\s"\'=&lt;&gt;`]+)).*?\&gt;#i'</span>
+			),
+			<span class="hljs-string">'\\2'</span>,
+			$str
+		);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-74" id="section-74"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-75" id="section-75"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>URL-decode taking spaces into account</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<a href="https://github.com/bcit-ci/CodeIgniter/issues/4877">https://github.com/bcit-ci/CodeIgniter/issues/4877</a>
+</div>
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$matches
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_urldecodespaces</span><span class="hljs-params">($matches)</span>
+	</span>{
+		$input    = $matches[<span class="hljs-number">0</span>];
+		$nospaces = preg_replace(<span class="hljs-string">'#\s+#'</span>, <span class="hljs-string">''</span>, $input);
+		<span class="hljs-keyword">return</span> ($nospaces === $input)
+			? $input
+			: rawurldecode($nospaces);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-76" id="section-76"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-77" id="section-77"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Compact Exploded Words</p>
+</div>
+<div class="body">
+<p>Callback method for xss_clean() to remove whitespace from
+things like 'j a v a s c r i p t'.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$matches
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_compact_exploded_words</span><span class="hljs-params">($matches)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> preg_replace(<span class="hljs-string">'/\s+/s'</span>, <span class="hljs-string">''</span>, $matches[<span class="hljs-number">1</span>]).$matches[<span class="hljs-number">2</span>];
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-78" id="section-78"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-79" id="section-79"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sanitize Naughty HTML</p>
+</div>
+<div class="body">
+<p>Callback method for xss_clean() to remove naughty HTML elements.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$matches
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_sanitize_naughty_html</span><span class="hljs-params">($matches)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $naughty_tags    = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'alert'</span>, <span class="hljs-string">'area'</span>, <span class="hljs-string">'prompt'</span>, <span class="hljs-string">'confirm'</span>, <span class="hljs-string">'applet'</span>, <span class="hljs-string">'audio'</span>, <span class="hljs-string">'basefont'</span>, <span class="hljs-string">'base'</span>, <span class="hljs-string">'behavior'</span>, <span class="hljs-string">'bgsound'</span>,
+			<span class="hljs-string">'blink'</span>, <span class="hljs-string">'body'</span>, <span class="hljs-string">'embed'</span>, <span class="hljs-string">'expression'</span>, <span class="hljs-string">'form'</span>, <span class="hljs-string">'frameset'</span>, <span class="hljs-string">'frame'</span>, <span class="hljs-string">'head'</span>, <span class="hljs-string">'html'</span>, <span class="hljs-string">'ilayer'</span>,
+			<span class="hljs-string">'iframe'</span>, <span class="hljs-string">'input'</span>, <span class="hljs-string">'button'</span>, <span class="hljs-string">'select'</span>, <span class="hljs-string">'isindex'</span>, <span class="hljs-string">'layer'</span>, <span class="hljs-string">'link'</span>, <span class="hljs-string">'meta'</span>, <span class="hljs-string">'keygen'</span>, <span class="hljs-string">'object'</span>,
+			<span class="hljs-string">'plaintext'</span>, <span class="hljs-string">'style'</span>, <span class="hljs-string">'script'</span>, <span class="hljs-string">'textarea'</span>, <span class="hljs-string">'title'</span>, <span class="hljs-string">'math'</span>, <span class="hljs-string">'video'</span>, <span class="hljs-string">'svg'</span>, <span class="hljs-string">'xml'</span>, <span class="hljs-string">'xss'</span>
+		);
+
+		<span class="hljs-keyword">static</span> $evil_attributes = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'on\w+'</span>, <span class="hljs-string">'style'</span>, <span class="hljs-string">'xmlns'</span>, <span class="hljs-string">'formaction'</span>, <span class="hljs-string">'form'</span>, <span class="hljs-string">'xlink:href'</span>, <span class="hljs-string">'FSCommand'</span>, <span class="hljs-string">'seekSegmentTime'</span>
+		);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-80" id="section-80"></a>
+</div>
+<p>First, escape unclosed tags</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($matches[<span class="hljs-string">'closeTag'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">'&amp;lt;'</span>.$matches[<span class="hljs-number">1</span>];
+		}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-81" id="section-81"></a>
+</div>
+<p>Is the element that we caught naughty? If so, escape it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">elseif</span> (in_array(strtolower($matches[<span class="hljs-string">'tagName'</span>]), $naughty_tags, <span class="hljs-keyword">TRUE</span>))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">'&amp;lt;'</span>.$matches[<span class="hljs-number">1</span>].<span class="hljs-string">'&amp;gt;'</span>;
+		}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-82" id="section-82"></a>
+</div>
+<p>For other tags, see if their attributes are &quot;evil&quot; and strip those</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">isset</span>($matches[<span class="hljs-string">'attributes'</span>]))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-83" id="section-83"></a>
+</div>
+<p>We'll store the already filtered attributes here</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$attributes = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-84" id="section-84"></a>
+</div>
+<p>Attribute-catching pattern</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$attributes_pattern = <span class="hljs-string">'#'</span>
+				.<span class="hljs-string">'(?&lt;name&gt;[^\s\042\047&gt;/=]+)'</span> <span class="hljs-comment">// attribute characters</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-85" id="section-85"></a>
+</div>
+<p>optional attribute-value</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				.<span class="hljs-string">'(?:\s*=(?&lt;value&gt;[^\s\042\047=&gt;&lt;`]+|\s*\042[^\042]*\042|\s*\047[^\047]*\047|\s*(?U:[^\s\042\047=&gt;&lt;`]*)))'</span> <span class="hljs-comment">// attribute-value separator</span>
+				.<span class="hljs-string">'#i'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-86" id="section-86"></a>
+</div>
+<p>Blacklist pattern for evil attribute names</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$is_evil_pattern = <span class="hljs-string">'#^('</span>.implode(<span class="hljs-string">'|'</span>, $evil_attributes).<span class="hljs-string">')$#i'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-87" id="section-87"></a>
+</div>
+<p>Each iteration filters a single attribute</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">do</span>
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-88" id="section-88"></a>
+</div>
+<p>Strip any non-alpha characters that may precede an attribute.
+Browsers often parse these incorrectly and that has been a
+of numerous XSS issues we've had.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				$matches[<span class="hljs-string">'attributes'</span>] = preg_replace(<span class="hljs-string">'#^[^a-z]+#i'</span>, <span class="hljs-string">''</span>, $matches[<span class="hljs-string">'attributes'</span>]);
+
+				<span class="hljs-keyword">if</span> ( ! preg_match($attributes_pattern, $matches[<span class="hljs-string">'attributes'</span>], $attribute, PREG_OFFSET_CAPTURE))
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-89" id="section-89"></a>
+</div>
+<p>No (valid) attribute found? Discard everything else inside the tag</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">break</span>;
+				}
+
+				<span class="hljs-keyword">if</span> (
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-90" id="section-90"></a>
+</div>
+<p>Is it indeed an &quot;evil&quot; attribute?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					preg_match($is_evil_pattern, $attribute[<span class="hljs-string">'name'</span>][<span class="hljs-number">0</span>])
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-91" id="section-91"></a>
+</div>
+<p>Or does it have an equals sign, but no value and not quoted? Strip that too!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">OR</span> (trim($attribute[<span class="hljs-string">'value'</span>][<span class="hljs-number">0</span>]) === <span class="hljs-string">''</span>)
+				)
+				{
+					$attributes[] = <span class="hljs-string">'xss=removed'</span>;
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					$attributes[] = $attribute[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];
+				}
+
+				$matches[<span class="hljs-string">'attributes'</span>] = substr($matches[<span class="hljs-string">'attributes'</span>], $attribute[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] + strlen($attribute[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]));
+			}
+			<span class="hljs-keyword">while</span> ($matches[<span class="hljs-string">'attributes'</span>] !== <span class="hljs-string">''</span>);
+
+			$attributes = <span class="hljs-keyword">empty</span>($attributes)
+				? <span class="hljs-string">''</span>
+				: <span class="hljs-string">' '</span>.implode(<span class="hljs-string">' '</span>, $attributes);
+			<span class="hljs-keyword">return</span> <span class="hljs-string">'&lt;'</span>.$matches[<span class="hljs-string">'slash'</span>].$matches[<span class="hljs-string">'tagName'</span>].$attributes.<span class="hljs-string">'&gt;'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $matches[<span class="hljs-number">0</span>];
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-92" id="section-92"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-93" id="section-93"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JS Link Removal</p>
+</div>
+<div class="body">
+<p>Callback method for xss_clean() to sanitize links.</p>
+<p>This limits the PCRE backtracks, making it more performance friendly
+and prevents PREG_BACKTRACK_LIMIT_ERROR from being triggered in
+PHP 5.2+ on link-heavy strings.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$match
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_js_link_removal</span><span class="hljs-params">($match)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> str_replace(
+			$match[<span class="hljs-number">1</span>],
+			preg_replace(
+				<span class="hljs-string">'#href=.*?(?:(?:alert|prompt|confirm)(?:\(|&amp;\#40;|`|&amp;\#96;)|javascript:|livescript:|mocha:|charset=|window\.|\(?document\)?\.|\.cookie|&lt;script|&lt;xss|d\s*a\s*t\s*a\s*:)#si'</span>,
+				<span class="hljs-string">''</span>,
+				<span class="hljs-keyword">$this</span>-&gt;_filter_attributes($match[<span class="hljs-number">1</span>])
+			),
+			$match[<span class="hljs-number">0</span>]
+		);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-94" id="section-94"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-95" id="section-95"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JS Image Removal</p>
+</div>
+<div class="body">
+<p>Callback method for xss_clean() to sanitize image tags.</p>
+<p>This limits the PCRE backtracks, making it more performance friendly
+and prevents PREG_BACKTRACK_LIMIT_ERROR from being triggered in
+PHP 5.2+ on image tag heavy strings.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$match
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_js_img_removal</span><span class="hljs-params">($match)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> str_replace(
+			$match[<span class="hljs-number">1</span>],
+			preg_replace(
+				<span class="hljs-string">'#src=.*?(?:(?:alert|prompt|confirm|eval)(?:\(|&amp;\#40;|`|&amp;\#96;)|javascript:|livescript:|mocha:|charset=|window\.|\(?document\)?\.|\.cookie|&lt;script|&lt;xss|base64\s*,)#si'</span>,
+				<span class="hljs-string">''</span>,
+				<span class="hljs-keyword">$this</span>-&gt;_filter_attributes($match[<span class="hljs-number">1</span>])
+			),
+			$match[<span class="hljs-number">0</span>]
+		);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-96" id="section-96"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-97" id="section-97"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Attribute Conversion</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$match
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_convert_attribute</span><span class="hljs-params">($match)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'&gt;'</span>, <span class="hljs-string">'&lt;'</span>, <span class="hljs-string">'\\'</span>), <span class="hljs-keyword">array</span>(<span class="hljs-string">'&amp;gt;'</span>, <span class="hljs-string">'&amp;lt;'</span>, <span class="hljs-string">'\\\\'</span>), $match[<span class="hljs-number">0</span>]);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-98" id="section-98"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-99" id="section-99"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Filter Attributes</p>
+</div>
+<div class="body">
+<p>Filters tag attributes for consistency and safety.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_filter_attributes</span><span class="hljs-params">($str)</span>
+	</span>{
+		$out = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">if</span> (preg_match_all(<span class="hljs-string">'#\s*[a-z\-]+\s*=\s*(\042|\047)([^\\1]*?)\\1#is'</span>, $str, $matches))
+		{
+			<span class="hljs-keyword">foreach</span> ($matches[<span class="hljs-number">0</span>] <span class="hljs-keyword">as</span> $match)
+			{
+				$out .= preg_replace(<span class="hljs-string">'#/\*.*?\*/#s'</span>, <span class="hljs-string">''</span>, $match);
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $out;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-100" id="section-100"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-101" id="section-101"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>HTML Entity Decode Callback</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$match
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_decode_entity</span><span class="hljs-params">($match)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-102" id="section-102"></a>
+</div>
+<p>Protect GET variables in URLs
+901119URL5918AMP18930PROTECT8198</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$match = preg_replace(<span class="hljs-string">'|\&amp;([a-z\_0-9\-]+)\=([a-z\_0-9\-/]+)|i'</span>, <span class="hljs-keyword">$this</span>-&gt;xss_hash().<span class="hljs-string">'\\1=\\2'</span>, $match[<span class="hljs-number">0</span>]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-103" id="section-103"></a>
+</div>
+<p>Decode, then un-protect URL GET vars</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> str_replace(
+			<span class="hljs-keyword">$this</span>-&gt;xss_hash(),
+			<span class="hljs-string">'&amp;'</span>,
+			<span class="hljs-keyword">$this</span>-&gt;entity_decode($match, <span class="hljs-keyword">$this</span>-&gt;charset)
+		);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-104" id="section-104"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-105" id="section-105"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Do Never Allowed</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_do_never_allowed</span><span class="hljs-params">($str)</span>
+	</span>{
+		$str = str_replace(array_keys(<span class="hljs-keyword">$this</span>-&gt;_never_allowed_str), <span class="hljs-keyword">$this</span>-&gt;_never_allowed_str, $str);
+
+		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;_never_allowed_regex <span class="hljs-keyword">as</span> $regex)
+		{
+			$str = preg_replace(<span class="hljs-string">'#'</span>.$regex.<span class="hljs-string">'#is'</span>, <span class="hljs-string">'[removed]'</span>, $str);
+		}
+
+		<span class="hljs-keyword">return</span> $str;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-106" id="section-106"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-107" id="section-107"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set CSRF Hash and Cookie</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_csrf_set_hash</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_csrf_hash === <span class="hljs-keyword">NULL</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-108" id="section-108"></a>
+</div>
+<p>If the cookie exists we will use its value.
+We don't necessarily want to regenerate it with
+each page load since a page could contain embedded
+sub-pages causing this feature to fail</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name]) &amp;&amp; is_string($_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name])
+				&amp;&amp; preg_match(<span class="hljs-string">'#^[0-9a-f]{32}$#iS'</span>, $_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name]) === <span class="hljs-number">1</span>)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_csrf_hash = $_COOKIE[<span class="hljs-keyword">$this</span>-&gt;_csrf_cookie_name];
+			}
+
+			$rand = <span class="hljs-keyword">$this</span>-&gt;get_random_bytes(<span class="hljs-number">16</span>);
+			<span class="hljs-keyword">$this</span>-&gt;_csrf_hash = ($rand === <span class="hljs-keyword">FALSE</span>)
+				? md5(uniqid(mt_rand(), <span class="hljs-keyword">TRUE</span>))
+				: bin2hex($rand);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_csrf_hash;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

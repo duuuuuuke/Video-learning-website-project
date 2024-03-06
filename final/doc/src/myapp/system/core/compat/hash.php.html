@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>hash.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../doc-style.css" />
+  <script src="../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../";
+    var thisFile = "src\\myapp\\system\\core\\compat\\hash.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>hash.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>PHP ext/hash compatibility package</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> (is_php(<span class="hljs-string">'5.6'</span>))
+{
+	<span class="hljs-keyword">return</span>;
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'hash_equals'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>hash_equals()</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$known_string
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$user_string
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hash_equals</span><span class="hljs-params">($known_string, $user_string)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_string($known_string))
+		{
+			trigger_error(<span class="hljs-string">'hash_equals(): Expected known_string to be a string, '</span>.strtolower(gettype($known_string)).<span class="hljs-string">' given'</span>, E_USER_WARNING);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_string($user_string))
+		{
+			trigger_error(<span class="hljs-string">'hash_equals(): Expected user_string to be a string, '</span>.strtolower(gettype($user_string)).<span class="hljs-string">' given'</span>, E_USER_WARNING);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (($length = strlen($known_string)) !== strlen($user_string))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$diff = <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $length; $i++)
+		{
+			$diff |= ord($known_string[$i]) ^ ord($user_string[$i]);
+		}
+
+		<span class="hljs-keyword">return</span> ($diff === <span class="hljs-number">0</span>);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> (is_php(<span class="hljs-string">'5.5'</span>))
+{
+	<span class="hljs-keyword">return</span>;
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'hash_pbkdf2'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>hash_pbkdf2()</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$algo
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$password
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$salt
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$iterations
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$length
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$raw_output
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hash_pbkdf2</span><span class="hljs-params">($algo, $password, $salt, $iterations, $length = <span class="hljs-number">0</span>, $raw_output = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! in_array(strtolower($algo), hash_algos(), <span class="hljs-keyword">TRUE</span>))
+		{
+			trigger_error(<span class="hljs-string">'hash_pbkdf2(): Unknown hashing algorithm: '</span>.$algo, E_USER_WARNING);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (($type = gettype($iterations)) !== <span class="hljs-string">'integer'</span>)
+		{
+			<span class="hljs-keyword">if</span> ($type === <span class="hljs-string">'object'</span> &amp;&amp; method_exists($iterations, <span class="hljs-string">'__toString'</span>))
+			{
+				$iterations = (string) $iterations;
+			}
+
+			<span class="hljs-keyword">if</span> (is_string($iterations) &amp;&amp; is_numeric($iterations))
+			{
+				$iterations = (int) $iterations;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				trigger_error(<span class="hljs-string">'hash_pbkdf2() expects parameter 4 to be long, '</span>.$type.<span class="hljs-string">' given'</span>, E_USER_WARNING);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">NULL</span>;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($iterations &lt; <span class="hljs-number">1</span>)
+		{
+			trigger_error(<span class="hljs-string">'hash_pbkdf2(): Iterations must be a positive integer: '</span>.$iterations, E_USER_WARNING);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (($type = gettype($length)) !== <span class="hljs-string">'integer'</span>)
+		{
+			<span class="hljs-keyword">if</span> ($type === <span class="hljs-string">'object'</span> &amp;&amp; method_exists($length, <span class="hljs-string">'__toString'</span>))
+			{
+				$length = (string) $length;
+			}
+
+			<span class="hljs-keyword">if</span> (is_string($length) &amp;&amp; is_numeric($length))
+			{
+				$length = (int) $length;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				trigger_error(<span class="hljs-string">'hash_pbkdf2() expects parameter 5 to be long, '</span>.$type.<span class="hljs-string">' given'</span>, E_USER_WARNING);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">NULL</span>;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($length &lt; <span class="hljs-number">0</span>)
+		{
+			trigger_error(<span class="hljs-string">'hash_pbkdf2(): Length must be greater than or equal to 0: '</span>.$length, E_USER_WARNING);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$hash_length = defined(<span class="hljs-string">'MB_OVERLOAD_STRING'</span>)
+			? mb_strlen(hash($algo, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">TRUE</span>), <span class="hljs-string">'8bit'</span>)
+			: strlen(hash($algo, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">TRUE</span>));
+		<span class="hljs-keyword">empty</span>($length) &amp;&amp; $length = $hash_length;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Pre-hash password inputs longer than the algorithm's block size
+(i.e. prepare HMAC key) to mitigate potential DoS attacks.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">static</span> $block_sizes;
+		<span class="hljs-keyword">empty</span>($block_sizes) &amp;&amp; $block_sizes = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'gost'</span> =&gt; <span class="hljs-number">32</span>,
+			<span class="hljs-string">'haval128,3'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval160,3'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval192,3'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval224,3'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval256,3'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval128,4'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval160,4'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval192,4'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval224,4'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval256,4'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval128,5'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval160,5'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval192,5'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval224,5'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'haval256,5'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'md2'</span> =&gt; <span class="hljs-number">16</span>,
+			<span class="hljs-string">'md4'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'md5'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'ripemd128'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'ripemd160'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'ripemd256'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'ripemd320'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'salsa10'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'salsa20'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'sha1'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'sha224'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'sha256'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'sha384'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'sha512'</span> =&gt; <span class="hljs-number">128</span>,
+			<span class="hljs-string">'snefru'</span> =&gt; <span class="hljs-number">32</span>,
+			<span class="hljs-string">'snefru256'</span> =&gt; <span class="hljs-number">32</span>,
+			<span class="hljs-string">'tiger128,3'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'tiger160,3'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'tiger192,3'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'tiger128,4'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'tiger160,4'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'tiger192,4'</span> =&gt; <span class="hljs-number">64</span>,
+			<span class="hljs-string">'whirlpool'</span> =&gt; <span class="hljs-number">64</span>
+		);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($block_sizes[$algo], $password[$block_sizes[$algo]]))
+		{
+			$password = hash($algo, $password, <span class="hljs-keyword">TRUE</span>);
+		}
+
+		$hash = <span class="hljs-string">''</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>Note: Blocks are NOT 0-indexed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">for</span> ($bc = (int) ceil($length / $hash_length), $bi = <span class="hljs-number">1</span>; $bi &lt;= $bc; $bi++)
+		{
+			$key = $derived_key = hash_hmac($algo, $salt.pack(<span class="hljs-string">'N'</span>, $bi), $password, <span class="hljs-keyword">TRUE</span>);
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">1</span>; $i &lt; $iterations; $i++)
+			{
+				$derived_key ^= $key = hash_hmac($algo, $key, $password, <span class="hljs-keyword">TRUE</span>);
+			}
+
+			$hash .= $derived_key;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>This is not RFC-compatible, but we're aiming for natural PHP compatibility</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! $raw_output)
+		{
+			$hash = bin2hex($hash);
+		}
+
+		<span class="hljs-keyword">return</span> defined(<span class="hljs-string">'MB_OVERLOAD_STRING'</span>)
+			? mb_substr($hash, <span class="hljs-number">0</span>, $length, <span class="hljs-string">'8bit'</span>)
+			: substr($hash, <span class="hljs-number">0</span>, $length);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

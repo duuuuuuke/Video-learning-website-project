@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>mimes.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\mimes.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>mimes.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>MIME TYPES</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This file contains an array of mime types.  It is used by the</td>
+</tr>
+<tr>
+<td>Upload class to help identify allowed file types.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(
+	<span class="hljs-string">'hqx'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/mac-binhex40'</span>, <span class="hljs-string">'application/mac-binhex'</span>, <span class="hljs-string">'application/x-binhex40'</span>, <span class="hljs-string">'application/x-mac-binhex40'</span>),
+	<span class="hljs-string">'cpt'</span>	=&gt;	<span class="hljs-string">'application/mac-compactpro'</span>,
+	<span class="hljs-string">'csv'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/x-comma-separated-values'</span>, <span class="hljs-string">'text/comma-separated-values'</span>, <span class="hljs-string">'application/octet-stream'</span>, <span class="hljs-string">'application/vnd.ms-excel'</span>, <span class="hljs-string">'application/x-csv'</span>, <span class="hljs-string">'text/x-csv'</span>, <span class="hljs-string">'text/csv'</span>, <span class="hljs-string">'application/csv'</span>, <span class="hljs-string">'application/excel'</span>, <span class="hljs-string">'application/vnd.msexcel'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'bin'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/macbinary'</span>, <span class="hljs-string">'application/mac-binary'</span>, <span class="hljs-string">'application/octet-stream'</span>, <span class="hljs-string">'application/x-binary'</span>, <span class="hljs-string">'application/x-macbinary'</span>),
+	<span class="hljs-string">'dms'</span>	=&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'lha'</span>	=&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'lzh'</span>	=&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'exe'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/octet-stream'</span>, <span class="hljs-string">'application/x-msdownload'</span>),
+	<span class="hljs-string">'class'</span>	=&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'psd'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-photoshop'</span>, <span class="hljs-string">'image/vnd.adobe.photoshop'</span>),
+	<span class="hljs-string">'so'</span>	=&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'sea'</span>	=&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'dll'</span>	=&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'oda'</span>	=&gt;	<span class="hljs-string">'application/oda'</span>,
+	<span class="hljs-string">'pdf'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/pdf'</span>, <span class="hljs-string">'application/force-download'</span>, <span class="hljs-string">'application/x-download'</span>, <span class="hljs-string">'binary/octet-stream'</span>),
+	<span class="hljs-string">'ai'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/pdf'</span>, <span class="hljs-string">'application/postscript'</span>),
+	<span class="hljs-string">'eps'</span>	=&gt;	<span class="hljs-string">'application/postscript'</span>,
+	<span class="hljs-string">'ps'</span>	=&gt;	<span class="hljs-string">'application/postscript'</span>,
+	<span class="hljs-string">'smi'</span>	=&gt;	<span class="hljs-string">'application/smil'</span>,
+	<span class="hljs-string">'smil'</span>	=&gt;	<span class="hljs-string">'application/smil'</span>,
+	<span class="hljs-string">'mif'</span>	=&gt;	<span class="hljs-string">'application/vnd.mif'</span>,
+	<span class="hljs-string">'xls'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/vnd.ms-excel'</span>, <span class="hljs-string">'application/msexcel'</span>, <span class="hljs-string">'application/x-msexcel'</span>, <span class="hljs-string">'application/x-ms-excel'</span>, <span class="hljs-string">'application/x-excel'</span>, <span class="hljs-string">'application/x-dos_ms_excel'</span>, <span class="hljs-string">'application/xls'</span>, <span class="hljs-string">'application/x-xls'</span>, <span class="hljs-string">'application/excel'</span>, <span class="hljs-string">'application/download'</span>, <span class="hljs-string">'application/vnd.ms-office'</span>, <span class="hljs-string">'application/msword'</span>),
+	<span class="hljs-string">'ppt'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/powerpoint'</span>, <span class="hljs-string">'application/vnd.ms-powerpoint'</span>, <span class="hljs-string">'application/vnd.ms-office'</span>, <span class="hljs-string">'application/msword'</span>),
+	<span class="hljs-string">'pptx'</span>	=&gt; 	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/vnd.openxmlformats-officedocument.presentationml.presentation'</span>, <span class="hljs-string">'application/x-zip'</span>, <span class="hljs-string">'application/zip'</span>),
+	<span class="hljs-string">'wbxml'</span>	=&gt;	<span class="hljs-string">'application/wbxml'</span>,
+	<span class="hljs-string">'wmlc'</span>	=&gt;	<span class="hljs-string">'application/wmlc'</span>,
+	<span class="hljs-string">'dcr'</span>	=&gt;	<span class="hljs-string">'application/x-director'</span>,
+	<span class="hljs-string">'dir'</span>	=&gt;	<span class="hljs-string">'application/x-director'</span>,
+	<span class="hljs-string">'dxr'</span>	=&gt;	<span class="hljs-string">'application/x-director'</span>,
+	<span class="hljs-string">'dvi'</span>	=&gt;	<span class="hljs-string">'application/x-dvi'</span>,
+	<span class="hljs-string">'gtar'</span>	=&gt;	<span class="hljs-string">'application/x-gtar'</span>,
+	<span class="hljs-string">'gz'</span>	=&gt;	<span class="hljs-string">'application/x-gzip'</span>,
+	<span class="hljs-string">'gzip'</span>  =&gt;	<span class="hljs-string">'application/x-gzip'</span>,
+	<span class="hljs-string">'php'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-httpd-php'</span>, <span class="hljs-string">'application/php'</span>, <span class="hljs-string">'application/x-php'</span>, <span class="hljs-string">'text/php'</span>, <span class="hljs-string">'text/x-php'</span>, <span class="hljs-string">'application/x-httpd-php-source'</span>),
+	<span class="hljs-string">'php4'</span>	=&gt;	<span class="hljs-string">'application/x-httpd-php'</span>,
+	<span class="hljs-string">'php3'</span>	=&gt;	<span class="hljs-string">'application/x-httpd-php'</span>,
+	<span class="hljs-string">'phtml'</span>	=&gt;	<span class="hljs-string">'application/x-httpd-php'</span>,
+	<span class="hljs-string">'phps'</span>	=&gt;	<span class="hljs-string">'application/x-httpd-php-source'</span>,
+	<span class="hljs-string">'js'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-javascript'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'swf'</span>	=&gt;	<span class="hljs-string">'application/x-shockwave-flash'</span>,
+	<span class="hljs-string">'sit'</span>	=&gt;	<span class="hljs-string">'application/x-stuffit'</span>,
+	<span class="hljs-string">'tar'</span>	=&gt;	<span class="hljs-string">'application/x-tar'</span>,
+	<span class="hljs-string">'tgz'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-tar'</span>, <span class="hljs-string">'application/x-gzip-compressed'</span>),
+	<span class="hljs-string">'z'</span>	=&gt;	<span class="hljs-string">'application/x-compress'</span>,
+	<span class="hljs-string">'xhtml'</span>	=&gt;	<span class="hljs-string">'application/xhtml+xml'</span>,
+	<span class="hljs-string">'xht'</span>	=&gt;	<span class="hljs-string">'application/xhtml+xml'</span>,
+	<span class="hljs-string">'zip'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-zip'</span>, <span class="hljs-string">'application/zip'</span>, <span class="hljs-string">'application/x-zip-compressed'</span>, <span class="hljs-string">'application/s-compressed'</span>, <span class="hljs-string">'multipart/x-zip'</span>),
+	<span class="hljs-string">'rar'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-rar'</span>, <span class="hljs-string">'application/rar'</span>, <span class="hljs-string">'application/x-rar-compressed'</span>),
+	<span class="hljs-string">'mid'</span>	=&gt;	<span class="hljs-string">'audio/midi'</span>,
+	<span class="hljs-string">'midi'</span>	=&gt;	<span class="hljs-string">'audio/midi'</span>,
+	<span class="hljs-string">'mpga'</span>	=&gt;	<span class="hljs-string">'audio/mpeg'</span>,
+	<span class="hljs-string">'mp2'</span>	=&gt;	<span class="hljs-string">'audio/mpeg'</span>,
+	<span class="hljs-string">'mp3'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'audio/mpeg'</span>, <span class="hljs-string">'audio/mpg'</span>, <span class="hljs-string">'audio/mpeg3'</span>, <span class="hljs-string">'audio/mp3'</span>),
+	<span class="hljs-string">'aif'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'audio/x-aiff'</span>, <span class="hljs-string">'audio/aiff'</span>),
+	<span class="hljs-string">'aiff'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'audio/x-aiff'</span>, <span class="hljs-string">'audio/aiff'</span>),
+	<span class="hljs-string">'aifc'</span>	=&gt;	<span class="hljs-string">'audio/x-aiff'</span>,
+	<span class="hljs-string">'ram'</span>	=&gt;	<span class="hljs-string">'audio/x-pn-realaudio'</span>,
+	<span class="hljs-string">'rm'</span>	=&gt;	<span class="hljs-string">'audio/x-pn-realaudio'</span>,
+	<span class="hljs-string">'rpm'</span>	=&gt;	<span class="hljs-string">'audio/x-pn-realaudio-plugin'</span>,
+	<span class="hljs-string">'ra'</span>	=&gt;	<span class="hljs-string">'audio/x-realaudio'</span>,
+	<span class="hljs-string">'rv'</span>	=&gt;	<span class="hljs-string">'video/vnd.rn-realvideo'</span>,
+	<span class="hljs-string">'wav'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'audio/x-wav'</span>, <span class="hljs-string">'audio/wave'</span>, <span class="hljs-string">'audio/wav'</span>),
+	<span class="hljs-string">'bmp'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/bmp'</span>, <span class="hljs-string">'image/x-bmp'</span>, <span class="hljs-string">'image/x-bitmap'</span>, <span class="hljs-string">'image/x-xbitmap'</span>, <span class="hljs-string">'image/x-win-bitmap'</span>, <span class="hljs-string">'image/x-windows-bmp'</span>, <span class="hljs-string">'image/ms-bmp'</span>, <span class="hljs-string">'image/x-ms-bmp'</span>, <span class="hljs-string">'application/bmp'</span>, <span class="hljs-string">'application/x-bmp'</span>, <span class="hljs-string">'application/x-win-bitmap'</span>),
+	<span class="hljs-string">'gif'</span>	=&gt;	<span class="hljs-string">'image/gif'</span>,
+	<span class="hljs-string">'jpeg'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jpeg'</span>, <span class="hljs-string">'image/pjpeg'</span>),
+	<span class="hljs-string">'jpg'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jpeg'</span>, <span class="hljs-string">'image/pjpeg'</span>),
+	<span class="hljs-string">'jpe'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jpeg'</span>, <span class="hljs-string">'image/pjpeg'</span>),
+	<span class="hljs-string">'jp2'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'j2k'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'jpf'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'jpg2'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'jpx'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'jpm'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'mj2'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'mjp2'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/jp2'</span>, <span class="hljs-string">'video/mj2'</span>, <span class="hljs-string">'image/jpx'</span>, <span class="hljs-string">'image/jpm'</span>),
+	<span class="hljs-string">'png'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/png'</span>,  <span class="hljs-string">'image/x-png'</span>),
+	<span class="hljs-string">'tiff'</span>	=&gt;	<span class="hljs-string">'image/tiff'</span>,
+	<span class="hljs-string">'tif'</span>	=&gt;	<span class="hljs-string">'image/tiff'</span>,
+	<span class="hljs-string">'css'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/css'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'html'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/html'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'htm'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/html'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'shtml'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/html'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'txt'</span>	=&gt;	<span class="hljs-string">'text/plain'</span>,
+	<span class="hljs-string">'text'</span>	=&gt;	<span class="hljs-string">'text/plain'</span>,
+	<span class="hljs-string">'log'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/plain'</span>, <span class="hljs-string">'text/x-log'</span>),
+	<span class="hljs-string">'rtx'</span>	=&gt;	<span class="hljs-string">'text/richtext'</span>,
+	<span class="hljs-string">'rtf'</span>	=&gt;	<span class="hljs-string">'text/rtf'</span>,
+	<span class="hljs-string">'xml'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/xml'</span>, <span class="hljs-string">'text/xml'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'xsl'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/xml'</span>, <span class="hljs-string">'text/xsl'</span>, <span class="hljs-string">'text/xml'</span>),
+	<span class="hljs-string">'mpeg'</span>	=&gt;	<span class="hljs-string">'video/mpeg'</span>,
+	<span class="hljs-string">'mpg'</span>	=&gt;	<span class="hljs-string">'video/mpeg'</span>,
+	<span class="hljs-string">'mpe'</span>	=&gt;	<span class="hljs-string">'video/mpeg'</span>,
+	<span class="hljs-string">'qt'</span>	=&gt;	<span class="hljs-string">'video/quicktime'</span>,
+	<span class="hljs-string">'mov'</span>	=&gt;	<span class="hljs-string">'video/quicktime'</span>,
+	<span class="hljs-string">'avi'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'video/x-msvideo'</span>, <span class="hljs-string">'video/msvideo'</span>, <span class="hljs-string">'video/avi'</span>, <span class="hljs-string">'application/x-troff-msvideo'</span>),
+	<span class="hljs-string">'movie'</span>	=&gt;	<span class="hljs-string">'video/x-sgi-movie'</span>,
+	<span class="hljs-string">'doc'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/msword'</span>, <span class="hljs-string">'application/vnd.ms-office'</span>),
+	<span class="hljs-string">'docx'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/vnd.openxmlformats-officedocument.wordprocessingml.document'</span>, <span class="hljs-string">'application/zip'</span>, <span class="hljs-string">'application/msword'</span>, <span class="hljs-string">'application/x-zip'</span>),
+	<span class="hljs-string">'dot'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/msword'</span>, <span class="hljs-string">'application/vnd.ms-office'</span>),
+	<span class="hljs-string">'dotx'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/vnd.openxmlformats-officedocument.wordprocessingml.document'</span>, <span class="hljs-string">'application/zip'</span>, <span class="hljs-string">'application/msword'</span>),
+	<span class="hljs-string">'xlsx'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'</span>, <span class="hljs-string">'application/zip'</span>, <span class="hljs-string">'application/vnd.ms-excel'</span>, <span class="hljs-string">'application/msword'</span>, <span class="hljs-string">'application/x-zip'</span>),
+	<span class="hljs-string">'word'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/msword'</span>, <span class="hljs-string">'application/octet-stream'</span>),
+	<span class="hljs-string">'xl'</span>	=&gt;	<span class="hljs-string">'application/excel'</span>,
+	<span class="hljs-string">'eml'</span>	=&gt;	<span class="hljs-string">'message/rfc822'</span>,
+	<span class="hljs-string">'json'</span>  =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/json'</span>, <span class="hljs-string">'text/json'</span>),
+	<span class="hljs-string">'pem'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-x509-user-cert'</span>, <span class="hljs-string">'application/x-pem-file'</span>, <span class="hljs-string">'application/octet-stream'</span>),
+	<span class="hljs-string">'p10'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-pkcs10'</span>, <span class="hljs-string">'application/pkcs10'</span>),
+	<span class="hljs-string">'p12'</span>   =&gt;	<span class="hljs-string">'application/x-pkcs12'</span>,
+	<span class="hljs-string">'p7a'</span>   =&gt;	<span class="hljs-string">'application/x-pkcs7-signature'</span>,
+	<span class="hljs-string">'p7c'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/pkcs7-mime'</span>, <span class="hljs-string">'application/x-pkcs7-mime'</span>),
+	<span class="hljs-string">'p7m'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/pkcs7-mime'</span>, <span class="hljs-string">'application/x-pkcs7-mime'</span>),
+	<span class="hljs-string">'p7r'</span>   =&gt;	<span class="hljs-string">'application/x-pkcs7-certreqresp'</span>,
+	<span class="hljs-string">'p7s'</span>   =&gt;	<span class="hljs-string">'application/pkcs7-signature'</span>,
+	<span class="hljs-string">'crt'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-x509-ca-cert'</span>, <span class="hljs-string">'application/x-x509-user-cert'</span>, <span class="hljs-string">'application/pkix-cert'</span>),
+	<span class="hljs-string">'crl'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/pkix-crl'</span>, <span class="hljs-string">'application/pkcs-crl'</span>),
+	<span class="hljs-string">'der'</span>   =&gt;	<span class="hljs-string">'application/x-x509-ca-cert'</span>,
+	<span class="hljs-string">'kdb'</span>   =&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'pgp'</span>   =&gt;	<span class="hljs-string">'application/pgp'</span>,
+	<span class="hljs-string">'gpg'</span>   =&gt;	<span class="hljs-string">'application/gpg-keys'</span>,
+	<span class="hljs-string">'sst'</span>   =&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'csr'</span>   =&gt;	<span class="hljs-string">'application/octet-stream'</span>,
+	<span class="hljs-string">'rsa'</span>   =&gt;	<span class="hljs-string">'application/x-pkcs7'</span>,
+	<span class="hljs-string">'cer'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/pkix-cert'</span>, <span class="hljs-string">'application/x-x509-ca-cert'</span>),
+	<span class="hljs-string">'3g2'</span>   =&gt;	<span class="hljs-string">'video/3gpp2'</span>,
+	<span class="hljs-string">'3gp'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'video/3gp'</span>, <span class="hljs-string">'video/3gpp'</span>),
+	<span class="hljs-string">'mp4'</span>   =&gt;	<span class="hljs-string">'video/mp4'</span>,
+	<span class="hljs-string">'m4a'</span>   =&gt;	<span class="hljs-string">'audio/x-m4a'</span>,
+	<span class="hljs-string">'f4v'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'video/mp4'</span>, <span class="hljs-string">'video/x-f4v'</span>),
+	<span class="hljs-string">'flv'</span>	=&gt;	<span class="hljs-string">'video/x-flv'</span>,
+	<span class="hljs-string">'webm'</span>	=&gt;	<span class="hljs-string">'video/webm'</span>,
+	<span class="hljs-string">'aac'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'audio/x-aac'</span>, <span class="hljs-string">'audio/aac'</span>),
+	<span class="hljs-string">'m4u'</span>   =&gt;	<span class="hljs-string">'application/vnd.mpegurl'</span>,
+	<span class="hljs-string">'m3u'</span>   =&gt;	<span class="hljs-string">'text/plain'</span>,
+	<span class="hljs-string">'xspf'</span>  =&gt;	<span class="hljs-string">'application/xspf+xml'</span>,
+	<span class="hljs-string">'vlc'</span>   =&gt;	<span class="hljs-string">'application/videolan'</span>,
+	<span class="hljs-string">'wmv'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'video/x-ms-wmv'</span>, <span class="hljs-string">'video/x-ms-asf'</span>),
+	<span class="hljs-string">'au'</span>    =&gt;	<span class="hljs-string">'audio/x-au'</span>,
+	<span class="hljs-string">'ac3'</span>   =&gt;	<span class="hljs-string">'audio/ac3'</span>,
+	<span class="hljs-string">'flac'</span>  =&gt;	<span class="hljs-string">'audio/x-flac'</span>,
+	<span class="hljs-string">'ogg'</span>   =&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'audio/ogg'</span>, <span class="hljs-string">'video/ogg'</span>, <span class="hljs-string">'application/ogg'</span>),
+	<span class="hljs-string">'kmz'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/vnd.google-earth.kmz'</span>, <span class="hljs-string">'application/zip'</span>, <span class="hljs-string">'application/x-zip'</span>),
+	<span class="hljs-string">'kml'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/vnd.google-earth.kml+xml'</span>, <span class="hljs-string">'application/xml'</span>, <span class="hljs-string">'text/xml'</span>),
+	<span class="hljs-string">'ics'</span>	=&gt;	<span class="hljs-string">'text/calendar'</span>,
+	<span class="hljs-string">'ical'</span>	=&gt;	<span class="hljs-string">'text/calendar'</span>,
+	<span class="hljs-string">'zsh'</span>	=&gt;	<span class="hljs-string">'text/x-scriptzsh'</span>,
+	<span class="hljs-string">'7z'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-7z-compressed'</span>, <span class="hljs-string">'application/x-compressed'</span>, <span class="hljs-string">'application/x-zip-compressed'</span>, <span class="hljs-string">'application/zip'</span>, <span class="hljs-string">'multipart/x-zip'</span>),
+	<span class="hljs-string">'7zip'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/x-7z-compressed'</span>, <span class="hljs-string">'application/x-compressed'</span>, <span class="hljs-string">'application/x-zip-compressed'</span>, <span class="hljs-string">'application/zip'</span>, <span class="hljs-string">'multipart/x-zip'</span>),
+	<span class="hljs-string">'cdr'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/cdr'</span>, <span class="hljs-string">'application/coreldraw'</span>, <span class="hljs-string">'application/x-cdr'</span>, <span class="hljs-string">'application/x-coreldraw'</span>, <span class="hljs-string">'image/cdr'</span>, <span class="hljs-string">'image/x-cdr'</span>, <span class="hljs-string">'zz-application/zz-winassoc-cdr'</span>),
+	<span class="hljs-string">'wma'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'audio/x-ms-wma'</span>, <span class="hljs-string">'video/x-ms-asf'</span>),
+	<span class="hljs-string">'jar'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'application/java-archive'</span>, <span class="hljs-string">'application/x-java-application'</span>, <span class="hljs-string">'application/x-jar'</span>, <span class="hljs-string">'application/x-compressed'</span>),
+	<span class="hljs-string">'svg'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/svg+xml'</span>, <span class="hljs-string">'application/xml'</span>, <span class="hljs-string">'text/xml'</span>),
+	<span class="hljs-string">'vcf'</span>	=&gt;	<span class="hljs-string">'text/x-vcard'</span>,
+	<span class="hljs-string">'srt'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/srt'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'vtt'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'text/vtt'</span>, <span class="hljs-string">'text/plain'</span>),
+	<span class="hljs-string">'ico'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'image/x-icon'</span>, <span class="hljs-string">'image/x-ico'</span>, <span class="hljs-string">'image/vnd.microsoft.icon'</span>),
+	<span class="hljs-string">'odc'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.chart'</span>,
+	<span class="hljs-string">'otc'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.chart-template'</span>,
+	<span class="hljs-string">'odf'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.formula'</span>,
+	<span class="hljs-string">'otf'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.formula-template'</span>,
+	<span class="hljs-string">'odg'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.graphics'</span>,
+	<span class="hljs-string">'otg'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.graphics-template'</span>,
+	<span class="hljs-string">'odi'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.image'</span>,
+	<span class="hljs-string">'oti'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.image-template'</span>,
+	<span class="hljs-string">'odp'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.presentation'</span>,
+	<span class="hljs-string">'otp'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.presentation-template'</span>,
+	<span class="hljs-string">'ods'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.spreadsheet'</span>,
+	<span class="hljs-string">'ots'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.spreadsheet-template'</span>,
+	<span class="hljs-string">'odt'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.text'</span>,
+	<span class="hljs-string">'odm'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.text-master'</span>,
+	<span class="hljs-string">'ott'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.text-template'</span>,
+	<span class="hljs-string">'oth'</span>	=&gt;	<span class="hljs-string">'application/vnd.oasis.opendocument.text-web'</span>
+);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

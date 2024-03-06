@@ -1,0 +1,3478 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loader.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Loader.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Loader.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Loader Class</p>
+</div>
+<div class="body">
+<p>Loads framework components.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Loader</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>All these are set automatically. Don't mess with them.</p>
+<div class="dox">
+<div class="summary">
+<p>Nesting level of the output buffering mechanism</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_ob_level;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of paths to load views from</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_view_paths =	<span class="hljs-keyword">array</span>(VIEWPATH	=&gt; <span class="hljs-keyword">TRUE</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of paths to load libraries from</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_library_paths =	<span class="hljs-keyword">array</span>(APPPATH, BASEPATH);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of paths to load models from</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_model_paths =	<span class="hljs-keyword">array</span>(APPPATH);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of paths to load helpers from</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_helper_paths =	<span class="hljs-keyword">array</span>(APPPATH, BASEPATH);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of cached variables</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_cached_vars =	<span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of loaded classes</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_classes =	<span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of loaded models</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_models =	<span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of loaded helpers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_helpers =	<span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of class name mappings</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_ci_varmap =	<span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'unit_test'</span> =&gt; <span class="hljs-string">'unit'</span>,
+		<span class="hljs-string">'user_agent'</span> =&gt; <span class="hljs-string">'agent'</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+<p>Sets component load paths, gets the initial output buffering level.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_ci_ob_level = ob_get_level();
+		<span class="hljs-keyword">$this</span>-&gt;_ci_classes =&amp; is_loaded();
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Loader Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initializer</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_ci_autoloader();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is Loaded</p>
+</div>
+<div class="body">
+<p>A utility method to test if a class is in the self::$_ci_classes array.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$class Class name to check for
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string|bool Class object name if loaded or FALSE
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_loaded</span><span class="hljs-params">($class)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> array_search(ucfirst($class), <span class="hljs-keyword">$this</span>-&gt;_ci_classes, <span class="hljs-keyword">TRUE</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Library Loader</p>
+</div>
+<div class="body">
+<p>Loads and instantiates libraries.
+Designed to be called from application controllers.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$library Library name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Optional parameters to pass to the library class constructor
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$object_name An optional object name to assign to
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">library</span><span class="hljs-params">($library, $params = NULL, $object_name = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($library))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (is_array($library))
+		{
+			<span class="hljs-keyword">foreach</span> ($library <span class="hljs-keyword">as</span> $key =&gt; $value)
+			{
+				<span class="hljs-keyword">if</span> (is_int($key))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;library($value, $params);
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					<span class="hljs-keyword">$this</span>-&gt;library($key, $params, $value);
+				}
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ($params !== <span class="hljs-keyword">NULL</span> &amp;&amp; ! is_array($params))
+		{
+			$params = <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_ci_load_library($library, $params, $object_name);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Model Loader</p>
+</div>
+<div class="body">
+<p>Loads and instantiates models.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$model Model name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$name An optional object name to assign to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$db_conn An optional database connection configuration to initialize
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">model</span><span class="hljs-params">($model, $name = <span class="hljs-string">''</span>, $db_conn = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($model))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (is_array($model))
+		{
+			<span class="hljs-keyword">foreach</span> ($model <span class="hljs-keyword">as</span> $key =&gt; $value)
+			{
+				is_int($key) ? <span class="hljs-keyword">$this</span>-&gt;model($value, <span class="hljs-string">''</span>, $db_conn) : <span class="hljs-keyword">$this</span>-&gt;model($key, $value, $db_conn);
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+		}
+
+		$path = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>Is the model in a sub-folder? If so, parse out the filename and path.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (($last_slash = strrpos($model, <span class="hljs-string">'/'</span>)) !== <span class="hljs-keyword">FALSE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<p>The path is in front of the last slash</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$path = substr($model, <span class="hljs-number">0</span>, ++$last_slash);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<p>And the model name behind it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$model = substr($model, $last_slash);
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($name))
+		{
+			$name = $model;
+		}
+
+		<span class="hljs-keyword">if</span> (in_array($name, <span class="hljs-keyword">$this</span>-&gt;_ci_models, <span class="hljs-keyword">TRUE</span>))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+		}
+
+		$CI =&amp; get_instance();
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($CI-&gt;$name))
+		{
+			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">'The model name you are loading is the name of a resource that is already being used: '</span>.$name);
+		}
+
+		<span class="hljs-keyword">if</span> ($db_conn !== <span class="hljs-keyword">FALSE</span> &amp;&amp; ! class_exists(<span class="hljs-string">'CI_DB'</span>, <span class="hljs-keyword">FALSE</span>))
+		{
+			<span class="hljs-keyword">if</span> ($db_conn === <span class="hljs-keyword">TRUE</span>)
+			{
+				$db_conn = <span class="hljs-string">''</span>;
+			}
+
+			<span class="hljs-keyword">$this</span>-&gt;database($db_conn, <span class="hljs-keyword">FALSE</span>, <span class="hljs-keyword">TRUE</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>Note: All of the code under this condition used to be just:</p>
+<pre><code>  load_class('Model', 'core');
+
+  However, load_class() instantiates classes
+  to cache them for later use and that prevents
+  MY_Model from being an abstract class and is
+  sub-optimal otherwise anyway.
+</code></pre>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! class_exists(<span class="hljs-string">'CI_Model'</span>, <span class="hljs-keyword">FALSE</span>))
+		{
+			$app_path = APPPATH.<span class="hljs-string">'core'</span>.DIRECTORY_SEPARATOR;
+			<span class="hljs-keyword">if</span> (file_exists($app_path.<span class="hljs-string">'Model.php'</span>))
+			{
+				<span class="hljs-keyword">require_once</span>($app_path.<span class="hljs-string">'Model.php'</span>);
+				<span class="hljs-keyword">if</span> ( ! class_exists(<span class="hljs-string">'CI_Model'</span>, <span class="hljs-keyword">FALSE</span>))
+				{
+					<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException($app_path.<span class="hljs-string">"Model.php exists, but doesn't declare class CI_Model"</span>);
+				}
+
+				log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'CI_Model class loaded'</span>);
+			}
+			<span class="hljs-keyword">elseif</span> ( ! class_exists(<span class="hljs-string">'CI_Model'</span>, <span class="hljs-keyword">FALSE</span>))
+			{
+				<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'core'</span>.DIRECTORY_SEPARATOR.<span class="hljs-string">'Model.php'</span>);
+			}
+
+			$class = config_item(<span class="hljs-string">'subclass_prefix'</span>).<span class="hljs-string">'Model'</span>;
+			<span class="hljs-keyword">if</span> (file_exists($app_path.$class.<span class="hljs-string">'.php'</span>))
+			{
+				<span class="hljs-keyword">require_once</span>($app_path.$class.<span class="hljs-string">'.php'</span>);
+				<span class="hljs-keyword">if</span> ( ! class_exists($class, <span class="hljs-keyword">FALSE</span>))
+				{
+					<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException($app_path.$class.<span class="hljs-string">".php exists, but doesn't declare class "</span>.$class);
+				}
+
+				log_message(<span class="hljs-string">'info'</span>, config_item(<span class="hljs-string">'subclass_prefix'</span>).<span class="hljs-string">'Model class loaded'</span>);
+			}
+		}
+
+		$model = ucfirst($model);
+		<span class="hljs-keyword">if</span> ( ! class_exists($model, <span class="hljs-keyword">FALSE</span>))
+		{
+			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;_ci_model_paths <span class="hljs-keyword">as</span> $mod_path)
+			{
+				<span class="hljs-keyword">if</span> ( ! file_exists($mod_path.<span class="hljs-string">'models/'</span>.$path.$model.<span class="hljs-string">'.php'</span>))
+				{
+					<span class="hljs-keyword">continue</span>;
+				}
+
+				<span class="hljs-keyword">require_once</span>($mod_path.<span class="hljs-string">'models/'</span>.$path.$model.<span class="hljs-string">'.php'</span>);
+				<span class="hljs-keyword">if</span> ( ! class_exists($model, <span class="hljs-keyword">FALSE</span>))
+				{
+					<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException($mod_path.<span class="hljs-string">"models/"</span>.$path.$model.<span class="hljs-string">".php exists, but doesn't declare class "</span>.$model);
+				}
+
+				<span class="hljs-keyword">break</span>;
+			}
+
+			<span class="hljs-keyword">if</span> ( ! class_exists($model, <span class="hljs-keyword">FALSE</span>))
+			{
+				<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">'Unable to locate the model you have specified: '</span>.$model);
+			}
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_subclass_of($model, <span class="hljs-string">'CI_Model'</span>))
+		{
+			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"Class "</span>.$model.<span class="hljs-string">" already exists and doesn't extend CI_Model"</span>);
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;_ci_models[] = $name;
+		$model = <span class="hljs-keyword">new</span> $model();
+		$CI-&gt;$name = $model;
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Model "'</span>.get_class($model).<span class="hljs-string">'" initialized'</span>);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Database Loader</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$params Database configuration options
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$return Whether to return the database object
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$query_builder Whether to enable Query Builder 					(overrides the configuration setting)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object|bool Database object if $return is set to TRUE, 					FALSE on failure, CI_Loader instance in any other case
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">database</span><span class="hljs-params">($params = <span class="hljs-string">''</span>, $return = FALSE, $query_builder = NULL)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>Grab the super object</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$CI =&amp; get_instance();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<p>Do we even need to load the database class?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">FALSE</span> &amp;&amp; $query_builder === <span class="hljs-keyword">NULL</span> &amp;&amp; <span class="hljs-keyword">isset</span>($CI-&gt;db) &amp;&amp; is_object($CI-&gt;db) &amp;&amp; ! <span class="hljs-keyword">empty</span>($CI-&gt;db-&gt;conn_id))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'database/DB.php'</span>);
+
+		<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> DB($params, $query_builder);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<p>Initialize the db variable. Needed to prevent
+reference errors with some configurations</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$CI-&gt;db = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<p>Load the DB class</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$CI-&gt;db =&amp; DB($params, $query_builder);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Load the Database Utilities Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">object</span>
+<span>$db Database object
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$return Whether to return the DB Utilities class object or not
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dbutil</span><span class="hljs-params">($db = NULL, $return = FALSE)</span>
+	</span>{
+		$CI =&amp; get_instance();
+
+		<span class="hljs-keyword">if</span> ( ! is_object($db) <span class="hljs-keyword">OR</span> ! ($db <span class="hljs-keyword">instanceof</span> CI_DB))
+		{
+			class_exists(<span class="hljs-string">'CI_DB'</span>, <span class="hljs-keyword">FALSE</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;database();
+			$db =&amp; $CI-&gt;db;
+		}
+
+		<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'database/DB_utility.php'</span>);
+		<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'database/drivers/'</span>.$db-&gt;dbdriver.<span class="hljs-string">'/'</span>.$db-&gt;dbdriver.<span class="hljs-string">'_utility.php'</span>);
+		$class = <span class="hljs-string">'CI_DB_'</span>.$db-&gt;dbdriver.<span class="hljs-string">'_utility'</span>;
+
+		<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> $class($db);
+		}
+
+		$CI-&gt;dbutil = <span class="hljs-keyword">new</span> $class($db);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Load the Database Forge Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">object</span>
+<span>$db Database object
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$return Whether to return the DB Forge class object or not
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">dbforge</span><span class="hljs-params">($db = NULL, $return = FALSE)</span>
+	</span>{
+		$CI =&amp; get_instance();
+		<span class="hljs-keyword">if</span> ( ! is_object($db) <span class="hljs-keyword">OR</span> ! ($db <span class="hljs-keyword">instanceof</span> CI_DB))
+		{
+			class_exists(<span class="hljs-string">'CI_DB'</span>, <span class="hljs-keyword">FALSE</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;database();
+			$db =&amp; $CI-&gt;db;
+		}
+
+		<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'database/DB_forge.php'</span>);
+		<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'database/drivers/'</span>.$db-&gt;dbdriver.<span class="hljs-string">'/'</span>.$db-&gt;dbdriver.<span class="hljs-string">'_forge.php'</span>);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($db-&gt;subdriver))
+		{
+			$driver_path = BASEPATH.<span class="hljs-string">'database/drivers/'</span>.$db-&gt;dbdriver.<span class="hljs-string">'/subdrivers/'</span>.$db-&gt;dbdriver.<span class="hljs-string">'_'</span>.$db-&gt;subdriver.<span class="hljs-string">'_forge.php'</span>;
+			<span class="hljs-keyword">if</span> (file_exists($driver_path))
+			{
+				<span class="hljs-keyword">require_once</span>($driver_path);
+				$class = <span class="hljs-string">'CI_DB_'</span>.$db-&gt;dbdriver.<span class="hljs-string">'_'</span>.$db-&gt;subdriver.<span class="hljs-string">'_forge'</span>;
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$class = <span class="hljs-string">'CI_DB_'</span>.$db-&gt;dbdriver.<span class="hljs-string">'_forge'</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> $class($db);
+		}
+
+		$CI-&gt;dbforge = <span class="hljs-keyword">new</span> $class($db);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>View Loader</p>
+</div>
+<div class="body">
+<p>Loads &quot;view&quot; files.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$view View name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$vars An associative array of data 				to be extracted for use in the view
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$return Whether to return the view output 				or leave it to the Output class
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object|string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">view</span><span class="hljs-params">($view, $vars = array<span class="hljs-params">()</span>, $return = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_load(<span class="hljs-keyword">array</span>(<span class="hljs-string">'_ci_view'</span> =&gt; $view, <span class="hljs-string">'_ci_vars'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;_ci_prepare_view_vars($vars), <span class="hljs-string">'_ci_return'</span> =&gt; $return));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Generic File Loader</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$path File path
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$return Whether to return the file output
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object|string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">file</span><span class="hljs-params">($path, $return = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_load(<span class="hljs-keyword">array</span>(<span class="hljs-string">'_ci_path'</span> =&gt; $path, <span class="hljs-string">'_ci_return'</span> =&gt; $return));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set Variables</p>
+</div>
+<div class="body">
+<p>Once variables are set they become available within
+the controller class and its &quot;view&quot; files.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array|object|string</span>
+<span>$vars 					An associative array or object containing values
+					to be set, or a value's name if string
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$val Value to set, only used if $vars is a string
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">vars</span><span class="hljs-params">($vars, $val = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$vars = is_string($vars)
+			? <span class="hljs-keyword">array</span>($vars =&gt; $val)
+			: <span class="hljs-keyword">$this</span>-&gt;_ci_prepare_view_vars($vars);
+
+		<span class="hljs-keyword">foreach</span> ($vars <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars[$key] = $val;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Clear Cached Variables</p>
+</div>
+<div class="body">
+<p>Clears the cached variables.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Loader
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">clear_vars</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars = <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Variable</p>
+</div>
+<div class="body">
+<p>Check if a variable is set and retrieve it.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$key Variable name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed The variable or NULL if not found
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_var</span><span class="hljs-params">($key)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars[$key]) ? <span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars[$key] : <span class="hljs-keyword">NULL</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Variables</p>
+</div>
+<div class="body">
+<p>Retrieves all loaded variables.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_vars</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Helper Loader</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$helpers Helper name(s)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">helper</span><span class="hljs-params">($helpers = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		is_array($helpers) <span class="hljs-keyword">OR</span> $helpers = <span class="hljs-keyword">array</span>($helpers);
+		<span class="hljs-keyword">foreach</span> ($helpers <span class="hljs-keyword">as</span> &amp;$helper)
+		{
+			$filename = basename($helper);
+			$filepath = ($filename === $helper) ? <span class="hljs-string">''</span> : substr($helper, <span class="hljs-number">0</span>, strlen($helper) - strlen($filename));
+			$filename = strtolower(preg_replace(<span class="hljs-string">'#(_helper)?(\.php)?$#i'</span>, <span class="hljs-string">''</span>, $filename)).<span class="hljs-string">'_helper'</span>;
+			$helper   = $filepath.$filename;
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_helpers[$helper]))
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<p>Is this a helper extension request?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$ext_helper = config_item(<span class="hljs-string">'subclass_prefix'</span>).$filename;
+			$ext_loaded = <span class="hljs-keyword">FALSE</span>;
+			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;_ci_helper_paths <span class="hljs-keyword">as</span> $path)
+			{
+				<span class="hljs-keyword">if</span> (file_exists($path.<span class="hljs-string">'helpers/'</span>.$ext_helper.<span class="hljs-string">'.php'</span>))
+				{
+					<span class="hljs-keyword">include_once</span>($path.<span class="hljs-string">'helpers/'</span>.$ext_helper.<span class="hljs-string">'.php'</span>);
+					$ext_loaded = <span class="hljs-keyword">TRUE</span>;
+				}
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<p>If we have loaded extensions - check if the base one is here</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ($ext_loaded === <span class="hljs-keyword">TRUE</span>)
+			{
+				$base_helper = BASEPATH.<span class="hljs-string">'helpers/'</span>.$helper.<span class="hljs-string">'.php'</span>;
+				<span class="hljs-keyword">if</span> ( ! file_exists($base_helper))
+				{
+					show_error(<span class="hljs-string">'Unable to load the requested file: helpers/'</span>.$helper.<span class="hljs-string">'.php'</span>);
+				}
+
+				<span class="hljs-keyword">include_once</span>($base_helper);
+				<span class="hljs-keyword">$this</span>-&gt;_ci_helpers[$helper] = <span class="hljs-keyword">TRUE</span>;
+				log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Helper loaded: '</span>.$helper);
+				<span class="hljs-keyword">continue</span>;
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<p>No extensions found ... try loading regular helpers and/or overrides</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;_ci_helper_paths <span class="hljs-keyword">as</span> $path)
+			{
+				<span class="hljs-keyword">if</span> (file_exists($path.<span class="hljs-string">'helpers/'</span>.$helper.<span class="hljs-string">'.php'</span>))
+				{
+					<span class="hljs-keyword">include_once</span>($path.<span class="hljs-string">'helpers/'</span>.$helper.<span class="hljs-string">'.php'</span>);
+
+					<span class="hljs-keyword">$this</span>-&gt;_ci_helpers[$helper] = <span class="hljs-keyword">TRUE</span>;
+					log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Helper loaded: '</span>.$helper);
+					<span class="hljs-keyword">break</span>;
+				}
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<p>unable to load the helper</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_helpers[$helper]))
+			{
+				show_error(<span class="hljs-string">'Unable to load the requested file: helpers/'</span>.$helper.<span class="hljs-string">'.php'</span>);
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Load Helpers</p>
+</div>
+<div class="body">
+<p>An alias for the helper() method in case the developer has
+written the plural form of it.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$helpers Helper name(s)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">helpers</span><span class="hljs-params">($helpers = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;helper($helpers);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Language Loader</p>
+</div>
+<div class="body">
+<p>Loads language files.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$files List of language file names to load
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>Language name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">language</span><span class="hljs-params">($files, $lang = <span class="hljs-string">''</span>)</span>
+	</span>{
+		get_instance()-&gt;lang-&gt;load($files, $lang);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Config Loader</p>
+</div>
+<div class="body">
+<p>Loads a config file (an alias for CI_Config::load()).</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$file Configuration file name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$use_sections Whether configuration values should be loaded into their own section
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$fail_gracefully Whether to just return FALSE or display an error message
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool TRUE if the file was loaded correctly or FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">config</span><span class="hljs-params">($file, $use_sections = FALSE, $fail_gracefully = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> get_instance()-&gt;config-&gt;load($file, $use_sections, $fail_gracefully);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Driver Loader</p>
+</div>
+<div class="body">
+<p>Loads a driver library.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$library Driver name(s)
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params Optional parameters to pass to the driver
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$object_name An optional object name to assign to
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object|bool Object or FALSE on failure if $library is a string 				and $object_name is set. CI_Loader instance otherwise.
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">driver</span><span class="hljs-params">($library, $params = NULL, $object_name = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_array($library))
+		{
+			<span class="hljs-keyword">foreach</span> ($library <span class="hljs-keyword">as</span> $key =&gt; $value)
+			{
+				<span class="hljs-keyword">if</span> (is_int($key))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;driver($value, $params);
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					<span class="hljs-keyword">$this</span>-&gt;driver($key, $params, $value);
+				}
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">empty</span>($library))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! class_exists(<span class="hljs-string">'CI_Driver_Library'</span>, <span class="hljs-keyword">FALSE</span>))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<p>We aren't instantiating an object here, just making the base class available</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">require</span> BASEPATH.<span class="hljs-string">'libraries/Driver.php'</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<p>We can save the loader some time since Drivers will <em>always</em> be in a subfolder,
+and typically identically named to the library</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! strpos($library, <span class="hljs-string">'/'</span>))
+		{
+			$library = ucfirst($library).<span class="hljs-string">'/'</span>.$library;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;library($library, $params, $object_name);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Add Package Path</p>
+</div>
+<div class="body">
+<p>Prepends a parent path to the library, model, helper and config
+path arrays.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Loader::$_ci_library_paths</span>
+</div>
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Loader::$_ci_model_paths</span>
+</div>
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Loader::$_ci_helper_paths</span>
+</div>
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Config::$_config_paths</span>
+</div>
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$path Path to add
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$view_cascade (default: TRUE)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add_package_path</span><span class="hljs-params">($path, $view_cascade = TRUE)</span>
+	</span>{
+		$path = rtrim($path, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>;
+
+		array_unshift(<span class="hljs-keyword">$this</span>-&gt;_ci_library_paths, $path);
+		array_unshift(<span class="hljs-keyword">$this</span>-&gt;_ci_model_paths, $path);
+		array_unshift(<span class="hljs-keyword">$this</span>-&gt;_ci_helper_paths, $path);
+
+		<span class="hljs-keyword">$this</span>-&gt;_ci_view_paths = <span class="hljs-keyword">array</span>($path.<span class="hljs-string">'views/'</span> =&gt; $view_cascade) + <span class="hljs-keyword">$this</span>-&gt;_ci_view_paths;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<p>Add config file path</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$config =&amp; <span class="hljs-keyword">$this</span>-&gt;_ci_get_component(<span class="hljs-string">'config'</span>);
+		$config-&gt;_config_paths[] = $path;
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Package Paths</p>
+</div>
+<div class="body">
+<p>Return a list of all package paths.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$include_base Whether to include BASEPATH (default: FALSE)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_package_paths</span><span class="hljs-params">($include_base = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> ($include_base === <span class="hljs-keyword">TRUE</span>) ? <span class="hljs-keyword">$this</span>-&gt;_ci_library_paths : <span class="hljs-keyword">$this</span>-&gt;_ci_model_paths;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Remove Package Path</p>
+</div>
+<div class="body">
+<p>Remove a path from the library, model, helper and/or config
+path arrays if it exists. If no path is provided, the most recently
+added path will be removed removed.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$path Path to remove
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove_package_path</span><span class="hljs-params">($path = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$config =&amp; <span class="hljs-keyword">$this</span>-&gt;_ci_get_component(<span class="hljs-string">'config'</span>);
+
+		<span class="hljs-keyword">if</span> ($path === <span class="hljs-string">''</span>)
+		{
+			array_shift(<span class="hljs-keyword">$this</span>-&gt;_ci_library_paths);
+			array_shift(<span class="hljs-keyword">$this</span>-&gt;_ci_model_paths);
+			array_shift(<span class="hljs-keyword">$this</span>-&gt;_ci_helper_paths);
+			array_shift(<span class="hljs-keyword">$this</span>-&gt;_ci_view_paths);
+			array_pop($config-&gt;_config_paths);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$path = rtrim($path, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>;
+			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'_ci_library_paths'</span>, <span class="hljs-string">'_ci_model_paths'</span>, <span class="hljs-string">'_ci_helper_paths'</span>) <span class="hljs-keyword">as</span> $var)
+			{
+				<span class="hljs-keyword">if</span> (($key = array_search($path, <span class="hljs-keyword">$this</span>-&gt;{$var})) !== <span class="hljs-keyword">FALSE</span>)
+				{
+					<span class="hljs-keyword">unset</span>(<span class="hljs-keyword">$this</span>-&gt;{$var}[$key]);
+				}
+			}
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_view_paths[$path.<span class="hljs-string">'views/'</span>]))
+			{
+				<span class="hljs-keyword">unset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_view_paths[$path.<span class="hljs-string">'views/'</span>]);
+			}
+
+			<span class="hljs-keyword">if</span> (($key = array_search($path, $config-&gt;_config_paths)) !== <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">unset</span>($config-&gt;_config_paths[$key]);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<p>make sure the application default paths are still in the array</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_ci_library_paths = array_unique(array_merge(<span class="hljs-keyword">$this</span>-&gt;_ci_library_paths, <span class="hljs-keyword">array</span>(APPPATH, BASEPATH)));
+		<span class="hljs-keyword">$this</span>-&gt;_ci_helper_paths = array_unique(array_merge(<span class="hljs-keyword">$this</span>-&gt;_ci_helper_paths, <span class="hljs-keyword">array</span>(APPPATH, BASEPATH)));
+		<span class="hljs-keyword">$this</span>-&gt;_ci_model_paths = array_unique(array_merge(<span class="hljs-keyword">$this</span>-&gt;_ci_model_paths, <span class="hljs-keyword">array</span>(APPPATH)));
+		<span class="hljs-keyword">$this</span>-&gt;_ci_view_paths = array_merge(<span class="hljs-keyword">$this</span>-&gt;_ci_view_paths, <span class="hljs-keyword">array</span>(APPPATH.<span class="hljs-string">'views/'</span> =&gt; <span class="hljs-keyword">TRUE</span>));
+		$config-&gt;_config_paths = array_unique(array_merge($config-&gt;_config_paths, <span class="hljs-keyword">array</span>(APPPATH)));
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-74" id="section-74"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-75" id="section-75"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Internal CI Data Loader</p>
+</div>
+<div class="body">
+<p>Used to load views and files.</p>
+<p>Variables are prefixed with <em>ci</em> to avoid symbol collision with
+variables made available to view files.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$_ci_data Data to load
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_ci_load</span><span class="hljs-params">($_ci_data)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-76" id="section-76"></a>
+</div>
+<p>Set the default data variables</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'_ci_view'</span>, <span class="hljs-string">'_ci_vars'</span>, <span class="hljs-string">'_ci_path'</span>, <span class="hljs-string">'_ci_return'</span>) <span class="hljs-keyword">as</span> $_ci_val)
+		{
+			$$_ci_val = <span class="hljs-keyword">isset</span>($_ci_data[$_ci_val]) ? $_ci_data[$_ci_val] : <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$file_exists = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-77" id="section-77"></a>
+</div>
+<p>Set the path to the requested file</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_string($_ci_path) &amp;&amp; $_ci_path !== <span class="hljs-string">''</span>)
+		{
+			$_ci_x = explode(<span class="hljs-string">'/'</span>, $_ci_path);
+			$_ci_file = end($_ci_x);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$_ci_ext = pathinfo($_ci_view, PATHINFO_EXTENSION);
+			$_ci_file = ($_ci_ext === <span class="hljs-string">''</span>) ? $_ci_view.<span class="hljs-string">'.php'</span> : $_ci_view;
+
+			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;_ci_view_paths <span class="hljs-keyword">as</span> $_ci_view_file =&gt; $cascade)
+			{
+				<span class="hljs-keyword">if</span> (file_exists($_ci_view_file.$_ci_file))
+				{
+					$_ci_path = $_ci_view_file.$_ci_file;
+					$file_exists = <span class="hljs-keyword">TRUE</span>;
+					<span class="hljs-keyword">break</span>;
+				}
+
+				<span class="hljs-keyword">if</span> ( ! $cascade)
+				{
+					<span class="hljs-keyword">break</span>;
+				}
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ( ! $file_exists &amp;&amp; ! file_exists($_ci_path))
+		{
+			show_error(<span class="hljs-string">'Unable to load the requested file: '</span>.$_ci_file);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-78" id="section-78"></a>
+</div>
+<p>This allows anything loaded using $this-&gt;load (views, files, etc.)
+to become accessible from within the Controller and Model functions.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$_ci_CI =&amp; get_instance();
+		<span class="hljs-keyword">foreach</span> (get_object_vars($_ci_CI) <span class="hljs-keyword">as</span> $_ci_key =&gt; $_ci_var)
+		{
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;$_ci_key))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;$_ci_key =&amp; $_ci_CI-&gt;$_ci_key;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-79" id="section-79"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Extract and cache variables</p>
+</div>
+<div class="body">
+<p>You can either set variables using the dedicated $this-&gt;load-&gt;vars()
+function or via the second parameter of this function. We'll merge
+the two types and cache them so that views that are embedded within
+other views can have access to these variables.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">empty</span>($_ci_vars) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars = array_merge(<span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars, $_ci_vars);
+		extract(<span class="hljs-keyword">$this</span>-&gt;_ci_cached_vars);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-80" id="section-80"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Buffer the output</p>
+</div>
+<div class="body">
+<p>We buffer the output for two reasons:</p>
+<ol>
+<li>Speed. You get a significant speed boost.</li>
+<li>So that the final rendered template can be post-processed by
+the output class. Why do we need post processing? For one thing,
+in order to show the elapsed page load time. Unless we can
+intercept the content right before it's sent to the browser and
+then stop the timer it won't be accurate.</li>
+</ol>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		ob_start();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-81" id="section-81"></a>
+</div>
+<p>If the PHP installation does not support short tags we'll
+do a little string replacement, changing the short tags
+to standard PHP echo statements.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_php(<span class="hljs-string">'5.4'</span>) &amp;&amp; ! ini_get(<span class="hljs-string">'short_open_tag'</span>) &amp;&amp; config_item(<span class="hljs-string">'rewrite_short_tags'</span>) === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">echo</span> <span class="hljs-keyword">eval</span>(<span class="hljs-string">'?&gt;'</span>.preg_replace(<span class="hljs-string">'/;*\s*\?&gt;/'</span>, <span class="hljs-string">'; ?&gt;'</span>, str_replace(<span class="hljs-string">'&lt;?='</span>, <span class="hljs-string">'&lt;?php echo '</span>, file_get_contents($_ci_path))));
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">include</span>($_ci_path); <span class="hljs-comment">// include() vs include_once() allows for multiple views with the same name</span>
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'File loaded: '</span>.$_ci_path);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-82" id="section-82"></a>
+</div>
+<p>Return the file data if requested</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($_ci_return === <span class="hljs-keyword">TRUE</span>)
+		{
+			$buffer = ob_get_contents();
+			@ob_end_clean();
+			<span class="hljs-keyword">return</span> $buffer;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-83" id="section-83"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Flush the buffer... or buff the flusher?</p>
+</div>
+<div class="body">
+<p>In order to permit views to be nested within
+other views, we need to flush the content back out whenever
+we are beyond the first level of output buffering so that
+it can be seen and included properly by the first included
+template and any subsequent ones. Oy!</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (ob_get_level() &gt; <span class="hljs-keyword">$this</span>-&gt;_ci_ob_level + <span class="hljs-number">1</span>)
+		{
+			ob_end_flush();
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$_ci_CI-&gt;output-&gt;append_output(ob_get_contents());
+			@ob_end_clean();
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-84" id="section-84"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-85" id="section-85"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Internal CI Library Loader</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$class Class name to load
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$params Optional parameters to pass to the class constructor
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$object_name Optional object name to assign to
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_ci_load_library</span><span class="hljs-params">($class, $params = NULL, $object_name = NULL)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-86" id="section-86"></a>
+</div>
+<p>Get the class name, and while we're at it trim any slashes.
+The directory path can be included as part of the class name,
+but we don't want a leading slash</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$class = str_replace(<span class="hljs-string">'.php'</span>, <span class="hljs-string">''</span>, trim($class, <span class="hljs-string">'/'</span>));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-87" id="section-87"></a>
+</div>
+<p>Was the path included with the class name?
+We look for a slash to determine this</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (($last_slash = strrpos($class, <span class="hljs-string">'/'</span>)) !== <span class="hljs-keyword">FALSE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-88" id="section-88"></a>
+</div>
+<p>Extract the path</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$subdir = substr($class, <span class="hljs-number">0</span>, ++$last_slash);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-89" id="section-89"></a>
+</div>
+<p>Get the filename from the path</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$class = substr($class, $last_slash);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$subdir = <span class="hljs-string">''</span>;
+		}
+
+		$class = ucfirst($class);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-90" id="section-90"></a>
+</div>
+<p>Is this a stock library? There are a few special conditions if so ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (file_exists(BASEPATH.<span class="hljs-string">'libraries/'</span>.$subdir.$class.<span class="hljs-string">'.php'</span>))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_load_stock_library($class, $subdir, $params, $object_name);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-91" id="section-91"></a>
+</div>
+<p>Safety: Was the class already loaded by a previous call?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (class_exists($class, <span class="hljs-keyword">FALSE</span>))
+		{
+			$property = $object_name;
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($property))
+			{
+				$property = strtolower($class);
+				<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_varmap[$property]) &amp;&amp; $property = <span class="hljs-keyword">$this</span>-&gt;_ci_varmap[$property];
+			}
+
+			$CI =&amp; get_instance();
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($CI-&gt;$property))
+			{
+				log_message(<span class="hljs-string">'debug'</span>, $class.<span class="hljs-string">' class already loaded. Second attempt ignored.'</span>);
+				<span class="hljs-keyword">return</span>;
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_init_library($class, <span class="hljs-string">''</span>, $params, $object_name);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-92" id="section-92"></a>
+</div>
+<p>Let's search for the requested library file and load it.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;_ci_library_paths <span class="hljs-keyword">as</span> $path)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-93" id="section-93"></a>
+</div>
+<p>BASEPATH has already been checked for</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ($path === BASEPATH)
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			$filepath = $path.<span class="hljs-string">'libraries/'</span>.$subdir.$class.<span class="hljs-string">'.php'</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-94" id="section-94"></a>
+</div>
+<p>Does the file exist? No? Bummer...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ( ! file_exists($filepath))
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			<span class="hljs-keyword">include_once</span>($filepath);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_init_library($class, <span class="hljs-string">''</span>, $params, $object_name);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-95" id="section-95"></a>
+</div>
+<p>One last attempt. Maybe the library is in a subdirectory, but it wasn't specified?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($subdir === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_load_library($class.<span class="hljs-string">'/'</span>.$class, $params, $object_name);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-96" id="section-96"></a>
+</div>
+<p>If we got this far we were unable to find the requested class.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Unable to load the requested class: '</span>.$class);
+		show_error(<span class="hljs-string">'Unable to load the requested class: '</span>.$class);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-97" id="section-97"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-98" id="section-98"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Internal CI Stock Library Loader</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$library_name Library name to load
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$file_path Path to the library filename, relative to libraries/
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$params Optional parameters to pass to the class constructor
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$object_name Optional object name to assign to
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_ci_load_stock_library</span><span class="hljs-params">($library_name, $file_path, $params, $object_name)</span>
+	</span>{
+		$prefix = <span class="hljs-string">'CI_'</span>;
+
+		<span class="hljs-keyword">if</span> (class_exists($prefix.$library_name, <span class="hljs-keyword">FALSE</span>))
+		{
+			<span class="hljs-keyword">if</span> (class_exists(config_item(<span class="hljs-string">'subclass_prefix'</span>).$library_name, <span class="hljs-keyword">FALSE</span>))
+			{
+				$prefix = config_item(<span class="hljs-string">'subclass_prefix'</span>);
+			}
+
+			$property = $object_name;
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($property))
+			{
+				$property = strtolower($library_name);
+				<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_varmap[$property]) &amp;&amp; $property = <span class="hljs-keyword">$this</span>-&gt;_ci_varmap[$property];
+			}
+
+			$CI =&amp; get_instance();
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($CI-&gt;$property))
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_init_library($library_name, $prefix, $params, $object_name);
+			}
+
+			log_message(<span class="hljs-string">'debug'</span>, $library_name.<span class="hljs-string">' class already loaded. Second attempt ignored.'</span>);
+			<span class="hljs-keyword">return</span>;
+		}
+
+		$paths = <span class="hljs-keyword">$this</span>-&gt;_ci_library_paths;
+		array_pop($paths); <span class="hljs-comment">// BASEPATH</span>
+		array_pop($paths); <span class="hljs-comment">// APPPATH (needs to be the first path checked)</span>
+		array_unshift($paths, APPPATH);
+
+		<span class="hljs-keyword">foreach</span> ($paths <span class="hljs-keyword">as</span> $path)
+		{
+			<span class="hljs-keyword">if</span> (file_exists($path = $path.<span class="hljs-string">'libraries/'</span>.$file_path.$library_name.<span class="hljs-string">'.php'</span>))
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-99" id="section-99"></a>
+</div>
+<p>Override</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">include_once</span>($path);
+				<span class="hljs-keyword">if</span> (class_exists($prefix.$library_name, <span class="hljs-keyword">FALSE</span>))
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_init_library($library_name, $prefix, $params, $object_name);
+				}
+
+				log_message(<span class="hljs-string">'debug'</span>, $path.<span class="hljs-string">' exists, but does not declare '</span>.$prefix.$library_name);
+			}
+		}
+
+		<span class="hljs-keyword">include_once</span>(BASEPATH.<span class="hljs-string">'libraries/'</span>.$file_path.$library_name.<span class="hljs-string">'.php'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-100" id="section-100"></a>
+</div>
+<p>Check for extensions</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$subclass = config_item(<span class="hljs-string">'subclass_prefix'</span>).$library_name;
+		<span class="hljs-keyword">foreach</span> ($paths <span class="hljs-keyword">as</span> $path)
+		{
+			<span class="hljs-keyword">if</span> (file_exists($path = $path.<span class="hljs-string">'libraries/'</span>.$file_path.$subclass.<span class="hljs-string">'.php'</span>))
+			{
+				<span class="hljs-keyword">include_once</span>($path);
+				<span class="hljs-keyword">if</span> (class_exists($subclass, <span class="hljs-keyword">FALSE</span>))
+				{
+					$prefix = config_item(<span class="hljs-string">'subclass_prefix'</span>);
+					<span class="hljs-keyword">break</span>;
+				}
+
+				log_message(<span class="hljs-string">'debug'</span>, $path.<span class="hljs-string">' exists, but does not declare '</span>.$subclass);
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_ci_init_library($library_name, $prefix, $params, $object_name);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-101" id="section-101"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-102" id="section-102"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Internal CI Library Instantiator</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$class Class name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$prefix Class name prefix
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array|null|bool</span>
+<span>$config Optional configuration to pass to the class constructor: 						FALSE to skip;
+						NULL to search in config paths;
+						array containing configuration data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$object_name Optional object name to assign to
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_ci_init_library</span><span class="hljs-params">($class, $prefix, $config = FALSE, $object_name = NULL)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-103" id="section-103"></a>
+</div>
+<p>Is there an associated config file for this class? Note: these should always be lowercase</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($config === <span class="hljs-keyword">NULL</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-104" id="section-104"></a>
+</div>
+<p>Fetch the config paths containing any package paths</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$config_component = <span class="hljs-keyword">$this</span>-&gt;_ci_get_component(<span class="hljs-string">'config'</span>);
+
+			<span class="hljs-keyword">if</span> (is_array($config_component-&gt;_config_paths))
+			{
+				$found = <span class="hljs-keyword">FALSE</span>;
+				<span class="hljs-keyword">foreach</span> ($config_component-&gt;_config_paths <span class="hljs-keyword">as</span> $path)
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-105" id="section-105"></a>
+</div>
+<p>We test for both uppercase and lowercase, for servers that
+are case-sensitive with regard to file names. Load global first,
+override with environment next</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> (file_exists($path.<span class="hljs-string">'config/'</span>.strtolower($class).<span class="hljs-string">'.php'</span>))
+					{
+						<span class="hljs-keyword">include</span>($path.<span class="hljs-string">'config/'</span>.strtolower($class).<span class="hljs-string">'.php'</span>);
+						$found = <span class="hljs-keyword">TRUE</span>;
+					}
+					<span class="hljs-keyword">elseif</span> (file_exists($path.<span class="hljs-string">'config/'</span>.ucfirst(strtolower($class)).<span class="hljs-string">'.php'</span>))
+					{
+						<span class="hljs-keyword">include</span>($path.<span class="hljs-string">'config/'</span>.ucfirst(strtolower($class)).<span class="hljs-string">'.php'</span>);
+						$found = <span class="hljs-keyword">TRUE</span>;
+					}
+
+					<span class="hljs-keyword">if</span> (file_exists($path.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/'</span>.strtolower($class).<span class="hljs-string">'.php'</span>))
+					{
+						<span class="hljs-keyword">include</span>($path.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/'</span>.strtolower($class).<span class="hljs-string">'.php'</span>);
+						$found = <span class="hljs-keyword">TRUE</span>;
+					}
+					<span class="hljs-keyword">elseif</span> (file_exists($path.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/'</span>.ucfirst(strtolower($class)).<span class="hljs-string">'.php'</span>))
+					{
+						<span class="hljs-keyword">include</span>($path.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/'</span>.ucfirst(strtolower($class)).<span class="hljs-string">'.php'</span>);
+						$found = <span class="hljs-keyword">TRUE</span>;
+					}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-106" id="section-106"></a>
+</div>
+<p>Break on the first found configuration, thus package
+files are not overridden by default paths</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> ($found === <span class="hljs-keyword">TRUE</span>)
+					{
+						<span class="hljs-keyword">break</span>;
+					}
+				}
+			}
+		}
+
+		$class_name = $prefix.$class;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-107" id="section-107"></a>
+</div>
+<p>Is the class name valid?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! class_exists($class_name, <span class="hljs-keyword">FALSE</span>))
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Non-existent class: '</span>.$class_name);
+			show_error(<span class="hljs-string">'Non-existent class: '</span>.$class_name);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-108" id="section-108"></a>
+</div>
+<p>Set the variable name we will assign the class to
+Was a custom class name supplied? If so we'll use it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($object_name))
+		{
+			$object_name = strtolower($class);
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_ci_varmap[$object_name]))
+			{
+				$object_name = <span class="hljs-keyword">$this</span>-&gt;_ci_varmap[$object_name];
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-109" id="section-109"></a>
+</div>
+<p>Don't overwrite existing properties</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$CI =&amp; get_instance();
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($CI-&gt;$object_name))
+		{
+			<span class="hljs-keyword">if</span> ($CI-&gt;$object_name <span class="hljs-keyword">instanceof</span> $class_name)
+			{
+				log_message(<span class="hljs-string">'debug'</span>, $class_name.<span class="hljs-string">" has already been instantiated as '"</span>.$object_name.<span class="hljs-string">"'. Second attempt aborted."</span>);
+				<span class="hljs-keyword">return</span>;
+			}
+
+			show_error(<span class="hljs-string">"Resource '"</span>.$object_name.<span class="hljs-string">"' already exists and is not a "</span>.$class_name.<span class="hljs-string">" instance."</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-110" id="section-110"></a>
+</div>
+<p>Save the class name and object name</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_ci_classes[$object_name] = $class;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-111" id="section-111"></a>
+</div>
+<p>Instantiate the class</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$CI-&gt;$object_name = <span class="hljs-keyword">isset</span>($config)
+			? <span class="hljs-keyword">new</span> $class_name($config)
+			: <span class="hljs-keyword">new</span> $class_name();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-112" id="section-112"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-113" id="section-113"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CI Autoloader</p>
+</div>
+<div class="body">
+<p>Loads component listed in the config/autoload.php file.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_ci_autoloader</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/autoload.php'</span>))
+		{
+			<span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/autoload.php'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/autoload.php'</span>))
+		{
+			<span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/autoload.php'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($autoload))
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-114" id="section-114"></a>
+</div>
+<p>Autoload packages</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($autoload[<span class="hljs-string">'packages'</span>]))
+		{
+			<span class="hljs-keyword">foreach</span> ($autoload[<span class="hljs-string">'packages'</span>] <span class="hljs-keyword">as</span> $package_path)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;add_package_path($package_path);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-115" id="section-115"></a>
+</div>
+<p>Load any custom config file</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (count($autoload[<span class="hljs-string">'config'</span>]) &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">foreach</span> ($autoload[<span class="hljs-string">'config'</span>] <span class="hljs-keyword">as</span> $val)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;config($val);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-116" id="section-116"></a>
+</div>
+<p>Autoload helpers and languages</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'helper'</span>, <span class="hljs-string">'language'</span>) <span class="hljs-keyword">as</span> $type)
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($autoload[$type]) &amp;&amp; count($autoload[$type]) &gt; <span class="hljs-number">0</span>)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;$type($autoload[$type]);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-117" id="section-117"></a>
+</div>
+<p>Autoload drivers</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($autoload[<span class="hljs-string">'drivers'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;driver($autoload[<span class="hljs-string">'drivers'</span>]);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-118" id="section-118"></a>
+</div>
+<p>Load libraries</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($autoload[<span class="hljs-string">'libraries'</span>]) &amp;&amp; count($autoload[<span class="hljs-string">'libraries'</span>]) &gt; <span class="hljs-number">0</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-119" id="section-119"></a>
+</div>
+<p>Load the database driver.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (in_array(<span class="hljs-string">'database'</span>, $autoload[<span class="hljs-string">'libraries'</span>]))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;database();
+				$autoload[<span class="hljs-string">'libraries'</span>] = array_diff($autoload[<span class="hljs-string">'libraries'</span>], <span class="hljs-keyword">array</span>(<span class="hljs-string">'database'</span>));
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-120" id="section-120"></a>
+</div>
+<p>Load all other libraries</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;library($autoload[<span class="hljs-string">'libraries'</span>]);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-121" id="section-121"></a>
+</div>
+<p>Autoload models</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($autoload[<span class="hljs-string">'model'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;model($autoload[<span class="hljs-string">'model'</span>]);
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-122" id="section-122"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-123" id="section-123"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Prepare variables for _ci_vars, to be later extract()-ed inside views</p>
+</div>
+<div class="body">
+<p>Converts objects to associative arrays and filters-out internal
+variable names (i.e. keys prefixed with '<em>ci</em>').</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$vars
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_ci_prepare_view_vars</span><span class="hljs-params">($vars)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_array($vars))
+		{
+			$vars = is_object($vars)
+				? get_object_vars($vars)
+				: <span class="hljs-keyword">array</span>();
+		}
+
+		<span class="hljs-keyword">foreach</span> (array_keys($vars) <span class="hljs-keyword">as</span> $key)
+		{
+			<span class="hljs-keyword">if</span> (strncmp($key, <span class="hljs-string">'_ci_'</span>, <span class="hljs-number">4</span>) === <span class="hljs-number">0</span>)
+			{
+				<span class="hljs-keyword">unset</span>($vars[$key]);
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $vars;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-124" id="section-124"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-125" id="section-125"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CI Component getter</p>
+</div>
+<div class="body">
+<p>Get a reference to a specific library or model.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$component Component name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">_ci_get_component</span><span class="hljs-params">($component)</span>
+	</span>{
+		$CI =&amp; get_instance();
+		<span class="hljs-keyword">return</span> $CI-&gt;$component;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

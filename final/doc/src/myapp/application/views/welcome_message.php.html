@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>welcome_message.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\views\\welcome_message.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>welcome_message.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+<span class="hljs-meta">?&gt;</span>&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="hljs-string">"en"</span>&gt;
+&lt;head&gt;
+	&lt;meta charset=<span class="hljs-string">"utf-8"</span>&gt;
+	&lt;title&gt;Welcome to CodeIgniter&lt;/title&gt;
+
+	&lt;style type=<span class="hljs-string">"text/css"</span>&gt;
+
+	::selection { background-color: <span class="hljs-comment">#E13300; color: white; }</span>
+	::-moz-selection { background-color: <span class="hljs-comment">#E13300; color: white; }</span>
+
+	body {
+		background-color: <span class="hljs-comment">#fff;</span>
+		margin: <span class="hljs-number">40</span>px;
+		font: <span class="hljs-number">13</span>px/<span class="hljs-number">20</span>px normal Helvetica, Arial, sans-serif;
+		color: <span class="hljs-comment">#4F5155;</span>
+	}
+
+	a {
+		color: <span class="hljs-comment">#003399;</span>
+		background-color: transparent;
+		font-weight: normal;
+	}
+
+	h1 {
+		color: <span class="hljs-comment">#444;</span>
+		background-color: transparent;
+		border-bottom: <span class="hljs-number">1</span>px solid <span class="hljs-comment">#D0D0D0;</span>
+		font-size: <span class="hljs-number">19</span>px;
+		font-weight: normal;
+		margin: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">14</span>px <span class="hljs-number">0</span>;
+		padding: <span class="hljs-number">14</span>px <span class="hljs-number">15</span>px <span class="hljs-number">10</span>px <span class="hljs-number">15</span>px;
+	}
+
+	code {
+		font-family: Consolas, Monaco, Courier <span class="hljs-keyword">New</span>, Courier, monospace;
+		font-size: <span class="hljs-number">12</span>px;
+		background-color: <span class="hljs-comment">#f9f9f9;</span>
+		border: <span class="hljs-number">1</span>px solid <span class="hljs-comment">#D0D0D0;</span>
+		color: <span class="hljs-comment">#002166;</span>
+		display: block;
+		margin: <span class="hljs-number">14</span>px <span class="hljs-number">0</span> <span class="hljs-number">14</span>px <span class="hljs-number">0</span>;
+		padding: <span class="hljs-number">12</span>px <span class="hljs-number">10</span>px <span class="hljs-number">12</span>px <span class="hljs-number">10</span>px;
+	}
+
+	<span class="hljs-comment">#body {</span>
+		margin: <span class="hljs-number">0</span> <span class="hljs-number">15</span>px <span class="hljs-number">0</span> <span class="hljs-number">15</span>px;
+	}
+
+	p.footer {
+		text-align: right;
+		font-size: <span class="hljs-number">11</span>px;
+		border-top: <span class="hljs-number">1</span>px solid <span class="hljs-comment">#D0D0D0;</span>
+		line-height: <span class="hljs-number">32</span>px;
+		padding: <span class="hljs-number">0</span> <span class="hljs-number">10</span>px <span class="hljs-number">0</span> <span class="hljs-number">10</span>px;
+		margin: <span class="hljs-number">20</span>px <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>;
+	}
+
+	<span class="hljs-comment">#container {</span>
+		margin: <span class="hljs-number">10</span>px;
+		border: <span class="hljs-number">1</span>px solid <span class="hljs-comment">#D0D0D0;</span>
+		box-shadow: <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">8</span>px <span class="hljs-comment">#D0D0D0;</span>
+	}
+	&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id=<span class="hljs-string">"container"</span>&gt;
+	&lt;h1&gt;Welcome to CodeIgniter!&lt;/h1&gt;
+
+	&lt;div id=<span class="hljs-string">"body"</span>&gt;
+		&lt;p&gt;The page you are looking at is being generated dynamically by CodeIgniter.&lt;/p&gt;
+
+		&lt;p&gt;<span class="hljs-keyword">If</span> you would like to edit this page you<span class="hljs-string">'ll find it located at:&lt;/p&gt;
+		&lt;code&gt;application/views/welcome_message.php&lt;/code&gt;
+
+		&lt;p&gt;The corresponding controller for this page is found at:&lt;/p&gt;
+		&lt;code&gt;application/controllers/Welcome.php&lt;/code&gt;
+
+		&lt;p&gt;If you are exploring CodeIgniter for the very first time, you should start by reading the &lt;a href="user_guide/"&gt;User Guide&lt;/a&gt;.&lt;/p&gt;
+	&lt;/div&gt;
+
+	&lt;p class="footer"&gt;Page rendered in &lt;strong&gt;{elapsed_time}&lt;/strong&gt; seconds. &lt;?php echo  (ENVIRONMENT === '</span>development<span class="hljs-string">') ?  '</span>CodeIgniter Version &lt;strong&gt;<span class="hljs-string">' . CI_VERSION . '</span>&lt;/strong&gt;<span class="hljs-string">' : '</span><span class="hljs-string">' ?&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</span></pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

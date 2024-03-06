@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trackback.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Trackback.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Trackback.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Trackback Class</p>
+</div>
+<div class="body">
+<p>Trackback Sending/Receiving Class</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Trackback</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Character set</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $charset = <span class="hljs-string">'UTF-8'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Trackback data</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $data = <span class="hljs-keyword">array</span>(
+		<span class="hljs-string">'url'</span> =&gt; <span class="hljs-string">''</span>,
+		<span class="hljs-string">'title'</span> =&gt; <span class="hljs-string">''</span>,
+		<span class="hljs-string">'excerpt'</span> =&gt; <span class="hljs-string">''</span>,
+		<span class="hljs-string">'blog_name'</span> =&gt; <span class="hljs-string">''</span>,
+		<span class="hljs-string">'charset'</span> =&gt; <span class="hljs-string">''</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Convert ASCII flag</p>
+</div>
+<div class="body">
+<p>Whether to convert high-ASCII and MS Word
+characters to HTML entities.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $convert_ascii = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Response</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $response = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error messages list</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $error_msg = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Trackback Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Send Trackback</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">send</span><span class="hljs-params">($tb_data)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_array($tb_data))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'The send() method must be passed an array'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Pre-process the Trackback Data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'url'</span>, <span class="hljs-string">'title'</span>, <span class="hljs-string">'excerpt'</span>, <span class="hljs-string">'blog_name'</span>, <span class="hljs-string">'ping_url'</span>) <span class="hljs-keyword">as</span> $item)
+		{
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($tb_data[$item]))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'Required item missing: '</span>.$item);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			<span class="hljs-keyword">switch</span> ($item)
+			{
+				<span class="hljs-keyword">case</span> <span class="hljs-string">'ping_url'</span>:
+					$$item = <span class="hljs-keyword">$this</span>-&gt;extract_urls($tb_data[$item]);
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> <span class="hljs-string">'excerpt'</span>:
+					$$item = <span class="hljs-keyword">$this</span>-&gt;limit_characters(<span class="hljs-keyword">$this</span>-&gt;convert_xml(strip_tags(stripslashes($tb_data[$item]))));
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> <span class="hljs-string">'url'</span>:
+					$$item = str_replace(<span class="hljs-string">'&amp;#45;'</span>, <span class="hljs-string">'-'</span>, <span class="hljs-keyword">$this</span>-&gt;convert_xml(strip_tags(stripslashes($tb_data[$item]))));
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">default</span>:
+					$$item = <span class="hljs-keyword">$this</span>-&gt;convert_xml(strip_tags(stripslashes($tb_data[$item])));
+					<span class="hljs-keyword">break</span>;
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Convert High ASCII Characters</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;convert_ascii === <span class="hljs-keyword">TRUE</span> &amp;&amp; in_array($item, <span class="hljs-keyword">array</span>(<span class="hljs-string">'excerpt'</span>, <span class="hljs-string">'title'</span>, <span class="hljs-string">'blog_name'</span>), <span class="hljs-keyword">TRUE</span>))
+			{
+				$$item = <span class="hljs-keyword">$this</span>-&gt;convert_ascii($$item);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Build the Trackback data string</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$charset = <span class="hljs-keyword">isset</span>($tb_data[<span class="hljs-string">'charset'</span>]) ? $tb_data[<span class="hljs-string">'charset'</span>] : <span class="hljs-keyword">$this</span>-&gt;charset;
+
+		$data = <span class="hljs-string">'url='</span>.rawurlencode($url).<span class="hljs-string">'&amp;title='</span>.rawurlencode($title).<span class="hljs-string">'&amp;blog_name='</span>.rawurlencode($blog_name)
+			.<span class="hljs-string">'&amp;excerpt='</span>.rawurlencode($excerpt).<span class="hljs-string">'&amp;charset='</span>.rawurlencode($charset);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Send Trackback(s)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$return = <span class="hljs-keyword">TRUE</span>;
+		<span class="hljs-keyword">if</span> (count($ping_url) &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">foreach</span> ($ping_url <span class="hljs-keyword">as</span> $url)
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;process($url, $data) === <span class="hljs-keyword">FALSE</span>)
+				{
+					$return = <span class="hljs-keyword">FALSE</span>;
+				}
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $return;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Receive Trackback  Data</p>
+</div>
+<div class="body">
+<p>This function simply validates the incoming TB data.
+It returns FALSE on failure and TRUE on success.
+If the data is valid it is set to the $this-&gt;data array
+so that it can be inserted into a database.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">receive</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'url'</span>, <span class="hljs-string">'title'</span>, <span class="hljs-string">'blog_name'</span>, <span class="hljs-string">'excerpt'</span>) <span class="hljs-keyword">as</span> $val)
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($_POST[$val]))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'The following required POST variable is missing: '</span>.$val);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			<span class="hljs-keyword">$this</span>-&gt;data[<span class="hljs-string">'charset'</span>] = <span class="hljs-keyword">isset</span>($_POST[<span class="hljs-string">'charset'</span>]) ? strtoupper(trim($_POST[<span class="hljs-string">'charset'</span>])) : <span class="hljs-string">'auto'</span>;
+
+			<span class="hljs-keyword">if</span> ($val !== <span class="hljs-string">'url'</span> &amp;&amp; MB_ENABLED === <span class="hljs-keyword">TRUE</span>)
+			{
+				<span class="hljs-keyword">if</span> (MB_ENABLED === <span class="hljs-keyword">TRUE</span>)
+				{
+					$_POST[$val] = mb_convert_encoding($_POST[$val], <span class="hljs-keyword">$this</span>-&gt;charset, <span class="hljs-keyword">$this</span>-&gt;data[<span class="hljs-string">'charset'</span>]);
+				}
+				<span class="hljs-keyword">elseif</span> (ICONV_ENABLED === <span class="hljs-keyword">TRUE</span>)
+				{
+					$_POST[$val] = @iconv(<span class="hljs-keyword">$this</span>-&gt;data[<span class="hljs-string">'charset'</span>], <span class="hljs-keyword">$this</span>-&gt;charset.<span class="hljs-string">'//IGNORE'</span>, $_POST[$val]);
+				}
+			}
+
+			$_POST[$val] = ($val !== <span class="hljs-string">'url'</span>) ? <span class="hljs-keyword">$this</span>-&gt;convert_xml(strip_tags($_POST[$val])) : strip_tags($_POST[$val]);
+
+			<span class="hljs-keyword">if</span> ($val === <span class="hljs-string">'excerpt'</span>)
+			{
+				$_POST[<span class="hljs-string">'excerpt'</span>] = <span class="hljs-keyword">$this</span>-&gt;limit_characters($_POST[<span class="hljs-string">'excerpt'</span>]);
+			}
+
+			<span class="hljs-keyword">$this</span>-&gt;data[$val] = $_POST[$val];
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Send Trackback Error Message</p>
+</div>
+<div class="body">
+<p>Allows custom errors to be set. By default it
+sends the &quot;incomplete information&quot; error, as that's
+the most common one.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">send_error</span><span class="hljs-params">($message = <span class="hljs-string">'Incomplete Information'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">exit</span>(<span class="hljs-string">'&lt;?xml version="1.0" encoding="utf-8"?'</span>.<span class="hljs-string">"&gt;\n&lt;response&gt;\n&lt;error&gt;1&lt;/error&gt;\n&lt;message&gt;"</span>.$message.<span class="hljs-string">"&lt;/message&gt;\n&lt;/response&gt;"</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Send Trackback Success Message</p>
+</div>
+<div class="body">
+<p>This should be called when a trackback has been
+successfully received and inserted.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">send_success</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">exit</span>(<span class="hljs-string">'&lt;?xml version="1.0" encoding="utf-8"?'</span>.<span class="hljs-string">"&gt;\n&lt;response&gt;\n&lt;error&gt;0&lt;/error&gt;\n&lt;/response&gt;"</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch a particular item</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">data</span><span class="hljs-params">($item)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;data[$item]) ? <span class="hljs-keyword">$this</span>-&gt;data[$item] : <span class="hljs-string">''</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Process Trackback</p>
+</div>
+<div class="body">
+<p>Opens a socket connection and passes the data to
+the server. Returns TRUE on success, FALSE on failure</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">process</span><span class="hljs-params">($url, $data)</span>
+	</span>{
+		$target = parse_url($url);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>Open the socket</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! $fp = @fsockopen($target[<span class="hljs-string">'host'</span>], <span class="hljs-number">80</span>))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'Invalid Connection: '</span>.$url);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>Build the path</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$path = <span class="hljs-keyword">isset</span>($target[<span class="hljs-string">'path'</span>]) ? $target[<span class="hljs-string">'path'</span>] : $url;
+		<span class="hljs-keyword">empty</span>($target[<span class="hljs-string">'query'</span>]) <span class="hljs-keyword">OR</span> $path .= <span class="hljs-string">'?'</span>.$target[<span class="hljs-string">'query'</span>];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<p>Add the Trackback ID to the data string</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($id = <span class="hljs-keyword">$this</span>-&gt;get_id($url))
+		{
+			$data = <span class="hljs-string">'tb_id='</span>.$id.<span class="hljs-string">'&amp;'</span>.$data;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>Transfer the data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		fputs($fp, <span class="hljs-string">'POST '</span>.$path.<span class="hljs-string">" HTTP/1.0\r\n"</span>);
+		fputs($fp, <span class="hljs-string">'Host: '</span>.$target[<span class="hljs-string">'host'</span>].<span class="hljs-string">"\r\n"</span>);
+		fputs($fp, <span class="hljs-string">"Content-type: application/x-www-form-urlencoded\r\n"</span>);
+		fputs($fp, <span class="hljs-string">'Content-length: '</span>.strlen($data).<span class="hljs-string">"\r\n"</span>);
+		fputs($fp, <span class="hljs-string">"Connection: close\r\n\r\n"</span>);
+		fputs($fp, $data);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<p>Was it successful?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">$this</span>-&gt;response = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">while</span> ( ! feof($fp))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;response .= fgets($fp, <span class="hljs-number">128</span>);
+		}
+		@fclose($fp);
+
+		<span class="hljs-keyword">if</span> (stripos(<span class="hljs-keyword">$this</span>-&gt;response, <span class="hljs-string">'&lt;error&gt;0&lt;/error&gt;'</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			$message = preg_match(<span class="hljs-string">'/&lt;message&gt;(.*?)&lt;\/message&gt;/is'</span>, <span class="hljs-keyword">$this</span>-&gt;response, $match)
+				? trim($match[<span class="hljs-number">1</span>])
+				: <span class="hljs-string">'An unknown error was encountered'</span>;
+			<span class="hljs-keyword">$this</span>-&gt;set_error($message);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Extract Trackback URLs</p>
+</div>
+<div class="body">
+<p>This function lets multiple trackbacks be sent.
+It takes a string of URLs (separated by comma or
+space) and puts each URL into an array</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">extract_urls</span><span class="hljs-params">($urls)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<p>Remove the pesky white space and replace with a comma, then replace doubles.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$urls = str_replace(<span class="hljs-string">',,'</span>, <span class="hljs-string">','</span>, preg_replace(<span class="hljs-string">'/\s*(\S+)\s*/'</span>, <span class="hljs-string">'\\1,'</span>, $urls));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<p>Break into an array via commas and remove duplicates</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$urls = array_unique(preg_split(<span class="hljs-string">'/[,]/'</span>, rtrim($urls, <span class="hljs-string">','</span>)));
+
+		array_walk($urls, <span class="hljs-keyword">array</span>(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'validate_url'</span>));
+		<span class="hljs-keyword">return</span> $urls;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate URL</p>
+</div>
+<div class="body">
+<p>Simply adds &quot;http://&quot; if missing</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validate_url</span><span class="hljs-params">(&amp;$url)</span>
+	</span>{
+		$url = trim($url);
+
+		<span class="hljs-keyword">if</span> (stripos($url, <span class="hljs-string">'http'</span>) !== <span class="hljs-number">0</span>)
+		{
+			$url = <span class="hljs-string">'http://'</span>.$url;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Find the Trackback URL's ID</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_id</span><span class="hljs-params">($url)</span>
+	</span>{
+		$tb_id = <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">if</span> (strpos($url, <span class="hljs-string">'?'</span>) !== <span class="hljs-keyword">FALSE</span>)
+		{
+			$tb_array = explode(<span class="hljs-string">'/'</span>, $url);
+			$tb_end   = $tb_array[count($tb_array)<span class="hljs-number">-1</span>];
+
+			<span class="hljs-keyword">if</span> ( ! is_numeric($tb_end))
+			{
+				$tb_end  = $tb_array[count($tb_array)<span class="hljs-number">-2</span>];
+			}
+
+			$tb_array = explode(<span class="hljs-string">'='</span>, $tb_end);
+			$tb_id	= $tb_array[count($tb_array)<span class="hljs-number">-1</span>];
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$url = rtrim($url, <span class="hljs-string">'/'</span>);
+
+			$tb_array = explode(<span class="hljs-string">'/'</span>, $url);
+			$tb_id	= $tb_array[count($tb_array)<span class="hljs-number">-1</span>];
+
+			<span class="hljs-keyword">if</span> ( ! is_numeric($tb_id))
+			{
+				$tb_id = $tb_array[count($tb_array)<span class="hljs-number">-2</span>];
+			}
+		}
+
+		<span class="hljs-keyword">return</span> ctype_digit((string) $tb_id) ? $tb_id : <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Convert Reserved XML characters to Entities</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">convert_xml</span><span class="hljs-params">($str)</span>
+	</span>{
+		$temp = <span class="hljs-string">'__TEMP_AMPERSANDS__'</span>;
+
+		$str = preg_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'/&amp;#(\d+);/'</span>, <span class="hljs-string">'/&amp;(\w+);/'</span>), $temp.<span class="hljs-string">'\\1;'</span>, $str);
+
+		$str = str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'&amp;'</span>, <span class="hljs-string">'&lt;'</span>, <span class="hljs-string">'&gt;'</span>, <span class="hljs-string">'"'</span>, <span class="hljs-string">"'"</span>, <span class="hljs-string">'-'</span>),
+					<span class="hljs-keyword">array</span>(<span class="hljs-string">'&amp;amp;'</span>, <span class="hljs-string">'&amp;lt;'</span>, <span class="hljs-string">'&amp;gt;'</span>, <span class="hljs-string">'&amp;quot;'</span>, <span class="hljs-string">'&amp;#39;'</span>, <span class="hljs-string">'&amp;#45;'</span>),
+					$str);
+
+		<span class="hljs-keyword">return</span> preg_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'/'</span>.$temp.<span class="hljs-string">'(\d+);/'</span>, <span class="hljs-string">'/'</span>.$temp.<span class="hljs-string">'(\w+);/'</span>), <span class="hljs-keyword">array</span>(<span class="hljs-string">'&amp;#\\1;'</span>, <span class="hljs-string">'&amp;\\1;'</span>), $str);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Character limiter</p>
+</div>
+<div class="body">
+<p>Limits the string based on the character count. Will preserve complete words.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">limit_characters</span><span class="hljs-params">($str, $n = <span class="hljs-number">500</span>, $end_char = <span class="hljs-string">'&amp;#8230;'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (strlen($str) &lt; $n)
+		{
+			<span class="hljs-keyword">return</span> $str;
+		}
+
+		$str = preg_replace(<span class="hljs-string">'/\s+/'</span>, <span class="hljs-string">' '</span>, str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">"\r\n"</span>, <span class="hljs-string">"\r"</span>, <span class="hljs-string">"\n"</span>), <span class="hljs-string">' '</span>, $str));
+
+		<span class="hljs-keyword">if</span> (strlen($str) &lt;= $n)
+		{
+			<span class="hljs-keyword">return</span> $str;
+		}
+
+		$out = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">foreach</span> (explode(<span class="hljs-string">' '</span>, trim($str)) <span class="hljs-keyword">as</span> $val)
+		{
+			$out .= $val.<span class="hljs-string">' '</span>;
+			<span class="hljs-keyword">if</span> (strlen($out) &gt;= $n)
+			{
+				<span class="hljs-keyword">return</span> rtrim($out).$end_char;
+			}
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>High ASCII to Entities</p>
+</div>
+<div class="body">
+<p>Converts Hight ascii text and MS Word special chars
+to character entities</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">convert_ascii</span><span class="hljs-params">($str)</span>
+	</span>{
+		$count	= <span class="hljs-number">1</span>;
+		$out	= <span class="hljs-string">''</span>;
+		$temp	= <span class="hljs-keyword">array</span>();
+
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $s = strlen($str); $i &lt; $s; $i++)
+		{
+			$ordinal = ord($str[$i]);
+
+			<span class="hljs-keyword">if</span> ($ordinal &lt; <span class="hljs-number">128</span>)
+			{
+				$out .= $str[$i];
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">if</span> (count($temp) === <span class="hljs-number">0</span>)
+				{
+					$count = ($ordinal &lt; <span class="hljs-number">224</span>) ? <span class="hljs-number">2</span> : <span class="hljs-number">3</span>;
+				}
+
+				$temp[] = $ordinal;
+
+				<span class="hljs-keyword">if</span> (count($temp) === $count)
+				{
+					$number = ($count === <span class="hljs-number">3</span>)
+						? (($temp[<span class="hljs-number">0</span>] % <span class="hljs-number">16</span>) * <span class="hljs-number">4096</span>) + (($temp[<span class="hljs-number">1</span>] % <span class="hljs-number">64</span>) * <span class="hljs-number">64</span>) + ($temp[<span class="hljs-number">2</span>] % <span class="hljs-number">64</span>)
+						: (($temp[<span class="hljs-number">0</span>] % <span class="hljs-number">32</span>) * <span class="hljs-number">64</span>) + ($temp[<span class="hljs-number">1</span>] % <span class="hljs-number">64</span>);
+
+					$out .= <span class="hljs-string">'&amp;#'</span>.$number.<span class="hljs-string">';'</span>;
+					$count = <span class="hljs-number">1</span>;
+					$temp = <span class="hljs-keyword">array</span>();
+				}
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $out;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set error message</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_error</span><span class="hljs-params">($msg)</span>
+	</span>{
+		log_message(<span class="hljs-string">'error'</span>, $msg);
+		<span class="hljs-keyword">$this</span>-&gt;error_msg[] = $msg;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show error messages</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">display_errors</span><span class="hljs-params">($open = <span class="hljs-string">'&lt;p&gt;'</span>, $close = <span class="hljs-string">'&lt;/p&gt;'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (count(<span class="hljs-keyword">$this</span>-&gt;error_msg) &gt; <span class="hljs-number">0</span>) ? $open.implode($close.$open, <span class="hljs-keyword">$this</span>-&gt;error_msg).$close : <span class="hljs-string">''</span>;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

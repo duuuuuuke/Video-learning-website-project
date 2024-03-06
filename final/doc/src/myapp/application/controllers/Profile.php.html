@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\controllers\\Profile.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Profile.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Profile</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Controller</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'logged_in'</span>)) {
+            $username = <span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>);
+            $result = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;get_userinfo($username);
+            <span class="hljs-keyword">if</span> (count($result) == <span class="hljs-number">1</span>) {
+                $email = $result[<span class="hljs-number">0</span>][<span class="hljs-string">'email'</span>];
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'info not found'</span>, <span class="hljs-string">'Info not found'</span>);
+                redirect(base_url().<span class="hljs-string">'index.php?/login'</span>);
+            }
+
+            $data = <span class="hljs-keyword">array</span>(
+                <span class="hljs-string">'username'</span> =&gt; $username,
+                <span class="hljs-string">'email'</span> =&gt; $email,
+            );
+
+            $wishlist = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;getWishlist($username);
+            $data[<span class="hljs-string">'allWishlist'</span>] = $wishlist;
+
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'profile_no_login'</span>, <span class="hljs-string">'You are not logged in, please login.'</span>);
+            redirect(base_url().<span class="hljs-string">'index.php?/login'</span>);
+        }
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/header'</span>);
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'profile'</span>, $data);
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/footer'</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">edit_profile</span><span class="hljs-params">()</span>
+    </span>{
+        $old_username = <span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>);
+        $data[<span class="hljs-string">'info'</span>] = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;get_userinfo($old_username);
+        $old_email = $data[<span class="hljs-string">'info'</span>][<span class="hljs-number">0</span>][<span class="hljs-string">'email'</span>];
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/header'</span>);
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'edit_profile'</span>, $data);
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/footer'</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update_info</span><span class="hljs-params">()</span>
+    </span>{
+        $old_username = <span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>);
+        $userinfo = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;get_userinfo($old_username);
+        $old_email = $userinfo[<span class="hljs-number">0</span>][<span class="hljs-string">'email'</span>];
+        $new_username = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'username'</span>);
+        $new_email = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'email'</span>);
+        <span class="hljs-keyword">if</span> ($new_username != $old_username &amp;&amp; $new_email == $old_email) {
+            <span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(
+                <span class="hljs-string">'username'</span>,
+                <span class="hljs-string">'Username'</span>,
+                <span class="hljs-string">'required|max_length[25]|is_unique[users.username]'</span>
+            );
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;run() == <span class="hljs-keyword">FALSE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>validation fail</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                <span class="hljs-keyword">$this</span>-&gt;index();
+            } <span class="hljs-keyword">else</span> {
+                $new_userinfo[<span class="hljs-string">'username'</span>] = $new_username;
+                $result = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;update_userinfo($old_username, $new_userinfo);
+                <span class="hljs-keyword">if</span> ($result == <span class="hljs-keyword">TRUE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>update successfully</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                    $user_data = <span class="hljs-keyword">array</span>(
+                        <span class="hljs-string">'username'</span> =&gt; $new_username
+                    );
+                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data);
+
+                    redirect(base_url().<span class="hljs-string">'index.php?/profile'</span>);
+                } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>update failed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'profile-message'</span>, <span class="hljs-string">'Something went wrong, please try again.'</span>);
+                    redirect(base_url().<span class="hljs-string">'index.php?/profile'</span>);
+                }
+            }
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ($new_email != $old_email &amp;&amp; $new_username == $old_username) {
+            <span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(
+                <span class="hljs-string">'email'</span>,
+                <span class="hljs-string">'Email'</span>,
+                <span class="hljs-string">'required|valid_email|is_unique[users.email]'</span>
+            );
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;run() == <span class="hljs-keyword">FALSE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>validation fail</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                <span class="hljs-keyword">$this</span>-&gt;index();
+            } <span class="hljs-keyword">else</span> {
+                $new_userinfo[<span class="hljs-string">'email'</span>] = $new_email;
+                $new_userinfo[<span class="hljs-string">'verified'</span>] = <span class="hljs-number">0</span>;
+                $result = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;update_userinfo($old_username, $new_userinfo);
+                <span class="hljs-keyword">if</span> ($result == <span class="hljs-keyword">TRUE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>update successfully</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                    $user_data = <span class="hljs-keyword">array</span>(
+                        <span class="hljs-string">'email'</span> =&gt; $new_email
+                    );
+                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data);
+
+                    redirect(base_url().<span class="hljs-string">'index.php?/profile'</span>);
+                } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>update failed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'profile-message'</span>, <span class="hljs-string">'Something went wrong, please try again.'</span>);
+                    redirect(base_url().<span class="hljs-string">'index.php?/profile'</span>);
+                }
+            }
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ($new_email != $old_email &amp;&amp; $new_username != $old_username) {
+            <span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(
+                <span class="hljs-string">'username'</span>,
+                <span class="hljs-string">'Username'</span>,
+                <span class="hljs-string">'required|max_length[25]|is_unique[users.username]'</span>
+            );
+            <span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(
+                <span class="hljs-string">'email'</span>,
+                <span class="hljs-string">'Email'</span>,
+                <span class="hljs-string">'required|valid_email|is_unique[users.email]'</span>
+            );
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;run() == <span class="hljs-keyword">FALSE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>validation fail</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                <span class="hljs-keyword">$this</span>-&gt;index();
+            } <span class="hljs-keyword">else</span> {
+                $new_userinfo[<span class="hljs-string">'email'</span>] = $new_email;
+                $new_userinfo[<span class="hljs-string">'username'</span>] = $new_username;
+                $new_userinfo[<span class="hljs-string">'verified'</span>] = <span class="hljs-number">0</span>;
+                $result = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;update_userinfo($old_username, $new_userinfo);
+                <span class="hljs-keyword">if</span> ($result == <span class="hljs-keyword">TRUE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>update successfully</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                    $user_data = <span class="hljs-keyword">array</span>(
+                        <span class="hljs-string">'email'</span> =&gt; $new_email,
+                        <span class="hljs-string">'username'</span> =&gt; $new_username
+                    );
+                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data);
+
+                    redirect(base_url().<span class="hljs-string">'index.php?/profile'</span>);
+                } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>update failed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'profile-message'</span>, <span class="hljs-string">'Something went wrong, please try again.'</span>);
+                    redirect(base_url().<span class="hljs-string">'index.php?/profile'</span>);
+                }
+            }
+        } <span class="hljs-keyword">else</span> {
+            redirect(base_url().<span class="hljs-string">'index.php?/profile'</span>);
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addToWishlist</span><span class="hljs-params">()</span>
+    </span>{
+        $product_id = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'product_id'</span>);
+        $data[<span class="hljs-string">'username'</span>] = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'username'</span>);
+        $data[<span class="hljs-string">'title'</span>] = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'title'</span>);
+        $data[<span class="hljs-string">'description'</span>] = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'description'</span>);
+        $result = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;addWishlist($data);
+        <span class="hljs-keyword">if</span> ($result != <span class="hljs-keyword">false</span>) {
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">'success'</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">'error, try it again please'</span>;
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getWishlist</span><span class="hljs-params">()</span>
+    </span>{
+        $username = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'username'</span>);
+        $data = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;getWishlist($username);
+        <span class="hljs-keyword">if</span> (!$data == <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">echo</span> json_encode($data-&gt;result());
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">echo</span>  <span class="hljs-string">""</span>;
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deleteWishlist</span><span class="hljs-params">()</span> </span>{
+        $title = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'title'</span>);
+        $username = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'username'</span>);
+        $result = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;delete($username, $title);
+        <span class="hljs-keyword">if</span> ($result) {
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">'success'</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">'try again'</span>;
+        }
+    }
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

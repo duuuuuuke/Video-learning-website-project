@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>postgre_driver.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../../doc-style.css" />
+  <script src="../../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../../";
+    var thisFile = "src\\myapp\\system\\database\\drivers\\postgre\\postgre_driver.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>postgre_driver.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Postgre Database Adapter Class</p>
+</div>
+<div class="body">
+<p>Note: _DB is an extender class that the app controller
+creates dynamically based on whether the query builder
+class is being used or not.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_DB_postgre_driver</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_DB</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Database driver</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $dbdriver = <span class="hljs-string">'postgre'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Database schema</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $schema = <span class="hljs-string">'public'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>ORDER BY random keyword</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_random_keyword = <span class="hljs-keyword">array</span>(<span class="hljs-string">'RANDOM()'</span>, <span class="hljs-string">'RANDOM()'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+<p>Creates a DSN string to be used for db_connect() and db_pconnect()</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($params)</span>
+	</span>{
+		<span class="hljs-keyword">parent</span>::__construct($params);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;dsn))
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;dsn === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;dsn = <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">if</span> (strpos(<span class="hljs-keyword">$this</span>-&gt;hostname, <span class="hljs-string">'/'</span>) !== <span class="hljs-keyword">FALSE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>If UNIX sockets are used, we shouldn't set a port</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;port = <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;hostname === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;dsn = <span class="hljs-string">'host='</span>.<span class="hljs-keyword">$this</span>-&gt;hostname.<span class="hljs-string">' '</span>;
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;port) &amp;&amp; ctype_digit(<span class="hljs-keyword">$this</span>-&gt;port))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;dsn .= <span class="hljs-string">'port='</span>.<span class="hljs-keyword">$this</span>-&gt;port.<span class="hljs-string">' '</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;username !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;dsn .= <span class="hljs-string">'user='</span>.<span class="hljs-keyword">$this</span>-&gt;username.<span class="hljs-string">' '</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>An empty password is valid!</p>
+</div>
+<div class="body">
+<p>$db['password'] = NULL must be done in order to ignore it.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;password === <span class="hljs-keyword">NULL</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;dsn .= <span class="hljs-string">"password='"</span>.<span class="hljs-keyword">$this</span>-&gt;password.<span class="hljs-string">"' "</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;database === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;dsn .= <span class="hljs-string">'dbname='</span>.<span class="hljs-keyword">$this</span>-&gt;database.<span class="hljs-string">' '</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>We don't have these options as elements in our standard configuration
+array, but they might be set by parse_url() if the configuration was
+provided via string. Example:</p>
+</div>
+<div class="body">
+<p>postgre://username:password@localhost:5432/database?connect_timeout=5&amp;sslmode=1</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'connect_timeout'</span>, <span class="hljs-string">'options'</span>, <span class="hljs-string">'sslmode'</span>, <span class="hljs-string">'service'</span>) <span class="hljs-keyword">as</span> $key)
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;$key) &amp;&amp; is_string(<span class="hljs-keyword">$this</span>-&gt;$key) &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;$key !== <span class="hljs-string">''</span>)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;dsn .= $key.<span class="hljs-string">"='"</span>.<span class="hljs-keyword">$this</span>-&gt;$key.<span class="hljs-string">"' "</span>;
+			}
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;dsn = rtrim(<span class="hljs-keyword">$this</span>-&gt;dsn);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Database connection</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$persistent
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>resource
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">db_connect</span><span class="hljs-params">($persistent = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;conn_id = ($persistent === <span class="hljs-keyword">TRUE</span>)
+			? pg_pconnect(<span class="hljs-keyword">$this</span>-&gt;dsn)
+			: pg_connect(<span class="hljs-keyword">$this</span>-&gt;dsn);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;conn_id !== <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">if</span> ($persistent === <span class="hljs-keyword">TRUE</span>
+				&amp;&amp; pg_connection_status(<span class="hljs-keyword">$this</span>-&gt;conn_id) === PGSQL_CONNECTION_BAD
+				&amp;&amp; pg_ping(<span class="hljs-keyword">$this</span>-&gt;conn_id) === <span class="hljs-keyword">FALSE</span>
+			)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;schema) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;simple_query(<span class="hljs-string">'SET search_path TO '</span>.<span class="hljs-keyword">$this</span>-&gt;schema.<span class="hljs-string">',public'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;conn_id;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Reconnect</p>
+</div>
+<div class="body">
+<p>Keep / reestablish the db connection if no queries have been
+sent for a length of time exceeding the server's idle timeout</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">reconnect</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (pg_ping(<span class="hljs-keyword">$this</span>-&gt;conn_id) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;conn_id = <span class="hljs-keyword">FALSE</span>;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set client character set</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$charset
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_db_set_charset</span><span class="hljs-params">($charset)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (pg_set_client_encoding(<span class="hljs-keyword">$this</span>-&gt;conn_id, $charset) === <span class="hljs-number">0</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Database version number</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">version</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;data_cache[<span class="hljs-string">'version'</span>]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;data_cache[<span class="hljs-string">'version'</span>];
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;conn_id <span class="hljs-keyword">OR</span> ($pg_version = pg_version(<span class="hljs-keyword">$this</span>-&gt;conn_id)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>If PHP was compiled with PostgreSQL lib versions earlier
+than 7.4, pg_version() won't return the server version
+and so we'll have to fall back to running a query in
+order to get it.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">isset</span>($pg_version[<span class="hljs-string">'server'</span>]) &amp;&amp; preg_match(<span class="hljs-string">'#^(\d+\.\d+)#'</span>, $pg_version[<span class="hljs-string">'server'</span>], $match))
+			? <span class="hljs-keyword">$this</span>-&gt;data_cache[<span class="hljs-string">'version'</span>] = $match[<span class="hljs-number">1</span>]
+			: <span class="hljs-keyword">parent</span>::version();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Execute the query</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$sql an SQL query
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>resource
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_execute</span><span class="hljs-params">($sql)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> pg_query(<span class="hljs-keyword">$this</span>-&gt;conn_id, $sql);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Begin Transaction</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_trans_begin</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (bool) pg_query(<span class="hljs-keyword">$this</span>-&gt;conn_id, <span class="hljs-string">'BEGIN'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Commit Transaction</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_trans_commit</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (bool) pg_query(<span class="hljs-keyword">$this</span>-&gt;conn_id, <span class="hljs-string">'COMMIT'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Rollback Transaction</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_trans_rollback</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (bool) pg_query(<span class="hljs-keyword">$this</span>-&gt;conn_id, <span class="hljs-string">'ROLLBACK'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Determines if a query is a &quot;write&quot; type.</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>An SQL query string
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_write_type</span><span class="hljs-params">($sql)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'#^(INSERT|UPDATE).*RETURNING\s.+(\,\s?.+)*$#is'</span>, $sql))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">parent</span>::is_write_type($sql);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Platform-dependent string escape</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_escape_str</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> pg_escape_string(<span class="hljs-keyword">$this</span>-&gt;conn_id, $str);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>&quot;Smart&quot; Escape String</p>
+</div>
+<div class="body">
+<p>Escapes data based on type</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">escape</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_php(<span class="hljs-string">'5.4.4'</span>) &amp;&amp; (is_string($str) <span class="hljs-keyword">OR</span> (is_object($str) &amp;&amp; method_exists($str, <span class="hljs-string">'__toString'</span>))))
+		{
+			<span class="hljs-keyword">return</span> pg_escape_literal(<span class="hljs-keyword">$this</span>-&gt;conn_id, $str);
+		}
+		<span class="hljs-keyword">elseif</span> (is_bool($str))
+		{
+			<span class="hljs-keyword">return</span> ($str) ? <span class="hljs-string">'TRUE'</span> : <span class="hljs-string">'FALSE'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">parent</span>::escape($str);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Affected Rows</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">affected_rows</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> pg_affected_rows(<span class="hljs-keyword">$this</span>-&gt;result_id);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Insert ID</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">insert_id</span><span class="hljs-params">()</span>
+	</span>{
+		$v = <span class="hljs-keyword">$this</span>-&gt;version();
+
+		$table	= (func_num_args() &gt; <span class="hljs-number">0</span>) ? func_get_arg(<span class="hljs-number">0</span>) : <span class="hljs-keyword">NULL</span>;
+		$column	= (func_num_args() &gt; <span class="hljs-number">1</span>) ? func_get_arg(<span class="hljs-number">1</span>) : <span class="hljs-keyword">NULL</span>;
+
+		<span class="hljs-keyword">if</span> ($table === <span class="hljs-keyword">NULL</span> &amp;&amp; $v &gt;= <span class="hljs-string">'8.1'</span>)
+		{
+			$sql = <span class="hljs-string">'SELECT LASTVAL() AS ins_id'</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ($table !== <span class="hljs-keyword">NULL</span>)
+		{
+			<span class="hljs-keyword">if</span> ($column !== <span class="hljs-keyword">NULL</span> &amp;&amp; $v &gt;= <span class="hljs-string">'8.0'</span>)
+			{
+				$sql = <span class="hljs-string">'SELECT pg_get_serial_sequence(\''</span>.$table.<span class="hljs-string">"', '"</span>.$column.<span class="hljs-string">"') AS seq"</span>;
+				$query = <span class="hljs-keyword">$this</span>-&gt;query($sql);
+				$query = $query-&gt;row();
+				$seq = $query-&gt;seq;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<p>seq_name passed in table parameter</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				$seq = $table;
+			}
+
+			$sql = <span class="hljs-string">'SELECT CURRVAL(\''</span>.$seq.<span class="hljs-string">"') AS ins_id"</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">return</span> pg_last_oid(<span class="hljs-keyword">$this</span>-&gt;result_id);
+		}
+
+		$query = <span class="hljs-keyword">$this</span>-&gt;query($sql);
+		$query = $query-&gt;row();
+		<span class="hljs-keyword">return</span> (int) $query-&gt;ins_id;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show table query</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific query string so that the table names can be fetched</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$prefix_limit
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_list_tables</span><span class="hljs-params">($prefix_limit = FALSE)</span>
+	</span>{
+		$sql = <span class="hljs-string">'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \''</span>.<span class="hljs-keyword">$this</span>-&gt;schema.<span class="hljs-string">"'"</span>;
+
+		<span class="hljs-keyword">if</span> ($prefix_limit !== <span class="hljs-keyword">FALSE</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;dbprefix !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> $sql.<span class="hljs-string">' AND "table_name" LIKE \''</span>
+				.<span class="hljs-keyword">$this</span>-&gt;escape_like_str(<span class="hljs-keyword">$this</span>-&gt;dbprefix).<span class="hljs-string">"%' "</span>
+				.sprintf(<span class="hljs-keyword">$this</span>-&gt;_like_escape_str, <span class="hljs-keyword">$this</span>-&gt;_like_escape_chr);
+		}
+
+		<span class="hljs-keyword">return</span> $sql;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List column query</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific query string so that the column names can be fetched</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_list_columns</span><span class="hljs-params">($table = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'SELECT "column_name"
+			FROM "information_schema"."columns"
+			WHERE LOWER("table_name") = '</span>.<span class="hljs-keyword">$this</span>-&gt;escape(strtolower($table));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Returns an object with field data</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">field_data</span><span class="hljs-params">($table)</span>
+	</span>{
+		$sql = <span class="hljs-string">'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
+			FROM "information_schema"."columns"
+			WHERE LOWER("table_name") = '</span>.<span class="hljs-keyword">$this</span>-&gt;escape(strtolower($table));
+
+		<span class="hljs-keyword">if</span> (($query = <span class="hljs-keyword">$this</span>-&gt;query($sql)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+		$query = $query-&gt;result_object();
+
+		$retval = <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($query); $i &lt; $c; $i++)
+		{
+			$retval[$i]			= <span class="hljs-keyword">new</span> stdClass();
+			$retval[$i]-&gt;name		= $query[$i]-&gt;column_name;
+			$retval[$i]-&gt;type		= $query[$i]-&gt;data_type;
+			$retval[$i]-&gt;max_length		= ($query[$i]-&gt;character_maximum_length &gt; <span class="hljs-number">0</span>) ? $query[$i]-&gt;character_maximum_length : $query[$i]-&gt;numeric_precision;
+			$retval[$i]-&gt;default		= $query[$i]-&gt;column_default;
+		}
+
+		<span class="hljs-keyword">return</span> $retval;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error</p>
+</div>
+<div class="body">
+<p>Returns an array containing code and message of the last
+database error that has occurred.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">error</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(<span class="hljs-string">'code'</span> =&gt; <span class="hljs-string">''</span>, <span class="hljs-string">'message'</span> =&gt; pg_last_error(<span class="hljs-keyword">$this</span>-&gt;conn_id));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>ORDER BY</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$orderby
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$direction ASC, DESC or RANDOM
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$escape
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">order_by</span><span class="hljs-params">($orderby, $direction = <span class="hljs-string">''</span>, $escape = NULL)</span>
+	</span>{
+		$direction = strtoupper(trim($direction));
+		<span class="hljs-keyword">if</span> ($direction === <span class="hljs-string">'RANDOM'</span>)
+		{
+			<span class="hljs-keyword">if</span> ( ! is_float($orderby) &amp;&amp; ctype_digit((string) $orderby))
+			{
+				$orderby = ($orderby &gt; <span class="hljs-number">1</span>)
+					? (float) <span class="hljs-string">'0.'</span>.$orderby
+					: (float) $orderby;
+			}
+
+			<span class="hljs-keyword">if</span> (is_float($orderby))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;simple_query(<span class="hljs-string">'SET SEED '</span>.$orderby);
+			}
+
+			$orderby = <span class="hljs-keyword">$this</span>-&gt;_random_keyword[<span class="hljs-number">0</span>];
+			$direction = <span class="hljs-string">''</span>;
+			$escape = <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">parent</span>::order_by($orderby, $direction, $escape);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Update statement</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific update string from the supplied data</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$values
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_update</span><span class="hljs-params">($table, $values)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;qb_limit = <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">$this</span>-&gt;qb_orderby = <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">parent</span>::_update($table, $values);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Update_Batch statement</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific batch update string from the supplied data</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table Table name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$values Update data
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$index WHERE key
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_update_batch</span><span class="hljs-params">($table, $values, $index)</span>
+	</span>{
+		$ids = <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">foreach</span> ($values <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			$ids[] = $val[$index][<span class="hljs-string">'value'</span>];
+
+			<span class="hljs-keyword">foreach</span> (array_keys($val) <span class="hljs-keyword">as</span> $field)
+			{
+				<span class="hljs-keyword">if</span> ($field !== $index)
+				{
+					$final[$val[$field][<span class="hljs-string">'field'</span>]][] = <span class="hljs-string">'WHEN '</span>.$val[$index][<span class="hljs-string">'value'</span>].<span class="hljs-string">' THEN '</span>.$val[$field][<span class="hljs-string">'value'</span>];
+				}
+			}
+		}
+
+		$cases = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">foreach</span> ($final <span class="hljs-keyword">as</span> $k =&gt; $v)
+		{
+			$cases .= $k.<span class="hljs-string">' = (CASE '</span>.$val[$index][<span class="hljs-string">'field'</span>].<span class="hljs-string">"\n"</span>
+				.implode(<span class="hljs-string">"\n"</span>, $v).<span class="hljs-string">"\n"</span>
+				.<span class="hljs-string">'ELSE '</span>.$k.<span class="hljs-string">' END), '</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;where($val[$index][<span class="hljs-string">'field'</span>].<span class="hljs-string">' IN('</span>.implode(<span class="hljs-string">','</span>, $ids).<span class="hljs-string">')'</span>, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">FALSE</span>);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'UPDATE '</span>.$table.<span class="hljs-string">' SET '</span>.substr($cases, <span class="hljs-number">0</span>, <span class="hljs-number">-2</span>).<span class="hljs-keyword">$this</span>-&gt;_compile_wh(<span class="hljs-string">'qb_where'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Delete statement</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific delete string from the supplied data</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$table
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_delete</span><span class="hljs-params">($table)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;qb_limit = <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">parent</span>::_delete($table);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>LIMIT</p>
+</div>
+<div class="body">
+<p>Generates a platform-specific LIMIT clause</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$sql SQL Query
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_limit</span><span class="hljs-params">($sql)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> $sql.<span class="hljs-string">' LIMIT '</span>.<span class="hljs-keyword">$this</span>-&gt;qb_limit.(<span class="hljs-keyword">$this</span>-&gt;qb_offset ? <span class="hljs-string">' OFFSET '</span>.<span class="hljs-keyword">$this</span>-&gt;qb_offset : <span class="hljs-string">''</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Close DB Connection</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_close</span><span class="hljs-params">()</span>
+	</span>{
+		pg_close(<span class="hljs-keyword">$this</span>-&gt;conn_id);
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

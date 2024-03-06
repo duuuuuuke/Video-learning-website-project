@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>login.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\views\\login.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>login.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;div class="container mt-5"&gt;
+	&lt;div class="col-4 offset-4 my-5"&gt;
+		&lt;?php if ($this-&gt;session-&gt;flashdata('success')) : ?&gt;
+			&lt;div class="alert alert-primary" role="alert"&gt;
+				&lt;?php echo $this-&gt;session-&gt;flashdata('success'); ?&gt;
+			&lt;/div&gt;
+		&lt;?php endif ?&gt;
+		&lt;?php if ($this-&gt;session-&gt;flashdata('send_email')) : ?&gt;
+			&lt;div class="alert alert-primary" role="alert"&gt;
+				&lt;?php echo $this-&gt;session-&gt;flashdata('send_email'); ?&gt;
+			&lt;/div&gt;
+		&lt;?php endif ?&gt;
+
+		&lt;?php if ($this-&gt;session-&gt;flashdata('error')) {
+			echo $this-&gt;session-&gt;flashdata('error');
+		} ?&gt;
+
+		&lt;?php if ($this-&gt;session-&gt;flashdata('captcha')) {
+			echo $this-&gt;session-&gt;flashdata('captcha');
+		} ?&gt;
+
+		&lt;?php echo form_open(base_url() . 'index.php?/login/check_login'); ?&gt;
+		&lt;h2 class="text-center my-5"&gt;Login&lt;/h2&gt;
+		&lt;div class="form-group"&gt;
+			&lt;input type="text" class="form-control" placeholder="Username" required="required" name="username"&gt;
+		&lt;/div&gt;
+		&lt;div class="form-group mt-5"&gt;
+			&lt;input type="password" class="form-control" placeholder="Password" required="required" name="password"&gt;
+		&lt;/div&gt;
+
+		&lt;div class="form-group"&gt;
+			&lt;?php echo $error; ?&gt;
+		&lt;/div&gt;
+		&lt;div class="clearfix my-3"&gt;
+			&lt;label class="float-left form-check-label"&gt;&lt;input type="checkbox" name="remember"&gt; Remember me&lt;/label&gt;
+		&lt;/div&gt;
+		&lt;div class="form-group"&gt;
+			&lt;button type="submit" class="btn btn-primary btn-block"&gt;Log in&lt;/button&gt;
+		&lt;/div&gt;
+		&lt;div class="clearfix"&gt;
+			&lt;p&gt;Don't have an account? &lt;a href="&lt;?php echo base_url(); ?&gt;index.php?/signup" class="ml-2"&gt;Sign up&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;?php echo form_close(); ?&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

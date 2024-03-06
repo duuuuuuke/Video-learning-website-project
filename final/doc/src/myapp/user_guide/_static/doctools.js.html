@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>doctools.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\user_guide\\_static\\doctools.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>doctools.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>doctools.js</p>
+<pre><code></code></pre>
+</div>
+<div class="body">
+<p>Sphinx JavaScript utilities for all documentation.</p>
+<p>:copyright: Copyright 2007-2017 by the Sphinx team, see AUTHORS.
+:license: BSD, see LICENSE for details.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>select a different prefix for underscore</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">$u = _.noConflict();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>make the code below compatible with browsers without
+an installed firebug like debugger
+if (!window.console || !console.firebug) {
+var names = [&quot;log&quot;, &quot;debug&quot;, &quot;info&quot;, &quot;warn&quot;, &quot;error&quot;, &quot;assert&quot;, &quot;dir&quot;,
+&quot;dirxml&quot;, &quot;group&quot;, &quot;groupEnd&quot;, &quot;time&quot;, &quot;timeEnd&quot;, &quot;count&quot;, &quot;trace&quot;,
+&quot;profile&quot;, &quot;profileEnd&quot;];
+window.console = {};
+for (var i = 0; i &lt; names.length; ++i)
+window.console[names[i]] = function() {};
+}</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>small helper function to urldecode strings</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">jQuery.urldecode = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">decodeURIComponent</span>(x).replace(<span class="hljs-regexp">/\+/g</span>, <span class="hljs-string">' '</span>);
+};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>small helper function to urlencode strings</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">jQuery.urlencode = <span class="hljs-built_in">encodeURIComponent</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>This function returns the parsed url parameters of the
+current request. Multiple values per key are supported,
+it will always return arrays of strings for the value parts.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">jQuery.getQueryParameters = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) </span>{
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> s == <span class="hljs-string">'undefined'</span>)
+    s = <span class="hljs-built_in">document</span>.location.search;
+  <span class="hljs-keyword">var</span> parts = s.substr(s.indexOf(<span class="hljs-string">'?'</span>) + <span class="hljs-number">1</span>).split(<span class="hljs-string">'&amp;'</span>);
+  <span class="hljs-keyword">var</span> result = {};
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; parts.length; i++) {
+    <span class="hljs-keyword">var</span> tmp = parts[i].split(<span class="hljs-string">'='</span>, <span class="hljs-number">2</span>);
+    <span class="hljs-keyword">var</span> key = jQuery.urldecode(tmp[<span class="hljs-number">0</span>]);
+    <span class="hljs-keyword">var</span> value = jQuery.urldecode(tmp[<span class="hljs-number">1</span>]);
+    <span class="hljs-keyword">if</span> (key <span class="hljs-keyword">in</span> result)
+      result[key].push(value);
+    <span class="hljs-keyword">else</span>
+      result[key] = [value];
+  }
+  <span class="hljs-keyword">return</span> result;
+};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>highlight a given string on a jquery object by wrapping it in
+span elements with the given class name.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">jQuery.fn.highlightText = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">text, className</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">highlight</span>(<span class="hljs-params">node</span>) </span>{
+    <span class="hljs-keyword">if</span> (node.nodeType == <span class="hljs-number">3</span>) {
+      <span class="hljs-keyword">var</span> val = node.nodeValue;
+      <span class="hljs-keyword">var</span> pos = val.toLowerCase().indexOf(text);
+      <span class="hljs-keyword">if</span> (pos &gt;= <span class="hljs-number">0</span> &amp;&amp; !jQuery(node.parentNode).hasClass(className)) {
+        <span class="hljs-keyword">var</span> span = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">"span"</span>);
+        span.className = className;
+        span.appendChild(<span class="hljs-built_in">document</span>.createTextNode(val.substr(pos, text.length)));
+        node.parentNode.insertBefore(span, node.parentNode.insertBefore(
+          <span class="hljs-built_in">document</span>.createTextNode(val.substr(pos + text.length)),
+          node.nextSibling));
+        node.nodeValue = val.substr(<span class="hljs-number">0</span>, pos);
+      }
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!jQuery(node).is(<span class="hljs-string">"button, select, textarea"</span>)) {
+      jQuery.each(node.childNodes, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        highlight(<span class="hljs-keyword">this</span>);
+      });
+    }
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    highlight(<span class="hljs-keyword">this</span>);
+  });
+};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>backward compatibility for jQuery.browser
+This will be supported until firefox bug is fixed.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">if</span> (!jQuery.browser) {
+  jQuery.uaMatch = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ua</span>) </span>{
+    ua = ua.toLowerCase();
+
+    <span class="hljs-keyword">var</span> match = <span class="hljs-regexp">/(chrome)[ \/]([\w.]+)/</span>.exec(ua) ||
+      <span class="hljs-regexp">/(webkit)[ \/]([\w.]+)/</span>.exec(ua) ||
+      <span class="hljs-regexp">/(opera)(?:.*version|)[ \/]([\w.]+)/</span>.exec(ua) ||
+      <span class="hljs-regexp">/(msie) ([\w.]+)/</span>.exec(ua) ||
+      ua.indexOf(<span class="hljs-string">"compatible"</span>) &lt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-regexp">/(mozilla)(?:.*? rv:([\w.]+)|)/</span>.exec(ua) ||
+      [];
+
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">browser</span>: match[ <span class="hljs-number">1</span> ] || <span class="hljs-string">""</span>,
+      <span class="hljs-attr">version</span>: match[ <span class="hljs-number">2</span> ] || <span class="hljs-string">"0"</span>
+    };
+  };
+  jQuery.browser = {};
+  jQuery.browser[jQuery.uaMatch(navigator.userAgent).browser] = <span class="hljs-literal">true</span>;
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Small JavaScript module for the documentation.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> Documentation = {
+
+  <span class="hljs-attr">init</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">this</span>.fixFirefoxAnchorBug();
+    <span class="hljs-keyword">this</span>.highlightSearchWords();
+    <span class="hljs-keyword">this</span>.initIndexTable();
+    
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>i18n support</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  TRANSLATIONS : {},
+  <span class="hljs-attr">PLURAL_EXPR</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>) </span>{ <span class="hljs-keyword">return</span> n == <span class="hljs-number">1</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>; },
+  <span class="hljs-attr">LOCALE</span> : <span class="hljs-string">'unknown'</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>gettext and ngettext don't access this so that the functions
+can safely bound to a different name (_ = Documentation.gettext)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  gettext : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">string</span>) </span>{
+    <span class="hljs-keyword">var</span> translated = Documentation.TRANSLATIONS[string];
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> translated == <span class="hljs-string">'undefined'</span>)
+      <span class="hljs-keyword">return</span> string;
+    <span class="hljs-keyword">return</span> (<span class="hljs-keyword">typeof</span> translated == <span class="hljs-string">'string'</span>) ? translated : translated[<span class="hljs-number">0</span>];
+  },
+
+  <span class="hljs-attr">ngettext</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">singular, plural, n</span>) </span>{
+    <span class="hljs-keyword">var</span> translated = Documentation.TRANSLATIONS[singular];
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> translated == <span class="hljs-string">'undefined'</span>)
+      <span class="hljs-keyword">return</span> (n == <span class="hljs-number">1</span>) ? singular : plural;
+    <span class="hljs-keyword">return</span> translated[Documentation.PLURALEXPR(n)];
+  },
+
+  <span class="hljs-attr">addTranslations</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">catalog</span>) </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> catalog.messages)
+      <span class="hljs-keyword">this</span>.TRANSLATIONS[key] = catalog.messages[key];
+    <span class="hljs-keyword">this</span>.PLURAL_EXPR = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span>(<span class="hljs-string">'n'</span>, <span class="hljs-string">'return +('</span> + catalog.plural_expr + <span class="hljs-string">')'</span>);
+    <span class="hljs-keyword">this</span>.LOCALE = catalog.locale;
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>add context elements like header anchor links</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  addContextElements : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-string">'div[id] &gt; :header:first'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      $(<span class="hljs-string">'&lt;a class="headerlink"&gt;\u00B6&lt;/a&gt;'</span>).
+      attr(<span class="hljs-string">'href'</span>, <span class="hljs-string">'#'</span> + <span class="hljs-keyword">this</span>.id).
+      attr(<span class="hljs-string">'title'</span>, _(<span class="hljs-string">'Permalink to this headline'</span>)).
+      appendTo(<span class="hljs-keyword">this</span>);
+    });
+    $(<span class="hljs-string">'dt[id]'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      $(<span class="hljs-string">'&lt;a class="headerlink"&gt;\u00B6&lt;/a&gt;'</span>).
+      attr(<span class="hljs-string">'href'</span>, <span class="hljs-string">'#'</span> + <span class="hljs-keyword">this</span>.id).
+      attr(<span class="hljs-string">'title'</span>, _(<span class="hljs-string">'Permalink to this definition'</span>)).
+      appendTo(<span class="hljs-keyword">this</span>);
+    });
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>workaround a firefox stupidity
+see: https://bugzilla.mozilla.org/show_bug.cgi?id=645075</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  fixFirefoxAnchorBug : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.location.hash)
+      <span class="hljs-built_in">window</span>.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-built_in">document</span>.location.href += <span class="hljs-string">''</span>;
+      }, <span class="hljs-number">10</span>);
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>highlight the search words provided in the url in the text</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  highlightSearchWords : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> params = $.getQueryParameters();
+    <span class="hljs-keyword">var</span> terms = (params.highlight) ? params.highlight[<span class="hljs-number">0</span>].split(<span class="hljs-regexp">/\s+/</span>) : [];
+    <span class="hljs-keyword">if</span> (terms.length) {
+      <span class="hljs-keyword">var</span> body = $(<span class="hljs-string">'div.body'</span>);
+      <span class="hljs-keyword">if</span> (!body.length) {
+        body = $(<span class="hljs-string">'body'</span>);
+      }
+      <span class="hljs-built_in">window</span>.setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        $.each(terms, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          body.highlightText(<span class="hljs-keyword">this</span>.toLowerCase(), <span class="hljs-string">'highlighted'</span>);
+        });
+      }, <span class="hljs-number">10</span>);
+      $(<span class="hljs-string">'&lt;p class="highlight-link"&gt;&lt;a href="javascript:Documentation.'</span> +
+        <span class="hljs-string">'hideSearchWords()"&gt;'</span> + _(<span class="hljs-string">'Hide Search Matches'</span>) + <span class="hljs-string">'&lt;/a&gt;&lt;/p&gt;'</span>)
+          .appendTo($(<span class="hljs-string">'#searchbox'</span>));
+    }
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>init the domain index toggle buttons</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  initIndexTable : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> togglers = $(<span class="hljs-string">'img.toggler'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> src = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>);
+      <span class="hljs-keyword">var</span> idnum = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substr(<span class="hljs-number">7</span>);
+      $(<span class="hljs-string">'tr.cg-'</span> + idnum).toggle();
+      <span class="hljs-keyword">if</span> (src.substr(<span class="hljs-number">-9</span>) == <span class="hljs-string">'minus.png'</span>)
+        $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src.substr(<span class="hljs-number">0</span>, src.length<span class="hljs-number">-9</span>) + <span class="hljs-string">'plus.png'</span>);
+      <span class="hljs-keyword">else</span>
+        $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'src'</span>, src.substr(<span class="hljs-number">0</span>, src.length<span class="hljs-number">-8</span>) + <span class="hljs-string">'minus.png'</span>);
+    }).css(<span class="hljs-string">'display'</span>, <span class="hljs-string">''</span>);
+    <span class="hljs-keyword">if</span> (DOCUMENTATION_OPTIONS.COLLAPSE_INDEX) {
+        togglers.click();
+    }
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>helper function to hide the search marks again</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  hideSearchWords : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-string">'#searchbox .highlight-link'</span>).fadeOut(<span class="hljs-number">300</span>);
+    $(<span class="hljs-string">'span.highlighted'</span>).removeClass(<span class="hljs-string">'highlighted'</span>);
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>make the url absolute</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  makeURL : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">relativeURL</span>) </span>{
+    <span class="hljs-keyword">return</span> DOCUMENTATION_OPTIONS.URL_ROOT + <span class="hljs-string">'/'</span> + relativeURL;
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>get the current relative url</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  getCurrentURL : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> path = <span class="hljs-built_in">document</span>.location.pathname;
+    <span class="hljs-keyword">var</span> parts = path.split(<span class="hljs-regexp">/\//</span>);
+    $.each(DOCUMENTATION_OPTIONS.URL_ROOT.split(<span class="hljs-regexp">/\//</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == <span class="hljs-string">'..'</span>)
+        parts.pop();
+    });
+    <span class="hljs-keyword">var</span> url = parts.join(<span class="hljs-string">'/'</span>);
+    <span class="hljs-keyword">return</span> path.substring(url.lastIndexOf(<span class="hljs-string">'/'</span>) + <span class="hljs-number">1</span>, path.length - <span class="hljs-number">1</span>);
+  },
+
+  <span class="hljs-attr">initOnKeyListeners</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-built_in">document</span>).keyup(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      <span class="hljs-keyword">var</span> activeElementType = <span class="hljs-built_in">document</span>.activeElement.tagName;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<p>don't navigate when in search box or textarea</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (activeElementType !== <span class="hljs-string">'TEXTAREA'</span> &amp;&amp; activeElementType !== <span class="hljs-string">'INPUT'</span> &amp;&amp; activeElementType !== <span class="hljs-string">'SELECT'</span>) {
+        <span class="hljs-keyword">switch</span> (event.keyCode) {
+          <span class="hljs-keyword">case</span> <span class="hljs-number">37</span>: <span class="hljs-comment">// left</span>
+            <span class="hljs-keyword">var</span> prevHref = $(<span class="hljs-string">'link[rel="prev"]'</span>).prop(<span class="hljs-string">'href'</span>);
+            <span class="hljs-keyword">if</span> (prevHref) {
+              <span class="hljs-built_in">window</span>.location.href = prevHref;
+              <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+          <span class="hljs-keyword">case</span> <span class="hljs-number">39</span>: <span class="hljs-comment">// right</span>
+            <span class="hljs-keyword">var</span> nextHref = $(<span class="hljs-string">'link[rel="next"]'</span>).prop(<span class="hljs-string">'href'</span>);
+            <span class="hljs-keyword">if</span> (nextHref) {
+              <span class="hljs-built_in">window</span>.location.href = nextHref;
+              <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+        }
+      }
+    });
+  }
+};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>quick alias for translations</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">_ = Documentation.gettext;
+
+$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  Documentation.init();
+});
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

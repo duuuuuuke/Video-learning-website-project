@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Detail.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\controllers\\Detail.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Detail.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Detail</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Controller</span>
+</span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+    </span>{
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/header'</span>);
+
+        $productId = <span class="hljs-keyword">$this</span>-&gt;input-&gt;get(<span class="hljs-string">'productId'</span>);
+        $query = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;fetch_id($productId);
+        $result = $query-&gt;result();
+        $product_username = <span class="hljs-string">''</span>;
+        $title = <span class="hljs-string">''</span>;
+        $description = <span class="hljs-string">''</span>;
+        $type = <span class="hljs-string">''</span>;
+        $path = <span class="hljs-string">''</span>;
+        $userid = <span class="hljs-string">''</span>;
+        $filename = <span class="hljs-string">''</span>;
+        <span class="hljs-keyword">foreach</span> ($result <span class="hljs-keyword">as</span> $row) {
+            $product_username = $row-&gt;username;
+            $title = $row-&gt;title;
+            $description = $row-&gt;description;
+            $type = $row-&gt;type;
+            $path = $row-&gt;path;
+            $userid = $row-&gt;userid;
+            $filename = $row-&gt;filename;
+        }
+
+        $data = <span class="hljs-keyword">array</span>(
+            <span class="hljs-string">'product_username'</span> =&gt; $product_username,
+            <span class="hljs-string">'title'</span> =&gt; $title,
+            <span class="hljs-string">'description'</span> =&gt; $description,
+            <span class="hljs-string">'type'</span> =&gt; $type,
+            <span class="hljs-string">'path'</span> =&gt; $path,
+            <span class="hljs-string">'userid'</span> =&gt; $userid,
+            <span class="hljs-string">'filename'</span> =&gt; $filename,
+            <span class="hljs-string">'productId'</span> =&gt; $productId
+        );
+
+        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'logged_in'</span>)) <span class="hljs-comment">//check if user already login</span>
+        {
+            <span class="hljs-keyword">if</span> (get_cookie(<span class="hljs-string">'remember'</span>)) { <span class="hljs-comment">// check if user activate the "remember me" feature  </span>
+                $username = get_cookie(<span class="hljs-string">'username'</span>); <span class="hljs-comment">//get the username from cookie</span>
+                $password = get_cookie(<span class="hljs-string">'password'</span>); <span class="hljs-comment">//get the username from cookie</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;user_model-&gt;login($username, $password)) <span class="hljs-comment">//check username and password correct</span>
+                {
+                    $user_data = <span class="hljs-keyword">array</span>(<span class="hljs-string">'username'</span> =&gt; $username, <span class="hljs-string">'logged_in'</span> =&gt; <span class="hljs-keyword">true</span>);
+                    <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data); <span class="hljs-comment">//set user status to login in session</span>
+                    <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'detail'</span>); <span class="hljs-comment">//if user already logined show detail page</span>
+                }
+            } <span class="hljs-keyword">else</span> {
+                redirect(base_url().<span class="hljs-string">'index.php?/login'</span>); <span class="hljs-comment">//if user already logined direct user to login page</span>
+            }
+        } <span class="hljs-keyword">else</span> {
+            $username = <span class="hljs-keyword">$this</span>-&gt;session-&gt;userdata(<span class="hljs-string">'username'</span>);
+
+            <span class="hljs-keyword">if</span> ($username != $product_username &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;product_model-&gt;is_bought($username, $title) == <span class="hljs-keyword">false</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>if the product in wishlist</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                $isAdded = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;isAdded($username, $title);
+                <span class="hljs-keyword">if</span> ($isAdded) {
+                    $data[<span class="hljs-string">'added'</span>] = <span class="hljs-keyword">true</span>;
+                } <span class="hljs-keyword">else</span> {
+                    $data[<span class="hljs-string">'added'</span>] = <span class="hljs-keyword">false</span>;
+                }
+                <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'pay'</span>, $data);
+            } <span class="hljs-keyword">else</span> {
+                $isLiked = <span class="hljs-keyword">$this</span>-&gt;product_model-&gt;getLike($productId, $username);
+                $data[<span class="hljs-string">'isLiked'</span>] = $isLiked;
+                $data[<span class="hljs-string">'likeCount'</span>] = <span class="hljs-keyword">$this</span>-&gt;product_model-&gt;getLikeCount($productId);
+
+                $allComments = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;getAllComments($productId);
+                $data[<span class="hljs-string">'allComments'</span>] = $allComments;
+                <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'detail'</span>, $data);
+            }
+        }
+        <span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/footer'</span>);
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">paid</span><span class="hljs-params">()</span>
+    </span>{
+        $username = <span class="hljs-keyword">$this</span>-&gt;input-&gt;get(<span class="hljs-string">'username'</span>);
+        $title = <span class="hljs-keyword">$this</span>-&gt;input-&gt;get(<span class="hljs-string">'title'</span>);
+        $productId = <span class="hljs-keyword">$this</span>-&gt;input-&gt;get(<span class="hljs-string">'productId'</span>);
+        $result = <span class="hljs-keyword">$this</span>-&gt;product_model-&gt;user_purchased($username, $title, $productId);
+        <span class="hljs-keyword">if</span> ($result != <span class="hljs-keyword">false</span>) {
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;file_model-&gt;isAdded($username, $title)) {
+                <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;delete($username, $title);
+            }
+            redirect(base_url() . <span class="hljs-string">'index.php?/detail?productId='</span> . $productId);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'paid_result'</span>, <span class="hljs-string">'Sorry, there are some error, please try again later!'</span>);
+        }
+    }
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getProductId</span><span class="hljs-params">()</span>
+    </span>{
+        $title = <span class="hljs-keyword">$this</span>-&gt;input-&gt;get(<span class="hljs-string">'title'</span>);
+        $id = <span class="hljs-keyword">$this</span>-&gt;file_model-&gt;fetchProductId($title);
+        <span class="hljs-keyword">foreach</span> ($id-&gt;result() <span class="hljs-keyword">as</span> $row) {
+            redirect(base_url().<span class="hljs-string">"index.php?/detail?productId="</span> . $row-&gt;id);
+        }
+    }
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>header.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../doc-style.css" />
+  <script src="../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../";
+    var thisFile = "src\\myapp\\application\\views\\template\\header.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>header.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;!-- &lt;!DOCTYPE html&gt; --&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+  &lt;title&gt;MyProject&lt;/title&gt;
+  &lt;link rel="stylesheet" type="text/css" href="&lt;?php echo base_url(); ?&gt;assets/css/bootstrap.css"&gt;
+  &lt;script src="&lt;?php echo base_url(); ?&gt;assets/js/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+  &lt;script src="&lt;?php echo base_url(); ?&gt;assets/js/bootstrap.js"&gt;&lt;/script&gt;
+  &lt;script src="https://www.google.com/recaptcha/api.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top"&gt;
+    &lt;a class="navbar-brand" href="#"&gt;My Project&lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+
+    &lt;div class="collapse navbar-collapse" id="navbarSupportedContent"&gt;
+      &lt;div class="navbar-nav ml-5"&gt;
+        &lt;a class="nav-item nav-link" href="&lt;?php echo base_url(); ?&gt;index.php?/"&gt;Home &lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class="navbar-nav my-lg-0 ml-auto mr-2"&gt;
+        &lt;?php if (!$this-&gt;session-&gt;userdata('logged_in')) : ?&gt;
+          &lt;a href="&lt;?php echo base_url(); ?&gt;index.php?/login" class="nav-item nav-link"&gt; Login &lt;/a&gt;
+        &lt;?php endif; ?&gt;
+        &lt;?php if ($this-&gt;session-&gt;userdata('logged_in')) : ?&gt;
+          &lt;a href="&lt;?php echo base_url(); ?&gt;index.php?/upload" class="nav-item nav-link"&gt; Upload &lt;/a&gt;
+        &lt;?php endif; ?&gt;
+        &lt;?php if ($this-&gt;session-&gt;userdata('logged_in')) : ?&gt;
+          &lt;a href="&lt;?php echo base_url(); ?&gt;index.php?/profile" class="nav-item nav-link"&gt; Profile &lt;/a&gt;
+        &lt;?php endif; ?&gt;
+        &lt;?php if ($this-&gt;session-&gt;userdata('logged_in')) : ?&gt;
+          &lt;a href="&lt;?php echo base_url(); ?&gt;index.php?/login/logout" class="nav-item nav-link"&gt; Logout &lt;/a&gt;
+        &lt;?php endif; ?&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+   
+
+
+  &lt;/nav&gt;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

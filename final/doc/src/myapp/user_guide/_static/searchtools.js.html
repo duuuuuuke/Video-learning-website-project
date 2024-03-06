@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>searchtools.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\user_guide\\_static\\searchtools.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>searchtools.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>searchtools.js_t</p>
+<pre><code></code></pre>
+</div>
+<div class="body">
+<p>Sphinx JavaScript utilities for the full-text search.</p>
+<p>:copyright: Copyright 2007-2017 by the Sphinx team, see AUTHORS.
+:license: BSD, see LICENSE for details.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+
+<span class="hljs-comment">/* Non-minified version JS is _stemmer.js if file is provided */</span> 
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Porter Stemmer</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> Stemmer = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+
+  <span class="hljs-keyword">var</span> step2list = {
+    <span class="hljs-attr">ational</span>: <span class="hljs-string">'ate'</span>,
+    <span class="hljs-attr">tional</span>: <span class="hljs-string">'tion'</span>,
+    <span class="hljs-attr">enci</span>: <span class="hljs-string">'ence'</span>,
+    <span class="hljs-attr">anci</span>: <span class="hljs-string">'ance'</span>,
+    <span class="hljs-attr">izer</span>: <span class="hljs-string">'ize'</span>,
+    <span class="hljs-attr">bli</span>: <span class="hljs-string">'ble'</span>,
+    <span class="hljs-attr">alli</span>: <span class="hljs-string">'al'</span>,
+    <span class="hljs-attr">entli</span>: <span class="hljs-string">'ent'</span>,
+    <span class="hljs-attr">eli</span>: <span class="hljs-string">'e'</span>,
+    <span class="hljs-attr">ousli</span>: <span class="hljs-string">'ous'</span>,
+    <span class="hljs-attr">ization</span>: <span class="hljs-string">'ize'</span>,
+    <span class="hljs-attr">ation</span>: <span class="hljs-string">'ate'</span>,
+    <span class="hljs-attr">ator</span>: <span class="hljs-string">'ate'</span>,
+    <span class="hljs-attr">alism</span>: <span class="hljs-string">'al'</span>,
+    <span class="hljs-attr">iveness</span>: <span class="hljs-string">'ive'</span>,
+    <span class="hljs-attr">fulness</span>: <span class="hljs-string">'ful'</span>,
+    <span class="hljs-attr">ousness</span>: <span class="hljs-string">'ous'</span>,
+    <span class="hljs-attr">aliti</span>: <span class="hljs-string">'al'</span>,
+    <span class="hljs-attr">iviti</span>: <span class="hljs-string">'ive'</span>,
+    <span class="hljs-attr">biliti</span>: <span class="hljs-string">'ble'</span>,
+    <span class="hljs-attr">logi</span>: <span class="hljs-string">'log'</span>
+  };
+
+  <span class="hljs-keyword">var</span> step3list = {
+    <span class="hljs-attr">icate</span>: <span class="hljs-string">'ic'</span>,
+    <span class="hljs-attr">ative</span>: <span class="hljs-string">''</span>,
+    <span class="hljs-attr">alize</span>: <span class="hljs-string">'al'</span>,
+    <span class="hljs-attr">iciti</span>: <span class="hljs-string">'ic'</span>,
+    <span class="hljs-attr">ical</span>: <span class="hljs-string">'ic'</span>,
+    <span class="hljs-attr">ful</span>: <span class="hljs-string">''</span>,
+    <span class="hljs-attr">ness</span>: <span class="hljs-string">''</span>
+  };
+
+  <span class="hljs-keyword">var</span> c = <span class="hljs-string">"[^aeiou]"</span>;          <span class="hljs-comment">// consonant</span>
+  <span class="hljs-keyword">var</span> v = <span class="hljs-string">"[aeiouy]"</span>;          <span class="hljs-comment">// vowel</span>
+  <span class="hljs-keyword">var</span> C = c + <span class="hljs-string">"[^aeiouy]*"</span>;    <span class="hljs-comment">// consonant sequence</span>
+  <span class="hljs-keyword">var</span> V = v + <span class="hljs-string">"[aeiou]*"</span>;      <span class="hljs-comment">// vowel sequence</span>
+
+  <span class="hljs-keyword">var</span> mgr0 = <span class="hljs-string">"^("</span> + C + <span class="hljs-string">")?"</span> + V + C;                      <span class="hljs-comment">// [C]VC... is m&gt;0</span>
+  <span class="hljs-keyword">var</span> meq1 = <span class="hljs-string">"^("</span> + C + <span class="hljs-string">")?"</span> + V + C + <span class="hljs-string">"("</span> + V + <span class="hljs-string">")?$"</span>;    <span class="hljs-comment">// [C]VC[V] is m=1</span>
+  <span class="hljs-keyword">var</span> mgr1 = <span class="hljs-string">"^("</span> + C + <span class="hljs-string">")?"</span> + V + C + V + C;              <span class="hljs-comment">// [C]VCVC... is m&gt;1</span>
+  <span class="hljs-keyword">var</span> s_v   = <span class="hljs-string">"^("</span> + C + <span class="hljs-string">")?"</span> + v;                         <span class="hljs-comment">// vowel in stem</span>
+
+  <span class="hljs-keyword">this</span>.stemWord = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">w</span>) </span>{
+    <span class="hljs-keyword">var</span> stem;
+    <span class="hljs-keyword">var</span> suffix;
+    <span class="hljs-keyword">var</span> firstch;
+    <span class="hljs-keyword">var</span> origword = w;
+
+    <span class="hljs-keyword">if</span> (w.length &lt; <span class="hljs-number">3</span>)
+      <span class="hljs-keyword">return</span> w;
+
+    <span class="hljs-keyword">var</span> re;
+    <span class="hljs-keyword">var</span> re2;
+    <span class="hljs-keyword">var</span> re3;
+    <span class="hljs-keyword">var</span> re4;
+
+    firstch = w.substr(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">if</span> (firstch == <span class="hljs-string">"y"</span>)
+      w = firstch.toUpperCase() + w.substr(<span class="hljs-number">1</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Step 1a</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    re = <span class="hljs-regexp">/^(.+?)(ss|i)es$/</span>;
+    re2 = <span class="hljs-regexp">/^(.+?)([^s])s$/</span>;
+
+    <span class="hljs-keyword">if</span> (re.test(w))
+      w = w.replace(re,<span class="hljs-string">"$1$2"</span>);
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (re2.test(w))
+      w = w.replace(re2,<span class="hljs-string">"$1$2"</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Step 1b</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    re = <span class="hljs-regexp">/^(.+?)eed$/</span>;
+    re2 = <span class="hljs-regexp">/^(.+?)(ed|ing)$/</span>;
+    <span class="hljs-keyword">if</span> (re.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re.exec(w);
+      re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(mgr0);
+      <span class="hljs-keyword">if</span> (re.test(fp[<span class="hljs-number">1</span>])) {
+        re = <span class="hljs-regexp">/.$/</span>;
+        w = w.replace(re,<span class="hljs-string">""</span>);
+      }
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (re2.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re2.exec(w);
+      stem = fp[<span class="hljs-number">1</span>];
+      re2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(s_v);
+      <span class="hljs-keyword">if</span> (re2.test(stem)) {
+        w = stem;
+        re2 = <span class="hljs-regexp">/(at|bl|iz)$/</span>;
+        re3 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">"([^aeiouylsz])\\1$"</span>);
+        re4 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">"^"</span> + C + v + <span class="hljs-string">"[^aeiouwxy]$"</span>);
+        <span class="hljs-keyword">if</span> (re2.test(w))
+          w = w + <span class="hljs-string">"e"</span>;
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (re3.test(w)) {
+          re = <span class="hljs-regexp">/.$/</span>;
+          w = w.replace(re,<span class="hljs-string">""</span>);
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (re4.test(w))
+          w = w + <span class="hljs-string">"e"</span>;
+      }
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Step 1c</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    re = <span class="hljs-regexp">/^(.+?)y$/</span>;
+    <span class="hljs-keyword">if</span> (re.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re.exec(w);
+      stem = fp[<span class="hljs-number">1</span>];
+      re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(s_v);
+      <span class="hljs-keyword">if</span> (re.test(stem))
+        w = stem + <span class="hljs-string">"i"</span>;
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Step 2</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    re = <span class="hljs-regexp">/^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/</span>;
+    <span class="hljs-keyword">if</span> (re.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re.exec(w);
+      stem = fp[<span class="hljs-number">1</span>];
+      suffix = fp[<span class="hljs-number">2</span>];
+      re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(mgr0);
+      <span class="hljs-keyword">if</span> (re.test(stem))
+        w = stem + step2list[suffix];
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Step 3</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    re = <span class="hljs-regexp">/^(.+?)(icate|ative|alize|iciti|ical|ful|ness)$/</span>;
+    <span class="hljs-keyword">if</span> (re.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re.exec(w);
+      stem = fp[<span class="hljs-number">1</span>];
+      suffix = fp[<span class="hljs-number">2</span>];
+      re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(mgr0);
+      <span class="hljs-keyword">if</span> (re.test(stem))
+        w = stem + step3list[suffix];
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Step 4</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    re = <span class="hljs-regexp">/^(.+?)(al|ance|ence|er|ic|able|ible|ant|ement|ment|ent|ou|ism|ate|iti|ous|ive|ize)$/</span>;
+    re2 = <span class="hljs-regexp">/^(.+?)(s|t)(ion)$/</span>;
+    <span class="hljs-keyword">if</span> (re.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re.exec(w);
+      stem = fp[<span class="hljs-number">1</span>];
+      re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(mgr1);
+      <span class="hljs-keyword">if</span> (re.test(stem))
+        w = stem;
+    }
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (re2.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re2.exec(w);
+      stem = fp[<span class="hljs-number">1</span>] + fp[<span class="hljs-number">2</span>];
+      re2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(mgr1);
+      <span class="hljs-keyword">if</span> (re2.test(stem))
+        w = stem;
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Step 5</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    re = <span class="hljs-regexp">/^(.+?)e$/</span>;
+    <span class="hljs-keyword">if</span> (re.test(w)) {
+      <span class="hljs-keyword">var</span> fp = re.exec(w);
+      stem = fp[<span class="hljs-number">1</span>];
+      re = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(mgr1);
+      re2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(meq1);
+      re3 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">"^"</span> + C + v + <span class="hljs-string">"[^aeiouwxy]$"</span>);
+      <span class="hljs-keyword">if</span> (re.test(stem) || (re2.test(stem) &amp;&amp; !(re3.test(stem))))
+        w = stem;
+    }
+    re = <span class="hljs-regexp">/ll$/</span>;
+    re2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(mgr1);
+    <span class="hljs-keyword">if</span> (re.test(w) &amp;&amp; re2.test(w)) {
+      re = <span class="hljs-regexp">/.$/</span>;
+      w = w.replace(re,<span class="hljs-string">""</span>);
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>and turn initial Y back to y</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (firstch == <span class="hljs-string">"y"</span>)
+      w = firstch.toLowerCase() + w.substr(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">return</span> w;
+  }
+}
+
+
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Simple result scoring code.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> Scorer = {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>Implement the following function to further tweak the score for each result
+The function takes a result array [filename, title, anchor, descr, score]
+and returns the new score.</p>
+<div class="dox">
+<div class="summary">
+<p>score: function(result) {
+return result[4];
+},</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>query matches the full name of an object</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  objNameMatch: <span class="hljs-number">11</span>,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>or matches in the last dotted part of the object name</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  objPartialMatch: <span class="hljs-number">6</span>,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Additive scores depending on the priority of the object</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  objPrio: {<span class="hljs-number">0</span>:  <span class="hljs-number">15</span>,   <span class="hljs-comment">// used to be importantResults</span>
+            <span class="hljs-number">1</span>:  <span class="hljs-number">5</span>,   <span class="hljs-comment">// used to be objectResults</span>
+            <span class="hljs-number">2</span>: <span class="hljs-number">-5</span>},  <span class="hljs-comment">// used to be unimportantResults</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Used when the priority is not in the mapping.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  objPrioDefault: <span class="hljs-number">0</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>query found in title</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  title: <span class="hljs-number">15</span>,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>query found in terms</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  term: <span class="hljs-number">5</span>
+};
+
+
+
+
+
+<span class="hljs-keyword">var</span> splitChars = (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> result = {};
+    <span class="hljs-keyword">var</span> singles = [<span class="hljs-number">96</span>, <span class="hljs-number">180</span>, <span class="hljs-number">187</span>, <span class="hljs-number">191</span>, <span class="hljs-number">215</span>, <span class="hljs-number">247</span>, <span class="hljs-number">749</span>, <span class="hljs-number">885</span>, <span class="hljs-number">903</span>, <span class="hljs-number">907</span>, <span class="hljs-number">909</span>, <span class="hljs-number">930</span>, <span class="hljs-number">1014</span>, <span class="hljs-number">1648</span>,
+         <span class="hljs-number">1748</span>, <span class="hljs-number">1809</span>, <span class="hljs-number">2416</span>, <span class="hljs-number">2473</span>, <span class="hljs-number">2481</span>, <span class="hljs-number">2526</span>, <span class="hljs-number">2601</span>, <span class="hljs-number">2609</span>, <span class="hljs-number">2612</span>, <span class="hljs-number">2615</span>, <span class="hljs-number">2653</span>, <span class="hljs-number">2702</span>,
+         <span class="hljs-number">2706</span>, <span class="hljs-number">2729</span>, <span class="hljs-number">2737</span>, <span class="hljs-number">2740</span>, <span class="hljs-number">2857</span>, <span class="hljs-number">2865</span>, <span class="hljs-number">2868</span>, <span class="hljs-number">2910</span>, <span class="hljs-number">2928</span>, <span class="hljs-number">2948</span>, <span class="hljs-number">2961</span>, <span class="hljs-number">2971</span>,
+         <span class="hljs-number">2973</span>, <span class="hljs-number">3085</span>, <span class="hljs-number">3089</span>, <span class="hljs-number">3113</span>, <span class="hljs-number">3124</span>, <span class="hljs-number">3213</span>, <span class="hljs-number">3217</span>, <span class="hljs-number">3241</span>, <span class="hljs-number">3252</span>, <span class="hljs-number">3295</span>, <span class="hljs-number">3341</span>, <span class="hljs-number">3345</span>,
+         <span class="hljs-number">3369</span>, <span class="hljs-number">3506</span>, <span class="hljs-number">3516</span>, <span class="hljs-number">3633</span>, <span class="hljs-number">3715</span>, <span class="hljs-number">3721</span>, <span class="hljs-number">3736</span>, <span class="hljs-number">3744</span>, <span class="hljs-number">3748</span>, <span class="hljs-number">3750</span>, <span class="hljs-number">3756</span>, <span class="hljs-number">3761</span>,
+         <span class="hljs-number">3781</span>, <span class="hljs-number">3912</span>, <span class="hljs-number">4239</span>, <span class="hljs-number">4347</span>, <span class="hljs-number">4681</span>, <span class="hljs-number">4695</span>, <span class="hljs-number">4697</span>, <span class="hljs-number">4745</span>, <span class="hljs-number">4785</span>, <span class="hljs-number">4799</span>, <span class="hljs-number">4801</span>, <span class="hljs-number">4823</span>,
+         <span class="hljs-number">4881</span>, <span class="hljs-number">5760</span>, <span class="hljs-number">5901</span>, <span class="hljs-number">5997</span>, <span class="hljs-number">6313</span>, <span class="hljs-number">7405</span>, <span class="hljs-number">8024</span>, <span class="hljs-number">8026</span>, <span class="hljs-number">8028</span>, <span class="hljs-number">8030</span>, <span class="hljs-number">8117</span>, <span class="hljs-number">8125</span>,
+         <span class="hljs-number">8133</span>, <span class="hljs-number">8181</span>, <span class="hljs-number">8468</span>, <span class="hljs-number">8485</span>, <span class="hljs-number">8487</span>, <span class="hljs-number">8489</span>, <span class="hljs-number">8494</span>, <span class="hljs-number">8527</span>, <span class="hljs-number">11311</span>, <span class="hljs-number">11359</span>, <span class="hljs-number">11687</span>, <span class="hljs-number">11695</span>,
+         <span class="hljs-number">11703</span>, <span class="hljs-number">11711</span>, <span class="hljs-number">11719</span>, <span class="hljs-number">11727</span>, <span class="hljs-number">11735</span>, <span class="hljs-number">12448</span>, <span class="hljs-number">12539</span>, <span class="hljs-number">43010</span>, <span class="hljs-number">43014</span>, <span class="hljs-number">43019</span>, <span class="hljs-number">43587</span>,
+         <span class="hljs-number">43696</span>, <span class="hljs-number">43713</span>, <span class="hljs-number">64286</span>, <span class="hljs-number">64297</span>, <span class="hljs-number">64311</span>, <span class="hljs-number">64317</span>, <span class="hljs-number">64319</span>, <span class="hljs-number">64322</span>, <span class="hljs-number">64325</span>, <span class="hljs-number">65141</span>];
+    <span class="hljs-keyword">var</span> i, j, start, end;
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; singles.length; i++) {
+        result[singles[i]] = <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-keyword">var</span> ranges = [[<span class="hljs-number">0</span>, <span class="hljs-number">47</span>], [<span class="hljs-number">58</span>, <span class="hljs-number">64</span>], [<span class="hljs-number">91</span>, <span class="hljs-number">94</span>], [<span class="hljs-number">123</span>, <span class="hljs-number">169</span>], [<span class="hljs-number">171</span>, <span class="hljs-number">177</span>], [<span class="hljs-number">182</span>, <span class="hljs-number">184</span>], [<span class="hljs-number">706</span>, <span class="hljs-number">709</span>],
+         [<span class="hljs-number">722</span>, <span class="hljs-number">735</span>], [<span class="hljs-number">741</span>, <span class="hljs-number">747</span>], [<span class="hljs-number">751</span>, <span class="hljs-number">879</span>], [<span class="hljs-number">888</span>, <span class="hljs-number">889</span>], [<span class="hljs-number">894</span>, <span class="hljs-number">901</span>], [<span class="hljs-number">1154</span>, <span class="hljs-number">1161</span>],
+         [<span class="hljs-number">1318</span>, <span class="hljs-number">1328</span>], [<span class="hljs-number">1367</span>, <span class="hljs-number">1368</span>], [<span class="hljs-number">1370</span>, <span class="hljs-number">1376</span>], [<span class="hljs-number">1416</span>, <span class="hljs-number">1487</span>], [<span class="hljs-number">1515</span>, <span class="hljs-number">1519</span>], [<span class="hljs-number">1523</span>, <span class="hljs-number">1568</span>],
+         [<span class="hljs-number">1611</span>, <span class="hljs-number">1631</span>], [<span class="hljs-number">1642</span>, <span class="hljs-number">1645</span>], [<span class="hljs-number">1750</span>, <span class="hljs-number">1764</span>], [<span class="hljs-number">1767</span>, <span class="hljs-number">1773</span>], [<span class="hljs-number">1789</span>, <span class="hljs-number">1790</span>], [<span class="hljs-number">1792</span>, <span class="hljs-number">1807</span>],
+         [<span class="hljs-number">1840</span>, <span class="hljs-number">1868</span>], [<span class="hljs-number">1958</span>, <span class="hljs-number">1968</span>], [<span class="hljs-number">1970</span>, <span class="hljs-number">1983</span>], [<span class="hljs-number">2027</span>, <span class="hljs-number">2035</span>], [<span class="hljs-number">2038</span>, <span class="hljs-number">2041</span>], [<span class="hljs-number">2043</span>, <span class="hljs-number">2047</span>],
+         [<span class="hljs-number">2070</span>, <span class="hljs-number">2073</span>], [<span class="hljs-number">2075</span>, <span class="hljs-number">2083</span>], [<span class="hljs-number">2085</span>, <span class="hljs-number">2087</span>], [<span class="hljs-number">2089</span>, <span class="hljs-number">2307</span>], [<span class="hljs-number">2362</span>, <span class="hljs-number">2364</span>], [<span class="hljs-number">2366</span>, <span class="hljs-number">2383</span>],
+         [<span class="hljs-number">2385</span>, <span class="hljs-number">2391</span>], [<span class="hljs-number">2402</span>, <span class="hljs-number">2405</span>], [<span class="hljs-number">2419</span>, <span class="hljs-number">2424</span>], [<span class="hljs-number">2432</span>, <span class="hljs-number">2436</span>], [<span class="hljs-number">2445</span>, <span class="hljs-number">2446</span>], [<span class="hljs-number">2449</span>, <span class="hljs-number">2450</span>],
+         [<span class="hljs-number">2483</span>, <span class="hljs-number">2485</span>], [<span class="hljs-number">2490</span>, <span class="hljs-number">2492</span>], [<span class="hljs-number">2494</span>, <span class="hljs-number">2509</span>], [<span class="hljs-number">2511</span>, <span class="hljs-number">2523</span>], [<span class="hljs-number">2530</span>, <span class="hljs-number">2533</span>], [<span class="hljs-number">2546</span>, <span class="hljs-number">2547</span>],
+         [<span class="hljs-number">2554</span>, <span class="hljs-number">2564</span>], [<span class="hljs-number">2571</span>, <span class="hljs-number">2574</span>], [<span class="hljs-number">2577</span>, <span class="hljs-number">2578</span>], [<span class="hljs-number">2618</span>, <span class="hljs-number">2648</span>], [<span class="hljs-number">2655</span>, <span class="hljs-number">2661</span>], [<span class="hljs-number">2672</span>, <span class="hljs-number">2673</span>],
+         [<span class="hljs-number">2677</span>, <span class="hljs-number">2692</span>], [<span class="hljs-number">2746</span>, <span class="hljs-number">2748</span>], [<span class="hljs-number">2750</span>, <span class="hljs-number">2767</span>], [<span class="hljs-number">2769</span>, <span class="hljs-number">2783</span>], [<span class="hljs-number">2786</span>, <span class="hljs-number">2789</span>], [<span class="hljs-number">2800</span>, <span class="hljs-number">2820</span>],
+         [<span class="hljs-number">2829</span>, <span class="hljs-number">2830</span>], [<span class="hljs-number">2833</span>, <span class="hljs-number">2834</span>], [<span class="hljs-number">2874</span>, <span class="hljs-number">2876</span>], [<span class="hljs-number">2878</span>, <span class="hljs-number">2907</span>], [<span class="hljs-number">2914</span>, <span class="hljs-number">2917</span>], [<span class="hljs-number">2930</span>, <span class="hljs-number">2946</span>],
+         [<span class="hljs-number">2955</span>, <span class="hljs-number">2957</span>], [<span class="hljs-number">2966</span>, <span class="hljs-number">2968</span>], [<span class="hljs-number">2976</span>, <span class="hljs-number">2978</span>], [<span class="hljs-number">2981</span>, <span class="hljs-number">2983</span>], [<span class="hljs-number">2987</span>, <span class="hljs-number">2989</span>], [<span class="hljs-number">3002</span>, <span class="hljs-number">3023</span>],
+         [<span class="hljs-number">3025</span>, <span class="hljs-number">3045</span>], [<span class="hljs-number">3059</span>, <span class="hljs-number">3076</span>], [<span class="hljs-number">3130</span>, <span class="hljs-number">3132</span>], [<span class="hljs-number">3134</span>, <span class="hljs-number">3159</span>], [<span class="hljs-number">3162</span>, <span class="hljs-number">3167</span>], [<span class="hljs-number">3170</span>, <span class="hljs-number">3173</span>],
+         [<span class="hljs-number">3184</span>, <span class="hljs-number">3191</span>], [<span class="hljs-number">3199</span>, <span class="hljs-number">3204</span>], [<span class="hljs-number">3258</span>, <span class="hljs-number">3260</span>], [<span class="hljs-number">3262</span>, <span class="hljs-number">3293</span>], [<span class="hljs-number">3298</span>, <span class="hljs-number">3301</span>], [<span class="hljs-number">3312</span>, <span class="hljs-number">3332</span>],
+         [<span class="hljs-number">3386</span>, <span class="hljs-number">3388</span>], [<span class="hljs-number">3390</span>, <span class="hljs-number">3423</span>], [<span class="hljs-number">3426</span>, <span class="hljs-number">3429</span>], [<span class="hljs-number">3446</span>, <span class="hljs-number">3449</span>], [<span class="hljs-number">3456</span>, <span class="hljs-number">3460</span>], [<span class="hljs-number">3479</span>, <span class="hljs-number">3481</span>],
+         [<span class="hljs-number">3518</span>, <span class="hljs-number">3519</span>], [<span class="hljs-number">3527</span>, <span class="hljs-number">3584</span>], [<span class="hljs-number">3636</span>, <span class="hljs-number">3647</span>], [<span class="hljs-number">3655</span>, <span class="hljs-number">3663</span>], [<span class="hljs-number">3674</span>, <span class="hljs-number">3712</span>], [<span class="hljs-number">3717</span>, <span class="hljs-number">3718</span>],
+         [<span class="hljs-number">3723</span>, <span class="hljs-number">3724</span>], [<span class="hljs-number">3726</span>, <span class="hljs-number">3731</span>], [<span class="hljs-number">3752</span>, <span class="hljs-number">3753</span>], [<span class="hljs-number">3764</span>, <span class="hljs-number">3772</span>], [<span class="hljs-number">3774</span>, <span class="hljs-number">3775</span>], [<span class="hljs-number">3783</span>, <span class="hljs-number">3791</span>],
+         [<span class="hljs-number">3802</span>, <span class="hljs-number">3803</span>], [<span class="hljs-number">3806</span>, <span class="hljs-number">3839</span>], [<span class="hljs-number">3841</span>, <span class="hljs-number">3871</span>], [<span class="hljs-number">3892</span>, <span class="hljs-number">3903</span>], [<span class="hljs-number">3949</span>, <span class="hljs-number">3975</span>], [<span class="hljs-number">3980</span>, <span class="hljs-number">4095</span>],
+         [<span class="hljs-number">4139</span>, <span class="hljs-number">4158</span>], [<span class="hljs-number">4170</span>, <span class="hljs-number">4175</span>], [<span class="hljs-number">4182</span>, <span class="hljs-number">4185</span>], [<span class="hljs-number">4190</span>, <span class="hljs-number">4192</span>], [<span class="hljs-number">4194</span>, <span class="hljs-number">4196</span>], [<span class="hljs-number">4199</span>, <span class="hljs-number">4205</span>],
+         [<span class="hljs-number">4209</span>, <span class="hljs-number">4212</span>], [<span class="hljs-number">4226</span>, <span class="hljs-number">4237</span>], [<span class="hljs-number">4250</span>, <span class="hljs-number">4255</span>], [<span class="hljs-number">4294</span>, <span class="hljs-number">4303</span>], [<span class="hljs-number">4349</span>, <span class="hljs-number">4351</span>], [<span class="hljs-number">4686</span>, <span class="hljs-number">4687</span>],
+         [<span class="hljs-number">4702</span>, <span class="hljs-number">4703</span>], [<span class="hljs-number">4750</span>, <span class="hljs-number">4751</span>], [<span class="hljs-number">4790</span>, <span class="hljs-number">4791</span>], [<span class="hljs-number">4806</span>, <span class="hljs-number">4807</span>], [<span class="hljs-number">4886</span>, <span class="hljs-number">4887</span>], [<span class="hljs-number">4955</span>, <span class="hljs-number">4968</span>],
+         [<span class="hljs-number">4989</span>, <span class="hljs-number">4991</span>], [<span class="hljs-number">5008</span>, <span class="hljs-number">5023</span>], [<span class="hljs-number">5109</span>, <span class="hljs-number">5120</span>], [<span class="hljs-number">5741</span>, <span class="hljs-number">5742</span>], [<span class="hljs-number">5787</span>, <span class="hljs-number">5791</span>], [<span class="hljs-number">5867</span>, <span class="hljs-number">5869</span>],
+         [<span class="hljs-number">5873</span>, <span class="hljs-number">5887</span>], [<span class="hljs-number">5906</span>, <span class="hljs-number">5919</span>], [<span class="hljs-number">5938</span>, <span class="hljs-number">5951</span>], [<span class="hljs-number">5970</span>, <span class="hljs-number">5983</span>], [<span class="hljs-number">6001</span>, <span class="hljs-number">6015</span>], [<span class="hljs-number">6068</span>, <span class="hljs-number">6102</span>],
+         [<span class="hljs-number">6104</span>, <span class="hljs-number">6107</span>], [<span class="hljs-number">6109</span>, <span class="hljs-number">6111</span>], [<span class="hljs-number">6122</span>, <span class="hljs-number">6127</span>], [<span class="hljs-number">6138</span>, <span class="hljs-number">6159</span>], [<span class="hljs-number">6170</span>, <span class="hljs-number">6175</span>], [<span class="hljs-number">6264</span>, <span class="hljs-number">6271</span>],
+         [<span class="hljs-number">6315</span>, <span class="hljs-number">6319</span>], [<span class="hljs-number">6390</span>, <span class="hljs-number">6399</span>], [<span class="hljs-number">6429</span>, <span class="hljs-number">6469</span>], [<span class="hljs-number">6510</span>, <span class="hljs-number">6511</span>], [<span class="hljs-number">6517</span>, <span class="hljs-number">6527</span>], [<span class="hljs-number">6572</span>, <span class="hljs-number">6592</span>],
+         [<span class="hljs-number">6600</span>, <span class="hljs-number">6607</span>], [<span class="hljs-number">6619</span>, <span class="hljs-number">6655</span>], [<span class="hljs-number">6679</span>, <span class="hljs-number">6687</span>], [<span class="hljs-number">6741</span>, <span class="hljs-number">6783</span>], [<span class="hljs-number">6794</span>, <span class="hljs-number">6799</span>], [<span class="hljs-number">6810</span>, <span class="hljs-number">6822</span>],
+         [<span class="hljs-number">6824</span>, <span class="hljs-number">6916</span>], [<span class="hljs-number">6964</span>, <span class="hljs-number">6980</span>], [<span class="hljs-number">6988</span>, <span class="hljs-number">6991</span>], [<span class="hljs-number">7002</span>, <span class="hljs-number">7042</span>], [<span class="hljs-number">7073</span>, <span class="hljs-number">7085</span>], [<span class="hljs-number">7098</span>, <span class="hljs-number">7167</span>],
+         [<span class="hljs-number">7204</span>, <span class="hljs-number">7231</span>], [<span class="hljs-number">7242</span>, <span class="hljs-number">7244</span>], [<span class="hljs-number">7294</span>, <span class="hljs-number">7400</span>], [<span class="hljs-number">7410</span>, <span class="hljs-number">7423</span>], [<span class="hljs-number">7616</span>, <span class="hljs-number">7679</span>], [<span class="hljs-number">7958</span>, <span class="hljs-number">7959</span>],
+         [<span class="hljs-number">7966</span>, <span class="hljs-number">7967</span>], [<span class="hljs-number">8006</span>, <span class="hljs-number">8007</span>], [<span class="hljs-number">8014</span>, <span class="hljs-number">8015</span>], [<span class="hljs-number">8062</span>, <span class="hljs-number">8063</span>], [<span class="hljs-number">8127</span>, <span class="hljs-number">8129</span>], [<span class="hljs-number">8141</span>, <span class="hljs-number">8143</span>],
+         [<span class="hljs-number">8148</span>, <span class="hljs-number">8149</span>], [<span class="hljs-number">8156</span>, <span class="hljs-number">8159</span>], [<span class="hljs-number">8173</span>, <span class="hljs-number">8177</span>], [<span class="hljs-number">8189</span>, <span class="hljs-number">8303</span>], [<span class="hljs-number">8306</span>, <span class="hljs-number">8307</span>], [<span class="hljs-number">8314</span>, <span class="hljs-number">8318</span>],
+         [<span class="hljs-number">8330</span>, <span class="hljs-number">8335</span>], [<span class="hljs-number">8341</span>, <span class="hljs-number">8449</span>], [<span class="hljs-number">8451</span>, <span class="hljs-number">8454</span>], [<span class="hljs-number">8456</span>, <span class="hljs-number">8457</span>], [<span class="hljs-number">8470</span>, <span class="hljs-number">8472</span>], [<span class="hljs-number">8478</span>, <span class="hljs-number">8483</span>],
+         [<span class="hljs-number">8506</span>, <span class="hljs-number">8507</span>], [<span class="hljs-number">8512</span>, <span class="hljs-number">8516</span>], [<span class="hljs-number">8522</span>, <span class="hljs-number">8525</span>], [<span class="hljs-number">8586</span>, <span class="hljs-number">9311</span>], [<span class="hljs-number">9372</span>, <span class="hljs-number">9449</span>], [<span class="hljs-number">9472</span>, <span class="hljs-number">10101</span>],
+         [<span class="hljs-number">10132</span>, <span class="hljs-number">11263</span>], [<span class="hljs-number">11493</span>, <span class="hljs-number">11498</span>], [<span class="hljs-number">11503</span>, <span class="hljs-number">11516</span>], [<span class="hljs-number">11518</span>, <span class="hljs-number">11519</span>], [<span class="hljs-number">11558</span>, <span class="hljs-number">11567</span>],
+         [<span class="hljs-number">11622</span>, <span class="hljs-number">11630</span>], [<span class="hljs-number">11632</span>, <span class="hljs-number">11647</span>], [<span class="hljs-number">11671</span>, <span class="hljs-number">11679</span>], [<span class="hljs-number">11743</span>, <span class="hljs-number">11822</span>], [<span class="hljs-number">11824</span>, <span class="hljs-number">12292</span>],
+         [<span class="hljs-number">12296</span>, <span class="hljs-number">12320</span>], [<span class="hljs-number">12330</span>, <span class="hljs-number">12336</span>], [<span class="hljs-number">12342</span>, <span class="hljs-number">12343</span>], [<span class="hljs-number">12349</span>, <span class="hljs-number">12352</span>], [<span class="hljs-number">12439</span>, <span class="hljs-number">12444</span>],
+         [<span class="hljs-number">12544</span>, <span class="hljs-number">12548</span>], [<span class="hljs-number">12590</span>, <span class="hljs-number">12592</span>], [<span class="hljs-number">12687</span>, <span class="hljs-number">12689</span>], [<span class="hljs-number">12694</span>, <span class="hljs-number">12703</span>], [<span class="hljs-number">12728</span>, <span class="hljs-number">12783</span>],
+         [<span class="hljs-number">12800</span>, <span class="hljs-number">12831</span>], [<span class="hljs-number">12842</span>, <span class="hljs-number">12880</span>], [<span class="hljs-number">12896</span>, <span class="hljs-number">12927</span>], [<span class="hljs-number">12938</span>, <span class="hljs-number">12976</span>], [<span class="hljs-number">12992</span>, <span class="hljs-number">13311</span>],
+         [<span class="hljs-number">19894</span>, <span class="hljs-number">19967</span>], [<span class="hljs-number">40908</span>, <span class="hljs-number">40959</span>], [<span class="hljs-number">42125</span>, <span class="hljs-number">42191</span>], [<span class="hljs-number">42238</span>, <span class="hljs-number">42239</span>], [<span class="hljs-number">42509</span>, <span class="hljs-number">42511</span>],
+         [<span class="hljs-number">42540</span>, <span class="hljs-number">42559</span>], [<span class="hljs-number">42592</span>, <span class="hljs-number">42593</span>], [<span class="hljs-number">42607</span>, <span class="hljs-number">42622</span>], [<span class="hljs-number">42648</span>, <span class="hljs-number">42655</span>], [<span class="hljs-number">42736</span>, <span class="hljs-number">42774</span>],
+         [<span class="hljs-number">42784</span>, <span class="hljs-number">42785</span>], [<span class="hljs-number">42889</span>, <span class="hljs-number">42890</span>], [<span class="hljs-number">42893</span>, <span class="hljs-number">43002</span>], [<span class="hljs-number">43043</span>, <span class="hljs-number">43055</span>], [<span class="hljs-number">43062</span>, <span class="hljs-number">43071</span>],
+         [<span class="hljs-number">43124</span>, <span class="hljs-number">43137</span>], [<span class="hljs-number">43188</span>, <span class="hljs-number">43215</span>], [<span class="hljs-number">43226</span>, <span class="hljs-number">43249</span>], [<span class="hljs-number">43256</span>, <span class="hljs-number">43258</span>], [<span class="hljs-number">43260</span>, <span class="hljs-number">43263</span>],
+         [<span class="hljs-number">43302</span>, <span class="hljs-number">43311</span>], [<span class="hljs-number">43335</span>, <span class="hljs-number">43359</span>], [<span class="hljs-number">43389</span>, <span class="hljs-number">43395</span>], [<span class="hljs-number">43443</span>, <span class="hljs-number">43470</span>], [<span class="hljs-number">43482</span>, <span class="hljs-number">43519</span>],
+         [<span class="hljs-number">43561</span>, <span class="hljs-number">43583</span>], [<span class="hljs-number">43596</span>, <span class="hljs-number">43599</span>], [<span class="hljs-number">43610</span>, <span class="hljs-number">43615</span>], [<span class="hljs-number">43639</span>, <span class="hljs-number">43641</span>], [<span class="hljs-number">43643</span>, <span class="hljs-number">43647</span>],
+         [<span class="hljs-number">43698</span>, <span class="hljs-number">43700</span>], [<span class="hljs-number">43703</span>, <span class="hljs-number">43704</span>], [<span class="hljs-number">43710</span>, <span class="hljs-number">43711</span>], [<span class="hljs-number">43715</span>, <span class="hljs-number">43738</span>], [<span class="hljs-number">43742</span>, <span class="hljs-number">43967</span>],
+         [<span class="hljs-number">44003</span>, <span class="hljs-number">44015</span>], [<span class="hljs-number">44026</span>, <span class="hljs-number">44031</span>], [<span class="hljs-number">55204</span>, <span class="hljs-number">55215</span>], [<span class="hljs-number">55239</span>, <span class="hljs-number">55242</span>], [<span class="hljs-number">55292</span>, <span class="hljs-number">55295</span>],
+         [<span class="hljs-number">57344</span>, <span class="hljs-number">63743</span>], [<span class="hljs-number">64046</span>, <span class="hljs-number">64047</span>], [<span class="hljs-number">64110</span>, <span class="hljs-number">64111</span>], [<span class="hljs-number">64218</span>, <span class="hljs-number">64255</span>], [<span class="hljs-number">64263</span>, <span class="hljs-number">64274</span>],
+         [<span class="hljs-number">64280</span>, <span class="hljs-number">64284</span>], [<span class="hljs-number">64434</span>, <span class="hljs-number">64466</span>], [<span class="hljs-number">64830</span>, <span class="hljs-number">64847</span>], [<span class="hljs-number">64912</span>, <span class="hljs-number">64913</span>], [<span class="hljs-number">64968</span>, <span class="hljs-number">65007</span>],
+         [<span class="hljs-number">65020</span>, <span class="hljs-number">65135</span>], [<span class="hljs-number">65277</span>, <span class="hljs-number">65295</span>], [<span class="hljs-number">65306</span>, <span class="hljs-number">65312</span>], [<span class="hljs-number">65339</span>, <span class="hljs-number">65344</span>], [<span class="hljs-number">65371</span>, <span class="hljs-number">65381</span>],
+         [<span class="hljs-number">65471</span>, <span class="hljs-number">65473</span>], [<span class="hljs-number">65480</span>, <span class="hljs-number">65481</span>], [<span class="hljs-number">65488</span>, <span class="hljs-number">65489</span>], [<span class="hljs-number">65496</span>, <span class="hljs-number">65497</span>]];
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; ranges.length; i++) {
+        start = ranges[i][<span class="hljs-number">0</span>];
+        end = ranges[i][<span class="hljs-number">1</span>];
+        <span class="hljs-keyword">for</span> (j = start; j &lt;= end; j++) {
+            result[j] = <span class="hljs-literal">true</span>;
+        }
+    }
+    <span class="hljs-keyword">return</span> result;
+})();
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">splitQuery</span>(<span class="hljs-params">query</span>) </span>{
+    <span class="hljs-keyword">var</span> result = [];
+    <span class="hljs-keyword">var</span> start = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; query.length; i++) {
+        <span class="hljs-keyword">if</span> (splitChars[query.charCodeAt(i)]) {
+            <span class="hljs-keyword">if</span> (start !== <span class="hljs-number">-1</span>) {
+                result.push(query.slice(start, i));
+                start = <span class="hljs-number">-1</span>;
+            }
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (start === <span class="hljs-number">-1</span>) {
+            start = i;
+        }
+    }
+    <span class="hljs-keyword">if</span> (start !== <span class="hljs-number">-1</span>) {
+        result.push(query.slice(start));
+    }
+    <span class="hljs-keyword">return</span> result;
+}
+
+
+
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Search Module</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> Search = {
+
+  <span class="hljs-attr">_index</span> : <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">_queued_query</span> : <span class="hljs-literal">null</span>,
+  <span class="hljs-attr">_pulse_status</span> : <span class="hljs-number">-1</span>,
+
+  <span class="hljs-attr">init</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> params = $.getQueryParameters();
+      <span class="hljs-keyword">if</span> (params.q) {
+          <span class="hljs-keyword">var</span> query = params.q[<span class="hljs-number">0</span>];
+          $(<span class="hljs-string">'input[name="q"]'</span>)[<span class="hljs-number">0</span>].value = query;
+          <span class="hljs-keyword">this</span>.performSearch(query);
+      }
+  },
+
+  <span class="hljs-attr">loadIndex</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">url</span>) </span>{
+    $.ajax({<span class="hljs-attr">type</span>: <span class="hljs-string">"GET"</span>, <span class="hljs-attr">url</span>: url, <span class="hljs-attr">data</span>: <span class="hljs-literal">null</span>,
+            <span class="hljs-attr">dataType</span>: <span class="hljs-string">"script"</span>, <span class="hljs-attr">cache</span>: <span class="hljs-literal">true</span>,
+            <span class="hljs-attr">complete</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">jqxhr, textstatus</span>) </span>{
+              <span class="hljs-keyword">if</span> (textstatus != <span class="hljs-string">"success"</span>) {
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"searchindexloader"</span>).src = url;
+              }
+            }});
+  },
+
+  <span class="hljs-attr">setIndex</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index</span>) </span>{
+    <span class="hljs-keyword">var</span> q;
+    <span class="hljs-keyword">this</span>._index = index;
+    <span class="hljs-keyword">if</span> ((q = <span class="hljs-keyword">this</span>._queued_query) !== <span class="hljs-literal">null</span>) {
+      <span class="hljs-keyword">this</span>._queued_query = <span class="hljs-literal">null</span>;
+      Search.query(q);
+    }
+  },
+
+  <span class="hljs-attr">hasIndex</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._index !== <span class="hljs-literal">null</span>;
+  },
+
+  <span class="hljs-attr">deferQuery</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">query</span>) </span>{
+      <span class="hljs-keyword">this</span>._queued_query = query;
+  },
+
+  <span class="hljs-attr">stopPulse</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">this</span>._pulse_status = <span class="hljs-number">0</span>;
+  },
+
+  <span class="hljs-attr">startPulse</span> : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._pulse_status &gt;= <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span>;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">pulse</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> i;
+      Search._pulse_status = (Search._pulse_status + <span class="hljs-number">1</span>) % <span class="hljs-number">4</span>;
+      <span class="hljs-keyword">var</span> dotString = <span class="hljs-string">''</span>;
+      <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; Search._pulse_status; i++)
+        dotString += <span class="hljs-string">'.'</span>;
+      Search.dots.text(dotString);
+      <span class="hljs-keyword">if</span> (Search._pulse_status &gt; <span class="hljs-number">-1</span>)
+        <span class="hljs-built_in">window</span>.setTimeout(pulse, <span class="hljs-number">500</span>);
+    }
+    pulse();
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>perform a search for something (or wait until index is loaded)</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  performSearch : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">query</span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>create the required interface elements</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">this</span>.out = $(<span class="hljs-string">'#search-results'</span>);
+    <span class="hljs-keyword">this</span>.title = $(<span class="hljs-string">'&lt;h2&gt;'</span> + _(<span class="hljs-string">'Searching'</span>) + <span class="hljs-string">'&lt;/h2&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.out);
+    <span class="hljs-keyword">this</span>.dots = $(<span class="hljs-string">'&lt;span&gt;&lt;/span&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.title);
+    <span class="hljs-keyword">this</span>.status = $(<span class="hljs-string">'&lt;p style="display: none"&gt;&lt;/p&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.out);
+    <span class="hljs-keyword">this</span>.output = $(<span class="hljs-string">'&lt;ul class="search"/&gt;'</span>).appendTo(<span class="hljs-keyword">this</span>.out);
+
+    $(<span class="hljs-string">'#search-progress'</span>).text(_(<span class="hljs-string">'Preparing search...'</span>));
+    <span class="hljs-keyword">this</span>.startPulse();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>index already loaded, the browser was quick!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.hasIndex())
+      <span class="hljs-keyword">this</span>.query(query);
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-keyword">this</span>.deferQuery(query);
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>execute search (requires search index to be loaded)</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  query : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">query</span>) </span>{
+    <span class="hljs-keyword">var</span> i;
+    <span class="hljs-keyword">var</span> stopwords = [<span class="hljs-string">"a"</span>,<span class="hljs-string">"and"</span>,<span class="hljs-string">"are"</span>,<span class="hljs-string">"as"</span>,<span class="hljs-string">"at"</span>,<span class="hljs-string">"be"</span>,<span class="hljs-string">"but"</span>,<span class="hljs-string">"by"</span>,<span class="hljs-string">"for"</span>,<span class="hljs-string">"if"</span>,<span class="hljs-string">"in"</span>,<span class="hljs-string">"into"</span>,<span class="hljs-string">"is"</span>,<span class="hljs-string">"it"</span>,<span class="hljs-string">"near"</span>,<span class="hljs-string">"no"</span>,<span class="hljs-string">"not"</span>,<span class="hljs-string">"of"</span>,<span class="hljs-string">"on"</span>,<span class="hljs-string">"or"</span>,<span class="hljs-string">"such"</span>,<span class="hljs-string">"that"</span>,<span class="hljs-string">"the"</span>,<span class="hljs-string">"their"</span>,<span class="hljs-string">"then"</span>,<span class="hljs-string">"there"</span>,<span class="hljs-string">"these"</span>,<span class="hljs-string">"they"</span>,<span class="hljs-string">"this"</span>,<span class="hljs-string">"to"</span>,<span class="hljs-string">"was"</span>,<span class="hljs-string">"will"</span>,<span class="hljs-string">"with"</span>];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>stem the searchterms and add them to the correct list</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> stemmer = <span class="hljs-keyword">new</span> Stemmer();
+    <span class="hljs-keyword">var</span> searchterms = [];
+    <span class="hljs-keyword">var</span> excluded = [];
+    <span class="hljs-keyword">var</span> hlterms = [];
+    <span class="hljs-keyword">var</span> tmp = splitQuery(query);
+    <span class="hljs-keyword">var</span> objectterms = [];
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; tmp.length; i++) {
+      <span class="hljs-keyword">if</span> (tmp[i] !== <span class="hljs-string">""</span>) {
+          objectterms.push(tmp[i].toLowerCase());
+      }
+
+      <span class="hljs-keyword">if</span> ($u.indexOf(stopwords, tmp[i].toLowerCase()) != <span class="hljs-number">-1</span> || tmp[i].match(<span class="hljs-regexp">/^\d+$/</span>) ||
+          tmp[i] === <span class="hljs-string">""</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<p>skip this &quot;word&quot;</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">continue</span>;
+      }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<p>stem the word</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">var</span> word = stemmer.stemWord(tmp[i].toLowerCase());
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>prevent stemmer from cutting word smaller than two chars</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span>(word.length &lt; <span class="hljs-number">3</span> &amp;&amp; tmp[i].length &gt;= <span class="hljs-number">3</span>) {
+        word = tmp[i];
+      }
+      <span class="hljs-keyword">var</span> toAppend;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>select the correct list</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (word[<span class="hljs-number">0</span>] == <span class="hljs-string">'-'</span>) {
+        toAppend = excluded;
+        word = word.substr(<span class="hljs-number">1</span>);
+      }
+      <span class="hljs-keyword">else</span> {
+        toAppend = searchterms;
+        hlterms.push(tmp[i].toLowerCase());
+      }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<p>only add if not already in the list</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (!$u.contains(toAppend, word))
+        toAppend.push(word);
+    }
+    <span class="hljs-keyword">var</span> highlightstring = <span class="hljs-string">'?highlight='</span> + $.urlencode(hlterms.join(<span class="hljs-string">" "</span>));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>console.debug('SEARCH: searching for:');
+console.info('required: ', searchterms);
+console.info('excluded: ', excluded);</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<p>prepare search</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> terms = <span class="hljs-keyword">this</span>._index.terms;
+    <span class="hljs-keyword">var</span> titleterms = <span class="hljs-keyword">this</span>._index.titleterms;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<p>array of [filename, title, anchor, descr, score]</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> results = [];
+    $(<span class="hljs-string">'#search-progress'</span>).empty();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<p>lookup as object</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; objectterms.length; i++) {
+      <span class="hljs-keyword">var</span> others = [].concat(objectterms.slice(<span class="hljs-number">0</span>, i),
+                             objectterms.slice(i+<span class="hljs-number">1</span>, objectterms.length));
+      results = results.concat(<span class="hljs-keyword">this</span>.performObjectSearch(objectterms[i], others));
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<p>lookup as search terms in fulltext</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    results = results.concat(<span class="hljs-keyword">this</span>.performTermsSearch(searchterms, excluded, terms, titleterms));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<p>let the scorer override scores with a custom scoring function</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (Scorer.score) {
+      <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; results.length; i++)
+        results[i][<span class="hljs-number">4</span>] = Scorer.score(results[i]);
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<p>now sort the results by score (in opposite order of appearance, since the
+display function below uses pop() to retrieve items) and then
+alphabetically</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    results.sort(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) </span>{
+      <span class="hljs-keyword">var</span> left = a[<span class="hljs-number">4</span>];
+      <span class="hljs-keyword">var</span> right = b[<span class="hljs-number">4</span>];
+      <span class="hljs-keyword">if</span> (left &gt; right) {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (left &lt; right) {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;
+      } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<p>same score: sort alphabetically</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        left = a[<span class="hljs-number">1</span>].toLowerCase();
+        right = b[<span class="hljs-number">1</span>].toLowerCase();
+        <span class="hljs-keyword">return</span> (left &gt; right) ? <span class="hljs-number">-1</span> : ((left &lt; right) ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>);
+      }
+    });
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<p>for debugging
+Search.lastresults = results.slice();  // a copy
+console.info('search results:', Search.lastresults);</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<p>print the results</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> resultCount = results.length;
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">displayNextItem</span>(<span class="hljs-params"></span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<p>results left, load the summary and display it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (results.length) {
+        <span class="hljs-keyword">var</span> item = results.pop();
+        <span class="hljs-keyword">var</span> listItem = $(<span class="hljs-string">'&lt;li style="display:none"&gt;&lt;/li&gt;'</span>);
+        <span class="hljs-keyword">if</span> (DOCUMENTATION_OPTIONS.FILE_SUFFIX === <span class="hljs-string">''</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<p>dirhtml builder</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          <span class="hljs-keyword">var</span> dirname = item[<span class="hljs-number">0</span>] + <span class="hljs-string">'/'</span>;
+          <span class="hljs-keyword">if</span> (dirname.match(<span class="hljs-regexp">/\/index\/$/</span>)) {
+            dirname = dirname.substring(<span class="hljs-number">0</span>, dirname.length<span class="hljs-number">-6</span>);
+          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (dirname == <span class="hljs-string">'index/'</span>) {
+            dirname = <span class="hljs-string">''</span>;
+          }
+          listItem.append($(<span class="hljs-string">'&lt;a/&gt;'</span>).attr(<span class="hljs-string">'href'</span>,
+            DOCUMENTATION_OPTIONS.URL_ROOT + dirname +
+            highlightstring + item[<span class="hljs-number">2</span>]).html(item[<span class="hljs-number">1</span>]));
+        } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<p>normal html builders</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          listItem.append($(<span class="hljs-string">'&lt;a/&gt;'</span>).attr(<span class="hljs-string">'href'</span>,
+            item[<span class="hljs-number">0</span>] + DOCUMENTATION_OPTIONS.FILE_SUFFIX +
+            highlightstring + item[<span class="hljs-number">2</span>]).html(item[<span class="hljs-number">1</span>]));
+        }
+        <span class="hljs-keyword">if</span> (item[<span class="hljs-number">3</span>]) {
+          listItem.append($(<span class="hljs-string">'&lt;span&gt; ('</span> + item[<span class="hljs-number">3</span>] + <span class="hljs-string">')&lt;/span&gt;'</span>));
+          Search.output.append(listItem);
+          listItem.slideDown(<span class="hljs-number">5</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            displayNextItem();
+          });
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (DOCUMENTATION_OPTIONS.HAS_SOURCE) {
+          <span class="hljs-keyword">var</span> suffix = DOCUMENTATION_OPTIONS.SOURCELINK_SUFFIX;
+          $.ajax({<span class="hljs-attr">url</span>: DOCUMENTATION_OPTIONS.URL_ROOT + <span class="hljs-string">'_sources/'</span> + item[<span class="hljs-number">5</span>] + (item[<span class="hljs-number">5</span>].slice(-suffix.length) === suffix ? <span class="hljs-string">''</span> : suffix),
+                  <span class="hljs-attr">dataType</span>: <span class="hljs-string">"text"</span>,
+                  <span class="hljs-attr">complete</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">jqxhr, textstatus</span>) </span>{
+                    <span class="hljs-keyword">var</span> data = jqxhr.responseText;
+                    <span class="hljs-keyword">if</span> (data !== <span class="hljs-string">''</span> &amp;&amp; data !== <span class="hljs-literal">undefined</span>) {
+                      listItem.append(Search.makeSearchSummary(data, searchterms, hlterms));
+                    }
+                    Search.output.append(listItem);
+                    listItem.slideDown(<span class="hljs-number">5</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                      displayNextItem();
+                    });
+                  }});
+        } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<p>no source available, just display title</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          Search.output.append(listItem);
+          listItem.slideDown(<span class="hljs-number">5</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            displayNextItem();
+          });
+        }
+      }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<p>search finished, update title and status message</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">else</span> {
+        Search.stopPulse();
+        Search.title.text(_(<span class="hljs-string">'Search Results'</span>));
+        <span class="hljs-keyword">if</span> (!resultCount)
+          Search.status.text(_(<span class="hljs-string">'Your search did not match any documents. Please make sure that all words are spelled correctly and that you\'ve selected enough categories.'</span>));
+        <span class="hljs-keyword">else</span>
+            Search.status.text(_(<span class="hljs-string">'Search finished, found %s page(s) matching the search query.'</span>).replace(<span class="hljs-string">'%s'</span>, resultCount));
+        Search.status.fadeIn(<span class="hljs-number">500</span>);
+      }
+    }
+    displayNextItem();
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>search for object names</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  performObjectSearch : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">object, otherterms</span>) </span>{
+    <span class="hljs-keyword">var</span> filenames = <span class="hljs-keyword">this</span>._index.filenames;
+    <span class="hljs-keyword">var</span> docnames = <span class="hljs-keyword">this</span>._index.docnames;
+    <span class="hljs-keyword">var</span> objects = <span class="hljs-keyword">this</span>._index.objects;
+    <span class="hljs-keyword">var</span> objnames = <span class="hljs-keyword">this</span>._index.objnames;
+    <span class="hljs-keyword">var</span> titles = <span class="hljs-keyword">this</span>._index.titles;
+
+    <span class="hljs-keyword">var</span> i;
+    <span class="hljs-keyword">var</span> results = [];
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> prefix <span class="hljs-keyword">in</span> objects) {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> name <span class="hljs-keyword">in</span> objects[prefix]) {
+        <span class="hljs-keyword">var</span> fullname = (prefix ? prefix + <span class="hljs-string">'.'</span> : <span class="hljs-string">''</span>) + name;
+        <span class="hljs-keyword">if</span> (fullname.toLowerCase().indexOf(object) &gt; <span class="hljs-number">-1</span>) {
+          <span class="hljs-keyword">var</span> score = <span class="hljs-number">0</span>;
+          <span class="hljs-keyword">var</span> parts = fullname.split(<span class="hljs-string">'.'</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<p>check for different match types: exact matches of full name or
+&quot;last name&quot; (i.e. last dotted part)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          <span class="hljs-keyword">if</span> (fullname == object || parts[parts.length - <span class="hljs-number">1</span>] == object) {
+            score += Scorer.objNameMatch;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<p>matches in last name</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (parts[parts.length - <span class="hljs-number">1</span>].indexOf(object) &gt; <span class="hljs-number">-1</span>) {
+            score += Scorer.objPartialMatch;
+          }
+          <span class="hljs-keyword">var</span> match = objects[prefix][name];
+          <span class="hljs-keyword">var</span> objname = objnames[match[<span class="hljs-number">1</span>]][<span class="hljs-number">2</span>];
+          <span class="hljs-keyword">var</span> title = titles[match[<span class="hljs-number">0</span>]];
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<p>If more than one term searched for, we require other words to be
+found in the name/title/description</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          <span class="hljs-keyword">if</span> (otherterms.length &gt; <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">var</span> haystack = (prefix + <span class="hljs-string">' '</span> + name + <span class="hljs-string">' '</span> +
+                            objname + <span class="hljs-string">' '</span> + title).toLowerCase();
+            <span class="hljs-keyword">var</span> allfound = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; otherterms.length; i++) {
+              <span class="hljs-keyword">if</span> (haystack.indexOf(otherterms[i]) == <span class="hljs-number">-1</span>) {
+                allfound = <span class="hljs-literal">false</span>;
+                <span class="hljs-keyword">break</span>;
+              }
+            }
+            <span class="hljs-keyword">if</span> (!allfound) {
+              <span class="hljs-keyword">continue</span>;
+            }
+          }
+          <span class="hljs-keyword">var</span> descr = objname + _(<span class="hljs-string">', in '</span>) + title;
+
+          <span class="hljs-keyword">var</span> anchor = match[<span class="hljs-number">3</span>];
+          <span class="hljs-keyword">if</span> (anchor === <span class="hljs-string">''</span>)
+            anchor = fullname;
+          <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (anchor == <span class="hljs-string">'-'</span>)
+            anchor = objnames[match[<span class="hljs-number">1</span>]][<span class="hljs-number">1</span>] + <span class="hljs-string">'-'</span> + fullname;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<p>add custom score for some objects according to scorer</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          <span class="hljs-keyword">if</span> (Scorer.objPrio.hasOwnProperty(match[<span class="hljs-number">2</span>])) {
+            score += Scorer.objPrio[match[<span class="hljs-number">2</span>]];
+          } <span class="hljs-keyword">else</span> {
+            score += Scorer.objPrioDefault;
+          }
+          results.push([docnames[match[<span class="hljs-number">0</span>]], fullname, <span class="hljs-string">'#'</span>+anchor, descr, score, filenames[match[<span class="hljs-number">0</span>]]]);
+        }
+      }
+    }
+
+    <span class="hljs-keyword">return</span> results;
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>search for full-text terms in the index</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  performTermsSearch : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">searchterms, excluded, terms, titleterms</span>) </span>{
+    <span class="hljs-keyword">var</span> docnames = <span class="hljs-keyword">this</span>._index.docnames;
+    <span class="hljs-keyword">var</span> filenames = <span class="hljs-keyword">this</span>._index.filenames;
+    <span class="hljs-keyword">var</span> titles = <span class="hljs-keyword">this</span>._index.titles;
+
+    <span class="hljs-keyword">var</span> i, j, file;
+    <span class="hljs-keyword">var</span> fileMap = {};
+    <span class="hljs-keyword">var</span> scoreMap = {};
+    <span class="hljs-keyword">var</span> results = [];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<p>perform the search on the required terms</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; searchterms.length; i++) {
+      <span class="hljs-keyword">var</span> word = searchterms[i];
+      <span class="hljs-keyword">var</span> files = [];
+      <span class="hljs-keyword">var</span> _o = [
+        {<span class="hljs-attr">files</span>: terms[word], <span class="hljs-attr">score</span>: Scorer.term},
+        {<span class="hljs-attr">files</span>: titleterms[word], <span class="hljs-attr">score</span>: Scorer.title}
+      ];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<p>no match but word was a required one</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> ($u.every(_o, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">o</span>)</span>{<span class="hljs-keyword">return</span> o.files === <span class="hljs-literal">undefined</span>;})) {
+        <span class="hljs-keyword">break</span>;
+      }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<p>found search word in contents</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      $u.each(_o, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">o</span>) </span>{
+        <span class="hljs-keyword">var</span> _files = o.files;
+        <span class="hljs-keyword">if</span> (_files === <span class="hljs-literal">undefined</span>)
+          <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">if</span> (_files.length === <span class="hljs-literal">undefined</span>)
+          _files = [_files];
+        files = files.concat(_files);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<p>set score for the word in each file to Scorer.term</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; _files.length; j++) {
+          file = _files[j];
+          <span class="hljs-keyword">if</span> (!(file <span class="hljs-keyword">in</span> scoreMap))
+            scoreMap[file] = {}
+          scoreMap[file][word] = o.score;
+        }
+      });
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<p>create the mapping</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; files.length; j++) {
+        file = files[j];
+        <span class="hljs-keyword">if</span> (file <span class="hljs-keyword">in</span> fileMap)
+          fileMap[file].push(word);
+        <span class="hljs-keyword">else</span>
+          fileMap[file] = [word];
+      }
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<p>now check if the files don't contain excluded terms</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">for</span> (file <span class="hljs-keyword">in</span> fileMap) {
+      <span class="hljs-keyword">var</span> valid = <span class="hljs-literal">true</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<p>check if all requirements are matched</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (fileMap[file].length != searchterms.length)
+          <span class="hljs-keyword">continue</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<p>ensure that none of the excluded terms is in the search result</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; excluded.length; i++) {
+        <span class="hljs-keyword">if</span> (terms[excluded[i]] == file ||
+            titleterms[excluded[i]] == file ||
+            $u.contains(terms[excluded[i]] || [], file) ||
+            $u.contains(titleterms[excluded[i]] || [], file)) {
+          valid = <span class="hljs-literal">false</span>;
+          <span class="hljs-keyword">break</span>;
+        }
+      }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<p>if we have still a valid result we can add it to the result list</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (valid) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<p>select one (max) score for the file.
+for better ranking, we should calculate ranking by using words statistics like basic tf-idf...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">var</span> score = $u.max($u.map(fileMap[file], <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">w</span>)</span>{<span class="hljs-keyword">return</span> scoreMap[file][w]}));
+        results.push([docnames[file], titles[file], <span class="hljs-string">''</span>, <span class="hljs-literal">null</span>, score, filenames[file]]);
+      }
+    }
+    <span class="hljs-keyword">return</span> results;
+  },
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>helper function to return a node containing the
+search summary for a given text. keywords is a list
+of stemmed words, hlwords is the list of normal, unstemmed
+words. the first one is used to find the occurrence, the
+latter for highlighting it.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  makeSearchSummary : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">text, keywords, hlwords</span>) </span>{
+    <span class="hljs-keyword">var</span> textLower = text.toLowerCase();
+    <span class="hljs-keyword">var</span> start = <span class="hljs-number">0</span>;
+    $.each(keywords, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> i = textLower.indexOf(<span class="hljs-keyword">this</span>.toLowerCase());
+      <span class="hljs-keyword">if</span> (i &gt; <span class="hljs-number">-1</span>)
+        start = i;
+    });
+    start = <span class="hljs-built_in">Math</span>.max(start - <span class="hljs-number">120</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-keyword">var</span> excerpt = ((start &gt; <span class="hljs-number">0</span>) ? <span class="hljs-string">'...'</span> : <span class="hljs-string">''</span>) +
+      $.trim(text.substr(start, <span class="hljs-number">240</span>)) +
+      ((start + <span class="hljs-number">240</span> - text.length) ? <span class="hljs-string">'...'</span> : <span class="hljs-string">''</span>);
+    <span class="hljs-keyword">var</span> rv = $(<span class="hljs-string">'&lt;div class="context"&gt;&lt;/div&gt;'</span>).text(excerpt);
+    $.each(hlwords, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      rv = rv.highlightText(<span class="hljs-keyword">this</span>, <span class="hljs-string">'highlighted'</span>);
+    });
+    <span class="hljs-keyword">return</span> rv;
+  }
+};
+
+$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  Search.init();
+});
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

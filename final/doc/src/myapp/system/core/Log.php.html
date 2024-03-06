@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Log.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Log.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Log.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Logging Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Log</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Path to save log files</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_log_path;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File permissions</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_file_permissions = <span class="hljs-number">0644</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Level of logging</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_threshold = <span class="hljs-number">1</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Array of threshold levels to log</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_threshold_array = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Format of timestamp for log files</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_date_fmt = <span class="hljs-string">'Y-m-d H:i:s'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Filename extension</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_file_ext;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether or not the logger can write to the log files</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_enabled = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Predefined logging levels</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_levels = <span class="hljs-keyword">array</span>(<span class="hljs-string">'ERROR'</span> =&gt; <span class="hljs-number">1</span>, <span class="hljs-string">'DEBUG'</span> =&gt; <span class="hljs-number">2</span>, <span class="hljs-string">'INFO'</span> =&gt; <span class="hljs-number">3</span>, <span class="hljs-string">'ALL'</span> =&gt; <span class="hljs-number">4</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>mbstring.func_overload flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> $func_overload;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		$config =&amp; get_config();
+
+		<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">self</span>::$func_overload) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">self</span>::$func_overload = (extension_loaded(<span class="hljs-string">'mbstring'</span>) &amp;&amp; ini_get(<span class="hljs-string">'mbstring.func_overload'</span>));
+
+		<span class="hljs-keyword">$this</span>-&gt;_log_path = ($config[<span class="hljs-string">'log_path'</span>] !== <span class="hljs-string">''</span>) ? $config[<span class="hljs-string">'log_path'</span>] : APPPATH.<span class="hljs-string">'logs/'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;_file_ext = (<span class="hljs-keyword">isset</span>($config[<span class="hljs-string">'log_file_extension'</span>]) &amp;&amp; $config[<span class="hljs-string">'log_file_extension'</span>] !== <span class="hljs-string">''</span>)
+			? ltrim($config[<span class="hljs-string">'log_file_extension'</span>], <span class="hljs-string">'.'</span>) : <span class="hljs-string">'php'</span>;
+
+		file_exists(<span class="hljs-keyword">$this</span>-&gt;_log_path) <span class="hljs-keyword">OR</span> mkdir(<span class="hljs-keyword">$this</span>-&gt;_log_path, <span class="hljs-number">0755</span>, <span class="hljs-keyword">TRUE</span>);
+
+		<span class="hljs-keyword">if</span> ( ! is_dir(<span class="hljs-keyword">$this</span>-&gt;_log_path) <span class="hljs-keyword">OR</span> ! is_really_writable(<span class="hljs-keyword">$this</span>-&gt;_log_path))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_enabled = <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (is_numeric($config[<span class="hljs-string">'log_threshold'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_threshold = (int) $config[<span class="hljs-string">'log_threshold'</span>];
+		}
+		<span class="hljs-keyword">elseif</span> (is_array($config[<span class="hljs-string">'log_threshold'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_threshold = <span class="hljs-number">0</span>;
+			<span class="hljs-keyword">$this</span>-&gt;_threshold_array = array_flip($config[<span class="hljs-string">'log_threshold'</span>]);
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($config[<span class="hljs-string">'log_date_format'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_date_fmt = $config[<span class="hljs-string">'log_date_format'</span>];
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($config[<span class="hljs-string">'log_file_permissions'</span>]) &amp;&amp; is_int($config[<span class="hljs-string">'log_file_permissions'</span>]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_file_permissions = $config[<span class="hljs-string">'log_file_permissions'</span>];
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Write Log File</p>
+</div>
+<div class="body">
+<p>Generally this function will be called using the global log_message() function</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$level The error level: 'error', 'debug' or 'info'
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$msg The error message
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">write_log</span><span class="hljs-params">($level, $msg)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_enabled === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$level = strtoupper($level);
+
+		<span class="hljs-keyword">if</span> (( ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_levels[$level]) <span class="hljs-keyword">OR</span> (<span class="hljs-keyword">$this</span>-&gt;_levels[$level] &gt; <span class="hljs-keyword">$this</span>-&gt;_threshold))
+			&amp;&amp; ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_threshold_array[<span class="hljs-keyword">$this</span>-&gt;_levels[$level]]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$filepath = <span class="hljs-keyword">$this</span>-&gt;_log_path.<span class="hljs-string">'log-'</span>.date(<span class="hljs-string">'Y-m-d'</span>).<span class="hljs-string">'.'</span>.<span class="hljs-keyword">$this</span>-&gt;_file_ext;
+		$message = <span class="hljs-string">''</span>;
+
+		<span class="hljs-keyword">if</span> ( ! file_exists($filepath))
+		{
+			$newfile = <span class="hljs-keyword">TRUE</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>Only add protection to php files</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_file_ext === <span class="hljs-string">'php'</span>)
+			{
+				$message .= <span class="hljs-string">"&lt;?php defined('BASEPATH') OR exit('No direct script access allowed'); ?&gt;\n\n"</span>;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ( ! $fp = @fopen($filepath, <span class="hljs-string">'ab'</span>))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		flock($fp, LOCK_EX);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>Instantiating DateTime with microseconds appended to initial date is needed for proper support of this format</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (strpos(<span class="hljs-keyword">$this</span>-&gt;_date_fmt, <span class="hljs-string">'u'</span>) !== <span class="hljs-keyword">FALSE</span>)
+		{
+			$microtime_full = microtime(<span class="hljs-keyword">TRUE</span>);
+			$microtime_short = sprintf(<span class="hljs-string">"%06d"</span>, ($microtime_full - floor($microtime_full)) * <span class="hljs-number">1000000</span>);
+			$date = <span class="hljs-keyword">new</span> DateTime(date(<span class="hljs-string">'Y-m-d H:i:s.'</span>.$microtime_short, $microtime_full));
+			$date = $date-&gt;format(<span class="hljs-keyword">$this</span>-&gt;_date_fmt);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$date = date(<span class="hljs-keyword">$this</span>-&gt;_date_fmt);
+		}
+
+		$message .= <span class="hljs-keyword">$this</span>-&gt;_format_line($level, $date, $msg);
+
+		<span class="hljs-keyword">for</span> ($written = <span class="hljs-number">0</span>, $length = <span class="hljs-keyword">self</span>::strlen($message); $written &lt; $length; $written += $result)
+		{
+			<span class="hljs-keyword">if</span> (($result = fwrite($fp, <span class="hljs-keyword">self</span>::substr($message, $written))) === <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">break</span>;
+			}
+		}
+
+		flock($fp, LOCK_UN);
+		fclose($fp);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($newfile) &amp;&amp; $newfile === <span class="hljs-keyword">TRUE</span>)
+		{
+			chmod($filepath, <span class="hljs-keyword">$this</span>-&gt;_file_permissions);
+		}
+
+		<span class="hljs-keyword">return</span> is_int($result);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Format the log line.</p>
+</div>
+<div class="body">
+<p>This is for extensibility of log formatting
+If you want to change the log format, extend the CI_Log class and override this method</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$level The error level
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$date Formatted date string
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$message The log message
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string Formatted log line with a new line character at the end
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_format_line</span><span class="hljs-params">($level, $date, $message)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> $level.<span class="hljs-string">' - '</span>.$date.<span class="hljs-string">' --&gt; '</span>.$message.PHP_EOL;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Byte-safe strlen()</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">strlen</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">self</span>::$func_overload)
+			? mb_strlen($str, <span class="hljs-string">'8bit'</span>)
+			: strlen($str);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Byte-safe substr()</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$start
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$length
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">substr</span><span class="hljs-params">($str, $start, $length = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>::$func_overload)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<p>mb_substr($str, $start, null, '8bit') returns an empty
+string on PHP 5.3</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">isset</span>($length) <span class="hljs-keyword">OR</span> $length = ($start &gt;= <span class="hljs-number">0</span> ? <span class="hljs-keyword">self</span>::strlen($str) - $start : -$start);
+			<span class="hljs-keyword">return</span> mb_substr($str, $start, $length, <span class="hljs-string">'8bit'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($length)
+			? substr($str, $start, $length)
+			: substr($str, $start);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

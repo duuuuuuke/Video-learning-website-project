@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Signup.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\controllers\\Signup.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Signup.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Signup</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Controller</span>
+</span>{
+
+	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+	</span>{
+		$data[<span class="hljs-string">'error'</span>] = <span class="hljs-string">""</span>;
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;helper(<span class="hljs-string">'form'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;helper(<span class="hljs-string">'url'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/header'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'signup'</span>, $data);
+		<span class="hljs-keyword">$this</span>-&gt;load-&gt;view(<span class="hljs-string">'template/footer'</span>);
+	}
+
+	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">register</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>form validation</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(
+			<span class="hljs-string">'username'</span>,
+			<span class="hljs-string">'Username'</span>,
+			<span class="hljs-string">'required|max_length[25]|is_unique[users.username]'</span>
+		);
+		<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(<span class="hljs-string">'password'</span>, <span class="hljs-string">'Password'</span>, <span class="hljs-string">'required'</span>);
+		<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(
+			<span class="hljs-string">'confirmed_password'</span>,
+			<span class="hljs-string">'Password Confirmation'</span>,
+			<span class="hljs-string">'required|min_length[5]|matches[password]'</span>
+		);
+		<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;set_rules(
+			<span class="hljs-string">'email'</span>,
+			<span class="hljs-string">'Email'</span>,
+			<span class="hljs-string">'required|valid_email|is_unique[users.email]'</span>
+		);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;form_validation-&gt;run() == <span class="hljs-keyword">FALSE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>validation fail, back to signup and show error</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;index();
+		} <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>validation succeed, insert new user</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$username = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'username'</span>);
+			$email = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'email'</span>);
+			$password = <span class="hljs-keyword">$this</span>-&gt;input-&gt;post(<span class="hljs-string">'password'</span>);
+			$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+			$new_user = <span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'username'</span> =&gt; $username,
+				<span class="hljs-string">'email'</span> =&gt; $email,
+				<span class="hljs-string">'password'</span> =&gt; $hashed_password,
+			);
+			$result = <span class="hljs-keyword">$this</span>-&gt;user_model-&gt;add_new_user($new_user);
+
+			<span class="hljs-keyword">if</span> ($result == <span class="hljs-keyword">TRUE</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>insert successfully, and set session, go to verification page</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				$user_data = <span class="hljs-keyword">array</span>(
+					<span class="hljs-string">'username'</span> =&gt; $username,
+					<span class="hljs-string">'email'</span> =&gt; $email,
+					<span class="hljs-string">'logged_in'</span> =&gt; <span class="hljs-keyword">false</span>
+				);
+				<span class="hljs-keyword">$this</span>-&gt;session-&gt;set_userdata($user_data);
+
+				redirect(base_url().<span class="hljs-string">'index.php?/login'</span>);
+			} <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>incase insertion failed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">$this</span>-&gt;session-&gt;set_flashdata(<span class="hljs-string">'message'</span>, <span class="hljs-string">'Something went wrong, please try again.'</span>);
+				redirect(base_url().<span class="hljs-string">'index.php?/signup'</span>);
+			}
+		}
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

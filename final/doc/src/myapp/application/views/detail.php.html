@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>detail.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\views\\detail.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>detail.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;div class="container my-5"&gt;
+
+    &lt;?php if ($type == 'video/mp4') : ?&gt;
+        &lt;?php echo "&lt;video width='320' height='240' controls&gt;
+            &lt;source src='./uploads/" . $userid . "/" . $title . "/" . $filename . "' type='video/mp4'&gt;
+            Your browser does not support the video tag.
+        &lt;/video&gt;" ?&gt;
+
+    &lt;?php endif ?&gt;
+
+    &lt;?php if ($type == 'application/pdf') : ?&gt;
+
+        &lt;form action="" method="post"&gt;
+            &lt;button class="btn btn-primary btn-lg" name="pdfview"&gt;View this document here&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;?php if (isset($_POST['pdfview'])) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>$path = './uploads/' . $userid . '/' . $title . '/' . $filename;
+header(&quot;Content-type: application/pdf&quot;);
+header(&quot;Content-Length: &quot; . filesize($path));
+readfile($path);</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>$file = './uploads/' . $userid . '/' . $title . '/' . $filename;
+$filename = $filename;</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>// Header content type
+header('Content-type: application/pdf');</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>header('Content-Disposition: inline; filename=&quot;' . $filename . '&quot;');</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>header('Content-Transfer-Encoding: binary');</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>header('Accept-Ranges: bytes');</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>// Read the file
+@readfile($file);</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>As I was using the methods above to show pdf files, chrome shows &quot;failed to load pdf document&quot; error. So I googled this method to solve the issue. Basically the pdf file is too large for readfile() to handle, but my pdf is only 100+KB.
+Reference:
+Chrome has “Failed to load PDF document” error message on inline PDFs. (2011, April 14). Stack  Overflow. https://stackoverflow.com/questions/5670785/chrome-has-failed-to-load-pdf-document-error-message-on-inline-pdfs</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">            $file = <span class="hljs-string">'./uploads/'</span> . $userid . <span class="hljs-string">'/'</span> . $title . <span class="hljs-string">'/'</span> . $filename;
+            $fp = fopen($file, <span class="hljs-string">"r"</span>);
+
+            header(<span class="hljs-string">"Content-type: application/pdf"</span>);
+            header(<span class="hljs-string">'Content-Length:'</span> . filesize($file));
+            ob_clean();
+            flush();
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>readFile($file);</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">            while (!feof($fp)) {
+                $buff = fread($fp, 1024);
+                print $buff;
+            }
+            exit;
+        } ?&gt;
+    &lt;?php endif ?&gt;
+
+    &lt;?php if ($isLiked == 'true') : ?&gt;
+        &lt;div class="container mt-5"&gt;
+            &lt;button class="btn btn-danger" id="likeBtn" type="button"&gt;like: &lt;?php echo $likeCount; ?&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;?php else : ?&gt;
+        &lt;div class="container mt-5"&gt;
+            &lt;button class="btn btn-outline-primary" id="likeBtn" type="button"&gt;like: &lt;?php echo $likeCount; ?&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;?php endif; ?&gt;
+
+    &lt;h2 class="mt-5"&gt;&lt;?php echo $title; ?&gt;&lt;/h2&gt;
+    &lt;p&gt;uploaded by: &lt;?php echo $product_username; ?&gt;&lt;/p&gt;
+    &lt;p&gt;product id: &lt;?php echo $productId; ?&gt;&lt;/p&gt;
+    &lt;h4 class="mt-5"&gt;Description:&lt;/h4&gt;
+    &lt;p class="mt-3"&gt;&lt;?php echo $description; ?&gt;&lt;/p&gt;
+    &lt;h4 class="mt-5"&gt;Comments:&lt;/h4&gt;
+    &lt;div class="input-group my-3"&gt;
+        &lt;input class="form-control" type="text" placeholder="Add a comment" name="addComment" id="newComment"&gt;
+        &lt;div class="input-group-append"&gt;
+            &lt;button class="btn btn-primary" id="subButton" type="submit"&gt;Add&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="comments"&gt;
+        &lt;?php if ($allComments) : ?&gt;
+            &lt;?php foreach ($allComments-&gt;result() as $row) : ?&gt;
+                &lt;div class="mb-5"&gt;
+                    &lt;h6&gt;&lt;?php echo $row-&gt;username; ?&gt;&lt;/h6&gt;
+                    &lt;p&gt;&lt;?php echo $row-&gt;date; ?&gt;&lt;/p&gt;
+                    &lt;p&gt;&lt;?php echo $row-&gt;comments; ?&gt;&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;?php endforeach; ?&gt;
+        &lt;?php else : ?&gt;
+            No comments.
+        &lt;?php endif; ?&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+    $(window).scroll(function() {
+        sessionStorage.scrollTop = $(this).scrollTop();
+    });
+
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>add and show comments</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">    $(document).ready(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+
+        <span class="hljs-keyword">if</span> (sessionStorage.scrollTop) {
+            $(window).scrollTop(sessionStorage.scrollTop);
+        }
+
+        $(<span class="hljs-string">'#subButton'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">var</span> newComment = $(<span class="hljs-string">'#newComment'</span>).val();
+            <span class="hljs-keyword">if</span> (newComment != <span class="hljs-string">''</span>) {
+                $.ajax({
+                    url: <span class="hljs-string">"&lt;?php echo base_url(); ?&gt;index.php?/ajax/addComment"</span>,
+                    method: <span class="hljs-string">'POST'</span>,
+                    data: {
+                        product_id: <span class="hljs-string">'&lt;?php echo $productId; ?&gt;'</span>,
+                        username: <span class="hljs-string">'&lt;?php echo $this-&gt;session-&gt;userdata('</span>username<span class="hljs-string">'); ?&gt;'</span>,
+                        comments: newComment,
+
+                    },
+                    success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span> </span>{
+                        <span class="hljs-keyword">var</span> content = <span class="hljs-string">''</span>
+                        <span class="hljs-keyword">var</span> result = JSON.parse(response);
+                        content += <span class="hljs-string">'&lt;div class="mb-5"&gt;&lt;h6&gt;'</span> + result[<span class="hljs-number">0</span>].username + <span class="hljs-string">'&lt;/h6&gt;'</span>;
+                        content += <span class="hljs-string">'&lt;p&gt;'</span> + result[<span class="hljs-number">0</span>].date + <span class="hljs-string">'&lt;/p&gt;'</span>;
+                        content += <span class="hljs-string">'&lt;p&gt;'</span> + result[<span class="hljs-number">0</span>].comments + <span class="hljs-string">'&lt;/p&gt;&lt;/div&gt;'</span>;
+
+                        $(<span class="hljs-string">'.comments'</span>).prepend(content);
+                    }
+                });
+            }
+        });
+
+        <span class="hljs-keyword">var</span> liked = <span class="hljs-string">'&lt;?php echo $isLiked; ?&gt;'</span>;
+        $(<span class="hljs-string">'#likeBtn'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+            $.ajax({
+                url: <span class="hljs-string">"&lt;?php echo base_url(); ?&gt;index.php?/likeBtn/handleLike"</span>,
+                method: <span class="hljs-string">'POST'</span>,
+                data: {
+                    product_id: <span class="hljs-string">'&lt;?php echo $productId; ?&gt;'</span>,
+                    username: <span class="hljs-string">'&lt;?php echo $this-&gt;session-&gt;userdata('</span>username<span class="hljs-string">'); ?&gt;'</span>,
+                    liked: liked,
+                },
+                success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span> </span>{
+                    <span class="hljs-keyword">if</span> (response != <span class="hljs-string">'error'</span> &amp;&amp; liked == <span class="hljs-string">'true'</span>) {
+                        $(<span class="hljs-string">'#likeBtn'</span>).removeClass(<span class="hljs-string">'btn-danger'</span>);
+                        $(<span class="hljs-string">'#likeBtn'</span>).addClass(<span class="hljs-string">'btn-outline-primary'</span>);
+                        $(<span class="hljs-string">'#likeBtn'</span>).text(<span class="hljs-string">'like: '</span> + response);
+                        liked = <span class="hljs-string">'false'</span>;
+
+                    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (response != <span class="hljs-string">'error'</span> &amp;&amp; liked == <span class="hljs-string">'false'</span>) {
+                        $(<span class="hljs-string">'#likeBtn'</span>).removeClass(<span class="hljs-string">'btn-outline-primary'</span>);
+                        $(<span class="hljs-string">'#likeBtn'</span>).addClass(<span class="hljs-string">'btn-danger'</span>);
+                        $(<span class="hljs-string">'#likeBtn'</span>).text(<span class="hljs-string">'like: '</span> + response);
+                        liked = <span class="hljs-string">'true'</span>;
+                    }
+                }
+            });
+        });
+    });
+&lt;/script&gt;
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

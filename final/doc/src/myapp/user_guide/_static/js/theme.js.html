@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>theme.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../doc-style.css" />
+  <script src="../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../";
+    var thisFile = "src\\myapp\\user_guide\\_static\\js\\theme.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>theme.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Shift nav in mobile when clicking the menu.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-string">"[data-toggle='wy-nav-top']"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        $(<span class="hljs-string">"[data-toggle='wy-nav-shift']"</span>).toggleClass(<span class="hljs-string">"shift"</span>);
+        $(<span class="hljs-string">"[data-toggle='rst-versions']"</span>).toggleClass(<span class="hljs-string">"shift"</span>);
+    });
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Close menu when you click a link.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-string">".wy-menu-vertical .current ul li a"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        $(<span class="hljs-string">"[data-toggle='wy-nav-shift']"</span>).removeClass(<span class="hljs-string">"shift"</span>);
+        $(<span class="hljs-string">"[data-toggle='rst-versions']"</span>).toggleClass(<span class="hljs-string">"shift"</span>);
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-string">"[data-toggle='rst-current-version']"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        $(<span class="hljs-string">"[data-toggle='rst-versions']"</span>).toggleClass(<span class="hljs-string">"shift-up"</span>);
+    });
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Make tables responsive</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $(<span class="hljs-string">"table.docutils:not(.field-list)"</span>).wrap(<span class="hljs-string">"&lt;div class='wy-table-responsive'&gt;&lt;/div&gt;"</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<hr>
+<p>START DOC MODIFICATION BY RUFNEX
+v1.0 04.02.2015
+Add ToogleButton to get FullWidth-View by Johannes Gamperl codeigniter.de</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+    $(<span class="hljs-string">'#openToc'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        $(<span class="hljs-string">'#nav'</span>).slideToggle();
+    });
+    $(<span class="hljs-string">'#closeMe'</span>).click(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">if</span> (getCookie(<span class="hljs-string">'ciNav'</span>) != <span class="hljs-string">'yes'</span>) {
+            setCookie(<span class="hljs-string">'ciNav'</span>, <span class="hljs-string">'yes'</span>, <span class="hljs-number">365</span>);
+        } <span class="hljs-keyword">else</span> {
+            setCookie(<span class="hljs-string">'ciNav'</span>, <span class="hljs-string">'no'</span>, <span class="hljs-number">365</span>);
+        }
+        tocFlip();
+    });
+    <span class="hljs-keyword">var</span> tocFlip = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-keyword">if</span> (getCookie(<span class="hljs-string">'ciNav'</span>) == <span class="hljs-string">'yes'</span>) {
+            $(<span class="hljs-string">'#nav2'</span>).show();
+            $(<span class="hljs-string">'#topMenu'</span>).remove();
+            $(<span class="hljs-string">'body'</span>).css({ <span class="hljs-attr">background</span>: <span class="hljs-string">'none'</span> });
+            $(<span class="hljs-string">'.wy-nav-content-wrap'</span>).css({ <span class="hljs-attr">background</span>: <span class="hljs-string">'none'</span>, <span class="hljs-string">'margin-left'</span>: <span class="hljs-number">0</span> });
+            $(<span class="hljs-string">'.wy-breadcrumbs'</span>).append(<span class="hljs-string">'&lt;div style="float:right;"&gt;&lt;div style="float:left;" id="topMenu"&gt;'</span> + $(<span class="hljs-string">'.wy-form'</span>).parent().html() + <span class="hljs-string">'&lt;/div&gt;&lt;/div&gt;'</span>);
+            $(<span class="hljs-string">'.wy-nav-side'</span>).toggle();
+        } <span class="hljs-keyword">else</span> {
+            $(<span class="hljs-string">'#topMenu'</span>).remove();
+            $(<span class="hljs-string">'#nav'</span>).hide();
+            $(<span class="hljs-string">'#nav2'</span>).hide();
+            $(<span class="hljs-string">'body'</span>).css({ <span class="hljs-attr">background</span>: <span class="hljs-string">'#edf0f2;'</span> });
+            $(<span class="hljs-string">'.wy-nav-content-wrap'</span>).css({ <span class="hljs-attr">background</span>: <span class="hljs-string">'none repeat scroll 0 0 #fcfcfc;'</span>, <span class="hljs-string">'margin-left'</span>: <span class="hljs-string">'300px'</span> });
+            $(<span class="hljs-string">'.wy-nav-side'</span>).show();
+        }
+    };
+    <span class="hljs-keyword">if</span> (getCookie(<span class="hljs-string">'ciNav'</span>) == <span class="hljs-string">'yes'</span>)
+    {
+        tocFlip();
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>$('#nav').slideToggle();</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>END MODIFICATION ---</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+});
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Rufnex Cookie functions</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setCookie</span>(<span class="hljs-params">cname, cvalue, exdays</span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>expire the old cookie if existed to avoid multiple cookies with the same name</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span>  (getCookie(cname)) {
+        <span class="hljs-built_in">document</span>.cookie = cname + <span class="hljs-string">"=;expires=Thu, 01 Jan 1970 00:00:00 GMT"</span>;
+    }
+    <span class="hljs-keyword">var</span> d = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    d.setTime(d.getTime() + (exdays * <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>));
+    <span class="hljs-keyword">var</span> expires = <span class="hljs-string">"expires="</span> + d.toGMTString();
+    <span class="hljs-built_in">document</span>.cookie = cname + <span class="hljs-string">"="</span> + cvalue + <span class="hljs-string">"; "</span> + expires + <span class="hljs-string">"; path=/"</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getCookie</span>(<span class="hljs-params">cname</span>) </span>{
+    <span class="hljs-keyword">var</span> name = cname + <span class="hljs-string">"="</span>;
+    <span class="hljs-keyword">var</span> ca = <span class="hljs-built_in">document</span>.cookie.split(<span class="hljs-string">';'</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; ca.length; i++) {
+        <span class="hljs-keyword">var</span> c = ca[i];
+        <span class="hljs-keyword">while</span> (c.charAt(<span class="hljs-number">0</span>) == <span class="hljs-string">' '</span>)
+            c = c.substring(<span class="hljs-number">1</span>);
+        <span class="hljs-keyword">if</span> (c.indexOf(name) == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">return</span> c.substring(name.length, c.length);
+        }
+    }
+    <span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>End</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>resize window</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">$(<span class="hljs-built_in">window</span>).on(<span class="hljs-string">'resize'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>show side nav on small screens when pulldown is enabled</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (getCookie(<span class="hljs-string">'ciNav'</span>) == <span class="hljs-string">'yes'</span> &amp;&amp; $(<span class="hljs-built_in">window</span>).width() &lt;= <span class="hljs-number">768</span>) { <span class="hljs-comment">// 768px is the tablet size defined by the theme</span>
+        $(<span class="hljs-string">'.wy-nav-side'</span>).show();
+    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>changing css with jquery seems to override the default css media query
+change margin</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (getCookie(<span class="hljs-string">'ciNav'</span>) == <span class="hljs-string">'no'</span> &amp;&amp; $(<span class="hljs-built_in">window</span>).width() &lt;= <span class="hljs-number">768</span>) {
+        $(<span class="hljs-string">'.wy-nav-content-wrap'</span>).css({<span class="hljs-string">'margin-left'</span>: <span class="hljs-number">0</span>});
+    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>hide side nav on large screens when pulldown is enabled</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (getCookie(<span class="hljs-string">'ciNav'</span>) == <span class="hljs-string">'yes'</span> &amp;&amp; $(<span class="hljs-built_in">window</span>).width() &gt; <span class="hljs-number">768</span>) {
+        $(<span class="hljs-string">'.wy-nav-side'</span>).hide();
+    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>change margin</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (getCookie(<span class="hljs-string">'ciNav'</span>) == <span class="hljs-string">'no'</span> &amp;&amp; $(<span class="hljs-built_in">window</span>).width() &gt; <span class="hljs-number">768</span>) {
+        $(<span class="hljs-string">'.wy-nav-content-wrap'</span>).css({<span class="hljs-string">'margin-left'</span>: <span class="hljs-string">'300px'</span>});
+    }
+});
+
+<span class="hljs-built_in">window</span>.SphinxRtdTheme = (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">jquery</span>) </span>{
+    <span class="hljs-keyword">var</span> stickyNav = (<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> navBar,
+                win,
+                stickyNavCssClass = <span class="hljs-string">'stickynav'</span>,
+                applyStickNav = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                    <span class="hljs-keyword">if</span> (navBar.height() &lt;= win.height()) {
+                        navBar.addClass(stickyNavCssClass);
+                    } <span class="hljs-keyword">else</span> {
+                        navBar.removeClass(stickyNavCssClass);
+                    }
+                },
+                enable = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                    applyStickNav();
+                    win.on(<span class="hljs-string">'resize'</span>, applyStickNav);
+                },
+                init = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                    navBar = jquery(<span class="hljs-string">'nav.wy-nav-side:first'</span>);
+                    win = jquery(<span class="hljs-built_in">window</span>);
+                };
+        jquery(init);
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-attr">enable</span>: enable
+        };
+    }());
+    <span class="hljs-keyword">return</span> {
+        <span class="hljs-attr">StickyNav</span>: stickyNav
+    };
+}($));
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

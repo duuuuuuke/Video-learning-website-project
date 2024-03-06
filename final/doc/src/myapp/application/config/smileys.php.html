@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>smileys.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\smileys.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>smileys.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>SMILEYS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This file contains an array of smileys for use with the emoticon helper.</td>
+</tr>
+<tr>
+<td>Individual images can be used to replace multiple smileys.  For example:</td>
+</tr>
+<tr>
+<td>:-) and :) use the same image replacement.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>Please see user guide for more info:</td>
+</tr>
+<tr>
+<td>https://codeigniter.com/user_guide/helpers/smiley_helper.html</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$smileys = <span class="hljs-keyword">array</span>(
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>smiley			image name						width	height	alt</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+	<span class="hljs-string">':-)'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'grin.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'grin'</span>),
+	<span class="hljs-string">':lol:'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'lol.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'LOL'</span>),
+	<span class="hljs-string">':cheese:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'cheese.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'cheese'</span>),
+	<span class="hljs-string">':)'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'smile.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'smile'</span>),
+	<span class="hljs-string">';-)'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'wink.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'wink'</span>),
+	<span class="hljs-string">';)'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'wink.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'wink'</span>),
+	<span class="hljs-string">':smirk:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'smirk.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'smirk'</span>),
+	<span class="hljs-string">':roll:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'rolleyes.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'rolleyes'</span>),
+	<span class="hljs-string">':-S'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'confused.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'confused'</span>),
+	<span class="hljs-string">':wow:'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'surprise.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'surprised'</span>),
+	<span class="hljs-string">':bug:'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'bigsurprise.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'big surprise'</span>),
+	<span class="hljs-string">':-P'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'tongue_laugh.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'tongue laugh'</span>),
+	<span class="hljs-string">'%-P'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'tongue_rolleye.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'tongue rolleye'</span>),
+	<span class="hljs-string">';-P'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'tongue_wink.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'tongue wink'</span>),
+	<span class="hljs-string">':P'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'raspberry.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'raspberry'</span>),
+	<span class="hljs-string">':blank:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'blank.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'blank stare'</span>),
+	<span class="hljs-string">':long:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'longface.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'long face'</span>),
+	<span class="hljs-string">':ohh:'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'ohh.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'ohh'</span>),
+	<span class="hljs-string">':grrr:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'grrr.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'grrr'</span>),
+	<span class="hljs-string">':gulp:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'gulp.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'gulp'</span>),
+	<span class="hljs-string">'8-/'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'ohoh.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'oh oh'</span>),
+	<span class="hljs-string">':down:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'downer.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'downer'</span>),
+	<span class="hljs-string">':red:'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'embarrassed.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'red face'</span>),
+	<span class="hljs-string">':sick:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'sick.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'sick'</span>),
+	<span class="hljs-string">':shut:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shuteye.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'shut eye'</span>),
+	<span class="hljs-string">':-/'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'hmm.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'hmmm'</span>),
+	<span class="hljs-string">'&gt;:('</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'mad.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'mad'</span>),
+	<span class="hljs-string">':mad:'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'mad.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'mad'</span>),
+	<span class="hljs-string">'&gt;:-('</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'angry.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'angry'</span>),
+	<span class="hljs-string">':angry:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'angry.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'angry'</span>),
+	<span class="hljs-string">':zip:'</span>			=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'zip.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'zipper'</span>),
+	<span class="hljs-string">':kiss:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'kiss.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'kiss'</span>),
+	<span class="hljs-string">':ahhh:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shock.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'shock'</span>),
+	<span class="hljs-string">':coolsmile:'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shade_smile.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'cool smile'</span>),
+	<span class="hljs-string">':coolsmirk:'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shade_smirk.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'cool smirk'</span>),
+	<span class="hljs-string">':coolgrin:'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shade_grin.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'cool grin'</span>),
+	<span class="hljs-string">':coolhmm:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shade_hmm.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'cool hmm'</span>),
+	<span class="hljs-string">':coolmad:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shade_mad.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'cool mad'</span>),
+	<span class="hljs-string">':coolcheese:'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'shade_cheese.gif'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'cool cheese'</span>),
+	<span class="hljs-string">':vampire:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'vampire.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'vampire'</span>),
+	<span class="hljs-string">':snake:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'snake.gif'</span>,			<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'snake'</span>),
+	<span class="hljs-string">':exclaim:'</span>		=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'exclaim.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'exclaim'</span>),
+	<span class="hljs-string">':question:'</span>	=&gt;	<span class="hljs-keyword">array</span>(<span class="hljs-string">'question.gif'</span>,		<span class="hljs-string">'19'</span>,	<span class="hljs-string">'19'</span>,	<span class="hljs-string">'question'</span>)
+
+);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

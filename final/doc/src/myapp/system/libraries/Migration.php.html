@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Migration.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Migration.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Migration.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Migration Class</p>
+</div>
+<div class="body">
+<p>All migrations should implement this, forces up() and down() and gives
+access to the CI super-global.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Migration</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether the library is enabled</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_migration_enabled = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Migration numbering type</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_migration_type = <span class="hljs-string">'sequential'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Path to migration classes</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_migration_path = <span class="hljs-keyword">NULL</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Current migration version</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_migration_version = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Database table with migration info</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_migration_table = <span class="hljs-string">'migrations'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether to automatically run migrations</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_migration_auto_latest = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Migration basename regex</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_migration_regex;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error message</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_error_string = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize Migration Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$config
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($config = array<span class="hljs-params">()</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Only run this constructor on main library load</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! in_array(get_class(<span class="hljs-keyword">$this</span>), <span class="hljs-keyword">array</span>(<span class="hljs-string">'CI_Migration'</span>, config_item(<span class="hljs-string">'subclass_prefix'</span>).<span class="hljs-string">'Migration'</span>), <span class="hljs-keyword">TRUE</span>))
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+		<span class="hljs-keyword">foreach</span> ($config <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;{<span class="hljs-string">'_'</span>.$key} = $val;
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Migrations Class Initialized'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Are they trying to use migrations while it is disabled?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_migration_enabled !== <span class="hljs-keyword">TRUE</span>)
+		{
+			show_error(<span class="hljs-string">'Migrations has been loaded but is disabled or set up incorrectly.'</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>If not set, set it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_migration_path !== <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;_migration_path = APPPATH.<span class="hljs-string">'migrations/'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Add trailing slash if not set</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_migration_path = rtrim(<span class="hljs-keyword">$this</span>-&gt;_migration_path, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>Load migration language</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;lang-&gt;load(<span class="hljs-string">'migration'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>They'll probably be using dbforge</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;load-&gt;dbforge();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<p>Make sure the migration table name was set.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;_migration_table))
+		{
+			show_error(<span class="hljs-string">'Migrations configuration file (migration.php) must have "migration_table" set.'</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>Migration basename regex</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_migration_regex = (<span class="hljs-keyword">$this</span>-&gt;_migration_type === <span class="hljs-string">'timestamp'</span>)
+			? <span class="hljs-string">'/^\d{14}_(\w+)$/'</span>
+			: <span class="hljs-string">'/^\d{3}_(\w+)$/'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>Make sure a valid migration numbering type was set.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! in_array(<span class="hljs-keyword">$this</span>-&gt;_migration_type, <span class="hljs-keyword">array</span>(<span class="hljs-string">'sequential'</span>, <span class="hljs-string">'timestamp'</span>)))
+		{
+			show_error(<span class="hljs-string">'An invalid migration numbering type was specified: '</span>.<span class="hljs-keyword">$this</span>-&gt;_migration_type);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>If the migrations table is missing, make it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;db-&gt;table_exists(<span class="hljs-keyword">$this</span>-&gt;_migration_table))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;dbforge-&gt;add_field(<span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'version'</span> =&gt; <span class="hljs-keyword">array</span>(<span class="hljs-string">'type'</span> =&gt; <span class="hljs-string">'BIGINT'</span>, <span class="hljs-string">'constraint'</span> =&gt; <span class="hljs-number">20</span>),
+			));
+
+			<span class="hljs-keyword">$this</span>-&gt;dbforge-&gt;create_table(<span class="hljs-keyword">$this</span>-&gt;_migration_table, <span class="hljs-keyword">TRUE</span>);
+
+			<span class="hljs-keyword">$this</span>-&gt;db-&gt;insert(<span class="hljs-keyword">$this</span>-&gt;_migration_table, <span class="hljs-keyword">array</span>(<span class="hljs-string">'version'</span> =&gt; <span class="hljs-number">0</span>));
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>Do we auto migrate to the latest migration?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_migration_auto_latest === <span class="hljs-keyword">TRUE</span> &amp;&amp; ! <span class="hljs-keyword">$this</span>-&gt;latest())
+		{
+			show_error(<span class="hljs-keyword">$this</span>-&gt;error_string());
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Migrate to a schema version</p>
+</div>
+<div class="body">
+<p>Calls each migration step required to get to the schema version of
+choice</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$target_version Target schema version
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">version</span><span class="hljs-params">($target_version)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<p>Note: We use strings, so that timestamp versions work on 32-bit systems</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$current_version = <span class="hljs-keyword">$this</span>-&gt;_get_version();
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_migration_type === <span class="hljs-string">'sequential'</span>)
+		{
+			$target_version = sprintf(<span class="hljs-string">'%03d'</span>, $target_version);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$target_version = (string) $target_version;
+		}
+
+		$migrations = <span class="hljs-keyword">$this</span>-&gt;find_migrations();
+
+		<span class="hljs-keyword">if</span> ($target_version &gt; <span class="hljs-number">0</span> &amp;&amp; ! <span class="hljs-keyword">isset</span>($migrations[$target_version]))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_error_string = sprintf(<span class="hljs-keyword">$this</span>-&gt;lang-&gt;line(<span class="hljs-string">'migration_not_found'</span>), $target_version);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ($target_version &gt; $current_version)
+		{
+			$method = <span class="hljs-string">'up'</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ($target_version &lt; $current_version)
+		{
+			$method = <span class="hljs-string">'down'</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>We need this so that migrations are applied in reverse order</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			krsort($migrations);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>Well, there's nothing to migrate then ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<p>Validate all available migrations within our target range.</p>
+<p>Unfortunately, we'll have to use another loop to run them
+in order to avoid leaving the procedure in a broken state.</p>
+<p>See https://github.com/bcit-ci/CodeIgniter/issues/4539</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$pending = <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">foreach</span> ($migrations <span class="hljs-keyword">as</span> $number =&gt; $file)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>Ignore versions out of our range.</p>
+<p>Because we've previously sorted the $migrations array depending on the direction,
+we can safely break the loop once we reach $target_version ...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ($method === <span class="hljs-string">'up'</span>)
+			{
+				<span class="hljs-keyword">if</span> ($number &lt;= $current_version)
+				{
+					<span class="hljs-keyword">continue</span>;
+				}
+				<span class="hljs-keyword">elseif</span> ($number &gt; $target_version)
+				{
+					<span class="hljs-keyword">break</span>;
+				}
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">if</span> ($number &gt; $current_version)
+				{
+					<span class="hljs-keyword">continue</span>;
+				}
+				<span class="hljs-keyword">elseif</span> ($number &lt;= $target_version)
+				{
+					<span class="hljs-keyword">break</span>;
+				}
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<p>Check for sequence gaps</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_migration_type === <span class="hljs-string">'sequential'</span>)
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($previous) &amp;&amp; abs($number - $previous) &gt; <span class="hljs-number">1</span>)
+				{
+					<span class="hljs-keyword">$this</span>-&gt;_error_string = sprintf(<span class="hljs-keyword">$this</span>-&gt;lang-&gt;line(<span class="hljs-string">'migration_sequence_gap'</span>), $number);
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+
+				$previous = $number;
+			}
+
+			<span class="hljs-keyword">include_once</span>($file);
+			$class = <span class="hljs-string">'Migration_'</span>.ucfirst(strtolower(<span class="hljs-keyword">$this</span>-&gt;_get_migration_name(basename($file, <span class="hljs-string">'.php'</span>))));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<p>Validate the migration file structure</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ( ! class_exists($class, <span class="hljs-keyword">FALSE</span>))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_error_string = sprintf(<span class="hljs-keyword">$this</span>-&gt;lang-&gt;line(<span class="hljs-string">'migration_class_doesnt_exist'</span>), $class);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+			<span class="hljs-keyword">elseif</span> ( ! is_callable(<span class="hljs-keyword">array</span>($class, $method)))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;_error_string = sprintf(<span class="hljs-keyword">$this</span>-&gt;lang-&gt;line(<span class="hljs-string">'migration_missing_'</span>.$method.<span class="hljs-string">'_method'</span>), $class);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			$pending[$number] = <span class="hljs-keyword">array</span>($class, $method);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<p>Now just run the necessary migrations</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> ($pending <span class="hljs-keyword">as</span> $number =&gt; $migration)
+		{
+			log_message(<span class="hljs-string">'debug'</span>, <span class="hljs-string">'Migrating '</span>.$method.<span class="hljs-string">' from version '</span>.$current_version.<span class="hljs-string">' to version '</span>.$number);
+
+			$migration[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> $migration[<span class="hljs-number">0</span>];
+			call_user_func($migration);
+			$current_version = $number;
+			<span class="hljs-keyword">$this</span>-&gt;_update_version($current_version);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<p>This is necessary when moving down, since the the last migration applied
+will be the down() method for the next migration up from the target</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($current_version &lt;&gt; $target_version)
+		{
+			$current_version = $target_version;
+			<span class="hljs-keyword">$this</span>-&gt;_update_version($current_version);
+		}
+
+		log_message(<span class="hljs-string">'debug'</span>, <span class="hljs-string">'Finished migrating to '</span>.$current_version);
+		<span class="hljs-keyword">return</span> $current_version;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sets the schema to the latest migration</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed Current version string on success, FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">latest</span><span class="hljs-params">()</span>
+	</span>{
+		$migrations = <span class="hljs-keyword">$this</span>-&gt;find_migrations();
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($migrations))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_error_string = <span class="hljs-keyword">$this</span>-&gt;lang-&gt;line(<span class="hljs-string">'migration_none_found'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$last_migration = basename(end($migrations));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<p>Calculate the last migration step from existing migration
+filenames and proceed to the standard version migration</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;version(<span class="hljs-keyword">$this</span>-&gt;_get_migration_number($last_migration));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sets the schema to the migration version set in config</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed TRUE if no migrations are found, current version string on success, FALSE on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">current</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;version(<span class="hljs-keyword">$this</span>-&gt;_migration_version);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error string</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string Error message returned as a string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">error_string</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_error_string;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Retrieves list of available migration scripts</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array list of migration file paths sorted by version
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">find_migrations</span><span class="hljs-params">()</span>
+	</span>{
+		$migrations = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<p>Load all <em>_</em>.php files in the migrations path</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (glob(<span class="hljs-keyword">$this</span>-&gt;_migration_path.<span class="hljs-string">'*_*.php'</span>) <span class="hljs-keyword">as</span> $file)
+		{
+			$name = basename($file, <span class="hljs-string">'.php'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<p>Filter out non-migration files</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-keyword">$this</span>-&gt;_migration_regex, $name))
+			{
+				$number = <span class="hljs-keyword">$this</span>-&gt;_get_migration_number($name);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<p>There cannot be duplicate migration numbers</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($migrations[$number]))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;_error_string = sprintf(<span class="hljs-keyword">$this</span>-&gt;lang-&gt;line(<span class="hljs-string">'migration_multiple_version'</span>), $number);
+					show_error(<span class="hljs-keyword">$this</span>-&gt;_error_string);
+				}
+
+				$migrations[$number] = $file;
+			}
+		}
+
+		ksort($migrations);
+		<span class="hljs-keyword">return</span> $migrations;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Extracts the migration number from a filename</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$migration
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string Numeric portion of a migration filename
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_get_migration_number</span><span class="hljs-params">($migration)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> sscanf($migration, <span class="hljs-string">'%[0-9]+'</span>, $number)
+			? $number : <span class="hljs-string">'0'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Extracts the migration class name from a filename</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$migration
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string text portion of a migration filename
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_get_migration_name</span><span class="hljs-params">($migration)</span>
+	</span>{
+		$parts = explode(<span class="hljs-string">'_'</span>, $migration);
+		array_shift($parts);
+		<span class="hljs-keyword">return</span> implode(<span class="hljs-string">'_'</span>, $parts);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Retrieves current schema version</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string Current migration version
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_get_version</span><span class="hljs-params">()</span>
+	</span>{
+		$row = <span class="hljs-keyword">$this</span>-&gt;db-&gt;select(<span class="hljs-string">'version'</span>)-&gt;get(<span class="hljs-keyword">$this</span>-&gt;_migration_table)-&gt;row();
+		<span class="hljs-keyword">return</span> $row ? $row-&gt;version : <span class="hljs-string">'0'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Stores the current schema version</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$migration Migration reached
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_update_version</span><span class="hljs-params">($migration)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;db-&gt;update(<span class="hljs-keyword">$this</span>-&gt;_migration_table, <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'version'</span> =&gt; $migration
+		));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Enable the use of CI super-global</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$var
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__get</span><span class="hljs-params">($var)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> get_instance()-&gt;$var;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

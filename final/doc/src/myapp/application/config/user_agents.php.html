@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>user_agents.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\config\\user_agents.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>user_agents.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>| -------------------------------------------------------------------</p>
+<table>
+<thead>
+<tr>
+<th>USER AGENT TYPES</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>This file contains four arrays of user agent data. It is used by the</td>
+</tr>
+<tr>
+<td>User Agent Class to help identify browser, platform, robot, and</td>
+</tr>
+<tr>
+<td>mobile device data. The array keys are used to identify the device</td>
+</tr>
+<tr>
+<td>and the array values are used to set the actual name of the item.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$platforms = <span class="hljs-keyword">array</span>(
+	<span class="hljs-string">'windows nt 10.0'</span>	=&gt; <span class="hljs-string">'Windows 10'</span>,
+	<span class="hljs-string">'windows nt 6.3'</span>	=&gt; <span class="hljs-string">'Windows 8.1'</span>,
+	<span class="hljs-string">'windows nt 6.2'</span>	=&gt; <span class="hljs-string">'Windows 8'</span>,
+	<span class="hljs-string">'windows nt 6.1'</span>	=&gt; <span class="hljs-string">'Windows 7'</span>,
+	<span class="hljs-string">'windows nt 6.0'</span>	=&gt; <span class="hljs-string">'Windows Vista'</span>,
+	<span class="hljs-string">'windows nt 5.2'</span>	=&gt; <span class="hljs-string">'Windows 2003'</span>,
+	<span class="hljs-string">'windows nt 5.1'</span>	=&gt; <span class="hljs-string">'Windows XP'</span>,
+	<span class="hljs-string">'windows nt 5.0'</span>	=&gt; <span class="hljs-string">'Windows 2000'</span>,
+	<span class="hljs-string">'windows nt 4.0'</span>	=&gt; <span class="hljs-string">'Windows NT 4.0'</span>,
+	<span class="hljs-string">'winnt4.0'</span>			=&gt; <span class="hljs-string">'Windows NT 4.0'</span>,
+	<span class="hljs-string">'winnt 4.0'</span>			=&gt; <span class="hljs-string">'Windows NT'</span>,
+	<span class="hljs-string">'winnt'</span>				=&gt; <span class="hljs-string">'Windows NT'</span>,
+	<span class="hljs-string">'windows 98'</span>		=&gt; <span class="hljs-string">'Windows 98'</span>,
+	<span class="hljs-string">'win98'</span>				=&gt; <span class="hljs-string">'Windows 98'</span>,
+	<span class="hljs-string">'windows 95'</span>		=&gt; <span class="hljs-string">'Windows 95'</span>,
+	<span class="hljs-string">'win95'</span>				=&gt; <span class="hljs-string">'Windows 95'</span>,
+	<span class="hljs-string">'windows phone'</span>			=&gt; <span class="hljs-string">'Windows Phone'</span>,
+	<span class="hljs-string">'windows'</span>			=&gt; <span class="hljs-string">'Unknown Windows OS'</span>,
+	<span class="hljs-string">'android'</span>			=&gt; <span class="hljs-string">'Android'</span>,
+	<span class="hljs-string">'blackberry'</span>		=&gt; <span class="hljs-string">'BlackBerry'</span>,
+	<span class="hljs-string">'iphone'</span>			=&gt; <span class="hljs-string">'iOS'</span>,
+	<span class="hljs-string">'ipad'</span>				=&gt; <span class="hljs-string">'iOS'</span>,
+	<span class="hljs-string">'ipod'</span>				=&gt; <span class="hljs-string">'iOS'</span>,
+	<span class="hljs-string">'os x'</span>				=&gt; <span class="hljs-string">'Mac OS X'</span>,
+	<span class="hljs-string">'ppc mac'</span>			=&gt; <span class="hljs-string">'Power PC Mac'</span>,
+	<span class="hljs-string">'freebsd'</span>			=&gt; <span class="hljs-string">'FreeBSD'</span>,
+	<span class="hljs-string">'ppc'</span>				=&gt; <span class="hljs-string">'Macintosh'</span>,
+	<span class="hljs-string">'linux'</span>				=&gt; <span class="hljs-string">'Linux'</span>,
+	<span class="hljs-string">'debian'</span>			=&gt; <span class="hljs-string">'Debian'</span>,
+	<span class="hljs-string">'sunos'</span>				=&gt; <span class="hljs-string">'Sun Solaris'</span>,
+	<span class="hljs-string">'beos'</span>				=&gt; <span class="hljs-string">'BeOS'</span>,
+	<span class="hljs-string">'apachebench'</span>		=&gt; <span class="hljs-string">'ApacheBench'</span>,
+	<span class="hljs-string">'aix'</span>				=&gt; <span class="hljs-string">'AIX'</span>,
+	<span class="hljs-string">'irix'</span>				=&gt; <span class="hljs-string">'Irix'</span>,
+	<span class="hljs-string">'osf'</span>				=&gt; <span class="hljs-string">'DEC OSF'</span>,
+	<span class="hljs-string">'hp-ux'</span>				=&gt; <span class="hljs-string">'HP-UX'</span>,
+	<span class="hljs-string">'netbsd'</span>			=&gt; <span class="hljs-string">'NetBSD'</span>,
+	<span class="hljs-string">'bsdi'</span>				=&gt; <span class="hljs-string">'BSDi'</span>,
+	<span class="hljs-string">'openbsd'</span>			=&gt; <span class="hljs-string">'OpenBSD'</span>,
+	<span class="hljs-string">'gnu'</span>				=&gt; <span class="hljs-string">'GNU/Linux'</span>,
+	<span class="hljs-string">'unix'</span>				=&gt; <span class="hljs-string">'Unknown Unix OS'</span>,
+	<span class="hljs-string">'symbian'</span> 			=&gt; <span class="hljs-string">'Symbian OS'</span>
+);
+
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>The order of this array should NOT be changed. Many browsers return
+multiple browser types so we want to identify the sub-type first.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$browsers = <span class="hljs-keyword">array</span>(
+	<span class="hljs-string">'OPR'</span>			=&gt; <span class="hljs-string">'Opera'</span>,
+	<span class="hljs-string">'Flock'</span>			=&gt; <span class="hljs-string">'Flock'</span>,
+	<span class="hljs-string">'Edge'</span>			=&gt; <span class="hljs-string">'Edge'</span>,
+	<span class="hljs-string">'Chrome'</span>		=&gt; <span class="hljs-string">'Chrome'</span>,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Opera 10+ always reports Opera/9.80 and appends Version/<real version> to the user agent string</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'Opera.*?Version'</span>	=&gt; <span class="hljs-string">'Opera'</span>,
+	<span class="hljs-string">'Opera'</span>			=&gt; <span class="hljs-string">'Opera'</span>,
+	<span class="hljs-string">'MSIE'</span>			=&gt; <span class="hljs-string">'Internet Explorer'</span>,
+	<span class="hljs-string">'Internet Explorer'</span>	=&gt; <span class="hljs-string">'Internet Explorer'</span>,
+	<span class="hljs-string">'Trident.* rv'</span>	=&gt; <span class="hljs-string">'Internet Explorer'</span>,
+	<span class="hljs-string">'Shiira'</span>		=&gt; <span class="hljs-string">'Shiira'</span>,
+	<span class="hljs-string">'Firefox'</span>		=&gt; <span class="hljs-string">'Firefox'</span>,
+	<span class="hljs-string">'Chimera'</span>		=&gt; <span class="hljs-string">'Chimera'</span>,
+	<span class="hljs-string">'Phoenix'</span>		=&gt; <span class="hljs-string">'Phoenix'</span>,
+	<span class="hljs-string">'Firebird'</span>		=&gt; <span class="hljs-string">'Firebird'</span>,
+	<span class="hljs-string">'Camino'</span>		=&gt; <span class="hljs-string">'Camino'</span>,
+	<span class="hljs-string">'Netscape'</span>		=&gt; <span class="hljs-string">'Netscape'</span>,
+	<span class="hljs-string">'OmniWeb'</span>		=&gt; <span class="hljs-string">'OmniWeb'</span>,
+	<span class="hljs-string">'Safari'</span>		=&gt; <span class="hljs-string">'Safari'</span>,
+	<span class="hljs-string">'Mozilla'</span>		=&gt; <span class="hljs-string">'Mozilla'</span>,
+	<span class="hljs-string">'Konqueror'</span>		=&gt; <span class="hljs-string">'Konqueror'</span>,
+	<span class="hljs-string">'icab'</span>			=&gt; <span class="hljs-string">'iCab'</span>,
+	<span class="hljs-string">'Lynx'</span>			=&gt; <span class="hljs-string">'Lynx'</span>,
+	<span class="hljs-string">'Links'</span>			=&gt; <span class="hljs-string">'Links'</span>,
+	<span class="hljs-string">'hotjava'</span>		=&gt; <span class="hljs-string">'HotJava'</span>,
+	<span class="hljs-string">'amaya'</span>			=&gt; <span class="hljs-string">'Amaya'</span>,
+	<span class="hljs-string">'IBrowse'</span>		=&gt; <span class="hljs-string">'IBrowse'</span>,
+	<span class="hljs-string">'Maxthon'</span>		=&gt; <span class="hljs-string">'Maxthon'</span>,
+	<span class="hljs-string">'Ubuntu'</span>		=&gt; <span class="hljs-string">'Ubuntu Web Browser'</span>
+);
+
+$mobiles = <span class="hljs-keyword">array</span>(
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>legacy array, old values commented out</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'mobileexplorer'</span>	=&gt; <span class="hljs-string">'Mobile Explorer'</span>,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>'openwave'			=&gt; 'Open Wave',
+'opera mini'		=&gt; 'Opera Mini',
+'operamini'			=&gt; 'Opera Mini',
+'elaine'			=&gt; 'Palm',</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'palmsource'</span>		=&gt; <span class="hljs-string">'Palm'</span>,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>'digital paths'		=&gt; 'Palm',
+'avantgo'			=&gt; 'Avantgo',
+'xiino'				=&gt; 'Xiino',</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'palmscape'</span>			=&gt; <span class="hljs-string">'Palmscape'</span>,
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>'nokia'				=&gt; 'Nokia',
+'ericsson'			=&gt; 'Ericsson',
+'blackberry'		=&gt; 'BlackBerry',
+'motorola'			=&gt; 'Motorola'</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Phones and Manufacturers</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'motorola'</span>		=&gt; <span class="hljs-string">'Motorola'</span>,
+	<span class="hljs-string">'nokia'</span>			=&gt; <span class="hljs-string">'Nokia'</span>,
+	<span class="hljs-string">'nexus'</span>			=&gt; <span class="hljs-string">'Nexus'</span>,
+	<span class="hljs-string">'palm'</span>			=&gt; <span class="hljs-string">'Palm'</span>,
+	<span class="hljs-string">'iphone'</span>		=&gt; <span class="hljs-string">'Apple iPhone'</span>,
+	<span class="hljs-string">'ipad'</span>			=&gt; <span class="hljs-string">'iPad'</span>,
+	<span class="hljs-string">'ipod'</span>			=&gt; <span class="hljs-string">'Apple iPod Touch'</span>,
+	<span class="hljs-string">'sony'</span>			=&gt; <span class="hljs-string">'Sony Ericsson'</span>,
+	<span class="hljs-string">'ericsson'</span>		=&gt; <span class="hljs-string">'Sony Ericsson'</span>,
+	<span class="hljs-string">'blackberry'</span>	=&gt; <span class="hljs-string">'BlackBerry'</span>,
+	<span class="hljs-string">'cocoon'</span>		=&gt; <span class="hljs-string">'O2 Cocoon'</span>,
+	<span class="hljs-string">'blazer'</span>		=&gt; <span class="hljs-string">'Treo'</span>,
+	<span class="hljs-string">'lg'</span>			=&gt; <span class="hljs-string">'LG'</span>,
+	<span class="hljs-string">'amoi'</span>			=&gt; <span class="hljs-string">'Amoi'</span>,
+	<span class="hljs-string">'xda'</span>			=&gt; <span class="hljs-string">'XDA'</span>,
+	<span class="hljs-string">'mda'</span>			=&gt; <span class="hljs-string">'MDA'</span>,
+	<span class="hljs-string">'vario'</span>			=&gt; <span class="hljs-string">'Vario'</span>,
+	<span class="hljs-string">'htc'</span>			=&gt; <span class="hljs-string">'HTC'</span>,
+	<span class="hljs-string">'samsung'</span>		=&gt; <span class="hljs-string">'Samsung'</span>,
+	<span class="hljs-string">'sharp'</span>			=&gt; <span class="hljs-string">'Sharp'</span>,
+	<span class="hljs-string">'sie-'</span>			=&gt; <span class="hljs-string">'Siemens'</span>,
+	<span class="hljs-string">'alcatel'</span>		=&gt; <span class="hljs-string">'Alcatel'</span>,
+	<span class="hljs-string">'benq'</span>			=&gt; <span class="hljs-string">'BenQ'</span>,
+	<span class="hljs-string">'ipaq'</span>			=&gt; <span class="hljs-string">'HP iPaq'</span>,
+	<span class="hljs-string">'mot-'</span>			=&gt; <span class="hljs-string">'Motorola'</span>,
+	<span class="hljs-string">'playstation portable'</span>	=&gt; <span class="hljs-string">'PlayStation Portable'</span>,
+	<span class="hljs-string">'playstation 3'</span>		=&gt; <span class="hljs-string">'PlayStation 3'</span>,
+	<span class="hljs-string">'playstation vita'</span>  	=&gt; <span class="hljs-string">'PlayStation Vita'</span>,
+	<span class="hljs-string">'hiptop'</span>		=&gt; <span class="hljs-string">'Danger Hiptop'</span>,
+	<span class="hljs-string">'nec-'</span>			=&gt; <span class="hljs-string">'NEC'</span>,
+	<span class="hljs-string">'panasonic'</span>		=&gt; <span class="hljs-string">'Panasonic'</span>,
+	<span class="hljs-string">'philips'</span>		=&gt; <span class="hljs-string">'Philips'</span>,
+	<span class="hljs-string">'sagem'</span>			=&gt; <span class="hljs-string">'Sagem'</span>,
+	<span class="hljs-string">'sanyo'</span>			=&gt; <span class="hljs-string">'Sanyo'</span>,
+	<span class="hljs-string">'spv'</span>			=&gt; <span class="hljs-string">'SPV'</span>,
+	<span class="hljs-string">'zte'</span>			=&gt; <span class="hljs-string">'ZTE'</span>,
+	<span class="hljs-string">'sendo'</span>			=&gt; <span class="hljs-string">'Sendo'</span>,
+	<span class="hljs-string">'nintendo dsi'</span>	=&gt; <span class="hljs-string">'Nintendo DSi'</span>,
+	<span class="hljs-string">'nintendo ds'</span>	=&gt; <span class="hljs-string">'Nintendo DS'</span>,
+	<span class="hljs-string">'nintendo 3ds'</span>	=&gt; <span class="hljs-string">'Nintendo 3DS'</span>,
+	<span class="hljs-string">'wii'</span>			=&gt; <span class="hljs-string">'Nintendo Wii'</span>,
+	<span class="hljs-string">'open web'</span>		=&gt; <span class="hljs-string">'Open Web'</span>,
+	<span class="hljs-string">'openweb'</span>		=&gt; <span class="hljs-string">'OpenWeb'</span>,
+	<span class="hljs-string">'meizu'</span>                 =&gt; <span class="hljs-string">'Meizu'</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Operating Systems</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'android'</span>		=&gt; <span class="hljs-string">'Android'</span>,
+	<span class="hljs-string">'symbian'</span>		=&gt; <span class="hljs-string">'Symbian'</span>,
+	<span class="hljs-string">'SymbianOS'</span>		=&gt; <span class="hljs-string">'SymbianOS'</span>,
+	<span class="hljs-string">'elaine'</span>		=&gt; <span class="hljs-string">'Palm'</span>,
+	<span class="hljs-string">'series60'</span>		=&gt; <span class="hljs-string">'Symbian S60'</span>,
+	<span class="hljs-string">'windows ce'</span>	=&gt; <span class="hljs-string">'Windows CE'</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>Browsers</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'obigo'</span>			=&gt; <span class="hljs-string">'Obigo'</span>,
+	<span class="hljs-string">'netfront'</span>		=&gt; <span class="hljs-string">'Netfront Browser'</span>,
+	<span class="hljs-string">'openwave'</span>		=&gt; <span class="hljs-string">'Openwave Browser'</span>,
+	<span class="hljs-string">'mobilexplorer'</span>	=&gt; <span class="hljs-string">'Mobile Explorer'</span>,
+	<span class="hljs-string">'operamini'</span>		=&gt; <span class="hljs-string">'Opera Mini'</span>,
+	<span class="hljs-string">'opera mini'</span>	=&gt; <span class="hljs-string">'Opera Mini'</span>,
+	<span class="hljs-string">'opera mobi'</span>	=&gt; <span class="hljs-string">'Opera Mobile'</span>,
+	<span class="hljs-string">'fennec'</span>		=&gt; <span class="hljs-string">'Firefox Mobile'</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>Other</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'digital paths'</span>	=&gt; <span class="hljs-string">'Digital Paths'</span>,
+	<span class="hljs-string">'avantgo'</span>		=&gt; <span class="hljs-string">'AvantGo'</span>,
+	<span class="hljs-string">'xiino'</span>			=&gt; <span class="hljs-string">'Xiino'</span>,
+	<span class="hljs-string">'novarra'</span>		=&gt; <span class="hljs-string">'Novarra Transcoder'</span>,
+	<span class="hljs-string">'vodafone'</span>		=&gt; <span class="hljs-string">'Vodafone'</span>,
+	<span class="hljs-string">'docomo'</span>		=&gt; <span class="hljs-string">'NTT DoCoMo'</span>,
+	<span class="hljs-string">'o2'</span>			=&gt; <span class="hljs-string">'O2'</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Fallback</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-string">'mobile'</span>		=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'wireless'</span>		=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'j2me'</span>			=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'midp'</span>			=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'cldc'</span>			=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'up.link'</span>		=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'up.browser'</span>	=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'smartphone'</span>	=&gt; <span class="hljs-string">'Generic Mobile'</span>,
+	<span class="hljs-string">'cellphone'</span>		=&gt; <span class="hljs-string">'Generic Mobile'</span>
+);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>There are hundreds of bots but these are the most common.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">$robots = <span class="hljs-keyword">array</span>(
+	<span class="hljs-string">'googlebot'</span>		=&gt; <span class="hljs-string">'Googlebot'</span>,
+	<span class="hljs-string">'msnbot'</span>		=&gt; <span class="hljs-string">'MSNBot'</span>,
+	<span class="hljs-string">'baiduspider'</span>		=&gt; <span class="hljs-string">'Baiduspider'</span>,
+	<span class="hljs-string">'bingbot'</span>		=&gt; <span class="hljs-string">'Bing'</span>,
+	<span class="hljs-string">'slurp'</span>			=&gt; <span class="hljs-string">'Inktomi Slurp'</span>,
+	<span class="hljs-string">'yahoo'</span>			=&gt; <span class="hljs-string">'Yahoo'</span>,
+	<span class="hljs-string">'ask jeeves'</span>		=&gt; <span class="hljs-string">'Ask Jeeves'</span>,
+	<span class="hljs-string">'fastcrawler'</span>		=&gt; <span class="hljs-string">'FastCrawler'</span>,
+	<span class="hljs-string">'infoseek'</span>		=&gt; <span class="hljs-string">'InfoSeek Robot 1.0'</span>,
+	<span class="hljs-string">'lycos'</span>			=&gt; <span class="hljs-string">'Lycos'</span>,
+	<span class="hljs-string">'yandex'</span>		=&gt; <span class="hljs-string">'YandexBot'</span>,
+	<span class="hljs-string">'mediapartners-google'</span>	=&gt; <span class="hljs-string">'MediaPartners Google'</span>,
+	<span class="hljs-string">'CRAZYWEBCRAWLER'</span>	=&gt; <span class="hljs-string">'Crazy Webcrawler'</span>,
+	<span class="hljs-string">'adsbot-google'</span>		=&gt; <span class="hljs-string">'AdsBot Google'</span>,
+	<span class="hljs-string">'feedfetcher-google'</span>	=&gt; <span class="hljs-string">'Feedfetcher Google'</span>,
+	<span class="hljs-string">'curious george'</span>	=&gt; <span class="hljs-string">'Curious George'</span>,
+	<span class="hljs-string">'ia_archiver'</span>		=&gt; <span class="hljs-string">'Alexa Crawler'</span>,
+	<span class="hljs-string">'MJ12bot'</span>		=&gt; <span class="hljs-string">'Majestic-12'</span>,
+	<span class="hljs-string">'Uptimebot'</span>		=&gt; <span class="hljs-string">'Uptimebot'</span>
+);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

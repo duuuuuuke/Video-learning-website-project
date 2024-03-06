@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>order.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "src\\order.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>order.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span> 
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"I am order.php!"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
+$redis = <span class="hljs-keyword">new</span> Redis();
+$redis-&gt;connect(<span class="hljs-string">'myredis'</span>, <span class="hljs-number">6379</span>);
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"Connection to Redis server sucessfully!"</span>; 
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"Server is running: "</span> . $redis-&gt;ping();
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;"</span>;
+$redis-&gt;set(<span class="hljs-string">"Cloud Computing"</span>, <span class="hljs-string">"INFS3208/7208"</span>); 
+<span class="hljs-keyword">echo</span> <span class="hljs-string">"Course code of Cloud Computing is: "</span> .$redis-&gt;get(<span class="hljs-string">"Cloud Computing"</span>); 
+<span class="hljs-meta">?&gt;</span>
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>date_helper.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\helpers\\date_helper.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>date_helper.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Date Helpers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'now'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get &quot;now&quot; time</p>
+</div>
+<div class="body">
+<p>Returns time() based on the timezone parameter or on the
+&quot;time_reference&quot; setting</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">now</span><span class="hljs-params">($timezone = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($timezone))
+		{
+			$timezone = config_item(<span class="hljs-string">'time_reference'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> ($timezone === <span class="hljs-string">'local'</span> <span class="hljs-keyword">OR</span> $timezone === date_default_timezone_get())
+		{
+			<span class="hljs-keyword">return</span> time();
+		}
+
+		$datetime = <span class="hljs-keyword">new</span> DateTime(<span class="hljs-string">'now'</span>, <span class="hljs-keyword">new</span> DateTimeZone($timezone));
+		sscanf($datetime-&gt;format(<span class="hljs-string">'j-n-Y G:i:s'</span>), <span class="hljs-string">'%d-%d-%d %d:%d:%d'</span>, $day, $month, $year, $hour, $minute, $second);
+
+		<span class="hljs-keyword">return</span> mktime($hour, $minute, $second, $month, $day, $year);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'mdate'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Convert MySQL Style Datecodes</p>
+</div>
+<div class="body">
+<p>This function is identical to PHPs date() function,
+except that it allows date codes to be formatted using
+the MySQL style, where each code letter is preceded
+with a percent sign:  %Y %m %d etc...</p>
+<p>The benefit of doing dates this way is that you don't
+have to worry about escaping your text letters that
+match the date codes.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mdate</span><span class="hljs-params">($datestr = <span class="hljs-string">''</span>, $time = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($datestr === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">empty</span>($time))
+		{
+			$time = now();
+		}
+
+		$datestr = str_replace(
+			<span class="hljs-string">'%\\'</span>,
+			<span class="hljs-string">''</span>,
+			preg_replace(<span class="hljs-string">'/([a-z]+?){1}/i'</span>, <span class="hljs-string">'\\\\\\1'</span>, $datestr)
+		);
+
+		<span class="hljs-keyword">return</span> date($datestr, $time);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'standard_date'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Standard Date</p>
+</div>
+<div class="body">
+<p>Returns a date formatted according to the submitted standard.</p>
+<p>As of PHP 5.2, the DateTime extension provides constants that
+serve for the exact same purpose and are used with date().</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$fmt = 'DATE_RFC822' the chosen format
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$time = NULL Unix timestamp
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">standard_date</span><span class="hljs-params">($fmt = <span class="hljs-string">'DATE_RFC822'</span>, $time = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($time))
+		{
+			$time = now();
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Procedural style pre-defined constants from the DateTime extension</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (strpos($fmt, <span class="hljs-string">'DATE_'</span>) !== <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> defined($fmt) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> date(constant($fmt), $time);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'timespan'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Timespan</p>
+</div>
+<div class="body">
+<p>Returns a span of seconds in this format:
+	10 days 14 hours 36 minutes 47 seconds</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>a number of seconds
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>Unix timestamp
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>a number of display units
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timespan</span><span class="hljs-params">($seconds = <span class="hljs-number">1</span>, $time = <span class="hljs-string">''</span>, $units = <span class="hljs-number">7</span>)</span>
+	</span>{
+		$CI =&amp; get_instance();
+		$CI-&gt;lang-&gt;load(<span class="hljs-string">'date'</span>);
+
+		is_numeric($seconds) <span class="hljs-keyword">OR</span> $seconds = <span class="hljs-number">1</span>;
+		is_numeric($time) <span class="hljs-keyword">OR</span> $time = time();
+		is_numeric($units) <span class="hljs-keyword">OR</span> $units = <span class="hljs-number">7</span>;
+
+		$seconds = ($time &lt;= $seconds) ? <span class="hljs-number">1</span> : $time - $seconds;
+
+		$str = <span class="hljs-keyword">array</span>();
+		$years = floor($seconds / <span class="hljs-number">31557600</span>);
+
+		<span class="hljs-keyword">if</span> ($years &gt; <span class="hljs-number">0</span>)
+		{
+			$str[] = $years.<span class="hljs-string">' '</span>.$CI-&gt;lang-&gt;line($years &gt; <span class="hljs-number">1</span> ? <span class="hljs-string">'date_years'</span> : <span class="hljs-string">'date_year'</span>);
+		}
+
+		$seconds -= $years * <span class="hljs-number">31557600</span>;
+		$months = floor($seconds / <span class="hljs-number">2629743</span>);
+
+		<span class="hljs-keyword">if</span> (count($str) &lt; $units &amp;&amp; ($years &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $months &gt; <span class="hljs-number">0</span>))
+		{
+			<span class="hljs-keyword">if</span> ($months &gt; <span class="hljs-number">0</span>)
+			{
+				$str[] = $months.<span class="hljs-string">' '</span>.$CI-&gt;lang-&gt;line($months &gt; <span class="hljs-number">1</span> ? <span class="hljs-string">'date_months'</span> : <span class="hljs-string">'date_month'</span>);
+			}
+
+			$seconds -= $months * <span class="hljs-number">2629743</span>;
+		}
+
+		$weeks = floor($seconds / <span class="hljs-number">604800</span>);
+
+		<span class="hljs-keyword">if</span> (count($str) &lt; $units &amp;&amp; ($years &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $months &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $weeks &gt; <span class="hljs-number">0</span>))
+		{
+			<span class="hljs-keyword">if</span> ($weeks &gt; <span class="hljs-number">0</span>)
+			{
+				$str[] = $weeks.<span class="hljs-string">' '</span>.$CI-&gt;lang-&gt;line($weeks &gt; <span class="hljs-number">1</span> ? <span class="hljs-string">'date_weeks'</span> : <span class="hljs-string">'date_week'</span>);
+			}
+
+			$seconds -= $weeks * <span class="hljs-number">604800</span>;
+		}
+
+		$days = floor($seconds / <span class="hljs-number">86400</span>);
+
+		<span class="hljs-keyword">if</span> (count($str) &lt; $units &amp;&amp; ($months &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $weeks &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $days &gt; <span class="hljs-number">0</span>))
+		{
+			<span class="hljs-keyword">if</span> ($days &gt; <span class="hljs-number">0</span>)
+			{
+				$str[] = $days.<span class="hljs-string">' '</span>.$CI-&gt;lang-&gt;line($days &gt; <span class="hljs-number">1</span> ? <span class="hljs-string">'date_days'</span> : <span class="hljs-string">'date_day'</span>);
+			}
+
+			$seconds -= $days * <span class="hljs-number">86400</span>;
+		}
+
+		$hours = floor($seconds / <span class="hljs-number">3600</span>);
+
+		<span class="hljs-keyword">if</span> (count($str) &lt; $units &amp;&amp; ($days &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $hours &gt; <span class="hljs-number">0</span>))
+		{
+			<span class="hljs-keyword">if</span> ($hours &gt; <span class="hljs-number">0</span>)
+			{
+				$str[] = $hours.<span class="hljs-string">' '</span>.$CI-&gt;lang-&gt;line($hours &gt; <span class="hljs-number">1</span> ? <span class="hljs-string">'date_hours'</span> : <span class="hljs-string">'date_hour'</span>);
+			}
+
+			$seconds -= $hours * <span class="hljs-number">3600</span>;
+		}
+
+		$minutes = floor($seconds / <span class="hljs-number">60</span>);
+
+		<span class="hljs-keyword">if</span> (count($str) &lt; $units &amp;&amp; ($days &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $hours &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $minutes &gt; <span class="hljs-number">0</span>))
+		{
+			<span class="hljs-keyword">if</span> ($minutes &gt; <span class="hljs-number">0</span>)
+			{
+				$str[] = $minutes.<span class="hljs-string">' '</span>.$CI-&gt;lang-&gt;line($minutes &gt; <span class="hljs-number">1</span> ? <span class="hljs-string">'date_minutes'</span> : <span class="hljs-string">'date_minute'</span>);
+			}
+
+			$seconds -= $minutes * <span class="hljs-number">60</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (count($str) === <span class="hljs-number">0</span>)
+		{
+			$str[] = $seconds.<span class="hljs-string">' '</span>.$CI-&gt;lang-&gt;line($seconds &gt; <span class="hljs-number">1</span> ? <span class="hljs-string">'date_seconds'</span> : <span class="hljs-string">'date_second'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> implode(<span class="hljs-string">', '</span>, $str);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'days_in_month'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Number of days in a month</p>
+</div>
+<div class="body">
+<p>Takes a month/year as input and returns the number of days
+for the given month/year. Takes leap years into consideration.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>a numeric month
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>a numeric year
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">days_in_month</span><span class="hljs-params">($month = <span class="hljs-number">0</span>, $year = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($month &lt; <span class="hljs-number">1</span> <span class="hljs-keyword">OR</span> $month &gt; <span class="hljs-number">12</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_numeric($year) <span class="hljs-keyword">OR</span> strlen($year) !== <span class="hljs-number">4</span>)
+		{
+			$year = date(<span class="hljs-string">'Y'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> (defined(<span class="hljs-string">'CAL_GREGORIAN'</span>))
+		{
+			<span class="hljs-keyword">return</span> cal_days_in_month(CAL_GREGORIAN, $month, $year);
+		}
+
+		<span class="hljs-keyword">if</span> ($year &gt;= <span class="hljs-number">1970</span>)
+		{
+			<span class="hljs-keyword">return</span> (int) date(<span class="hljs-string">'t'</span>, mktime(<span class="hljs-number">12</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, $month, <span class="hljs-number">1</span>, $year));
+		}
+
+		<span class="hljs-keyword">if</span> ($month == <span class="hljs-number">2</span>)
+		{
+			<span class="hljs-keyword">if</span> ($year % <span class="hljs-number">400</span> === <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> ($year % <span class="hljs-number">4</span> === <span class="hljs-number">0</span> &amp;&amp; $year % <span class="hljs-number">100</span> !== <span class="hljs-number">0</span>))
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-number">29</span>;
+			}
+		}
+
+		$days_in_month	= <span class="hljs-keyword">array</span>(<span class="hljs-number">31</span>, <span class="hljs-number">28</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>);
+		<span class="hljs-keyword">return</span> $days_in_month[$month - <span class="hljs-number">1</span>];
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'local_to_gmt'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Converts a local Unix timestamp to GMT</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>Unix timestamp
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">local_to_gmt</span><span class="hljs-params">($time = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($time === <span class="hljs-string">''</span>)
+		{
+			$time = time();
+		}
+
+		<span class="hljs-keyword">return</span> mktime(
+			gmdate(<span class="hljs-string">'G'</span>, $time),
+			gmdate(<span class="hljs-string">'i'</span>, $time),
+			gmdate(<span class="hljs-string">'s'</span>, $time),
+			gmdate(<span class="hljs-string">'n'</span>, $time),
+			gmdate(<span class="hljs-string">'j'</span>, $time),
+			gmdate(<span class="hljs-string">'Y'</span>, $time)
+		);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'gmt_to_local'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Converts GMT time to a localized value</p>
+</div>
+<div class="body">
+<p>Takes a Unix timestamp (in GMT) as input, and returns
+at the local value based on the timezone and DST setting
+submitted</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>Unix timestamp
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>timezone
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>whether DST is active
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gmt_to_local</span><span class="hljs-params">($time = <span class="hljs-string">''</span>, $timezone = <span class="hljs-string">'UTC'</span>, $dst = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($time === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> now();
+		}
+
+		$time += timezones($timezone) * <span class="hljs-number">3600</span>;
+
+		<span class="hljs-keyword">return</span> ($dst === <span class="hljs-keyword">TRUE</span>) ? $time + <span class="hljs-number">3600</span> : $time;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'mysql_to_unix'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Converts a MySQL Timestamp to Unix</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>MySQL timestamp YYYY-MM-DD HH:MM:SS
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int Unix timstamp
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mysql_to_unix</span><span class="hljs-params">($time = <span class="hljs-string">''</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>We'll remove certain characters for backward compatibility
+since the formatting changed with MySQL 4.1
+YYYY-MM-DD HH:MM:SS</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$time = str_replace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'-'</span>, <span class="hljs-string">':'</span>, <span class="hljs-string">' '</span>), <span class="hljs-string">''</span>, $time);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>YYYYMMDDHHMMSS</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> mktime(
+			substr($time, <span class="hljs-number">8</span>, <span class="hljs-number">2</span>),
+			substr($time, <span class="hljs-number">10</span>, <span class="hljs-number">2</span>),
+			substr($time, <span class="hljs-number">12</span>, <span class="hljs-number">2</span>),
+			substr($time, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>),
+			substr($time, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>),
+			substr($time, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>)
+		);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'unix_to_human'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Unix to &quot;Human&quot;</p>
+</div>
+<div class="body">
+<p>Formats Unix timestamp to the following prototype: 2006-08-21 11:35 PM</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>Unix timestamp
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>whether to show seconds
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>format: us or euro
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unix_to_human</span><span class="hljs-params">($time = <span class="hljs-string">''</span>, $seconds = FALSE, $fmt = <span class="hljs-string">'us'</span>)</span>
+	</span>{
+		$r = date(<span class="hljs-string">'Y'</span>, $time).<span class="hljs-string">'-'</span>.date(<span class="hljs-string">'m'</span>, $time).<span class="hljs-string">'-'</span>.date(<span class="hljs-string">'d'</span>, $time).<span class="hljs-string">' '</span>;
+
+		<span class="hljs-keyword">if</span> ($fmt === <span class="hljs-string">'us'</span>)
+		{
+			$r .= date(<span class="hljs-string">'h'</span>, $time).<span class="hljs-string">':'</span>.date(<span class="hljs-string">'i'</span>, $time);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$r .= date(<span class="hljs-string">'H'</span>, $time).<span class="hljs-string">':'</span>.date(<span class="hljs-string">'i'</span>, $time);
+		}
+
+		<span class="hljs-keyword">if</span> ($seconds)
+		{
+			$r .= <span class="hljs-string">':'</span>.date(<span class="hljs-string">'s'</span>, $time);
+		}
+
+		<span class="hljs-keyword">if</span> ($fmt === <span class="hljs-string">'us'</span>)
+		{
+			<span class="hljs-keyword">return</span> $r.<span class="hljs-string">' '</span>.date(<span class="hljs-string">'A'</span>, $time);
+		}
+
+		<span class="hljs-keyword">return</span> $r;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'human_to_unix'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Convert &quot;human&quot; date to GMT</p>
+</div>
+<div class="body">
+<p>Reverses the above process</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>format: us or euro
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">human_to_unix</span><span class="hljs-params">($datestr = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($datestr === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$datestr = preg_replace(<span class="hljs-string">'/\040+/'</span>, <span class="hljs-string">' '</span>, trim($datestr));
+
+		<span class="hljs-keyword">if</span> ( ! preg_match(<span class="hljs-string">'/^(\d{2}|\d{4})\-[0-9]{1,2}\-[0-9]{1,2}\s[0-9]{1,2}:[0-9]{1,2}(?::[0-9]{1,2})?(?:\s[AP]M)?$/i'</span>, $datestr))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		sscanf($datestr, <span class="hljs-string">'%d-%d-%d %s %s'</span>, $year, $month, $day, $time, $ampm);
+		sscanf($time, <span class="hljs-string">'%d:%d:%d'</span>, $hour, $min, $sec);
+		<span class="hljs-keyword">isset</span>($sec) <span class="hljs-keyword">OR</span> $sec = <span class="hljs-number">0</span>;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($ampm))
+		{
+			$ampm = strtolower($ampm);
+
+			<span class="hljs-keyword">if</span> ($ampm[<span class="hljs-number">0</span>] === <span class="hljs-string">'p'</span> &amp;&amp; $hour &lt; <span class="hljs-number">12</span>)
+			{
+				$hour += <span class="hljs-number">12</span>;
+			}
+			<span class="hljs-keyword">elseif</span> ($ampm[<span class="hljs-number">0</span>] === <span class="hljs-string">'a'</span> &amp;&amp; $hour === <span class="hljs-number">12</span>)
+			{
+				$hour = <span class="hljs-number">0</span>;
+			}
+		}
+
+		<span class="hljs-keyword">return</span> mktime($hour, $min, $sec, $month, $day, $year);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'nice_date'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Turns many &quot;reasonably-date-like&quot; strings into something
+that is actually useful. This only works for dates after unix epoch.</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The terribly formatted date-like string
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>Date format to return (same as php date function)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">nice_date</span><span class="hljs-params">($bad_date = <span class="hljs-string">''</span>, $format = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($bad_date))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">'Unknown'</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">empty</span>($format))
+		{
+			$format = <span class="hljs-string">'U'</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<p>Date like: YYYYMM</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/^\d{6}$/i'</span>, $bad_date))
+		{
+			<span class="hljs-keyword">if</span> (in_array(substr($bad_date, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>), <span class="hljs-keyword">array</span>(<span class="hljs-string">'19'</span>, <span class="hljs-string">'20'</span>)))
+			{
+				$year  = substr($bad_date, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>);
+				$month = substr($bad_date, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$month  = substr($bad_date, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>);
+				$year   = substr($bad_date, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>);
+			}
+
+			<span class="hljs-keyword">return</span> date($format, strtotime($year.<span class="hljs-string">'-'</span>.$month.<span class="hljs-string">'-01'</span>));
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>Date Like: YYYYMMDD</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/^\d{8}$/i'</span>, $bad_date, $matches))
+		{
+			<span class="hljs-keyword">return</span> DateTime::createFromFormat(<span class="hljs-string">'Ymd'</span>, $bad_date)-&gt;format($format);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<p>Date Like: MM-DD-YYYY <strong>or</strong> M-D-YYYY (or anything in between)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/^(\d{1,2})-(\d{1,2})-(\d{4})$/i'</span>, $bad_date, $matches))
+		{
+			<span class="hljs-keyword">return</span> date($format, strtotime($matches[<span class="hljs-number">3</span>].<span class="hljs-string">'-'</span>.$matches[<span class="hljs-number">1</span>].<span class="hljs-string">'-'</span>.$matches[<span class="hljs-number">2</span>]));
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<p>Any other kind of string, when converted into UNIX time,
+produces &quot;0 seconds after epoc...&quot; is probably bad...
+return &quot;Invalid Date&quot;.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (date(<span class="hljs-string">'U'</span>, strtotime($bad_date)) === <span class="hljs-string">'0'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">'Invalid Date'</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<p>It's probably a valid-ish date format already</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> date($format, strtotime($bad_date));
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'timezone_menu'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Timezone Menu</p>
+</div>
+<div class="body">
+<p>Generates a drop-down menu of timezones.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>timezone
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>classname
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>menu name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>attributes
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timezone_menu</span><span class="hljs-params">($default = <span class="hljs-string">'UTC'</span>, $class = <span class="hljs-string">''</span>, $name = <span class="hljs-string">'timezones'</span>, $attributes = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$CI =&amp; get_instance();
+		$CI-&gt;lang-&gt;load(<span class="hljs-string">'date'</span>);
+
+		$default = ($default === <span class="hljs-string">'GMT'</span>) ? <span class="hljs-string">'UTC'</span> : $default;
+
+		$menu = <span class="hljs-string">'&lt;select name="'</span>.$name.<span class="hljs-string">'"'</span>;
+
+		<span class="hljs-keyword">if</span> ($class !== <span class="hljs-string">''</span>)
+		{
+			$menu .= <span class="hljs-string">' class="'</span>.$class.<span class="hljs-string">'"'</span>;
+		}
+
+		$menu .= _stringify_attributes($attributes).<span class="hljs-string">"&gt;\n"</span>;
+
+		<span class="hljs-keyword">foreach</span> (timezones() <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			$selected = ($default === $key) ? <span class="hljs-string">' selected="selected"'</span> : <span class="hljs-string">''</span>;
+			$menu .= <span class="hljs-string">'&lt;option value="'</span>.$key.<span class="hljs-string">'"'</span>.$selected.<span class="hljs-string">'&gt;'</span>.$CI-&gt;lang-&gt;line($key).<span class="hljs-string">"&lt;/option&gt;\n"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $menu.<span class="hljs-string">'&lt;/select&gt;'</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'timezones'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Timezones</p>
+</div>
+<div class="body">
+<p>Returns an array of timezones. This is a helper function
+for various other ones in this library</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>timezone
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timezones</span><span class="hljs-params">($tz = <span class="hljs-string">''</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<p>Note: Don't change the order of these even though
+some items appear to be in the wrong order</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$zones = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'UM12'</span>		=&gt; <span class="hljs-number">-12</span>,
+			<span class="hljs-string">'UM11'</span>		=&gt; <span class="hljs-number">-11</span>,
+			<span class="hljs-string">'UM10'</span>		=&gt; <span class="hljs-number">-10</span>,
+			<span class="hljs-string">'UM95'</span>		=&gt; <span class="hljs-number">-9.5</span>,
+			<span class="hljs-string">'UM9'</span>		=&gt; <span class="hljs-number">-9</span>,
+			<span class="hljs-string">'UM8'</span>		=&gt; <span class="hljs-number">-8</span>,
+			<span class="hljs-string">'UM7'</span>		=&gt; <span class="hljs-number">-7</span>,
+			<span class="hljs-string">'UM6'</span>		=&gt; <span class="hljs-number">-6</span>,
+			<span class="hljs-string">'UM5'</span>		=&gt; <span class="hljs-number">-5</span>,
+			<span class="hljs-string">'UM45'</span>		=&gt; <span class="hljs-number">-4.5</span>,
+			<span class="hljs-string">'UM4'</span>		=&gt; <span class="hljs-number">-4</span>,
+			<span class="hljs-string">'UM35'</span>		=&gt; <span class="hljs-number">-3.5</span>,
+			<span class="hljs-string">'UM3'</span>		=&gt; <span class="hljs-number">-3</span>,
+			<span class="hljs-string">'UM2'</span>		=&gt; <span class="hljs-number">-2</span>,
+			<span class="hljs-string">'UM1'</span>		=&gt; <span class="hljs-number">-1</span>,
+			<span class="hljs-string">'UTC'</span>		=&gt; <span class="hljs-number">0</span>,
+			<span class="hljs-string">'UP1'</span>		=&gt; +<span class="hljs-number">1</span>,
+			<span class="hljs-string">'UP2'</span>		=&gt; +<span class="hljs-number">2</span>,
+			<span class="hljs-string">'UP3'</span>		=&gt; +<span class="hljs-number">3</span>,
+			<span class="hljs-string">'UP35'</span>		=&gt; +<span class="hljs-number">3.5</span>,
+			<span class="hljs-string">'UP4'</span>		=&gt; +<span class="hljs-number">4</span>,
+			<span class="hljs-string">'UP45'</span>		=&gt; +<span class="hljs-number">4.5</span>,
+			<span class="hljs-string">'UP5'</span>		=&gt; +<span class="hljs-number">5</span>,
+			<span class="hljs-string">'UP55'</span>		=&gt; +<span class="hljs-number">5.5</span>,
+			<span class="hljs-string">'UP575'</span>		=&gt; +<span class="hljs-number">5.75</span>,
+			<span class="hljs-string">'UP6'</span>		=&gt; +<span class="hljs-number">6</span>,
+			<span class="hljs-string">'UP65'</span>		=&gt; +<span class="hljs-number">6.5</span>,
+			<span class="hljs-string">'UP7'</span>		=&gt; +<span class="hljs-number">7</span>,
+			<span class="hljs-string">'UP8'</span>		=&gt; +<span class="hljs-number">8</span>,
+			<span class="hljs-string">'UP875'</span>		=&gt; +<span class="hljs-number">8.75</span>,
+			<span class="hljs-string">'UP9'</span>		=&gt; +<span class="hljs-number">9</span>,
+			<span class="hljs-string">'UP95'</span>		=&gt; +<span class="hljs-number">9.5</span>,
+			<span class="hljs-string">'UP10'</span>		=&gt; +<span class="hljs-number">10</span>,
+			<span class="hljs-string">'UP105'</span>		=&gt; +<span class="hljs-number">10.5</span>,
+			<span class="hljs-string">'UP11'</span>		=&gt; +<span class="hljs-number">11</span>,
+			<span class="hljs-string">'UP115'</span>		=&gt; +<span class="hljs-number">11.5</span>,
+			<span class="hljs-string">'UP12'</span>		=&gt; +<span class="hljs-number">12</span>,
+			<span class="hljs-string">'UP1275'</span>	=&gt; +<span class="hljs-number">12.75</span>,
+			<span class="hljs-string">'UP13'</span>		=&gt; +<span class="hljs-number">13</span>,
+			<span class="hljs-string">'UP14'</span>		=&gt; +<span class="hljs-number">14</span>
+		);
+
+		<span class="hljs-keyword">if</span> ($tz === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> $zones;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($zones[$tz]) ? $zones[$tz] : <span class="hljs-number">0</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'date_range'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Date range</p>
+</div>
+<div class="body">
+<p>Returns a list of dates within a specified period.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>unix_start UNIX timestamp of period start date
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>unix_end|days UNIX timestamp of period end date 					or interval in days.
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>is_unix Specifies whether the second parameter 					is a UNIX timestamp or a day interval
+					 - TRUE or 'unix' for a timestamp
+					 - FALSE or 'days' for an interval
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>date_format Output date format, same as in date()
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">date_range</span><span class="hljs-params">($unix_start = <span class="hljs-string">''</span>, $mixed = <span class="hljs-string">''</span>, $is_unix = TRUE, $format = <span class="hljs-string">'Y-m-d'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($unix_start == <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> $mixed == <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> $format == <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$is_unix = ! ( ! $is_unix <span class="hljs-keyword">OR</span> $is_unix === <span class="hljs-string">'days'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<p>Validate input and try strtotime() on invalid timestamps/intervals, just in case</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ( ! ctype_digit((string) $unix_start) &amp;&amp; ($unix_start = @strtotime($unix_start)) === <span class="hljs-keyword">FALSE</span>)
+			<span class="hljs-keyword">OR</span> ( ! ctype_digit((string) $mixed) &amp;&amp; ($is_unix === <span class="hljs-keyword">FALSE</span> <span class="hljs-keyword">OR</span> ($mixed = @strtotime($mixed)) === <span class="hljs-keyword">FALSE</span>))
+			<span class="hljs-keyword">OR</span> ($is_unix === <span class="hljs-keyword">TRUE</span> &amp;&amp; $mixed &lt; $unix_start))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ($is_unix &amp;&amp; ($unix_start == $mixed <span class="hljs-keyword">OR</span> date($format, $unix_start) === date($format, $mixed)))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(date($format, $unix_start));
+		}
+
+		$range = <span class="hljs-keyword">array</span>();
+
+		$from = <span class="hljs-keyword">new</span> DateTime();
+		$from-&gt;setTimestamp($unix_start);
+
+		<span class="hljs-keyword">if</span> ($is_unix)
+		{
+			$arg = <span class="hljs-keyword">new</span> DateTime();
+			$arg-&gt;setTimestamp($mixed);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$arg = (int) $mixed;
+		}
+
+		$period = <span class="hljs-keyword">new</span> DatePeriod($from, <span class="hljs-keyword">new</span> DateInterval(<span class="hljs-string">'P1D'</span>), $arg);
+		<span class="hljs-keyword">foreach</span> ($period <span class="hljs-keyword">as</span> $date)
+		{
+			$range[] = $date-&gt;format($format);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>If a period end date was passed to the DatePeriod constructor, it might not
+be in our results. Not sure if this is a bug or it's just possible because
+the end date might actually be less than 24 hours away from the previously
+generated DateTime object, but either way - we have to append it manually.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_int($arg) &amp;&amp; $range[count($range) - <span class="hljs-number">1</span>] !== $arg-&gt;format($format))
+		{
+			$range[] = $arg-&gt;format($format);
+		}
+
+		<span class="hljs-keyword">return</span> $range;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Input.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Input.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Input.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Input Class</p>
+</div>
+<div class="body">
+<p>Pre-processes global input data for security</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Input</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>IP address of the current user</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $ip_address = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Allow GET array flag</p>
+</div>
+<div class="body">
+<p>If set to FALSE, then $_GET will be set to an empty array.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_allow_get_array = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Standardize new lines flag</p>
+</div>
+<div class="body">
+<p>If set to TRUE, then newlines are standardized.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_standardize_newlines;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Enable XSS flag</p>
+</div>
+<div class="body">
+<p>Determines whether the XSS filter is always active when
+GET, POST or COOKIE data is encountered.
+Set automatically based on config setting.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_enable_xss = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Enable CSRF flag</p>
+</div>
+<div class="body">
+<p>Enables a CSRF cookie token to be set.
+Set automatically based on config setting.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_enable_csrf = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of all HTTP request headers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $headers = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Raw input stream data</p>
+</div>
+<div class="body">
+<p>Holds a cache of php://input contents</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_raw_input_stream;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Parsed input stream data</p>
+</div>
+<div class="body">
+<p>Parsed from php://input at runtime</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_Input::input_stream()</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_input_stream;
+
+	<span class="hljs-keyword">protected</span> $security;
+	<span class="hljs-keyword">protected</span> $uni;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+<p>Determines whether to globally enable the XSS processing
+and whether to allow the $_GET array.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_allow_get_array		= (config_item(<span class="hljs-string">'allow_get_array'</span>) !== <span class="hljs-keyword">FALSE</span>);
+		<span class="hljs-keyword">$this</span>-&gt;_enable_xss		= (config_item(<span class="hljs-string">'global_xss_filtering'</span>) === <span class="hljs-keyword">TRUE</span>);
+		<span class="hljs-keyword">$this</span>-&gt;_enable_csrf		= (config_item(<span class="hljs-string">'csrf_protection'</span>) === <span class="hljs-keyword">TRUE</span>);
+		<span class="hljs-keyword">$this</span>-&gt;_standardize_newlines	= (bool) config_item(<span class="hljs-string">'standardize_newlines'</span>);
+
+		<span class="hljs-keyword">$this</span>-&gt;security =&amp; load_class(<span class="hljs-string">'Security'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Do we need the UTF-8 class?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (UTF8_ENABLED === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;uni =&amp; load_class(<span class="hljs-string">'Utf8'</span>, <span class="hljs-string">'core'</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Sanitize global arrays</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_sanitize_globals();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>CSRF Protection check</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_enable_csrf === <span class="hljs-keyword">TRUE</span> &amp;&amp; ! is_cli())
+		{
+			<span class="hljs-keyword">$this</span>-&gt;security-&gt;csrf_verify();
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Input Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch from array</p>
+</div>
+<div class="body">
+<p>Internal method used to retrieve values from global arrays.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>&amp;$array $_GET, $_POST, $_COOKIE, $_SERVER, etc.
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$index Index for item to be fetched from $array
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_fetch_from_array</span><span class="hljs-params">(&amp;$array, $index = NULL, $xss_clean = NULL)</span>
+	</span>{
+		is_bool($xss_clean) <span class="hljs-keyword">OR</span> $xss_clean = <span class="hljs-keyword">$this</span>-&gt;_enable_xss;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<p>If $index is NULL, it means that the whole $array is requested</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">isset</span>($index) <span class="hljs-keyword">OR</span> $index = array_keys($array);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>allow fetching multiple keys at once</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_array($index))
+		{
+			$output = <span class="hljs-keyword">array</span>();
+			<span class="hljs-keyword">foreach</span> ($index <span class="hljs-keyword">as</span> $key)
+			{
+				$output[$key] = <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array($array, $key, $xss_clean);
+			}
+
+			<span class="hljs-keyword">return</span> $output;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($array[$index]))
+		{
+			$value = $array[$index];
+		}
+		<span class="hljs-keyword">elseif</span> (($count = preg_match_all(<span class="hljs-string">'/(?:^[^\[]+)|\[[^]]*\]/'</span>, $index, $matches)) &gt; <span class="hljs-number">1</span>) <span class="hljs-comment">// Does the index contain array notation</span>
+		{
+			$value = $array;
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $count; $i++)
+			{
+				$key = trim($matches[<span class="hljs-number">0</span>][$i], <span class="hljs-string">'[]'</span>);
+				<span class="hljs-keyword">if</span> ($key === <span class="hljs-string">''</span>) <span class="hljs-comment">// Empty notation will return the value as array</span>
+				{
+					<span class="hljs-keyword">break</span>;
+				}
+
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($value[$key]))
+				{
+					$value = $value[$key];
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">NULL</span>;
+				}
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">return</span> ($xss_clean === <span class="hljs-keyword">TRUE</span>)
+			? <span class="hljs-keyword">$this</span>-&gt;security-&gt;xss_clean($value)
+			: $value;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from the GET array</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$index Index for item to be fetched from $_GET
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span><span class="hljs-params">($index = NULL, $xss_clean = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array($_GET, $index, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from the POST array</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$index Index for item to be fetched from $_POST
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">post</span><span class="hljs-params">($index = NULL, $xss_clean = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array($_POST, $index, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from POST data with fallback to GET</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$index Index for item to be fetched from $_POST or $_GET
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">post_get</span><span class="hljs-params">($index, $xss_clean = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($_POST[$index])
+			? <span class="hljs-keyword">$this</span>-&gt;post($index, $xss_clean)
+			: <span class="hljs-keyword">$this</span>-&gt;get($index, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from GET data with fallback to POST</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$index Index for item to be fetched from $_GET or $_POST
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_post</span><span class="hljs-params">($index, $xss_clean = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($_GET[$index])
+			? <span class="hljs-keyword">$this</span>-&gt;get($index, $xss_clean)
+			: <span class="hljs-keyword">$this</span>-&gt;post($index, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from the COOKIE array</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$index Index for item to be fetched from $_COOKIE
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">cookie</span><span class="hljs-params">($index = NULL, $xss_clean = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array($_COOKIE, $index, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from the SERVER array</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$index Index for item to be fetched from $_SERVER
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">server</span><span class="hljs-params">($index, $xss_clean = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array($_SERVER, $index, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch an item from the php://input stream</p>
+</div>
+<div class="body">
+<p>Useful when you need to access PUT, DELETE or PATCH request data.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$index Index for item to be fetched
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">input_stream</span><span class="hljs-params">($index = NULL, $xss_clean = NULL)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<p>Prior to PHP 5.6, the input stream can only be read once,
+so we'll need to check if we have already done that first.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_array(<span class="hljs-keyword">$this</span>-&gt;_input_stream))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<p>$this-&gt;raw_input_stream will trigger __get().</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			parse_str(<span class="hljs-keyword">$this</span>-&gt;raw_input_stream, <span class="hljs-keyword">$this</span>-&gt;_input_stream);
+			is_array(<span class="hljs-keyword">$this</span>-&gt;_input_stream) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;_input_stream = <span class="hljs-keyword">array</span>();
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array(<span class="hljs-keyword">$this</span>-&gt;_input_stream, $index, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set cookie</p>
+</div>
+<div class="body">
+<p>Accepts an arbitrary number of parameters (up to 7) or an associative
+array in the first parameter containing all the values.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|mixed[]</span>
+<span>$name Cookie name or an array containing parameters
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$value Cookie value
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$expire Cookie expiration time in seconds
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$domain Cookie domain (e.g.: '.yourdomain.com')
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$path Cookie path (default: '/')
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$prefix Cookie name prefix
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$secure Whether to only transfer cookies via SSL
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$httponly Whether to only makes the cookie accessible via HTTP (no javascript)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_cookie</span><span class="hljs-params">($name, $value = <span class="hljs-string">''</span>, $expire = <span class="hljs-string">''</span>, $domain = <span class="hljs-string">''</span>, $path = <span class="hljs-string">'/'</span>, $prefix = <span class="hljs-string">''</span>, $secure = NULL, $httponly = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_array($name))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<p>always leave 'name' in last place, as the loop will break otherwise, due to $$item</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'value'</span>, <span class="hljs-string">'expire'</span>, <span class="hljs-string">'domain'</span>, <span class="hljs-string">'path'</span>, <span class="hljs-string">'prefix'</span>, <span class="hljs-string">'secure'</span>, <span class="hljs-string">'httponly'</span>, <span class="hljs-string">'name'</span>) <span class="hljs-keyword">as</span> $item)
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($name[$item]))
+				{
+					$$item = $name[$item];
+				}
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($prefix === <span class="hljs-string">''</span> &amp;&amp; config_item(<span class="hljs-string">'cookie_prefix'</span>) !== <span class="hljs-string">''</span>)
+		{
+			$prefix = config_item(<span class="hljs-string">'cookie_prefix'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> ($domain == <span class="hljs-string">''</span> &amp;&amp; config_item(<span class="hljs-string">'cookie_domain'</span>) != <span class="hljs-string">''</span>)
+		{
+			$domain = config_item(<span class="hljs-string">'cookie_domain'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> ($path === <span class="hljs-string">'/'</span> &amp;&amp; config_item(<span class="hljs-string">'cookie_path'</span>) !== <span class="hljs-string">'/'</span>)
+		{
+			$path = config_item(<span class="hljs-string">'cookie_path'</span>);
+		}
+
+		$secure = ($secure === <span class="hljs-keyword">NULL</span> &amp;&amp; config_item(<span class="hljs-string">'cookie_secure'</span>) !== <span class="hljs-keyword">NULL</span>)
+			? (bool) config_item(<span class="hljs-string">'cookie_secure'</span>)
+			: (bool) $secure;
+
+		$httponly = ($httponly === <span class="hljs-keyword">NULL</span> &amp;&amp; config_item(<span class="hljs-string">'cookie_httponly'</span>) !== <span class="hljs-keyword">NULL</span>)
+			? (bool) config_item(<span class="hljs-string">'cookie_httponly'</span>)
+			: (bool) $httponly;
+
+		<span class="hljs-keyword">if</span> ( ! is_numeric($expire))
+		{
+			$expire = time() - <span class="hljs-number">86500</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$expire = ($expire &gt; <span class="hljs-number">0</span>) ? time() + $expire : <span class="hljs-number">0</span>;
+		}
+
+		setcookie($prefix.$name, $value, $expire, $path, $domain, $secure, $httponly);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch the IP Address</p>
+</div>
+<div class="body">
+<p>Determines and validates the visitor's IP address.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string IP address
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ip_address</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;ip_address !== <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;ip_address;
+		}
+
+		$proxy_ips = config_item(<span class="hljs-string">'proxy_ips'</span>);
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($proxy_ips) &amp;&amp; ! is_array($proxy_ips))
+		{
+			$proxy_ips = explode(<span class="hljs-string">','</span>, str_replace(<span class="hljs-string">' '</span>, <span class="hljs-string">''</span>, $proxy_ips));
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;ip_address = <span class="hljs-keyword">$this</span>-&gt;server(<span class="hljs-string">'REMOTE_ADDR'</span>);
+
+		<span class="hljs-keyword">if</span> ($proxy_ips)
+		{
+			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'HTTP_X_FORWARDED_FOR'</span>, <span class="hljs-string">'HTTP_CLIENT_IP'</span>, <span class="hljs-string">'HTTP_X_CLIENT_IP'</span>, <span class="hljs-string">'HTTP_X_CLUSTER_CLIENT_IP'</span>) <span class="hljs-keyword">as</span> $header)
+			{
+				<span class="hljs-keyword">if</span> (($spoof = <span class="hljs-keyword">$this</span>-&gt;server($header)) !== <span class="hljs-keyword">NULL</span>)
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<p>Some proxies typically list the whole chain of IP
+addresses through which the client has reached us.
+e.g. client_ip, proxy_ip1, proxy_ip2, etc.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					sscanf($spoof, <span class="hljs-string">'%[^,]'</span>, $spoof);
+
+					<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;valid_ip($spoof))
+					{
+						$spoof = <span class="hljs-keyword">NULL</span>;
+					}
+					<span class="hljs-keyword">else</span>
+					{
+						<span class="hljs-keyword">break</span>;
+					}
+				}
+			}
+
+			<span class="hljs-keyword">if</span> ($spoof)
+			{
+				<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>, $c = count($proxy_ips); $i &lt; $c; $i++)
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<p>Check if we have an IP address or a subnet</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> (strpos($proxy_ips[$i], <span class="hljs-string">'/'</span>) === <span class="hljs-keyword">FALSE</span>)
+					{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<p>An IP address (and not a subnet) is specified.
+We can compare right away.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">						<span class="hljs-keyword">if</span> ($proxy_ips[$i] === <span class="hljs-keyword">$this</span>-&gt;ip_address)
+						{
+							<span class="hljs-keyword">$this</span>-&gt;ip_address = $spoof;
+							<span class="hljs-keyword">break</span>;
+						}
+
+						<span class="hljs-keyword">continue</span>;
+					}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<p>We have a subnet ... now the heavy lifting begins</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">isset</span>($separator) <span class="hljs-keyword">OR</span> $separator = <span class="hljs-keyword">$this</span>-&gt;valid_ip(<span class="hljs-keyword">$this</span>-&gt;ip_address, <span class="hljs-string">'ipv6'</span>) ? <span class="hljs-string">':'</span> : <span class="hljs-string">'.'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<p>If the proxy entry doesn't match the IP protocol - skip it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> (strpos($proxy_ips[$i], $separator) === <span class="hljs-keyword">FALSE</span>)
+					{
+						<span class="hljs-keyword">continue</span>;
+					}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<p>Convert the REMOTE_ADDR IP address to binary, if needed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($ip, $sprintf))
+					{
+						<span class="hljs-keyword">if</span> ($separator === <span class="hljs-string">':'</span>)
+						{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<p>Make sure we're have the &quot;full&quot; IPv6 format</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">							$ip = explode(<span class="hljs-string">':'</span>,
+								str_replace(<span class="hljs-string">'::'</span>,
+									str_repeat(<span class="hljs-string">':'</span>, <span class="hljs-number">9</span> - substr_count(<span class="hljs-keyword">$this</span>-&gt;ip_address, <span class="hljs-string">':'</span>)),
+									<span class="hljs-keyword">$this</span>-&gt;ip_address
+								)
+							);
+
+							<span class="hljs-keyword">for</span> ($j = <span class="hljs-number">0</span>; $j &lt; <span class="hljs-number">8</span>; $j++)
+							{
+								$ip[$j] = intval($ip[$j], <span class="hljs-number">16</span>);
+							}
+
+							$sprintf = <span class="hljs-string">'%016b%016b%016b%016b%016b%016b%016b%016b'</span>;
+						}
+						<span class="hljs-keyword">else</span>
+						{
+							$ip = explode(<span class="hljs-string">'.'</span>, <span class="hljs-keyword">$this</span>-&gt;ip_address);
+							$sprintf = <span class="hljs-string">'%08b%08b%08b%08b'</span>;
+						}
+
+						$ip = vsprintf($sprintf, $ip);
+					}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<p>Split the netmask length off the network address</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					sscanf($proxy_ips[$i], <span class="hljs-string">'%[^/]/%d'</span>, $netaddr, $masklen);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<p>Again, an IPv6 address is most likely in a compressed form</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> ($separator === <span class="hljs-string">':'</span>)
+					{
+						$netaddr = explode(<span class="hljs-string">':'</span>, str_replace(<span class="hljs-string">'::'</span>, str_repeat(<span class="hljs-string">':'</span>, <span class="hljs-number">9</span> - substr_count($netaddr, <span class="hljs-string">':'</span>)), $netaddr));
+						<span class="hljs-keyword">for</span> ($j = <span class="hljs-number">0</span>; $j &lt; <span class="hljs-number">8</span>; $j++)
+						{
+							$netaddr[$j] = intval($netaddr[$j], <span class="hljs-number">16</span>);
+						}
+					}
+					<span class="hljs-keyword">else</span>
+					{
+						$netaddr = explode(<span class="hljs-string">'.'</span>, $netaddr);
+					}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<p>Convert to binary and finally compare</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					<span class="hljs-keyword">if</span> (strncmp($ip, vsprintf($sprintf, $netaddr), $masklen) === <span class="hljs-number">0</span>)
+					{
+						<span class="hljs-keyword">$this</span>-&gt;ip_address = $spoof;
+						<span class="hljs-keyword">break</span>;
+					}
+				}
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;valid_ip(<span class="hljs-keyword">$this</span>-&gt;ip_address))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;ip_address = <span class="hljs-string">'0.0.0.0'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;ip_address;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate IP Address</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$ip IP address
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$which IP protocol: 'ipv4' or 'ipv6'
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">valid_ip</span><span class="hljs-params">($ip, $which = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">switch</span> (strtolower($which))
+		{
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'ipv4'</span>:
+				$which = FILTER_FLAG_IPV4;
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">case</span> <span class="hljs-string">'ipv6'</span>:
+				$which = FILTER_FLAG_IPV6;
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">default</span>:
+				$which = <span class="hljs-keyword">NULL</span>;
+				<span class="hljs-keyword">break</span>;
+		}
+
+		<span class="hljs-keyword">return</span> (bool) filter_var($ip, FILTER_VALIDATE_IP, $which);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fetch User Agent string</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string|null User Agent string or NULL if it doesn't exist
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">user_agent</span><span class="hljs-params">($xss_clean = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array($_SERVER, <span class="hljs-string">'HTTP_USER_AGENT'</span>, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sanitize Globals</p>
+</div>
+<div class="body">
+<p>Internal method serving for the following purposes:</p>
+<pre><code>- Unsets $_GET data, if query strings are not enabled
+- Cleans POST, COOKIE and SERVER data
+- Standardizes newline characters to PHP_EOL</code></pre>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_sanitize_globals</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<p>Is $_GET data allowed? If not we'll set the $_GET to an empty array</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_allow_get_array === <span class="hljs-keyword">FALSE</span>)
+		{
+			$_GET = <span class="hljs-keyword">array</span>();
+		}
+		<span class="hljs-keyword">elseif</span> (is_array($_GET))
+		{
+			<span class="hljs-keyword">foreach</span> ($_GET <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				$_GET[<span class="hljs-keyword">$this</span>-&gt;_clean_input_keys($key)] = <span class="hljs-keyword">$this</span>-&gt;_clean_input_data($val);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<p>Clean $_POST Data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_array($_POST))
+		{
+			<span class="hljs-keyword">foreach</span> ($_POST <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				$_POST[<span class="hljs-keyword">$this</span>-&gt;_clean_input_keys($key)] = <span class="hljs-keyword">$this</span>-&gt;_clean_input_data($val);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<p>Clean $_COOKIE Data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_array($_COOKIE))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<p>Also get rid of specially treated cookies that might be set by a server
+or silly application, that are of no use to a CI application anyway
+but that when present will trip our 'Disallowed Key Characters' alarm
+http://www.ietf.org/rfc/rfc2109.txt
+note that the key names below are single quoted strings, and are not PHP variables</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">unset</span>(
+				$_COOKIE[<span class="hljs-string">'$Version'</span>],
+				$_COOKIE[<span class="hljs-string">'$Path'</span>],
+				$_COOKIE[<span class="hljs-string">'$Domain'</span>]
+			);
+
+			<span class="hljs-keyword">foreach</span> ($_COOKIE <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				<span class="hljs-keyword">if</span> (($cookie_key = <span class="hljs-keyword">$this</span>-&gt;_clean_input_keys($key)) !== <span class="hljs-keyword">FALSE</span>)
+				{
+					$_COOKIE[$cookie_key] = <span class="hljs-keyword">$this</span>-&gt;_clean_input_data($val);
+				}
+				<span class="hljs-keyword">else</span>
+				{
+					<span class="hljs-keyword">unset</span>($_COOKIE[$key]);
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<p>Sanitize PHP_SELF</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$_SERVER[<span class="hljs-string">'PHP_SELF'</span>] = strip_tags($_SERVER[<span class="hljs-string">'PHP_SELF'</span>]);
+
+		log_message(<span class="hljs-string">'debug'</span>, <span class="hljs-string">'Global POST, GET and COOKIE data sanitized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Clean Input Data</p>
+</div>
+<div class="body">
+<p>Internal method that aids in escaping data and
+standardizing newline characters to PHP_EOL.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$str Input string(s)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_clean_input_data</span><span class="hljs-params">($str)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_array($str))
+		{
+			$new_array = <span class="hljs-keyword">array</span>();
+			<span class="hljs-keyword">foreach</span> (array_keys($str) <span class="hljs-keyword">as</span> $key)
+			{
+				$new_array[<span class="hljs-keyword">$this</span>-&gt;_clean_input_keys($key)] = <span class="hljs-keyword">$this</span>-&gt;_clean_input_data($str[$key]);
+			}
+			<span class="hljs-keyword">return</span> $new_array;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>We strip slashes if magic quotes is on to keep things consistent</p>
+</div>
+<div class="body">
+<p>NOTE: In PHP 5.4 get_magic_quotes_gpc() will always return 0 and
+it will probably not exist in future versions at all.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_php(<span class="hljs-string">'5.4'</span>) &amp;&amp; get_magic_quotes_gpc())
+		{
+			$str = stripslashes($str);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<p>Clean UTF-8 if supported</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (UTF8_ENABLED === <span class="hljs-keyword">TRUE</span>)
+		{
+			$str = <span class="hljs-keyword">$this</span>-&gt;uni-&gt;clean_string($str);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<p>Remove control characters</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$str = remove_invisible_characters($str, <span class="hljs-keyword">FALSE</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<p>Standardize newlines if needed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_standardize_newlines === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> preg_replace(<span class="hljs-string">'/(?:\r\n|[\r\n])/'</span>, PHP_EOL, $str);
+		}
+
+		<span class="hljs-keyword">return</span> $str;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Clean Keys</p>
+</div>
+<div class="body">
+<p>Internal method that helps to prevent malicious users
+from trying to exploit keys we make sure that keys are
+only named with alpha-numeric text and a few other items.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$str Input string
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$fatal Whether to terminate script exection 				or to return FALSE if an invalid
+				key is encountered
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string|bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_clean_input_keys</span><span class="hljs-params">($str, $fatal = TRUE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! preg_match(<span class="hljs-string">'/^[a-z0-9:_\/|-]+$/i'</span>, $str))
+		{
+			<span class="hljs-keyword">if</span> ($fatal === <span class="hljs-keyword">TRUE</span>)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				set_status_header(<span class="hljs-number">503</span>);
+				<span class="hljs-keyword">echo</span> <span class="hljs-string">'Disallowed Key Characters.'</span>;
+				<span class="hljs-keyword">exit</span>(<span class="hljs-number">7</span>); <span class="hljs-comment">// EXIT_USER_INPUT</span>
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<p>Clean UTF-8 if supported</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (UTF8_ENABLED === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;uni-&gt;clean_string($str);
+		}
+
+		<span class="hljs-keyword">return</span> $str;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Request Headers</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">request_headers</span><span class="hljs-params">($xss_clean = FALSE)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-74" id="section-74"></a>
+</div>
+<p>If header is already defined, return it immediately</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;headers))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array(<span class="hljs-keyword">$this</span>-&gt;headers, <span class="hljs-keyword">NULL</span>, $xss_clean);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-75" id="section-75"></a>
+</div>
+<p>In Apache, you can simply call apache_request_headers()</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'apache_request_headers'</span>))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;headers = apache_request_headers();
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">isset</span>($_SERVER[<span class="hljs-string">'CONTENT_TYPE'</span>]) &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;headers[<span class="hljs-string">'Content-Type'</span>] = $_SERVER[<span class="hljs-string">'CONTENT_TYPE'</span>];
+
+			<span class="hljs-keyword">foreach</span> ($_SERVER <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				<span class="hljs-keyword">if</span> (sscanf($key, <span class="hljs-string">'HTTP_%s'</span>, $header) === <span class="hljs-number">1</span>)
+				{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-76" id="section-76"></a>
+</div>
+<p>take SOME_HEADER and turn it into Some-Header</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">					$header = str_replace(<span class="hljs-string">'_'</span>, <span class="hljs-string">' '</span>, strtolower($header));
+					$header = str_replace(<span class="hljs-string">' '</span>, <span class="hljs-string">'-'</span>, ucwords($header));
+
+					<span class="hljs-keyword">$this</span>-&gt;headers[$header] = $_SERVER[$key];
+				}
+			}
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_fetch_from_array(<span class="hljs-keyword">$this</span>-&gt;headers, <span class="hljs-keyword">NULL</span>, $xss_clean);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-77" id="section-77"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-78" id="section-78"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Request Header</p>
+</div>
+<div class="body">
+<p>Returns the value of a single member of the headers class member</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$index Header name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$xss_clean Whether to apply XSS filtering
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string|null The requested header on success or NULL on failure
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_request_header</span><span class="hljs-params">($index, $xss_clean = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $headers;
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($headers))
+		{
+			<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;headers) &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;request_headers();
+			<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;headers <span class="hljs-keyword">as</span> $key =&gt; $value)
+			{
+				$headers[strtolower($key)] = $value;
+			}
+		}
+
+		$index = strtolower($index);
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($headers[$index]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">NULL</span>;
+		}
+
+		<span class="hljs-keyword">return</span> ($xss_clean === <span class="hljs-keyword">TRUE</span>)
+			? <span class="hljs-keyword">$this</span>-&gt;security-&gt;xss_clean($headers[$index])
+			: $headers[$index];
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-79" id="section-79"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-80" id="section-80"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is AJAX request?</p>
+</div>
+<div class="body">
+<p>Test to see if a request contains the HTTP_X_REQUESTED_WITH header.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_ajax_request</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> ( ! <span class="hljs-keyword">empty</span>($_SERVER[<span class="hljs-string">'HTTP_X_REQUESTED_WITH'</span>]) &amp;&amp; strtolower($_SERVER[<span class="hljs-string">'HTTP_X_REQUESTED_WITH'</span>]) === <span class="hljs-string">'xmlhttprequest'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-81" id="section-81"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-82" id="section-82"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is CLI request?</p>
+</div>
+<div class="body">
+<p>Test to see if a request was made from the command line.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_cli_request</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> is_cli();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-83" id="section-83"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-84" id="section-84"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get Request Method</p>
+</div>
+<div class="body">
+<p>Return the request method</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$upper Whether to return in upper or lower case 				(default: FALSE)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">method</span><span class="hljs-params">($upper = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> ($upper)
+			? strtoupper(<span class="hljs-keyword">$this</span>-&gt;server(<span class="hljs-string">'REQUEST_METHOD'</span>))
+			: strtolower(<span class="hljs-keyword">$this</span>-&gt;server(<span class="hljs-string">'REQUEST_METHOD'</span>));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-85" id="section-85"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-86" id="section-86"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Magic __get()</p>
+</div>
+<div class="body">
+<p>Allows read access to protected properties</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$name
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__get</span><span class="hljs-params">($name)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($name === <span class="hljs-string">'raw_input_stream'</span>)
+		{
+			<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_raw_input_stream) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;_raw_input_stream = file_get_contents(<span class="hljs-string">'php://input'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_raw_input_stream;
+		}
+		<span class="hljs-keyword">elseif</span> ($name === <span class="hljs-string">'ip_address'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;ip_address;
+		}
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

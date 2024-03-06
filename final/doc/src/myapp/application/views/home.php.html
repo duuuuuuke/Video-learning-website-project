@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>home.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\views\\home.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>home.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;div class="container mt-5"&gt;
+    &lt;!-- show logged-in content --&gt;
+    &lt;?php if ($this-&gt;session-&gt;userdata('logged_in')) : ?&gt;
+        &lt;h1 class="my-5"&gt;Hello, &lt;?php echo $this-&gt;session-&gt;userdata('username'); ?&gt;!&lt;/h1&gt;
+    &lt;?php endif; ?&gt;
+
+    &lt;!-- main content --&gt;
+    &lt;h3 class="mt-5"&gt;Courses&lt;/h3&gt;
+
+    &lt;div class="mb-5" id="load_data"&gt;
+
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;script&gt;
+    $(document).ready(function() {
+
+        var limit = 5;
+        var start = 0;
+        var active = false; // flag to show loading data or not
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>send request and load data.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">        <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load_data</span><span class="hljs-params">(limit, start)</span> </span>{
+            $.ajax({
+                url: <span class="hljs-string">"&lt;?php echo base_url(); ?&gt;index.php?/ajax/scroll_fetch"</span>,
+                method: <span class="hljs-string">"POST"</span>,
+                data: {
+                    limit: limit,
+                    start: start
+                }, <span class="hljs-comment">// send data to controller</span>
+                success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(response)</span> </span>{
+                    <span class="hljs-keyword">if</span> (response == <span class="hljs-string">''</span>) {
+                        active = <span class="hljs-keyword">true</span>;
+                    } <span class="hljs-keyword">else</span> {
+                        $(<span class="hljs-string">'#load_data'</span>).append(response);
+                        active = <span class="hljs-keyword">false</span>;
+                    }
+                }
+            })
+        }
+
+        <span class="hljs-keyword">if</span> (active == <span class="hljs-keyword">false</span>) {
+            active = <span class="hljs-keyword">true</span>;
+            load_data(limit, start);
+        }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>scroll loading</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">        $(document).scroll(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>see if the srollbar hit the bottom of the content and if there more data to load</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">            <span class="hljs-keyword">if</span> ($(window).scrollTop() &gt;= $(document).height() - $(window).height() &amp;&amp; active == <span class="hljs-keyword">false</span>) {
+                active = <span class="hljs-keyword">true</span>;
+                start = start + limit;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>after 0.8s, load data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">                setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+                    load_data(limit, start);
+                }, <span class="hljs-number">500</span>);
+            }
+        });
+    });
+&lt;/script&gt;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

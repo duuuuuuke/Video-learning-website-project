@@ -1,0 +1,4473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image_lib.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Image_lib.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h2">
+        <a href="#watermark-vars">Watermark Vars</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#private-vars">Private Vars</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Image_lib.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Manipulation class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Image_lib</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>PHP extension/library to use for image manipulation
+Can be: imagemagick, netpbm, gd, gd2</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $image_library		= <span class="hljs-string">'gd2'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Path to the graphic library (if applicable)</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $library_path		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether to send to browser or write to disk</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $dynamic_output		= <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Path to original image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $source_image		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Path to the modified image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $new_image		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image width</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $width			= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $height			= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Quality percentage of new image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $quality			= <span class="hljs-number">90</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether to create a thumbnail</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $create_thumb		= <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>String to add to thumbnail version of image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $thumb_marker		= <span class="hljs-string">'_thumb'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether to maintain aspect ratio when resizing or use hard values</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $maintain_ratio		= <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>auto, height, or width.  Determines what to use as the master dimension</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $master_dim		= <span class="hljs-string">'auto'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Angle at to rotate image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $rotation_angle		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>X Coordinate for manipulation of the current image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $x_axis			= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Y Coordinate for manipulation of the current image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $y_axis			= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="watermark-vars">
+  <h2>
+    <a href="#watermark-vars" name="watermark-vars" class="pilcrow"></a>
+Watermark Vars
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Watermark text if graphic is not used</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_text			= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Type of watermarking.  Options:  text/overlay</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_type			= <span class="hljs-string">'text'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Default transparency for watermark</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_x_transp		= <span class="hljs-number">4</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Default transparency for watermark</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_y_transp		= <span class="hljs-number">4</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Watermark image path</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_overlay_path		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>TT font</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_font_path		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Font size (different versions of GD will either use points or pixels)</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_font_size		= <span class="hljs-number">17</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Vertical alignment:   T M B</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_vrt_alignment	= <span class="hljs-string">'B'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Horizontal alignment: L R C</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_hor_alignment	= <span class="hljs-string">'C'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Padding around text</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_padding			= <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Lets you push text to the right</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_hor_offset		= <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Lets you push text down</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_vrt_offset		= <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Text color</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $wm_font_color	= <span class="hljs-string">'#ffffff'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Dropshadow color</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $wm_shadow_color	= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Dropshadow distance</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_shadow_distance	= <span class="hljs-number">2</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image opacity: 1 - 100  Only works with image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_opacity		= <span class="hljs-number">50</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="private-vars">
+  <h2>
+    <a href="#private-vars" name="private-vars" class="pilcrow"></a>
+Private Vars
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Source image folder</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $source_folder		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Destination image folder</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $dest_folder		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image mime-type</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $mime_type		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Original image width</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $orig_width		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Original image height</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $orig_height		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image format</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $image_type		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Size of current image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $size_str		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Full path to source image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $full_src_path		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Full path to destination image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $full_dst_path		= <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>File permissions</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $file_permissions = <span class="hljs-number">0644</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Name of function to create image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $create_fnc		= <span class="hljs-string">'imagecreatetruecolor'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Name of function to copy image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $copy_fnc		= <span class="hljs-string">'imagecopyresampled'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error messages</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $error_msg		= <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether to have a drop shadow on watermark</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $wm_use_drop_shadow	= <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Whether to use truetype fonts</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $wm_use_truetype	= <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize Image Library</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$props
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($props = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (count($props) &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;initialize($props);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>A work-around for some improperly formatted, but
+usable JPEGs; known to be produced by Samsung
+smartphones' front-facing cameras.</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<a href="https://github.com/bcit-ci/CodeIgniter/issues/4967">https://github.com/bcit-ci/CodeIgniter/issues/4967</a>
+</div>
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<a href="https://bugs.php.net/bug.php?id=72404">https://bugs.php.net/bug.php?id=72404</a>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		ini_set(<span class="hljs-string">'gd.jpeg_ignore_warning'</span>, <span class="hljs-number">1</span>);
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Image Lib Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize image properties</p>
+</div>
+<div class="body">
+<p>Resets values in case this class is used in a loop</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">clear</span><span class="hljs-params">()</span>
+	</span>{
+		$props = <span class="hljs-keyword">array</span>(<span class="hljs-string">'thumb_marker'</span>, <span class="hljs-string">'library_path'</span>, <span class="hljs-string">'source_image'</span>, <span class="hljs-string">'new_image'</span>, <span class="hljs-string">'width'</span>, <span class="hljs-string">'height'</span>, <span class="hljs-string">'rotation_angle'</span>, <span class="hljs-string">'x_axis'</span>, <span class="hljs-string">'y_axis'</span>, <span class="hljs-string">'wm_text'</span>, <span class="hljs-string">'wm_overlay_path'</span>, <span class="hljs-string">'wm_font_path'</span>, <span class="hljs-string">'wm_shadow_color'</span>, <span class="hljs-string">'source_folder'</span>, <span class="hljs-string">'dest_folder'</span>, <span class="hljs-string">'mime_type'</span>, <span class="hljs-string">'orig_width'</span>, <span class="hljs-string">'orig_height'</span>, <span class="hljs-string">'image_type'</span>, <span class="hljs-string">'size_str'</span>, <span class="hljs-string">'full_src_path'</span>, <span class="hljs-string">'full_dst_path'</span>);
+
+		<span class="hljs-keyword">foreach</span> ($props <span class="hljs-keyword">as</span> $val)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;$val = <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;image_library 		= <span class="hljs-string">'gd2'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;dynamic_output 		= <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">$this</span>-&gt;quality 				= <span class="hljs-number">90</span>;
+		<span class="hljs-keyword">$this</span>-&gt;create_thumb 		= <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">$this</span>-&gt;thumb_marker 		= <span class="hljs-string">'_thumb'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;maintain_ratio 		= <span class="hljs-keyword">TRUE</span>;
+		<span class="hljs-keyword">$this</span>-&gt;master_dim 			= <span class="hljs-string">'auto'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_type 				= <span class="hljs-string">'text'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_x_transp 			= <span class="hljs-number">4</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_y_transp 			= <span class="hljs-number">4</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_font_size 		= <span class="hljs-number">17</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment 	= <span class="hljs-string">'B'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment 	= <span class="hljs-string">'C'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_padding 			= <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_hor_offset 		= <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset 		= <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_font_color		= <span class="hljs-string">'#ffffff'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_shadow_distance 	= <span class="hljs-number">2</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_opacity 			= <span class="hljs-number">50</span>;
+		<span class="hljs-keyword">$this</span>-&gt;create_fnc 			= <span class="hljs-string">'imagecreatetruecolor'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;copy_fnc 			= <span class="hljs-string">'imagecopyresampled'</span>;
+		<span class="hljs-keyword">$this</span>-&gt;error_msg 			= <span class="hljs-keyword">array</span>();
+		<span class="hljs-keyword">$this</span>-&gt;wm_use_drop_shadow 	= <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">$this</span>-&gt;wm_use_truetype 		= <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>initialize image preferences</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span><span class="hljs-params">($props = array<span class="hljs-params">()</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<p>Convert array elements into class variables</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (count($props) &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">foreach</span> ($props <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				<span class="hljs-keyword">if</span> (property_exists(<span class="hljs-keyword">$this</span>, $key))
+				{
+					<span class="hljs-keyword">if</span> (in_array($key, <span class="hljs-keyword">array</span>(<span class="hljs-string">'wm_font_color'</span>, <span class="hljs-string">'wm_shadow_color'</span>), <span class="hljs-keyword">TRUE</span>))
+					{
+						<span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/^#?([0-9a-f]{3}|[0-9a-f]{6})$/i'</span>, $val, $matches))
+						{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>$matches[1] contains our hex color value, but it might be
+both in the full 6-length format or the shortened 3-length
+value.
+We'll later need the full version, so we keep it if it's
+already there and if not - we'll convert to it. We can
+access string characters by their index as in an array,
+so we'll do that and use concatenation to form the final
+value:</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">							$val = (strlen($matches[<span class="hljs-number">1</span>]) === <span class="hljs-number">6</span>)
+								? <span class="hljs-string">'#'</span>.$matches[<span class="hljs-number">1</span>]
+								: <span class="hljs-string">'#'</span>.$matches[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>].$matches[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>].$matches[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>].$matches[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>].$matches[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>].$matches[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>];
+						}
+						<span class="hljs-keyword">else</span>
+						{
+							<span class="hljs-keyword">continue</span>;
+						}
+					}
+					<span class="hljs-keyword">elseif</span> (in_array($key, <span class="hljs-keyword">array</span>(<span class="hljs-string">'width'</span>, <span class="hljs-string">'height'</span>), <span class="hljs-keyword">TRUE</span>) &amp;&amp; ! ctype_digit((string) $val))
+					{
+						<span class="hljs-keyword">continue</span>;
+					}
+
+					<span class="hljs-keyword">$this</span>-&gt;$key = $val;
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<p>Is there a source image? If not, there's no reason to continue</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;source_image === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_source_image_required'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is getimagesize() available?</p>
+</div>
+<div class="body">
+<p>We use it to determine the image properties (width/height).
+Note: We need to figure out how to determine image
+properties using ImageMagick and NetPBM</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'getimagesize'</span>))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_gd_required_for_props'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;image_library = strtolower(<span class="hljs-keyword">$this</span>-&gt;image_library);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set the full server path</p>
+</div>
+<div class="body">
+<p>The source image may or may not contain a path.
+Either way, we'll try use realpath to generate the
+full server path in order to more reliably read it.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (($full_source_path = realpath(<span class="hljs-keyword">$this</span>-&gt;source_image)) !== <span class="hljs-keyword">FALSE</span>)
+		{
+			$full_source_path = str_replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>, $full_source_path);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$full_source_path = <span class="hljs-keyword">$this</span>-&gt;source_image;
+		}
+
+		$x = explode(<span class="hljs-string">'/'</span>, $full_source_path);
+		<span class="hljs-keyword">$this</span>-&gt;source_image = end($x);
+		<span class="hljs-keyword">$this</span>-&gt;source_folder = str_replace(<span class="hljs-keyword">$this</span>-&gt;source_image, <span class="hljs-string">''</span>, $full_source_path);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<p>Set the Image Properties</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">$this</span>-&gt;get_image_properties(<span class="hljs-keyword">$this</span>-&gt;source_folder.<span class="hljs-keyword">$this</span>-&gt;source_image))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Assign the &quot;new&quot; image name/path</p>
+</div>
+<div class="body">
+<p>If the user has set a &quot;new_image&quot; name it means
+we are making a copy of the source image. If not
+it means we are altering the original. We'll
+set the destination filename and path accordingly.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;new_image === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;dest_image  = <span class="hljs-keyword">$this</span>-&gt;source_image;
+			<span class="hljs-keyword">$this</span>-&gt;dest_folder = <span class="hljs-keyword">$this</span>-&gt;source_folder;
+		}
+		<span class="hljs-keyword">elseif</span> (strpos(<span class="hljs-keyword">$this</span>-&gt;new_image, <span class="hljs-string">'/'</span>) === <span class="hljs-keyword">FALSE</span> &amp;&amp; strpos(<span class="hljs-keyword">$this</span>-&gt;new_image, <span class="hljs-string">'\\'</span>) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;dest_image  = <span class="hljs-keyword">$this</span>-&gt;new_image;
+			<span class="hljs-keyword">$this</span>-&gt;dest_folder = <span class="hljs-keyword">$this</span>-&gt;source_folder;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<p>Is there a file name?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ( ! preg_match(<span class="hljs-string">'#\.(jpg|jpeg|gif|png)$#i'</span>, <span class="hljs-keyword">$this</span>-&gt;new_image))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;dest_image  = <span class="hljs-keyword">$this</span>-&gt;source_image;
+				<span class="hljs-keyword">$this</span>-&gt;dest_folder = <span class="hljs-keyword">$this</span>-&gt;new_image;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$x = explode(<span class="hljs-string">'/'</span>, str_replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>, <span class="hljs-keyword">$this</span>-&gt;new_image));
+				<span class="hljs-keyword">$this</span>-&gt;dest_image  = end($x);
+				<span class="hljs-keyword">$this</span>-&gt;dest_folder = str_replace(<span class="hljs-keyword">$this</span>-&gt;dest_image, <span class="hljs-string">''</span>, <span class="hljs-keyword">$this</span>-&gt;new_image);
+			}
+
+			<span class="hljs-keyword">$this</span>-&gt;dest_folder = realpath(<span class="hljs-keyword">$this</span>-&gt;dest_folder).<span class="hljs-string">'/'</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Compile the finalized filenames/paths</p>
+</div>
+<div class="body">
+<p>We'll create two master strings containing the
+full server path to the source image and the
+full server path to the destination image.
+We'll also split the destination image name
+so we can insert the thumbnail marker if needed.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;create_thumb === <span class="hljs-keyword">FALSE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;thumb_marker === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;thumb_marker = <span class="hljs-string">''</span>;
+		}
+
+		$xp = <span class="hljs-keyword">$this</span>-&gt;explode_name(<span class="hljs-keyword">$this</span>-&gt;dest_image);
+
+		$filename = $xp[<span class="hljs-string">'name'</span>];
+		$file_ext = $xp[<span class="hljs-string">'ext'</span>];
+
+		<span class="hljs-keyword">$this</span>-&gt;full_src_path = <span class="hljs-keyword">$this</span>-&gt;source_folder.<span class="hljs-keyword">$this</span>-&gt;source_image;
+		<span class="hljs-keyword">$this</span>-&gt;full_dst_path = <span class="hljs-keyword">$this</span>-&gt;dest_folder.$filename.<span class="hljs-keyword">$this</span>-&gt;thumb_marker.$file_ext;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Should we maintain image proportions?</p>
+</div>
+<div class="body">
+<p>When creating thumbs or copies, the target width/height
+might not be in correct proportion with the source
+image's width/height. We'll recalculate it here.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;maintain_ratio === <span class="hljs-keyword">TRUE</span> &amp;&amp; (<span class="hljs-keyword">$this</span>-&gt;width !== <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;height !== <span class="hljs-number">0</span>))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;image_reproportion();
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Was a width and height specified?</p>
+</div>
+<div class="body">
+<p>If the destination width/height was not submitted we
+will use the values from the actual file</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;width === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;width = <span class="hljs-keyword">$this</span>-&gt;orig_width;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;height === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;height = <span class="hljs-keyword">$this</span>-&gt;orig_height;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<p>Set the quality</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;quality = trim(str_replace(<span class="hljs-string">'%'</span>, <span class="hljs-string">''</span>, <span class="hljs-keyword">$this</span>-&gt;quality));
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;quality === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;quality === <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> ! ctype_digit(<span class="hljs-keyword">$this</span>-&gt;quality))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;quality = <span class="hljs-number">90</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<p>Set the x/y coordinates</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		is_numeric(<span class="hljs-keyword">$this</span>-&gt;x_axis) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;x_axis = <span class="hljs-number">0</span>;
+		is_numeric(<span class="hljs-keyword">$this</span>-&gt;y_axis) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;y_axis = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<p>Watermark-related Stuff...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_overlay_path !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;wm_overlay_path = str_replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>, realpath(<span class="hljs-keyword">$this</span>-&gt;wm_overlay_path));
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_shadow_color !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;wm_use_drop_shadow = <span class="hljs-keyword">TRUE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;wm_use_drop_shadow === <span class="hljs-keyword">TRUE</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;wm_shadow_color === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;wm_use_drop_shadow = <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_font_path !== <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;wm_use_truetype = <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Resize</p>
+</div>
+<div class="body">
+<p>This is a wrapper function that chooses the proper
+resize function based on the protocol specified</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">resize</span><span class="hljs-params">()</span>
+	</span>{
+		$protocol = (<span class="hljs-keyword">$this</span>-&gt;image_library === <span class="hljs-string">'gd2'</span>) ? <span class="hljs-string">'image_process_gd'</span> : <span class="hljs-string">'image_process_'</span>.<span class="hljs-keyword">$this</span>-&gt;image_library;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;$protocol(<span class="hljs-string">'resize'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-74" id="section-74"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-75" id="section-75"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Crop</p>
+</div>
+<div class="body">
+<p>This is a wrapper function that chooses the proper
+cropping function based on the protocol specified</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">crop</span><span class="hljs-params">()</span>
+	</span>{
+		$protocol = (<span class="hljs-keyword">$this</span>-&gt;image_library === <span class="hljs-string">'gd2'</span>) ? <span class="hljs-string">'image_process_gd'</span> : <span class="hljs-string">'image_process_'</span>.<span class="hljs-keyword">$this</span>-&gt;image_library;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;$protocol(<span class="hljs-string">'crop'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-76" id="section-76"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-77" id="section-77"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Rotate</p>
+</div>
+<div class="body">
+<p>This is a wrapper function that chooses the proper
+rotation function based on the protocol specified</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">rotate</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-78" id="section-78"></a>
+</div>
+<p>Allowed rotation values</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$degs = <span class="hljs-keyword">array</span>(<span class="hljs-number">90</span>, <span class="hljs-number">180</span>, <span class="hljs-number">270</span>, <span class="hljs-string">'vrt'</span>, <span class="hljs-string">'hor'</span>);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-string">''</span> <span class="hljs-keyword">OR</span> ! in_array(<span class="hljs-keyword">$this</span>-&gt;rotation_angle, $degs))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_rotation_angle_required'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-79" id="section-79"></a>
+</div>
+<p>Reassign the width and height</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-number">90</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-number">270</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;width	= <span class="hljs-keyword">$this</span>-&gt;orig_height;
+			<span class="hljs-keyword">$this</span>-&gt;height	= <span class="hljs-keyword">$this</span>-&gt;orig_width;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">$this</span>-&gt;width	= <span class="hljs-keyword">$this</span>-&gt;orig_width;
+			<span class="hljs-keyword">$this</span>-&gt;height	= <span class="hljs-keyword">$this</span>-&gt;orig_height;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-80" id="section-80"></a>
+</div>
+<p>Choose resizing function</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;image_library === <span class="hljs-string">'imagemagick'</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;image_library === <span class="hljs-string">'netpbm'</span>)
+		{
+			$protocol = <span class="hljs-string">'image_process_'</span>.<span class="hljs-keyword">$this</span>-&gt;image_library;
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;$protocol(<span class="hljs-string">'rotate'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-string">'hor'</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-string">'vrt'</span>)
+			? <span class="hljs-keyword">$this</span>-&gt;image_mirror_gd()
+			: <span class="hljs-keyword">$this</span>-&gt;image_rotate_gd();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-81" id="section-81"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-82" id="section-82"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Process Using GD/GD2</p>
+</div>
+<div class="body">
+<p>This function will resize or crop</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_process_gd</span><span class="hljs-params">($action = <span class="hljs-string">'resize'</span>)</span>
+	</span>{
+		$v2_override = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-83" id="section-83"></a>
+</div>
+<p>If the target width/height match the source, AND if the new file name is not equal to the old file name
+we'll simply make a copy of the original with the new name... assuming dynamic rendering is off.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;dynamic_output === <span class="hljs-keyword">FALSE</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;orig_width === <span class="hljs-keyword">$this</span>-&gt;width &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;orig_height === <span class="hljs-keyword">$this</span>-&gt;height)
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;source_image !== <span class="hljs-keyword">$this</span>-&gt;new_image &amp;&amp; @copy(<span class="hljs-keyword">$this</span>-&gt;full_src_path, <span class="hljs-keyword">$this</span>-&gt;full_dst_path))
+			{
+				chmod(<span class="hljs-keyword">$this</span>-&gt;full_dst_path, <span class="hljs-keyword">$this</span>-&gt;file_permissions);
+			}
+
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-84" id="section-84"></a>
+</div>
+<p>Let's set up our values based on the action</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($action === <span class="hljs-string">'crop'</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-85" id="section-85"></a>
+</div>
+<p>Reassign the source width/height if cropping</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;orig_width  = <span class="hljs-keyword">$this</span>-&gt;width;
+			<span class="hljs-keyword">$this</span>-&gt;orig_height = <span class="hljs-keyword">$this</span>-&gt;height;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-86" id="section-86"></a>
+</div>
+<p>GD 2.0 has a cropping bug so we'll test for it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;gd_version() !== <span class="hljs-keyword">FALSE</span>)
+			{
+				$gd_version = str_replace(<span class="hljs-string">'0'</span>, <span class="hljs-string">''</span>, <span class="hljs-keyword">$this</span>-&gt;gd_version());
+				$v2_override = ($gd_version == <span class="hljs-number">2</span>);
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-87" id="section-87"></a>
+</div>
+<p>If resizing the x/y axis must be zero</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;x_axis = <span class="hljs-number">0</span>;
+			<span class="hljs-keyword">$this</span>-&gt;y_axis = <span class="hljs-number">0</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-88" id="section-88"></a>
+</div>
+<p>Create the image handle</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! ($src_img = <span class="hljs-keyword">$this</span>-&gt;image_create_gd()))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-89" id="section-89"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Create the image</p>
+</div>
+<div class="body">
+<p>Old conditional which users report cause problems with shared GD libs who report themselves as &quot;2.0 or greater&quot;
+it appears that this is no longer the issue that it was in 2004, so we've removed it, retaining it in the comment
+below should that ever prove inaccurate.</p>
+<p>if ($this-&gt;image_library === 'gd2' &amp;&amp; function_exists('imagecreatetruecolor') &amp;&amp; $v2_override === FALSE)</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;image_library === <span class="hljs-string">'gd2'</span> &amp;&amp; function_exists(<span class="hljs-string">'imagecreatetruecolor'</span>))
+		{
+			$create	= <span class="hljs-string">'imagecreatetruecolor'</span>;
+			$copy	= <span class="hljs-string">'imagecopyresampled'</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$create	= <span class="hljs-string">'imagecreate'</span>;
+			$copy	= <span class="hljs-string">'imagecopyresized'</span>;
+		}
+
+		$dst_img = $create(<span class="hljs-keyword">$this</span>-&gt;width, <span class="hljs-keyword">$this</span>-&gt;height);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;image_type === <span class="hljs-number">3</span>) <span class="hljs-comment">// png we can actually preserve transparency</span>
+		{
+			imagealphablending($dst_img, <span class="hljs-keyword">FALSE</span>);
+			imagesavealpha($dst_img, <span class="hljs-keyword">TRUE</span>);
+		}
+
+		$copy($dst_img, $src_img, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;x_axis, <span class="hljs-keyword">$this</span>-&gt;y_axis, <span class="hljs-keyword">$this</span>-&gt;width, <span class="hljs-keyword">$this</span>-&gt;height, <span class="hljs-keyword">$this</span>-&gt;orig_width, <span class="hljs-keyword">$this</span>-&gt;orig_height);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-90" id="section-90"></a>
+</div>
+<p>Show the image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;dynamic_output === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;image_display_gd($dst_img);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">$this</span>-&gt;image_save_gd($dst_img)) <span class="hljs-comment">// Or save it</span>
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-91" id="section-91"></a>
+</div>
+<p>Kill the file handles</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		imagedestroy($dst_img);
+		imagedestroy($src_img);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;dynamic_output !== <span class="hljs-keyword">TRUE</span>)
+		{
+			chmod(<span class="hljs-keyword">$this</span>-&gt;full_dst_path, <span class="hljs-keyword">$this</span>-&gt;file_permissions);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-92" id="section-92"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-93" id="section-93"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Process Using ImageMagick</p>
+</div>
+<div class="body">
+<p>This function will resize, crop or rotate</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_process_imagemagick</span><span class="hljs-params">($action = <span class="hljs-string">'resize'</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-94" id="section-94"></a>
+</div>
+<p>Do we have a vaild library path?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;library_path === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_libpath_invalid'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! preg_match(<span class="hljs-string">'/convert$/i'</span>, <span class="hljs-keyword">$this</span>-&gt;library_path))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;library_path = rtrim(<span class="hljs-keyword">$this</span>-&gt;library_path, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/convert'</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-95" id="section-95"></a>
+</div>
+<p>Execute the command</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$cmd = <span class="hljs-keyword">$this</span>-&gt;library_path.<span class="hljs-string">' -quality '</span>.<span class="hljs-keyword">$this</span>-&gt;quality;
+
+		<span class="hljs-keyword">if</span> ($action === <span class="hljs-string">'crop'</span>)
+		{
+			$cmd .= <span class="hljs-string">' -crop '</span>.<span class="hljs-keyword">$this</span>-&gt;width.<span class="hljs-string">'x'</span>.<span class="hljs-keyword">$this</span>-&gt;height.<span class="hljs-string">'+'</span>.<span class="hljs-keyword">$this</span>-&gt;x_axis.<span class="hljs-string">'+'</span>.<span class="hljs-keyword">$this</span>-&gt;y_axis;
+		}
+		<span class="hljs-keyword">elseif</span> ($action === <span class="hljs-string">'rotate'</span>)
+		{
+			$cmd .= (<span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-string">'hor'</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-string">'vrt'</span>)
+					? <span class="hljs-string">' -flop'</span>
+					: <span class="hljs-string">' -rotate '</span>.<span class="hljs-keyword">$this</span>-&gt;rotation_angle;
+		}
+		<span class="hljs-keyword">else</span> <span class="hljs-comment">// Resize</span>
+		{
+			<span class="hljs-keyword">if</span>(<span class="hljs-keyword">$this</span>-&gt;maintain_ratio === <span class="hljs-keyword">TRUE</span>)
+			{
+				$cmd .= <span class="hljs-string">' -resize '</span>.<span class="hljs-keyword">$this</span>-&gt;width.<span class="hljs-string">'x'</span>.<span class="hljs-keyword">$this</span>-&gt;height;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$cmd .= <span class="hljs-string">' -resize '</span>.<span class="hljs-keyword">$this</span>-&gt;width.<span class="hljs-string">'x'</span>.<span class="hljs-keyword">$this</span>-&gt;height.<span class="hljs-string">'\!'</span>;
+			}
+		}
+
+		$cmd .= <span class="hljs-string">' '</span>.escapeshellarg(<span class="hljs-keyword">$this</span>-&gt;full_src_path).<span class="hljs-string">' '</span>.escapeshellarg(<span class="hljs-keyword">$this</span>-&gt;full_dst_path).<span class="hljs-string">' 2&gt;&amp;1'</span>;
+
+		$retval = <span class="hljs-number">1</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-96" id="section-96"></a>
+</div>
+<p>exec() might be disabled</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (function_usable(<span class="hljs-string">'exec'</span>))
+		{
+			@exec($cmd, $output, $retval);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-97" id="section-97"></a>
+</div>
+<p>Did it work?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($retval &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_image_process_failed'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		chmod(<span class="hljs-keyword">$this</span>-&gt;full_dst_path, <span class="hljs-keyword">$this</span>-&gt;file_permissions);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-98" id="section-98"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-99" id="section-99"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Process Using NetPBM</p>
+</div>
+<div class="body">
+<p>This function will resize, crop or rotate</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_process_netpbm</span><span class="hljs-params">($action = <span class="hljs-string">'resize'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;library_path === <span class="hljs-string">''</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_libpath_invalid'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-100" id="section-100"></a>
+</div>
+<p>Build the resizing command</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">switch</span> (<span class="hljs-keyword">$this</span>-&gt;image_type)
+		{
+			<span class="hljs-keyword">case</span> <span class="hljs-number">1</span> :
+				$cmd_in		= <span class="hljs-string">'giftopnm'</span>;
+				$cmd_out	= <span class="hljs-string">'ppmtogif'</span>;
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">case</span> <span class="hljs-number">2</span> :
+				$cmd_in		= <span class="hljs-string">'jpegtopnm'</span>;
+				$cmd_out	= <span class="hljs-string">'ppmtojpeg'</span>;
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">case</span> <span class="hljs-number">3</span> :
+				$cmd_in		= <span class="hljs-string">'pngtopnm'</span>;
+				$cmd_out	= <span class="hljs-string">'ppmtopng'</span>;
+				<span class="hljs-keyword">break</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ($action === <span class="hljs-string">'crop'</span>)
+		{
+			$cmd_inner = <span class="hljs-string">'pnmcut -left '</span>.<span class="hljs-keyword">$this</span>-&gt;x_axis.<span class="hljs-string">' -top '</span>.<span class="hljs-keyword">$this</span>-&gt;y_axis.<span class="hljs-string">' -width '</span>.<span class="hljs-keyword">$this</span>-&gt;width.<span class="hljs-string">' -height '</span>.<span class="hljs-keyword">$this</span>-&gt;height;
+		}
+		<span class="hljs-keyword">elseif</span> ($action === <span class="hljs-string">'rotate'</span>)
+		{
+			<span class="hljs-keyword">switch</span> (<span class="hljs-keyword">$this</span>-&gt;rotation_angle)
+			{
+				<span class="hljs-keyword">case</span> <span class="hljs-number">90</span>:	$angle = <span class="hljs-string">'r270'</span>;
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> <span class="hljs-number">180</span>:	$angle = <span class="hljs-string">'r180'</span>;
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> <span class="hljs-number">270</span>:	$angle = <span class="hljs-string">'r90'</span>;
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> <span class="hljs-string">'vrt'</span>:	$angle = <span class="hljs-string">'tb'</span>;
+					<span class="hljs-keyword">break</span>;
+				<span class="hljs-keyword">case</span> <span class="hljs-string">'hor'</span>:	$angle = <span class="hljs-string">'lr'</span>;
+					<span class="hljs-keyword">break</span>;
+			}
+
+			$cmd_inner = <span class="hljs-string">'pnmflip -'</span>.$angle.<span class="hljs-string">' '</span>;
+		}
+		<span class="hljs-keyword">else</span> <span class="hljs-comment">// Resize</span>
+		{
+			$cmd_inner = <span class="hljs-string">'pnmscale -xysize '</span>.<span class="hljs-keyword">$this</span>-&gt;width.<span class="hljs-string">' '</span>.<span class="hljs-keyword">$this</span>-&gt;height;
+		}
+
+		$cmd = <span class="hljs-keyword">$this</span>-&gt;library_path.$cmd_in.<span class="hljs-string">' '</span>.escapeshellarg(<span class="hljs-keyword">$this</span>-&gt;full_src_path).<span class="hljs-string">' | '</span>.$cmd_inner.<span class="hljs-string">' | '</span>.$cmd_out.<span class="hljs-string">' &gt; '</span>.<span class="hljs-keyword">$this</span>-&gt;dest_folder.<span class="hljs-string">'netpbm.tmp'</span>;
+
+		$retval = <span class="hljs-number">1</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-101" id="section-101"></a>
+</div>
+<p>exec() might be disabled</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (function_usable(<span class="hljs-string">'exec'</span>))
+		{
+			@exec($cmd, $output, $retval);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-102" id="section-102"></a>
+</div>
+<p>Did it work?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($retval &gt; <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_image_process_failed'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-103" id="section-103"></a>
+</div>
+<p>With NetPBM we have to create a temporary image.
+If you try manipulating the original it fails so
+we have to rename the temp file.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		copy(<span class="hljs-keyword">$this</span>-&gt;dest_folder.<span class="hljs-string">'netpbm.tmp'</span>, <span class="hljs-keyword">$this</span>-&gt;full_dst_path);
+		unlink(<span class="hljs-keyword">$this</span>-&gt;dest_folder.<span class="hljs-string">'netpbm.tmp'</span>);
+		chmod(<span class="hljs-keyword">$this</span>-&gt;full_dst_path, <span class="hljs-keyword">$this</span>-&gt;file_permissions);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-104" id="section-104"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-105" id="section-105"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Rotate Using GD</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_rotate_gd</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-106" id="section-106"></a>
+</div>
+<p>Create the image handle</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! ($src_img = <span class="hljs-keyword">$this</span>-&gt;image_create_gd()))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-107" id="section-107"></a>
+</div>
+<p>Set the background color
+This won't work with transparent PNG files so we are
+going to have to figure out how to determine the color
+of the alpha channel in a future release.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$white = imagecolorallocate($src_img, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-108" id="section-108"></a>
+</div>
+<p>Rotate it!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$dst_img = imagerotate($src_img, <span class="hljs-keyword">$this</span>-&gt;rotation_angle, $white);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-109" id="section-109"></a>
+</div>
+<p>Show the image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;dynamic_output === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;image_display_gd($dst_img);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">$this</span>-&gt;image_save_gd($dst_img)) <span class="hljs-comment">// ... or save it</span>
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-110" id="section-110"></a>
+</div>
+<p>Kill the file handles</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		imagedestroy($dst_img);
+		imagedestroy($src_img);
+
+		chmod(<span class="hljs-keyword">$this</span>-&gt;full_dst_path, <span class="hljs-keyword">$this</span>-&gt;file_permissions);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-111" id="section-111"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-112" id="section-112"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Create Mirror Image using GD</p>
+</div>
+<div class="body">
+<p>This function will flip horizontal or vertical</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_mirror_gd</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! $src_img = <span class="hljs-keyword">$this</span>-&gt;image_create_gd())
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$width  = <span class="hljs-keyword">$this</span>-&gt;orig_width;
+		$height = <span class="hljs-keyword">$this</span>-&gt;orig_height;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;rotation_angle === <span class="hljs-string">'hor'</span>)
+		{
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $height; $i++)
+			{
+				$left = <span class="hljs-number">0</span>;
+				$right = $width - <span class="hljs-number">1</span>;
+
+				<span class="hljs-keyword">while</span> ($left &lt; $right)
+				{
+					$cl = imagecolorat($src_img, $left, $i);
+					$cr = imagecolorat($src_img, $right, $i);
+
+					imagesetpixel($src_img, $left, $i, $cr);
+					imagesetpixel($src_img, $right, $i, $cl);
+
+					$left++;
+					$right--;
+				}
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">for</span> ($i = <span class="hljs-number">0</span>; $i &lt; $width; $i++)
+			{
+				$top = <span class="hljs-number">0</span>;
+				$bottom = $height - <span class="hljs-number">1</span>;
+
+				<span class="hljs-keyword">while</span> ($top &lt; $bottom)
+				{
+					$ct = imagecolorat($src_img, $i, $top);
+					$cb = imagecolorat($src_img, $i, $bottom);
+
+					imagesetpixel($src_img, $i, $top, $cb);
+					imagesetpixel($src_img, $i, $bottom, $ct);
+
+					$top++;
+					$bottom--;
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-113" id="section-113"></a>
+</div>
+<p>Show the image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;dynamic_output === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;image_display_gd($src_img);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">$this</span>-&gt;image_save_gd($src_img)) <span class="hljs-comment">// ... or save it</span>
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-114" id="section-114"></a>
+</div>
+<p>Kill the file handles</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		imagedestroy($src_img);
+
+		chmod(<span class="hljs-keyword">$this</span>-&gt;full_dst_path, <span class="hljs-keyword">$this</span>-&gt;file_permissions);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-115" id="section-115"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-116" id="section-116"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Image Watermark</p>
+</div>
+<div class="body">
+<p>This is a wrapper function that chooses the type
+of watermarking based on the specified preference.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">watermark</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">$this</span>-&gt;wm_type === <span class="hljs-string">'overlay'</span>) ? <span class="hljs-keyword">$this</span>-&gt;overlay_watermark() : <span class="hljs-keyword">$this</span>-&gt;text_watermark();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-117" id="section-117"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-118" id="section-118"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Watermark - Graphic Version</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">overlay_watermark</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'imagecolortransparent'</span>))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_gd_required'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-119" id="section-119"></a>
+</div>
+<p>Fetch source image properties</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;get_image_properties();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-120" id="section-120"></a>
+</div>
+<p>Fetch watermark image properties</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$props		= <span class="hljs-keyword">$this</span>-&gt;get_image_properties(<span class="hljs-keyword">$this</span>-&gt;wm_overlay_path, <span class="hljs-keyword">TRUE</span>);
+		$wm_img_type	= $props[<span class="hljs-string">'image_type'</span>];
+		$wm_width	= $props[<span class="hljs-string">'width'</span>];
+		$wm_height	= $props[<span class="hljs-string">'height'</span>];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-121" id="section-121"></a>
+</div>
+<p>Create two image resources</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$wm_img  = <span class="hljs-keyword">$this</span>-&gt;image_create_gd(<span class="hljs-keyword">$this</span>-&gt;wm_overlay_path, $wm_img_type);
+		$src_img = <span class="hljs-keyword">$this</span>-&gt;image_create_gd(<span class="hljs-keyword">$this</span>-&gt;full_src_path);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-122" id="section-122"></a>
+</div>
+<p>Reverse the offset if necessary
+When the image is positioned at the bottom
+we don't want the vertical offset to push it
+further down. We want the reverse, so we'll
+invert the offset. Same with the horizontal
+offset when the image is at the right</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment = strtoupper(<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment[<span class="hljs-number">0</span>]);
+		<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment = strtoupper(<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment[<span class="hljs-number">0</span>]);
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment === <span class="hljs-string">'B'</span>)
+			<span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset = <span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset * <span class="hljs-number">-1</span>;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment === <span class="hljs-string">'R'</span>)
+			<span class="hljs-keyword">$this</span>-&gt;wm_hor_offset = <span class="hljs-keyword">$this</span>-&gt;wm_hor_offset * <span class="hljs-number">-1</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-123" id="section-123"></a>
+</div>
+<p>Set the base x and y axis values</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$x_axis = <span class="hljs-keyword">$this</span>-&gt;wm_hor_offset + <span class="hljs-keyword">$this</span>-&gt;wm_padding;
+		$y_axis = <span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset + <span class="hljs-keyword">$this</span>-&gt;wm_padding;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-124" id="section-124"></a>
+</div>
+<p>Set the vertical position</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment === <span class="hljs-string">'M'</span>)
+		{
+			$y_axis += (<span class="hljs-keyword">$this</span>-&gt;orig_height / <span class="hljs-number">2</span>) - ($wm_height / <span class="hljs-number">2</span>);
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment === <span class="hljs-string">'B'</span>)
+		{
+			$y_axis += <span class="hljs-keyword">$this</span>-&gt;orig_height - $wm_height;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-125" id="section-125"></a>
+</div>
+<p>Set the horizontal position</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment === <span class="hljs-string">'C'</span>)
+		{
+			$x_axis += (<span class="hljs-keyword">$this</span>-&gt;orig_width / <span class="hljs-number">2</span>) - ($wm_width / <span class="hljs-number">2</span>);
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment === <span class="hljs-string">'R'</span>)
+		{
+			$x_axis += <span class="hljs-keyword">$this</span>-&gt;orig_width - $wm_width;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-126" id="section-126"></a>
+</div>
+<p>Build the finalized image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($wm_img_type === <span class="hljs-number">3</span> &amp;&amp; function_exists(<span class="hljs-string">'imagealphablending'</span>))
+		{
+			@imagealphablending($src_img, <span class="hljs-keyword">TRUE</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-127" id="section-127"></a>
+</div>
+<p>Set RGB values for text and shadow</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$rgba = imagecolorat($wm_img, <span class="hljs-keyword">$this</span>-&gt;wm_x_transp, <span class="hljs-keyword">$this</span>-&gt;wm_y_transp);
+		$alpha = ($rgba &amp; <span class="hljs-number">0x7F000000</span>) &gt;&gt; <span class="hljs-number">24</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-128" id="section-128"></a>
+</div>
+<p>make a best guess as to whether we're dealing with an image with alpha transparency or no/binary transparency</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($alpha &gt; <span class="hljs-number">0</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-129" id="section-129"></a>
+</div>
+<p>copy the image directly, the image's alpha transparency being the sole determinant of blending</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			imagecopy($src_img, $wm_img, $x_axis, $y_axis, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, $wm_width, $wm_height);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-130" id="section-130"></a>
+</div>
+<p>set our RGB value from above to be transparent and merge the images with the specified opacity</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			imagecolortransparent($wm_img, imagecolorat($wm_img, <span class="hljs-keyword">$this</span>-&gt;wm_x_transp, <span class="hljs-keyword">$this</span>-&gt;wm_y_transp));
+			imagecopymerge($src_img, $wm_img, $x_axis, $y_axis, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, $wm_width, $wm_height, <span class="hljs-keyword">$this</span>-&gt;wm_opacity);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-131" id="section-131"></a>
+</div>
+<p>We can preserve transparency for PNG images</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;image_type === <span class="hljs-number">3</span>)
+		{
+			imagealphablending($src_img, <span class="hljs-keyword">FALSE</span>);
+			imagesavealpha($src_img, <span class="hljs-keyword">TRUE</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-132" id="section-132"></a>
+</div>
+<p>Output the image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;dynamic_output === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;image_display_gd($src_img);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">$this</span>-&gt;image_save_gd($src_img)) <span class="hljs-comment">// ... or save it</span>
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		imagedestroy($src_img);
+		imagedestroy($wm_img);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-133" id="section-133"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-134" id="section-134"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Watermark - Text Version</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">text_watermark</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! ($src_img = <span class="hljs-keyword">$this</span>-&gt;image_create_gd()))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_use_truetype === <span class="hljs-keyword">TRUE</span> &amp;&amp; ! file_exists(<span class="hljs-keyword">$this</span>-&gt;wm_font_path))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_missing_font'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-135" id="section-135"></a>
+</div>
+<p>Fetch source image properties</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;get_image_properties();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-136" id="section-136"></a>
+</div>
+<p>Reverse the vertical offset
+When the image is positioned at the bottom
+we don't want the vertical offset to push it
+further down. We want the reverse, so we'll
+invert the offset. Note: The horizontal
+offset flips itself automatically</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment === <span class="hljs-string">'B'</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset = <span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset * <span class="hljs-number">-1</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment === <span class="hljs-string">'R'</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;wm_hor_offset = <span class="hljs-keyword">$this</span>-&gt;wm_hor_offset * <span class="hljs-number">-1</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-137" id="section-137"></a>
+</div>
+<p>Set font width and height
+These are calculated differently depending on
+whether we are using the true type font or not</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_use_truetype === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>(<span class="hljs-keyword">$this</span>-&gt;wm_font_size))
+			{
+				<span class="hljs-keyword">$this</span>-&gt;wm_font_size = <span class="hljs-number">17</span>;
+			}
+
+			<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'imagettfbbox'</span>))
+			{
+				$temp = imagettfbbox(<span class="hljs-keyword">$this</span>-&gt;wm_font_size, <span class="hljs-number">0</span>, <span class="hljs-keyword">$this</span>-&gt;wm_font_path, <span class="hljs-keyword">$this</span>-&gt;wm_text);
+				$temp = $temp[<span class="hljs-number">2</span>] - $temp[<span class="hljs-number">0</span>];
+
+				$fontwidth = $temp / strlen(<span class="hljs-keyword">$this</span>-&gt;wm_text);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$fontwidth = <span class="hljs-keyword">$this</span>-&gt;wm_font_size - (<span class="hljs-keyword">$this</span>-&gt;wm_font_size / <span class="hljs-number">4</span>);
+			}
+
+			$fontheight = <span class="hljs-keyword">$this</span>-&gt;wm_font_size;
+			<span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset += <span class="hljs-keyword">$this</span>-&gt;wm_font_size;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$fontwidth  = imagefontwidth(<span class="hljs-keyword">$this</span>-&gt;wm_font_size);
+			$fontheight = imagefontheight(<span class="hljs-keyword">$this</span>-&gt;wm_font_size);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-138" id="section-138"></a>
+</div>
+<p>Set base X and Y axis values</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$x_axis = <span class="hljs-keyword">$this</span>-&gt;wm_hor_offset + <span class="hljs-keyword">$this</span>-&gt;wm_padding;
+		$y_axis = <span class="hljs-keyword">$this</span>-&gt;wm_vrt_offset + <span class="hljs-keyword">$this</span>-&gt;wm_padding;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_use_drop_shadow === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;wm_shadow_distance = <span class="hljs-number">0</span>;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment = strtoupper(<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment[<span class="hljs-number">0</span>]);
+		<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment = strtoupper(<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment[<span class="hljs-number">0</span>]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-139" id="section-139"></a>
+</div>
+<p>Set vertical alignment</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment === <span class="hljs-string">'M'</span>)
+		{
+			$y_axis += (<span class="hljs-keyword">$this</span>-&gt;orig_height / <span class="hljs-number">2</span>) + ($fontheight / <span class="hljs-number">2</span>);
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;wm_vrt_alignment === <span class="hljs-string">'B'</span>)
+		{
+			$y_axis += <span class="hljs-keyword">$this</span>-&gt;orig_height - $fontheight - <span class="hljs-keyword">$this</span>-&gt;wm_shadow_distance - ($fontheight / <span class="hljs-number">2</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-140" id="section-140"></a>
+</div>
+<p>Set horizontal alignment</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment === <span class="hljs-string">'R'</span>)
+		{
+			$x_axis += <span class="hljs-keyword">$this</span>-&gt;orig_width - ($fontwidth * strlen(<span class="hljs-keyword">$this</span>-&gt;wm_text)) - <span class="hljs-keyword">$this</span>-&gt;wm_shadow_distance;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">$this</span>-&gt;wm_hor_alignment === <span class="hljs-string">'C'</span>)
+		{
+			$x_axis += floor((<span class="hljs-keyword">$this</span>-&gt;orig_width - ($fontwidth * strlen(<span class="hljs-keyword">$this</span>-&gt;wm_text))) / <span class="hljs-number">2</span>);
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_use_drop_shadow)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-141" id="section-141"></a>
+</div>
+<p>Offset from text</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$x_shad = $x_axis + <span class="hljs-keyword">$this</span>-&gt;wm_shadow_distance;
+			$y_shad = $y_axis + <span class="hljs-keyword">$this</span>-&gt;wm_shadow_distance;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-142" id="section-142"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set RGB values for shadow</p>
+</div>
+<div class="body">
+<p>First character is #, so we don't really need it.
+Get the rest of the string and split it into 2-length
+hex values:</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$drp_color = str_split(substr(<span class="hljs-keyword">$this</span>-&gt;wm_shadow_color, <span class="hljs-number">1</span>, <span class="hljs-number">6</span>), <span class="hljs-number">2</span>);
+			$drp_color = imagecolorclosest($src_img, hexdec($drp_color[<span class="hljs-number">0</span>]), hexdec($drp_color[<span class="hljs-number">1</span>]), hexdec($drp_color[<span class="hljs-number">2</span>]));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-143" id="section-143"></a>
+</div>
+<p>Add the shadow to the source image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_use_truetype)
+			{
+				imagettftext($src_img, <span class="hljs-keyword">$this</span>-&gt;wm_font_size, <span class="hljs-number">0</span>, $x_shad, $y_shad, $drp_color, <span class="hljs-keyword">$this</span>-&gt;wm_font_path, <span class="hljs-keyword">$this</span>-&gt;wm_text);
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				imagestring($src_img, <span class="hljs-keyword">$this</span>-&gt;wm_font_size, $x_shad, $y_shad, <span class="hljs-keyword">$this</span>-&gt;wm_text, $drp_color);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-144" id="section-144"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set RGB values for text</p>
+</div>
+<div class="body">
+<p>First character is #, so we don't really need it.
+Get the rest of the string and split it into 2-length
+hex values:</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$txt_color = str_split(substr(<span class="hljs-keyword">$this</span>-&gt;wm_font_color, <span class="hljs-number">1</span>, <span class="hljs-number">6</span>), <span class="hljs-number">2</span>);
+		$txt_color = imagecolorclosest($src_img, hexdec($txt_color[<span class="hljs-number">0</span>]), hexdec($txt_color[<span class="hljs-number">1</span>]), hexdec($txt_color[<span class="hljs-number">2</span>]));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-145" id="section-145"></a>
+</div>
+<p>Add the text to the source image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;wm_use_truetype)
+		{
+			imagettftext($src_img, <span class="hljs-keyword">$this</span>-&gt;wm_font_size, <span class="hljs-number">0</span>, $x_axis, $y_axis, $txt_color, <span class="hljs-keyword">$this</span>-&gt;wm_font_path, <span class="hljs-keyword">$this</span>-&gt;wm_text);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			imagestring($src_img, <span class="hljs-keyword">$this</span>-&gt;wm_font_size, $x_axis, $y_axis, <span class="hljs-keyword">$this</span>-&gt;wm_text, $txt_color);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-146" id="section-146"></a>
+</div>
+<p>We can preserve transparency for PNG images</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;image_type === <span class="hljs-number">3</span>)
+		{
+			imagealphablending($src_img, <span class="hljs-keyword">FALSE</span>);
+			imagesavealpha($src_img, <span class="hljs-keyword">TRUE</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-147" id="section-147"></a>
+</div>
+<p>Output the final image</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;dynamic_output === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;image_display_gd($src_img);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">$this</span>-&gt;image_save_gd($src_img);
+		}
+
+		imagedestroy($src_img);
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-148" id="section-148"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-149" id="section-149"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Create Image - GD</p>
+</div>
+<div class="body">
+<p>This simply creates an image resource handle
+based on the type of image being processed</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>resource
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_create_gd</span><span class="hljs-params">($path = <span class="hljs-string">''</span>, $image_type = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($path === <span class="hljs-string">''</span>)
+		{
+			$path = <span class="hljs-keyword">$this</span>-&gt;full_src_path;
+		}
+
+		<span class="hljs-keyword">if</span> ($image_type === <span class="hljs-string">''</span>)
+		{
+			$image_type = <span class="hljs-keyword">$this</span>-&gt;image_type;
+		}
+
+		<span class="hljs-keyword">switch</span> ($image_type)
+		{
+			<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+				<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'imagecreatefromgif'</span>))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>, <span class="hljs-string">'imglib_gif_not_supported'</span>));
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+
+				<span class="hljs-keyword">return</span> imagecreatefromgif($path);
+			<span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+				<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'imagecreatefromjpeg'</span>))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>, <span class="hljs-string">'imglib_jpg_not_supported'</span>));
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+
+				<span class="hljs-keyword">return</span> imagecreatefromjpeg($path);
+			<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:
+				<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'imagecreatefrompng'</span>))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>, <span class="hljs-string">'imglib_png_not_supported'</span>));
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+
+				<span class="hljs-keyword">return</span> imagecreatefrompng($path);
+			<span class="hljs-keyword">default</span>:
+				<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>));
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-150" id="section-150"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-151" id="section-151"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Write image file to disk - GD</p>
+</div>
+<div class="body">
+<p>Takes an image resource as input and writes the file
+to the specified destination</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">resource</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_save_gd</span><span class="hljs-params">($resource)</span>
+	</span>{
+		<span class="hljs-keyword">switch</span> (<span class="hljs-keyword">$this</span>-&gt;image_type)
+		{
+			<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:
+				<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'imagegif'</span>))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>, <span class="hljs-string">'imglib_gif_not_supported'</span>));
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+
+				<span class="hljs-keyword">if</span> ( ! @imagegif($resource, <span class="hljs-keyword">$this</span>-&gt;full_dst_path))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_save_failed'</span>);
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+			<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+				<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'imagejpeg'</span>))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>, <span class="hljs-string">'imglib_jpg_not_supported'</span>));
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+
+				<span class="hljs-keyword">if</span> ( ! @imagejpeg($resource, <span class="hljs-keyword">$this</span>-&gt;full_dst_path, <span class="hljs-keyword">$this</span>-&gt;quality))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_save_failed'</span>);
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+			<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:
+				<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'imagepng'</span>))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>, <span class="hljs-string">'imglib_png_not_supported'</span>));
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+
+				<span class="hljs-keyword">if</span> ( ! @imagepng($resource, <span class="hljs-keyword">$this</span>-&gt;full_dst_path))
+				{
+					<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_save_failed'</span>);
+					<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+				}
+			<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">default</span>:
+				<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-keyword">array</span>(<span class="hljs-string">'imglib_unsupported_imagecreate'</span>));
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			<span class="hljs-keyword">break</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-152" id="section-152"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-153" id="section-153"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Dynamically outputs an image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">resource</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_display_gd</span><span class="hljs-params">($resource)</span>
+	</span>{
+		header(<span class="hljs-string">'Content-Disposition: filename='</span>.<span class="hljs-keyword">$this</span>-&gt;source_image.<span class="hljs-string">';'</span>);
+		header(<span class="hljs-string">'Content-Type: '</span>.<span class="hljs-keyword">$this</span>-&gt;mime_type);
+		header(<span class="hljs-string">'Content-Transfer-Encoding: binary'</span>);
+		header(<span class="hljs-string">'Last-Modified: '</span>.gmdate(<span class="hljs-string">'D, d M Y H:i:s'</span>, time()).<span class="hljs-string">' GMT'</span>);
+
+		<span class="hljs-keyword">switch</span> (<span class="hljs-keyword">$this</span>-&gt;image_type)
+		{
+			<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>	:	imagegif($resource);
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">case</span> <span class="hljs-number">2</span>	:	imagejpeg($resource, <span class="hljs-keyword">NULL</span>, <span class="hljs-keyword">$this</span>-&gt;quality);
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>	:	imagepng($resource);
+				<span class="hljs-keyword">break</span>;
+			<span class="hljs-keyword">default</span>:	<span class="hljs-keyword">echo</span> <span class="hljs-string">'Unable to display the image'</span>;
+				<span class="hljs-keyword">break</span>;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-154" id="section-154"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-155" id="section-155"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Re-proportion Image Width/Height</p>
+</div>
+<div class="body">
+<p>When creating thumbs, the desired width/height
+can end up warping the image due to an incorrect
+ratio between the full-sized image and the thumb.</p>
+<p>This function lets us re-proportion the width/height
+if users choose to maintain the aspect ratio when resizing.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">image_reproportion</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ((<span class="hljs-keyword">$this</span>-&gt;width === <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;height === <span class="hljs-number">0</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;orig_width === <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">$this</span>-&gt;orig_height === <span class="hljs-number">0</span>
+			<span class="hljs-keyword">OR</span> ( ! ctype_digit((string) <span class="hljs-keyword">$this</span>-&gt;width) &amp;&amp; ! ctype_digit((string) <span class="hljs-keyword">$this</span>-&gt;height))
+			<span class="hljs-keyword">OR</span> ! ctype_digit((string) <span class="hljs-keyword">$this</span>-&gt;orig_width) <span class="hljs-keyword">OR</span> ! ctype_digit((string) <span class="hljs-keyword">$this</span>-&gt;orig_height))
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-156" id="section-156"></a>
+</div>
+<p>Sanitize</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;width = (int) <span class="hljs-keyword">$this</span>-&gt;width;
+		<span class="hljs-keyword">$this</span>-&gt;height = (int) <span class="hljs-keyword">$this</span>-&gt;height;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;master_dim !== <span class="hljs-string">'width'</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;master_dim !== <span class="hljs-string">'height'</span>)
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;width &gt; <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;height &gt; <span class="hljs-number">0</span>)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;master_dim = (((<span class="hljs-keyword">$this</span>-&gt;orig_height/<span class="hljs-keyword">$this</span>-&gt;orig_width) - (<span class="hljs-keyword">$this</span>-&gt;height/<span class="hljs-keyword">$this</span>-&gt;width)) &lt; <span class="hljs-number">0</span>)
+							? <span class="hljs-string">'width'</span> : <span class="hljs-string">'height'</span>;
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				<span class="hljs-keyword">$this</span>-&gt;master_dim = (<span class="hljs-keyword">$this</span>-&gt;height === <span class="hljs-number">0</span>) ? <span class="hljs-string">'width'</span> : <span class="hljs-string">'height'</span>;
+			}
+		}
+		<span class="hljs-keyword">elseif</span> ((<span class="hljs-keyword">$this</span>-&gt;master_dim === <span class="hljs-string">'width'</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;width === <span class="hljs-number">0</span>)
+			<span class="hljs-keyword">OR</span> (<span class="hljs-keyword">$this</span>-&gt;master_dim === <span class="hljs-string">'height'</span> &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;height === <span class="hljs-number">0</span>))
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;master_dim === <span class="hljs-string">'width'</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;height = (int) ceil(<span class="hljs-keyword">$this</span>-&gt;width*<span class="hljs-keyword">$this</span>-&gt;orig_height/<span class="hljs-keyword">$this</span>-&gt;orig_width);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">$this</span>-&gt;width = (int) ceil(<span class="hljs-keyword">$this</span>-&gt;orig_width*<span class="hljs-keyword">$this</span>-&gt;height/<span class="hljs-keyword">$this</span>-&gt;orig_height);
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-157" id="section-157"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-158" id="section-158"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get image properties</p>
+</div>
+<div class="body">
+<p>A helper function that gets info about the file</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_image_properties</span><span class="hljs-params">($path = <span class="hljs-string">''</span>, $return = FALSE)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-159" id="section-159"></a>
+</div>
+<p>For now we require GD but we should
+find a way to determine this using IM or NetPBM</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		<span class="hljs-keyword">if</span> ($path === <span class="hljs-string">''</span>)
+		{
+			$path = <span class="hljs-keyword">$this</span>-&gt;full_src_path;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! file_exists($path))
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_invalid_path'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$vals = getimagesize($path);
+		<span class="hljs-keyword">if</span> ($vals === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;set_error(<span class="hljs-string">'imglib_invalid_image'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		$types = <span class="hljs-keyword">array</span>(<span class="hljs-number">1</span> =&gt; <span class="hljs-string">'gif'</span>, <span class="hljs-number">2</span> =&gt; <span class="hljs-string">'jpeg'</span>, <span class="hljs-number">3</span> =&gt; <span class="hljs-string">'png'</span>);
+		$mime = <span class="hljs-keyword">isset</span>($types[$vals[<span class="hljs-number">2</span>]]) ? <span class="hljs-string">'image/'</span>.$types[$vals[<span class="hljs-number">2</span>]] : <span class="hljs-string">'image/jpg'</span>;
+
+		<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(
+				<span class="hljs-string">'width'</span>      =&gt; $vals[<span class="hljs-number">0</span>],
+				<span class="hljs-string">'height'</span>     =&gt; $vals[<span class="hljs-number">1</span>],
+				<span class="hljs-string">'image_type'</span> =&gt; $vals[<span class="hljs-number">2</span>],
+				<span class="hljs-string">'size_str'</span>   =&gt; $vals[<span class="hljs-number">3</span>],
+				<span class="hljs-string">'mime_type'</span>  =&gt; $mime
+			);
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;orig_width  = $vals[<span class="hljs-number">0</span>];
+		<span class="hljs-keyword">$this</span>-&gt;orig_height = $vals[<span class="hljs-number">1</span>];
+		<span class="hljs-keyword">$this</span>-&gt;image_type  = $vals[<span class="hljs-number">2</span>];
+		<span class="hljs-keyword">$this</span>-&gt;size_str    = $vals[<span class="hljs-number">3</span>];
+		<span class="hljs-keyword">$this</span>-&gt;mime_type   = $mime;
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-160" id="section-160"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-161" id="section-161"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Size calculator</p>
+</div>
+<div class="body">
+<p>This function takes a known width x height and
+recalculates it to a new size. Only one
+new variable needs to be known</p>
+<pre><code>$props = array(
+		'width'		=&gt; $width,
+		'height'	=&gt; $height,
+		'new_width'	=&gt; 40,
+		'new_height'	=&gt; ''
+	);</code></pre>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">size_calculator</span><span class="hljs-params">($vals)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_array($vals))
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+		$allowed = <span class="hljs-keyword">array</span>(<span class="hljs-string">'new_width'</span>, <span class="hljs-string">'new_height'</span>, <span class="hljs-string">'width'</span>, <span class="hljs-string">'height'</span>);
+
+		<span class="hljs-keyword">foreach</span> ($allowed <span class="hljs-keyword">as</span> $item)
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($vals[$item]))
+			{
+				$vals[$item] = <span class="hljs-number">0</span>;
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($vals[<span class="hljs-string">'width'</span>] === <span class="hljs-number">0</span> <span class="hljs-keyword">OR</span> $vals[<span class="hljs-string">'height'</span>] === <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">return</span> $vals;
+		}
+
+		<span class="hljs-keyword">if</span> ($vals[<span class="hljs-string">'new_width'</span>] === <span class="hljs-number">0</span>)
+		{
+			$vals[<span class="hljs-string">'new_width'</span>] = ceil($vals[<span class="hljs-string">'width'</span>]*$vals[<span class="hljs-string">'new_height'</span>]/$vals[<span class="hljs-string">'height'</span>]);
+		}
+		<span class="hljs-keyword">elseif</span> ($vals[<span class="hljs-string">'new_height'</span>] === <span class="hljs-number">0</span>)
+		{
+			$vals[<span class="hljs-string">'new_height'</span>] = ceil($vals[<span class="hljs-string">'new_width'</span>]*$vals[<span class="hljs-string">'height'</span>]/$vals[<span class="hljs-string">'width'</span>]);
+		}
+
+		<span class="hljs-keyword">return</span> $vals;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-162" id="section-162"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-163" id="section-163"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Explode source_image</p>
+</div>
+<div class="body">
+<p>This is a helper function that extracts the extension
+from the source_image.  This function lets us deal with
+source_images with multiple periods, like: my.cool.jpg
+It returns an associative array with two elements:
+$array['ext']  = '.jpg';
+$array['name'] = 'my.cool';</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">explode_name</span><span class="hljs-params">($source_image)</span>
+	</span>{
+		$ext = strrchr($source_image, <span class="hljs-string">'.'</span>);
+		$name = ($ext === <span class="hljs-keyword">FALSE</span>) ? $source_image : substr($source_image, <span class="hljs-number">0</span>, -strlen($ext));
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>(<span class="hljs-string">'ext'</span> =&gt; $ext, <span class="hljs-string">'name'</span> =&gt; $name);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-164" id="section-164"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-165" id="section-165"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is GD Installed?</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gd_loaded</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! extension_loaded(<span class="hljs-string">'gd'</span>))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-166" id="section-166"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>As it is stated in the PHP manual, dl() is not always available
+and even if so - it could generate an E_WARNING message on failure</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">return</span> (function_exists(<span class="hljs-string">'dl'</span>) &amp;&amp; @dl(<span class="hljs-string">'gd.so'</span>));
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-167" id="section-167"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-168" id="section-168"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get GD version</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">gd_version</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (function_exists(<span class="hljs-string">'gd_info'</span>))
+		{
+			$gd_version = @gd_info();
+			<span class="hljs-keyword">return</span> preg_replace(<span class="hljs-string">'/\D/'</span>, <span class="hljs-string">''</span>, $gd_version[<span class="hljs-string">'GD Version'</span>]);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-169" id="section-169"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-170" id="section-170"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set error message</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_error</span><span class="hljs-params">($msg)</span>
+	</span>{
+		$CI =&amp; get_instance();
+		$CI-&gt;lang-&gt;load(<span class="hljs-string">'imglib'</span>);
+
+		<span class="hljs-keyword">if</span> (is_array($msg))
+		{
+			<span class="hljs-keyword">foreach</span> ($msg <span class="hljs-keyword">as</span> $val)
+			{
+				$msg = ($CI-&gt;lang-&gt;line($val) === <span class="hljs-keyword">FALSE</span>) ? $val : $CI-&gt;lang-&gt;line($val);
+				<span class="hljs-keyword">$this</span>-&gt;error_msg[] = $msg;
+				log_message(<span class="hljs-string">'error'</span>, $msg);
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$msg = ($CI-&gt;lang-&gt;line($msg) === <span class="hljs-keyword">FALSE</span>) ? $msg : $CI-&gt;lang-&gt;line($msg);
+			<span class="hljs-keyword">$this</span>-&gt;error_msg[] = $msg;
+			log_message(<span class="hljs-string">'error'</span>, $msg);
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-171" id="section-171"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-172" id="section-172"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show error messages</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">display_errors</span><span class="hljs-params">($open = <span class="hljs-string">'&lt;p&gt;'</span>, $close = <span class="hljs-string">'&lt;/p&gt;'</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (count(<span class="hljs-keyword">$this</span>-&gt;error_msg) &gt; <span class="hljs-number">0</span>) ? $open.implode($close.$open, <span class="hljs-keyword">$this</span>-&gt;error_msg).$close : <span class="hljs-string">''</span>;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

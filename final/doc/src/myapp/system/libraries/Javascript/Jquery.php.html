@@ -1,0 +1,3393 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jquery.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../doc-style.css" />
+  <script src="../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Javascript\\Jquery.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h2">
+        <a href="#event-code">Event Code</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#effects">Effects</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#pre-written-handy-stuff">Pre-written handy stuff</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#plugins">Plugins</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#class-functions">Class functions</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Jquery.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Jquery Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Jquery</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_Javascript</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JavaScript directory location</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_javascript_folder = <span class="hljs-string">'js'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JQuery code for load</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $jquery_code_for_load = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JQuery code for compile</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $jquery_code_for_compile = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JQuery corner active flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $jquery_corner_active = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JQuery table sorter active flag</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $jquery_table_sorter_active = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JQuery table sorter pager active</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $jquery_table_sorter_pager_active = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>JQuery AJAX image</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $jquery_ajax_img = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($params)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;CI =&amp; get_instance();
+		extract($params);
+
+		<span class="hljs-keyword">if</span> ($autoload === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;script();
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Jquery Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="event-code">
+  <h2>
+    <a href="#event-code" name="event-code" class="pilcrow"></a>
+Event Code
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Blur</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery blur event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_blur</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'blur'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Change</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery change event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_change</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'change'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Click</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery click event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>whether or not to return false
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_click</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>, $ret_false = TRUE)</span>
+	</span>{
+		is_array($js) <span class="hljs-keyword">OR</span> $js = <span class="hljs-keyword">array</span>($js);
+
+		<span class="hljs-keyword">if</span> ($ret_false)
+		{
+			$js[] = <span class="hljs-string">'return false;'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'click'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Double Click</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery dblclick event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_dblclick</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'dblclick'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery error event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_error</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'error'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Focus</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery focus event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_focus</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'focus'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Hover</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery hover event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript code for mouse over</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript code for mouse out</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_hover</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $over = <span class="hljs-string">''</span>, $out = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$event = <span class="hljs-string">"\n\t$("</span>.<span class="hljs-keyword">$this</span>-&gt;_prep_element($element).<span class="hljs-string">").hover(\n\t\tfunction()\n\t\t{\n\t\t\t{$over}\n\t\t}, \n\t\tfunction()\n\t\t{\n\t\t\t{$out}\n\t\t});\n"</span>;
+
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile[] = $event;
+
+		<span class="hljs-keyword">return</span> $event;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Keydown</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery keydown event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_keydown</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'keydown'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Keyup</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery keydown event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_keyup</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'keyup'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Load</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery load event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_load</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'load'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Mousedown</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery mousedown event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mousedown</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'mousedown'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Mouse Out</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery mouseout event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mouseout</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'mouseout'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Mouse Over</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery mouseover event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mouseover</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'mouseover'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Mouseup</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery mouseup event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_mouseup</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'mouseup'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Output</p>
+</div>
+<div class="body">
+<p>Outputs script directly</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$array_js = array()
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_output</span><span class="hljs-params">($array_js = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! is_array($array_js))
+		{
+			$array_js = <span class="hljs-keyword">array</span>($array_js);
+		}
+
+		<span class="hljs-keyword">foreach</span> ($array_js <span class="hljs-keyword">as</span> $js)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile[] = <span class="hljs-string">"\t"</span>.$js.<span class="hljs-string">"\n"</span>;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Resize</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery resize event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_resize</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'resize'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Scroll</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery scroll event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_scroll</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'scroll'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Unload</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery unload event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_unload</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $js = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_add_event($element, $js, <span class="hljs-string">'unload'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="effects">
+  <h2>
+    <a href="#effects" name="effects" class="pilcrow"></a>
+Effects
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Add Class</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery addClass event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$element
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$class
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_addClass</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $class = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').addClass("'</span>.$class.<span class="hljs-string">'");'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Animate</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery animate event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$element
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$params
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$speed 'slow', 'normal', 'fast', or time in milliseconds
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$extra
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_animate</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $params = array<span class="hljs-params">()</span>, $speed = <span class="hljs-string">''</span>, $extra = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		$animations = <span class="hljs-string">"\t\t\t"</span>;
+
+		<span class="hljs-keyword">foreach</span> ($params <span class="hljs-keyword">as</span> $param =&gt; $value)
+		{
+			$animations .= $param.<span class="hljs-string">": '"</span>.$value.<span class="hljs-string">"', "</span>;
+		}
+
+		$animations = substr($animations, <span class="hljs-number">0</span>, <span class="hljs-number">-2</span>); <span class="hljs-comment">// remove the last ", "</span>
+
+		<span class="hljs-keyword">if</span> ($speed !== <span class="hljs-string">''</span>)
+		{
+			$speed = <span class="hljs-string">', '</span>.$speed;
+		}
+
+		<span class="hljs-keyword">if</span> ($extra !== <span class="hljs-string">''</span>)
+		{
+			$extra = <span class="hljs-string">', '</span>.$extra;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"$({$element}).animate({\n$animations\n\t\t}"</span>.$speed.$extra.<span class="hljs-string">');'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fade In</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery hide event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>One of 'slow', 'normal', 'fast', or time in milliseconds</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript callback function</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_fadeIn</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $speed = <span class="hljs-string">''</span>, $callback = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		<span class="hljs-keyword">if</span> ($callback !== <span class="hljs-string">''</span>)
+		{
+			$callback = <span class="hljs-string">", function(){\n{$callback}\n}"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"$({$element}).fadeIn({$speed}{$callback});"</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Fade Out</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery hide event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>One of 'slow', 'normal', 'fast', or time in milliseconds</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript callback function</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_fadeOut</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $speed = <span class="hljs-string">''</span>, $callback = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		<span class="hljs-keyword">if</span> ($callback !== <span class="hljs-string">''</span>)
+		{
+			$callback = <span class="hljs-string">", function(){\n{$callback}\n}"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').fadeOut('</span>.$speed.$callback.<span class="hljs-string">');'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Hide</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery hide action</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>One of 'slow', 'normal', 'fast', or time in milliseconds</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript callback function</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_hide</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $speed = <span class="hljs-string">''</span>, $callback = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		<span class="hljs-keyword">if</span> ($callback !== <span class="hljs-string">''</span>)
+		{
+			$callback = <span class="hljs-string">", function(){\n{$callback}\n}"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">"$({$element}).hide({$speed}{$callback});"</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Remove Class</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery remove class event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$element
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$class
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_removeClass</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $class = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').removeClass("'</span>.$class.<span class="hljs-string">'");'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Slide Up</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery slideUp event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>One of 'slow', 'normal', 'fast', or time in milliseconds</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript callback function</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_slideUp</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $speed = <span class="hljs-string">''</span>, $callback = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		<span class="hljs-keyword">if</span> ($callback !== <span class="hljs-string">''</span>)
+		{
+			$callback = <span class="hljs-string">", function(){\n{$callback}\n}"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').slideUp('</span>.$speed.$callback.<span class="hljs-string">');'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Slide Down</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery slideDown event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>One of 'slow', 'normal', 'fast', or time in milliseconds</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript callback function</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_slideDown</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $speed = <span class="hljs-string">''</span>, $callback = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		<span class="hljs-keyword">if</span> ($callback !== <span class="hljs-string">''</span>)
+		{
+			$callback = <span class="hljs-string">", function(){\n{$callback}\n}"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').slideDown('</span>.$speed.$callback.<span class="hljs-string">');'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Slide Toggle</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery slideToggle event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>One of 'slow', 'normal', 'fast', or time in milliseconds</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript callback function</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_slideToggle</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $speed = <span class="hljs-string">''</span>, $callback = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		<span class="hljs-keyword">if</span> ($callback !== <span class="hljs-string">''</span>)
+		{
+			$callback = <span class="hljs-string">", function(){\n{$callback}\n}"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').slideToggle('</span>.$speed.$callback.<span class="hljs-string">');'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Toggle</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery toggle event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_toggle</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').toggle();'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Toggle Class</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery toggle class event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$element
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$class
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_toggleClass</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $class = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').toggleClass("'</span>.$class.<span class="hljs-string">'");'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show</p>
+</div>
+<div class="body">
+<p>Outputs a jQuery show event</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>element</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>One of 'slow', 'normal', 'fast', or time in milliseconds</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span><ul>
+<li>Javascript callback function</li>
+</ul>
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_show</span><span class="hljs-params">($element = <span class="hljs-string">'this'</span>, $speed = <span class="hljs-string">''</span>, $callback = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$element = <span class="hljs-keyword">$this</span>-&gt;_prep_element($element);
+		$speed = <span class="hljs-keyword">$this</span>-&gt;_validate_speed($speed);
+
+		<span class="hljs-keyword">if</span> ($callback !== <span class="hljs-string">''</span>)
+		{
+			$callback = <span class="hljs-string">", function(){\n{$callback}\n}"</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.$element.<span class="hljs-string">').show('</span>.$speed.$callback.<span class="hljs-string">');'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-74" id="section-74"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Updater</p>
+</div>
+<div class="body">
+<p>An Ajax call that populates the designated DOM node with
+returned content</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the controller to run the call against
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>optional parameters
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_updater</span><span class="hljs-params">($container = <span class="hljs-string">'this'</span>, $controller = <span class="hljs-string">''</span>, $options = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$container = <span class="hljs-keyword">$this</span>-&gt;_prep_element($container);
+		$controller = (strpos(<span class="hljs-string">'://'</span>, $controller) === <span class="hljs-keyword">FALSE</span>) ? $controller : <span class="hljs-keyword">$this</span>-&gt;CI-&gt;config-&gt;site_url($controller);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-75" id="section-75"></a>
+</div>
+<p>ajaxStart and ajaxStop are better choices here... but this is a stop gap</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;CI-&gt;config-&gt;item(<span class="hljs-string">'javascript_ajax_img'</span>) === <span class="hljs-string">''</span>)
+		{
+			$loading_notifier = <span class="hljs-string">'Loading...'</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$loading_notifier = <span class="hljs-string">'&lt;img src="'</span>.<span class="hljs-keyword">$this</span>-&gt;CI-&gt;config-&gt;slash_item(<span class="hljs-string">'base_url'</span>).<span class="hljs-keyword">$this</span>-&gt;CI-&gt;config-&gt;item(<span class="hljs-string">'javascript_ajax_img'</span>).<span class="hljs-string">'" alt="Loading" /&gt;'</span>;
+		}
+
+		$updater = <span class="hljs-string">'$('</span>.$container.<span class="hljs-string">").empty();\n"</span> <span class="hljs-comment">// anything that was in... get it out</span>
+			.<span class="hljs-string">"\t\t$("</span>.$container.<span class="hljs-string">').prepend("'</span>.$loading_notifier.<span class="hljs-string">"\");\n"</span>; <span class="hljs-comment">// to replace with an image</span>
+
+		$request_options = <span class="hljs-string">''</span>;
+		<span class="hljs-keyword">if</span> ($options !== <span class="hljs-string">''</span>)
+		{
+			$request_options .= <span class="hljs-string">', {'</span>
+					.(is_array($options) ? <span class="hljs-string">"'"</span>.implode(<span class="hljs-string">"', '"</span>, $options).<span class="hljs-string">"'"</span> : <span class="hljs-string">"'"</span>.str_replace(<span class="hljs-string">':'</span>, <span class="hljs-string">"':'"</span>, $options).<span class="hljs-string">"'"</span>)
+					.<span class="hljs-string">'}'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $updater.<span class="hljs-string">"\t\t$($container).load('$controller'$request_options);"</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="pre-written-handy-stuff">
+  <h2>
+    <a href="#pre-written-handy-stuff" name="pre-written-handy-stuff" class="pilcrow"></a>
+Pre-written handy stuff
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-77" id="section-77"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Zebra tables</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$class
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$odd
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$hover
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_zebraTables</span><span class="hljs-params">($class = <span class="hljs-string">''</span>, $odd = <span class="hljs-string">'odd'</span>, $hover = <span class="hljs-string">''</span>)</span>
+	</span>{
+		$class = ($class !== <span class="hljs-string">''</span>) ? <span class="hljs-string">'.'</span>.$class : <span class="hljs-string">''</span>;
+		$zebra = <span class="hljs-string">"\t\$(\"table{$class} tbody tr:nth-child(even)\").addClass(\"{$odd}\");"</span>;
+
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile[] = $zebra;
+
+		<span class="hljs-keyword">if</span> ($hover !== <span class="hljs-string">''</span>)
+		{
+			$hover = <span class="hljs-keyword">$this</span>-&gt;hover(<span class="hljs-string">"table{$class} tbody tr"</span>, <span class="hljs-string">"$(this).addClass('hover');"</span>, <span class="hljs-string">"$(this).removeClass('hover');"</span>);
+		}
+
+		<span class="hljs-keyword">return</span> $zebra;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="plugins">
+  <h2>
+    <a href="#plugins" name="plugins" class="pilcrow"></a>
+Plugins
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-79" id="section-79"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Corner Plugin</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$element
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$corner_style
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">corner</span><span class="hljs-params">($element = <span class="hljs-string">''</span>, $corner_style = <span class="hljs-string">''</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-80" id="section-80"></a>
+</div>
+<p>may want to make this configurable down the road</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$corner_location = <span class="hljs-string">'/plugins/jquery.corner.js'</span>;
+
+		<span class="hljs-keyword">if</span> ($corner_style !== <span class="hljs-string">''</span>)
+		{
+			$corner_style = <span class="hljs-string">'"'</span>.$corner_style.<span class="hljs-string">'"'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.<span class="hljs-keyword">$this</span>-&gt;_prep_element($element).<span class="hljs-string">').corner('</span>.$corner_style.<span class="hljs-string">');'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-81" id="section-81"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-82" id="section-82"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Modal window</p>
+</div>
+<div class="body">
+<p>Load a thickbox modal window</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$src
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$relative
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">modal</span><span class="hljs-params">($src, $relative = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_load[] = <span class="hljs-keyword">$this</span>-&gt;external($src, $relative);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-83" id="section-83"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-84" id="section-84"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Effect</p>
+</div>
+<div class="body">
+<p>Load an Effect library</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$src
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$relative
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">effect</span><span class="hljs-params">($src, $relative = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_load[] = <span class="hljs-keyword">$this</span>-&gt;external($src, $relative);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-85" id="section-85"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-86" id="section-86"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Plugin</p>
+</div>
+<div class="body">
+<p>Load a plugin library</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$src
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$relative
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">plugin</span><span class="hljs-params">($src, $relative = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_load[] = <span class="hljs-keyword">$this</span>-&gt;external($src, $relative);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-87" id="section-87"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-88" id="section-88"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>UI</p>
+</div>
+<div class="body">
+<p>Load a user interface library</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$src
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$relative
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">ui</span><span class="hljs-params">($src, $relative = FALSE)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_load[] = <span class="hljs-keyword">$this</span>-&gt;external($src, $relative);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-89" id="section-89"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-90" id="section-90"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Sortable</p>
+</div>
+<div class="body">
+<p>Creates a jQuery sortable</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$element
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$options
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sortable</span><span class="hljs-params">($element, $options = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (count($options) &gt; <span class="hljs-number">0</span>)
+		{
+			$sort_options = <span class="hljs-keyword">array</span>();
+			<span class="hljs-keyword">foreach</span> ($options <span class="hljs-keyword">as</span> $k=&gt;$v)
+			{
+				$sort_options[] = <span class="hljs-string">"\n\t\t"</span>.$k.<span class="hljs-string">': '</span>.$v;
+			}
+			$sort_options = implode(<span class="hljs-string">','</span>, $sort_options);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$sort_options = <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-string">'$('</span>.<span class="hljs-keyword">$this</span>-&gt;_prep_element($element).<span class="hljs-string">').sortable({'</span>.$sort_options.<span class="hljs-string">"\n\t});"</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-91" id="section-91"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-92" id="section-92"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Table Sorter Plugin</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>table name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>plugin location
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tablesorter</span><span class="hljs-params">($table = <span class="hljs-string">''</span>, $options = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile[] = <span class="hljs-string">"\t$("</span>.<span class="hljs-keyword">$this</span>-&gt;_prep_element($table).<span class="hljs-string">').tablesorter('</span>.$options.<span class="hljs-string">");\n"</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <hr>
+<div class="pilwrap" id="class-functions">
+  <h2>
+    <a href="#class-functions" name="class-functions" class="pilcrow"></a>
+Class functions
+  </h2>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-94" id="section-94"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Add Event</p>
+</div>
+<div class="body">
+<p>Constructs the syntax for an event, and adds to into the array for compilation</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The element to attach the event to
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The code to execute
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>The event to pass
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_add_event</span><span class="hljs-params">($element, $js, $event)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_array($js))
+		{
+			$js = implode(<span class="hljs-string">"\n\t\t"</span>, $js);
+		}
+
+		$event = <span class="hljs-string">"\n\t$("</span>.<span class="hljs-keyword">$this</span>-&gt;_prep_element($element).<span class="hljs-string">').'</span>.$event.<span class="hljs-string">"(function(){\n\t\t{$js}\n\t});\n"</span>;
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile[] = $event;
+		<span class="hljs-keyword">return</span> $event;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-95" id="section-95"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-96" id="section-96"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Compile</p>
+</div>
+<div class="body">
+<p>As events are specified, they are stored in an array
+This function compiles them all for output on a page</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$view_var
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$script_tags
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_compile</span><span class="hljs-params">($view_var = <span class="hljs-string">'script_foot'</span>, $script_tags = TRUE)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-97" id="section-97"></a>
+</div>
+<p>External references</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$external_scripts = implode(<span class="hljs-string">''</span>, <span class="hljs-keyword">$this</span>-&gt;jquery_code_for_load);
+		<span class="hljs-keyword">$this</span>-&gt;CI-&gt;load-&gt;vars(<span class="hljs-keyword">array</span>(<span class="hljs-string">'library_src'</span> =&gt; $external_scripts));
+
+		<span class="hljs-keyword">if</span> (count(<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile) === <span class="hljs-number">0</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-98" id="section-98"></a>
+</div>
+<p>no inline references, let's just return</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">return</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-99" id="section-99"></a>
+</div>
+<p>Inline references</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$script = <span class="hljs-string">'$(document).ready(function() {'</span>.<span class="hljs-string">"\n"</span>
+			.implode(<span class="hljs-string">''</span>, <span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile)
+			.<span class="hljs-string">'});'</span>;
+
+		$output = ($script_tags === <span class="hljs-keyword">FALSE</span>) ? $script : <span class="hljs-keyword">$this</span>-&gt;inline($script);
+
+		<span class="hljs-keyword">$this</span>-&gt;CI-&gt;load-&gt;vars(<span class="hljs-keyword">array</span>($view_var =&gt; $output));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-100" id="section-100"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-101" id="section-101"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Clear Compile</p>
+</div>
+<div class="body">
+<p>Clears the array of script events collected for output</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_clear_compile</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile = <span class="hljs-keyword">array</span>();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-102" id="section-102"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-103" id="section-103"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Document Ready</p>
+</div>
+<div class="body">
+<p>A wrapper for writing document.ready()</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+<span>$js
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_document_ready</span><span class="hljs-params">($js)</span>
+	</span>{
+		is_array($js) <span class="hljs-keyword">OR</span> $js = <span class="hljs-keyword">array</span>($js);
+
+		<span class="hljs-keyword">foreach</span> ($js <span class="hljs-keyword">as</span> $script)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_compile[] = $script;
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-104" id="section-104"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-105" id="section-105"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Script Tag</p>
+</div>
+<div class="body">
+<p>Outputs the script tag that loads the jquery.js file into an HTML document</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$library_src
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$relative
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">script</span><span class="hljs-params">($library_src = <span class="hljs-string">''</span>, $relative = FALSE)</span>
+	</span>{
+		$library_src = <span class="hljs-keyword">$this</span>-&gt;external($library_src, $relative);
+		<span class="hljs-keyword">$this</span>-&gt;jquery_code_for_load[] = $library_src;
+		<span class="hljs-keyword">return</span> $library_src;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-106" id="section-106"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-107" id="section-107"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Prep Element</p>
+</div>
+<div class="body">
+<p>Puts HTML element in quotes for use in jQuery code
+unless the supplied element is the Javascript 'this'
+object, in which case no quotes are added</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_prep_element</span><span class="hljs-params">($element)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ($element !== <span class="hljs-string">'this'</span>)
+		{
+			$element = <span class="hljs-string">'"'</span>.$element.<span class="hljs-string">'"'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $element;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-108" id="section-108"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-109" id="section-109"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Validate Speed</p>
+</div>
+<div class="body">
+<p>Ensures the speed parameter is valid for jQuery</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_validate_speed</span><span class="hljs-params">($speed)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (in_array($speed, <span class="hljs-keyword">array</span>(<span class="hljs-string">'slow'</span>, <span class="hljs-string">'normal'</span>, <span class="hljs-string">'fast'</span>)))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">'"'</span>.$speed.<span class="hljs-string">'"'</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (preg_match(<span class="hljs-string">'/[^0-9]/'</span>, $speed))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">''</span>;
+		}
+
+		<span class="hljs-keyword">return</span> $speed;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

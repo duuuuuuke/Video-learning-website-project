@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exceptions.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Exceptions.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Exceptions.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Exceptions Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Exceptions</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Nesting level of the output buffering mechanism</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $ob_level;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of available error levels</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $levels = <span class="hljs-keyword">array</span>(
+		E_ERROR			=&gt;	<span class="hljs-string">'Error'</span>,
+		E_WARNING		=&gt;	<span class="hljs-string">'Warning'</span>,
+		E_PARSE			=&gt;	<span class="hljs-string">'Parsing Error'</span>,
+		E_NOTICE		=&gt;	<span class="hljs-string">'Notice'</span>,
+		E_CORE_ERROR		=&gt;	<span class="hljs-string">'Core Error'</span>,
+		E_CORE_WARNING		=&gt;	<span class="hljs-string">'Core Warning'</span>,
+		E_COMPILE_ERROR		=&gt;	<span class="hljs-string">'Compile Error'</span>,
+		E_COMPILE_WARNING	=&gt;	<span class="hljs-string">'Compile Warning'</span>,
+		E_USER_ERROR		=&gt;	<span class="hljs-string">'User Error'</span>,
+		E_USER_WARNING		=&gt;	<span class="hljs-string">'User Warning'</span>,
+		E_USER_NOTICE		=&gt;	<span class="hljs-string">'User Notice'</span>,
+		E_STRICT		=&gt;	<span class="hljs-string">'Runtime Notice'</span>
+	);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;ob_level = ob_get_level();
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Note: Do not log messages from this constructor.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Exception Logger</p>
+</div>
+<div class="body">
+<p>Logs PHP generated error messages</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$severity Log level
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$message Error message
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$filepath File path
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$line Line number
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">log_exception</span><span class="hljs-params">($severity, $message, $filepath, $line)</span>
+	</span>{
+		$severity = <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;levels[$severity]) ? <span class="hljs-keyword">$this</span>-&gt;levels[$severity] : $severity;
+		log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Severity: '</span>.$severity.<span class="hljs-string">' --&gt; '</span>.$message.<span class="hljs-string">' '</span>.$filepath.<span class="hljs-string">' '</span>.$line);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>404 Error Handler</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$page Page URI
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$log_error Whether to log the error
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show_404</span><span class="hljs-params">($page = <span class="hljs-string">''</span>, $log_error = TRUE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_cli())
+		{
+			$heading = <span class="hljs-string">'Not Found'</span>;
+			$message = <span class="hljs-string">'The controller/method pair you requested was not found.'</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$heading = <span class="hljs-string">'404 Page Not Found'</span>;
+			$message = <span class="hljs-string">'The page you requested was not found.'</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>By default we log this, but allow a dev to skip it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($log_error)
+		{
+			log_message(<span class="hljs-string">'error'</span>, $heading.<span class="hljs-string">': '</span>.$page);
+		}
+
+		<span class="hljs-keyword">echo</span> <span class="hljs-keyword">$this</span>-&gt;show_error($heading, $message, <span class="hljs-string">'error_404'</span>, <span class="hljs-number">404</span>);
+		<span class="hljs-keyword">exit</span>(<span class="hljs-number">4</span>); <span class="hljs-comment">// EXIT_UNKNOWN_FILE</span>
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>General Error Page</p>
+</div>
+<div class="body">
+<p>Takes an error message as input (either as a string or an array)
+and displays it using the specified template.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$heading Page heading
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$message Error message
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$template Template name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$status_code (default: 500)
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string Error page output
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show_error</span><span class="hljs-params">($heading, $message, $template = <span class="hljs-string">'error_general'</span>, $status_code = <span class="hljs-number">500</span>)</span>
+	</span>{
+		$templates_path = config_item(<span class="hljs-string">'error_views_path'</span>);
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($templates_path))
+		{
+			$templates_path = VIEWPATH.<span class="hljs-string">'errors'</span>.DIRECTORY_SEPARATOR;
+		}
+
+		<span class="hljs-keyword">if</span> (is_cli())
+		{
+			$message = <span class="hljs-string">"\t"</span>.(is_array($message) ? implode(<span class="hljs-string">"\n\t"</span>, $message) : $message);
+			$template = <span class="hljs-string">'cli'</span>.DIRECTORY_SEPARATOR.$template;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			set_status_header($status_code);
+			$message = <span class="hljs-string">'&lt;p&gt;'</span>.(is_array($message) ? implode(<span class="hljs-string">'&lt;/p&gt;&lt;p&gt;'</span>, $message) : $message).<span class="hljs-string">'&lt;/p&gt;'</span>;
+			$template = <span class="hljs-string">'html'</span>.DIRECTORY_SEPARATOR.$template;
+		}
+
+		<span class="hljs-keyword">if</span> (ob_get_level() &gt; <span class="hljs-keyword">$this</span>-&gt;ob_level + <span class="hljs-number">1</span>)
+		{
+			ob_end_flush();
+		}
+		ob_start();
+		<span class="hljs-keyword">include</span>($templates_path.$template.<span class="hljs-string">'.php'</span>);
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		<span class="hljs-keyword">return</span> $buffer;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show_exception</span><span class="hljs-params">($exception)</span>
+	</span>{
+		$templates_path = config_item(<span class="hljs-string">'error_views_path'</span>);
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($templates_path))
+		{
+			$templates_path = VIEWPATH.<span class="hljs-string">'errors'</span>.DIRECTORY_SEPARATOR;
+		}
+
+		$message = $exception-&gt;getMessage();
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($message))
+		{
+			$message = <span class="hljs-string">'(null)'</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (is_cli())
+		{
+			$templates_path .= <span class="hljs-string">'cli'</span>.DIRECTORY_SEPARATOR;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$templates_path .= <span class="hljs-string">'html'</span>.DIRECTORY_SEPARATOR;
+		}
+
+		<span class="hljs-keyword">if</span> (ob_get_level() &gt; <span class="hljs-keyword">$this</span>-&gt;ob_level + <span class="hljs-number">1</span>)
+		{
+			ob_end_flush();
+		}
+
+		ob_start();
+		<span class="hljs-keyword">include</span>($templates_path.<span class="hljs-string">'error_exception.php'</span>);
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		<span class="hljs-keyword">echo</span> $buffer;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Native PHP error handler</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$severity Error level
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$message Error message
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$filepath File path
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$line Line number
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show_php_error</span><span class="hljs-params">($severity, $message, $filepath, $line)</span>
+	</span>{
+		$templates_path = config_item(<span class="hljs-string">'error_views_path'</span>);
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($templates_path))
+		{
+			$templates_path = VIEWPATH.<span class="hljs-string">'errors'</span>.DIRECTORY_SEPARATOR;
+		}
+
+		$severity = <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;levels[$severity]) ? <span class="hljs-keyword">$this</span>-&gt;levels[$severity] : $severity;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>For safety reasons we don't show the full file path in non-CLI requests</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_cli())
+		{
+			$filepath = str_replace(<span class="hljs-string">'\\'</span>, <span class="hljs-string">'/'</span>, $filepath);
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">FALSE</span> !== strpos($filepath, <span class="hljs-string">'/'</span>))
+			{
+				$x = explode(<span class="hljs-string">'/'</span>, $filepath);
+				$filepath = $x[count($x)<span class="hljs-number">-2</span>].<span class="hljs-string">'/'</span>.end($x);
+			}
+
+			$template = <span class="hljs-string">'html'</span>.DIRECTORY_SEPARATOR.<span class="hljs-string">'error_php'</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$template = <span class="hljs-string">'cli'</span>.DIRECTORY_SEPARATOR.<span class="hljs-string">'error_php'</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (ob_get_level() &gt; <span class="hljs-keyword">$this</span>-&gt;ob_level + <span class="hljs-number">1</span>)
+		{
+			ob_end_flush();
+		}
+		ob_start();
+		<span class="hljs-keyword">include</span>($templates_path.$template.<span class="hljs-string">'.php'</span>);
+		$buffer = ob_get_contents();
+		ob_end_clean();
+		<span class="hljs-keyword">echo</span> $buffer;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

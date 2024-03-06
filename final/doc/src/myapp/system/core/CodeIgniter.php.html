@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CodeIgniter.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\CodeIgniter.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h2">
+        <a href="#load-the-framework-constants">Load the framework constants</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#load-the-global-functions">Load the global functions</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#security-procedures">Security procedures</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#define-a-custom-error-handler-so-we-can-log-php-errors">Define a custom error handler so we can log PHP errors</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#set-the-subclass_prefix">Set the subclass_prefix</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#should-we-use-a-composer-autoloader">Should we use a Composer autoloader?</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#start-the-timer...tick-tock-tick-tock">Start the timer... tick tock tick tock...</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#instantiate-the-hooks-class">Instantiate the hooks class</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#is-there-a-pre_system-hook">Is there a &amp;quot;pre_system&amp;quot; hook?</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#instantiate-the-config-class">Instantiate the config class</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#important-charset-related-stuff">Important charset-related stuff</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#load-compatibility-features">Load compatibility features</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#instantiate-the-utf-8-class">Instantiate the UTF-8 class</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#instantiate-the-uri-class">Instantiate the URI class</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#instantiate-the-routing-class-and-set-the-routing">Instantiate the routing class and set the routing</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#instantiate-the-output-class">Instantiate the output class</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#load-the-security-class-for-xss-and-csrf-support">Load the security class for xss and csrf support</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#load-the-input-class-and-sanitize-globals">Load the Input class and sanitize globals</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#load-the-language-class">Load the Language class</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#load-the-app-controller-and-local-controller">Load the app controller and local controller</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#sanity-checks">Sanity checks</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#is-there-a-pre_controller-hook">Is there a &amp;quot;pre_controller&amp;quot; hook?</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#instantiate-the-requested-controller">Instantiate the requested controller</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#is-there-a-post_controller_constructor-hook">Is there a &amp;quot;post_controller_constructor&amp;quot; hook?</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#call-the-requested-method">Call the requested method</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#is-there-a-post_controller-hook">Is there a &amp;quot;post_controller&amp;quot; hook?</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#send-the-final-rendered-output-to-the-browser">Send the final rendered output to the browser</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#is-there-a-post_system-hook">Is there a &amp;quot;post_system&amp;quot; hook?</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>CodeIgniter.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>System Initialization File</p>
+</div>
+<div class="body">
+<p>Loads the base classes and executes the request.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter Version</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">const</span> CI_VERSION = <span class="hljs-string">'3.1.11'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="load-the-framework-constants">
+  <h2>
+    <a href="#load-the-framework-constants" name="load-the-framework-constants" class="pilcrow"></a>
+Load the framework constants
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/constants.php'</span>))
+	{
+		<span class="hljs-keyword">require_once</span>(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/constants.php'</span>);
+	}
+
+	<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/constants.php'</span>))
+	{
+		<span class="hljs-keyword">require_once</span>(APPPATH.<span class="hljs-string">'config/constants.php'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="load-the-global-functions">
+  <h2>
+    <a href="#load-the-global-functions" name="load-the-global-functions" class="pilcrow"></a>
+Load the global functions
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'core/Common.php'</span>);
+
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="security-procedures">
+  <h2>
+    <a href="#security-procedures" name="security-procedures" class="pilcrow"></a>
+Security procedures
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! is_php(<span class="hljs-string">'5.4'</span>))
+{
+	ini_set(<span class="hljs-string">'magic_quotes_runtime'</span>, <span class="hljs-number">0</span>);
+
+	<span class="hljs-keyword">if</span> ((bool) ini_get(<span class="hljs-string">'register_globals'</span>))
+	{
+		$_protected = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'_SERVER'</span>,
+			<span class="hljs-string">'_GET'</span>,
+			<span class="hljs-string">'_POST'</span>,
+			<span class="hljs-string">'_FILES'</span>,
+			<span class="hljs-string">'_REQUEST'</span>,
+			<span class="hljs-string">'_SESSION'</span>,
+			<span class="hljs-string">'_ENV'</span>,
+			<span class="hljs-string">'_COOKIE'</span>,
+			<span class="hljs-string">'GLOBALS'</span>,
+			<span class="hljs-string">'HTTP_RAW_POST_DATA'</span>,
+			<span class="hljs-string">'system_path'</span>,
+			<span class="hljs-string">'application_folder'</span>,
+			<span class="hljs-string">'view_folder'</span>,
+			<span class="hljs-string">'_protected'</span>,
+			<span class="hljs-string">'_registered'</span>
+		);
+
+		$_registered = ini_get(<span class="hljs-string">'variables_order'</span>);
+		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(<span class="hljs-string">'E'</span> =&gt; <span class="hljs-string">'_ENV'</span>, <span class="hljs-string">'G'</span> =&gt; <span class="hljs-string">'_GET'</span>, <span class="hljs-string">'P'</span> =&gt; <span class="hljs-string">'_POST'</span>, <span class="hljs-string">'C'</span> =&gt; <span class="hljs-string">'_COOKIE'</span>, <span class="hljs-string">'S'</span> =&gt; <span class="hljs-string">'_SERVER'</span>) <span class="hljs-keyword">as</span> $key =&gt; $superglobal)
+		{
+			<span class="hljs-keyword">if</span> (strpos($_registered, $key) === <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			<span class="hljs-keyword">foreach</span> (array_keys($$superglobal) <span class="hljs-keyword">as</span> $var)
+			{
+				<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($GLOBALS[$var]) &amp;&amp; ! in_array($var, $_protected, <span class="hljs-keyword">TRUE</span>))
+				{
+					$GLOBALS[$var] = <span class="hljs-keyword">NULL</span>;
+				}
+			}
+		}
+	}
+}
+
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="define-a-custom-error-handler-so-we-can-log-php-errors">
+  <h2>
+    <a href="#define-a-custom-error-handler-so-we-can-log-php-errors" name="define-a-custom-error-handler-so-we-can-log-php-errors" class="pilcrow"></a>
+Define a custom error handler so we can log PHP errors
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	set_error_handler(<span class="hljs-string">'_error_handler'</span>);
+	set_exception_handler(<span class="hljs-string">'_exception_handler'</span>);
+	register_shutdown_function(<span class="hljs-string">'_shutdown_handler'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="set-the-subclass_prefix">
+  <h2>
+    <a href="#set-the-subclass_prefix" name="set-the-subclass_prefix" class="pilcrow"></a>
+Set the subclass_prefix
+  </h2>
+</div>
+</div>
+<div class="body">
+<p>Normally the &quot;subclass_prefix&quot; is set in the config file.
+The subclass prefix allows CI to know if a core class is
+being extended via a library in the local application
+&quot;libraries&quot; folder. Since CI allows config items to be
+overridden via data set in the main index.php file,
+before proceeding we need to know if a subclass_prefix
+override exists. If so, we will set this value now,
+before any classes are loaded
+Note: Since the config file data is cached it doesn't
+hurt to load it here.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($assign_to_config[<span class="hljs-string">'subclass_prefix'</span>]))
+	{
+		get_config(<span class="hljs-keyword">array</span>(<span class="hljs-string">'subclass_prefix'</span> =&gt; $assign_to_config[<span class="hljs-string">'subclass_prefix'</span>]));
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="should-we-use-a-composer-autoloader">
+  <h2>
+    <a href="#should-we-use-a-composer-autoloader" name="should-we-use-a-composer-autoloader" class="pilcrow"></a>
+Should we use a Composer autoloader?
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> ($composer_autoload = config_item(<span class="hljs-string">'composer_autoload'</span>))
+	{
+		<span class="hljs-keyword">if</span> ($composer_autoload === <span class="hljs-keyword">TRUE</span>)
+		{
+			file_exists(APPPATH.<span class="hljs-string">'vendor/autoload.php'</span>)
+				? <span class="hljs-keyword">require_once</span>(APPPATH.<span class="hljs-string">'vendor/autoload.php'</span>)
+				: log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'$config[\'composer_autoload\'] is set to TRUE but '</span>.APPPATH.<span class="hljs-string">'vendor/autoload.php was not found.'</span>);
+		}
+		<span class="hljs-keyword">elseif</span> (file_exists($composer_autoload))
+		{
+			<span class="hljs-keyword">require_once</span>($composer_autoload);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Could not find the specified $config[\'composer_autoload\'] path: '</span>.$composer_autoload);
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="start-the-timer...tick-tock-tick-tock">
+  <h2>
+    <a href="#start-the-timer...tick-tock-tick-tock" name="start-the-timer...tick-tock-tick-tock" class="pilcrow"></a>
+Start the timer... tick tock tick tock...
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$BM =&amp; load_class(<span class="hljs-string">'Benchmark'</span>, <span class="hljs-string">'core'</span>);
+	$BM-&gt;mark(<span class="hljs-string">'total_execution_time_start'</span>);
+	$BM-&gt;mark(<span class="hljs-string">'loading_time:_base_classes_start'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="instantiate-the-hooks-class">
+  <h2>
+    <a href="#instantiate-the-hooks-class" name="instantiate-the-hooks-class" class="pilcrow"></a>
+Instantiate the hooks class
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$EXT =&amp; load_class(<span class="hljs-string">'Hooks'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="is-there-a-pre_system-hook">
+  <h2>
+    <a href="#is-there-a-pre_system-hook" name="is-there-a-pre_system-hook" class="pilcrow"></a>
+Is there a &quot;pre_system&quot; hook?
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$EXT-&gt;call_hook(<span class="hljs-string">'pre_system'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="instantiate-the-config-class">
+  <h2>
+    <a href="#instantiate-the-config-class" name="instantiate-the-config-class" class="pilcrow"></a>
+Instantiate the config class
+  </h2>
+</div>
+</div>
+<div class="body">
+<p>Note: It is important that Config is loaded first as
+most other classes depend on it either directly or by
+depending on another class that uses it.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$CFG =&amp; load_class(<span class="hljs-string">'Config'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Do we have any manually set config items in the index.php file?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($assign_to_config) &amp;&amp; is_array($assign_to_config))
+	{
+		<span class="hljs-keyword">foreach</span> ($assign_to_config <span class="hljs-keyword">as</span> $key =&gt; $value)
+		{
+			$CFG-&gt;set_item($key, $value);
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="important-charset-related-stuff">
+  <h2>
+    <a href="#important-charset-related-stuff" name="important-charset-related-stuff" class="pilcrow"></a>
+Important charset-related stuff
+  </h2>
+</div>
+</div>
+<div class="body">
+<p>Configure mbstring and/or iconv if they are enabled
+and set MB_ENABLED and ICONV_ENABLED constants, so
+that we don't repeatedly do extension_loaded() or
+function_exists() calls.</p>
+<p>Note: UTF-8 class depends on this. It used to be done
+in it's constructor, but it's <em>not</em> class-specific.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$charset = strtoupper(config_item(<span class="hljs-string">'charset'</span>));
+	ini_set(<span class="hljs-string">'default_charset'</span>, $charset);
+
+	<span class="hljs-keyword">if</span> (extension_loaded(<span class="hljs-string">'mbstring'</span>))
+	{
+		define(<span class="hljs-string">'MB_ENABLED'</span>, <span class="hljs-keyword">TRUE</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>mbstring.internal_encoding is deprecated starting with PHP 5.6
+and it's usage triggers E_DEPRECATED messages.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		@ini_set(<span class="hljs-string">'mbstring.internal_encoding'</span>, $charset);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>This is required for mb_convert_encoding() to strip invalid characters.
+That's utilized by CI_Utf8, but it's also done for consistency with iconv.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		mb_substitute_character(<span class="hljs-string">'none'</span>);
+	}
+	<span class="hljs-keyword">else</span>
+	{
+		define(<span class="hljs-string">'MB_ENABLED'</span>, <span class="hljs-keyword">FALSE</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<p>There's an ICONV_IMPL constant, but the PHP manual says that using
+iconv's predefined constants is &quot;strongly discouraged&quot;.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> (extension_loaded(<span class="hljs-string">'iconv'</span>))
+	{
+		define(<span class="hljs-string">'ICONV_ENABLED'</span>, <span class="hljs-keyword">TRUE</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>iconv.internal_encoding is deprecated starting with PHP 5.6
+and it's usage triggers E_DEPRECATED messages.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		@ini_set(<span class="hljs-string">'iconv.internal_encoding'</span>, $charset);
+	}
+	<span class="hljs-keyword">else</span>
+	{
+		define(<span class="hljs-string">'ICONV_ENABLED'</span>, <span class="hljs-keyword">FALSE</span>);
+	}
+
+	<span class="hljs-keyword">if</span> (is_php(<span class="hljs-string">'5.6'</span>))
+	{
+		ini_set(<span class="hljs-string">'php.internal_encoding'</span>, $charset);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="load-compatibility-features">
+  <h2>
+    <a href="#load-compatibility-features" name="load-compatibility-features" class="pilcrow"></a>
+Load compatibility features
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+	<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'core/compat/mbstring.php'</span>);
+	<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'core/compat/hash.php'</span>);
+	<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'core/compat/password.php'</span>);
+	<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'core/compat/standard.php'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="instantiate-the-utf-8-class">
+  <h2>
+    <a href="#instantiate-the-utf-8-class" name="instantiate-the-utf-8-class" class="pilcrow"></a>
+Instantiate the UTF-8 class
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$UNI =&amp; load_class(<span class="hljs-string">'Utf8'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="instantiate-the-uri-class">
+  <h2>
+    <a href="#instantiate-the-uri-class" name="instantiate-the-uri-class" class="pilcrow"></a>
+Instantiate the URI class
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$URI =&amp; load_class(<span class="hljs-string">'URI'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="instantiate-the-routing-class-and-set-the-routing">
+  <h2>
+    <a href="#instantiate-the-routing-class-and-set-the-routing" name="instantiate-the-routing-class-and-set-the-routing" class="pilcrow"></a>
+Instantiate the routing class and set the routing
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$RTR =&amp; load_class(<span class="hljs-string">'Router'</span>, <span class="hljs-string">'core'</span>, <span class="hljs-keyword">isset</span>($routing) ? $routing : <span class="hljs-keyword">NULL</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="instantiate-the-output-class">
+  <h2>
+    <a href="#instantiate-the-output-class" name="instantiate-the-output-class" class="pilcrow"></a>
+Instantiate the output class
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$OUT =&amp; load_class(<span class="hljs-string">'Output'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<hr>
+<pre><code>Is there a valid cache file? If so, we're done...
+</code></pre>
+<hr>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> ($EXT-&gt;call_hook(<span class="hljs-string">'cache_override'</span>) === <span class="hljs-keyword">FALSE</span> &amp;&amp; $OUT-&gt;_display_cache($CFG, $URI) === <span class="hljs-keyword">TRUE</span>)
+	{
+		<span class="hljs-keyword">exit</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="load-the-security-class-for-xss-and-csrf-support">
+  <h2>
+    <a href="#load-the-security-class-for-xss-and-csrf-support" name="load-the-security-class-for-xss-and-csrf-support" class="pilcrow"></a>
+Load the security class for xss and csrf support
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$SEC =&amp; load_class(<span class="hljs-string">'Security'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="load-the-input-class-and-sanitize-globals">
+  <h2>
+    <a href="#load-the-input-class-and-sanitize-globals" name="load-the-input-class-and-sanitize-globals" class="pilcrow"></a>
+Load the Input class and sanitize globals
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$IN	=&amp; load_class(<span class="hljs-string">'Input'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="load-the-language-class">
+  <h2>
+    <a href="#load-the-language-class" name="load-the-language-class" class="pilcrow"></a>
+Load the Language class
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$LANG =&amp; load_class(<span class="hljs-string">'Lang'</span>, <span class="hljs-string">'core'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="load-the-app-controller-and-local-controller">
+  <h2>
+    <a href="#load-the-app-controller-and-local-controller" name="load-the-app-controller-and-local-controller" class="pilcrow"></a>
+Load the app controller and local controller
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+Load the base controller class
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">require_once</span> BASEPATH.<span class="hljs-string">'core/Controller.php'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Reference to the CI_Controller method.</p>
+</div>
+<div class="body">
+<p>Returns current CI instance object</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>CI_Controller
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">get_instance</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> CI_Controller::get_instance();
+	}
+
+	<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'core/'</span>.$CFG-&gt;config[<span class="hljs-string">'subclass_prefix'</span>].<span class="hljs-string">'Controller.php'</span>))
+	{
+		<span class="hljs-keyword">require_once</span> APPPATH.<span class="hljs-string">'core/'</span>.$CFG-&gt;config[<span class="hljs-string">'subclass_prefix'</span>].<span class="hljs-string">'Controller.php'</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<p>Set a mark point for benchmarking</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$BM-&gt;mark(<span class="hljs-string">'loading_time:_base_classes_end'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="sanity-checks">
+  <h2>
+    <a href="#sanity-checks" name="sanity-checks" class="pilcrow"></a>
+Sanity checks
+  </h2>
+</div>
+</div>
+<div class="body">
+<p>The Router class has already validated the request,
+leaving us with 3 options here:</p>
+<pre><code>1) an empty class name, if we reached the default
+   controller, but it didn't exist;
+2) a query string which doesn't go through a
+   file_exists() check
+3) a regular request for a non-existing page
+</code></pre>
+<p>We handle all of these as a 404 error.</p>
+<p>Furthermore, none of the methods in the app controller
+or the loader class can be called via the URI, nor can
+controller methods that begin with an underscore.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+	$e404 = <span class="hljs-keyword">FALSE</span>;
+	$class = ucfirst($RTR-&gt;class);
+	$method = $RTR-&gt;method;
+
+	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($class) <span class="hljs-keyword">OR</span> ! file_exists(APPPATH.<span class="hljs-string">'controllers/'</span>.$RTR-&gt;directory.$class.<span class="hljs-string">'.php'</span>))
+	{
+		$e404 = <span class="hljs-keyword">TRUE</span>;
+	}
+	<span class="hljs-keyword">else</span>
+	{
+		<span class="hljs-keyword">require_once</span>(APPPATH.<span class="hljs-string">'controllers/'</span>.$RTR-&gt;directory.$class.<span class="hljs-string">'.php'</span>);
+
+		<span class="hljs-keyword">if</span> ( ! class_exists($class, <span class="hljs-keyword">FALSE</span>) <span class="hljs-keyword">OR</span> $method[<span class="hljs-number">0</span>] === <span class="hljs-string">'_'</span> <span class="hljs-keyword">OR</span> method_exists(<span class="hljs-string">'CI_Controller'</span>, $method))
+		{
+			$e404 = <span class="hljs-keyword">TRUE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (method_exists($class, <span class="hljs-string">'_remap'</span>))
+		{
+			$params = <span class="hljs-keyword">array</span>($method, array_slice($URI-&gt;rsegments, <span class="hljs-number">2</span>));
+			$method = <span class="hljs-string">'_remap'</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ( ! method_exists($class, $method))
+		{
+			$e404 = <span class="hljs-keyword">TRUE</span>;
+		}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>DO NOT CHANGE THIS, NOTHING ELSE WORKS!</p>
+</div>
+<div class="body">
+<ul>
+<li>method_exists() returns true for non-public methods, which passes the previous elseif</li>
+<li>is_callable() returns false for PHP 4-style constructors, even if there's a __construct()</li>
+<li>method_exists($class, '__construct') won't work because CI_Controller::__construct() is inherited</li>
+<li>People will only complain if this doesn't work, even though it is documented that it shouldn't.</li>
+</ul>
+<p>ReflectionMethod::isConstructor() is the ONLY reliable check,
+knowing which method will be executed as a constructor.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">elseif</span> ( ! is_callable(<span class="hljs-keyword">array</span>($class, $method)))
+		{
+			$reflection = <span class="hljs-keyword">new</span> ReflectionMethod($class, $method);
+			<span class="hljs-keyword">if</span> ( ! $reflection-&gt;isPublic() <span class="hljs-keyword">OR</span> $reflection-&gt;isConstructor())
+			{
+				$e404 = <span class="hljs-keyword">TRUE</span>;
+			}
+		}
+	}
+
+	<span class="hljs-keyword">if</span> ($e404)
+	{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($RTR-&gt;routes[<span class="hljs-string">'404_override'</span>]))
+		{
+			<span class="hljs-keyword">if</span> (sscanf($RTR-&gt;routes[<span class="hljs-string">'404_override'</span>], <span class="hljs-string">'%[^/]/%s'</span>, $error_class, $error_method) !== <span class="hljs-number">2</span>)
+			{
+				$error_method = <span class="hljs-string">'index'</span>;
+			}
+
+			$error_class = ucfirst($error_class);
+
+			<span class="hljs-keyword">if</span> ( ! class_exists($error_class, <span class="hljs-keyword">FALSE</span>))
+			{
+				<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'controllers/'</span>.$RTR-&gt;directory.$error_class.<span class="hljs-string">'.php'</span>))
+				{
+					<span class="hljs-keyword">require_once</span>(APPPATH.<span class="hljs-string">'controllers/'</span>.$RTR-&gt;directory.$error_class.<span class="hljs-string">'.php'</span>);
+					$e404 = ! class_exists($error_class, <span class="hljs-keyword">FALSE</span>);
+				}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<p>Were we in a directory? If so, check for a global override</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">				<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">empty</span>($RTR-&gt;directory) &amp;&amp; file_exists(APPPATH.<span class="hljs-string">'controllers/'</span>.$error_class.<span class="hljs-string">'.php'</span>))
+				{
+					<span class="hljs-keyword">require_once</span>(APPPATH.<span class="hljs-string">'controllers/'</span>.$error_class.<span class="hljs-string">'.php'</span>);
+					<span class="hljs-keyword">if</span> (($e404 = ! class_exists($error_class, <span class="hljs-keyword">FALSE</span>)) === <span class="hljs-keyword">FALSE</span>)
+					{
+						$RTR-&gt;directory = <span class="hljs-string">''</span>;
+					}
+				}
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				$e404 = <span class="hljs-keyword">FALSE</span>;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<p>Did we reset the $e404 flag? If so, set the rsegments, starting from index 1</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! $e404)
+		{
+			$class = $error_class;
+			$method = $error_method;
+
+			$URI-&gt;rsegments = <span class="hljs-keyword">array</span>(
+				<span class="hljs-number">1</span> =&gt; $class,
+				<span class="hljs-number">2</span> =&gt; $method
+			);
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			show_404($RTR-&gt;directory.$class.<span class="hljs-string">'/'</span>.$method);
+		}
+	}
+
+	<span class="hljs-keyword">if</span> ($method !== <span class="hljs-string">'_remap'</span>)
+	{
+		$params = array_slice($URI-&gt;rsegments, <span class="hljs-number">2</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="is-there-a-pre_controller-hook">
+  <h2>
+    <a href="#is-there-a-pre_controller-hook" name="is-there-a-pre_controller-hook" class="pilcrow"></a>
+Is there a &quot;pre_controller&quot; hook?
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$EXT-&gt;call_hook(<span class="hljs-string">'pre_controller'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="instantiate-the-requested-controller">
+  <h2>
+    <a href="#instantiate-the-requested-controller" name="instantiate-the-requested-controller" class="pilcrow"></a>
+Instantiate the requested controller
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+Mark a start point so we can benchmark the controller
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$BM-&gt;mark(<span class="hljs-string">'controller_execution_time_( '</span>.$class.<span class="hljs-string">' / '</span>.$method.<span class="hljs-string">' )_start'</span>);
+
+	$CI = <span class="hljs-keyword">new</span> $class();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="is-there-a-post_controller_constructor-hook">
+  <h2>
+    <a href="#is-there-a-post_controller_constructor-hook" name="is-there-a-post_controller_constructor-hook" class="pilcrow"></a>
+Is there a &quot;post_controller_constructor&quot; hook?
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$EXT-&gt;call_hook(<span class="hljs-string">'post_controller_constructor'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="call-the-requested-method">
+  <h2>
+    <a href="#call-the-requested-method" name="call-the-requested-method" class="pilcrow"></a>
+Call the requested method
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	call_user_func_array(<span class="hljs-keyword">array</span>(&amp;$CI, $method), $params);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<p>Mark a benchmark end point</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$BM-&gt;mark(<span class="hljs-string">'controller_execution_time_( '</span>.$class.<span class="hljs-string">' / '</span>.$method.<span class="hljs-string">' )_end'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="is-there-a-post_controller-hook">
+  <h2>
+    <a href="#is-there-a-post_controller-hook" name="is-there-a-post_controller-hook" class="pilcrow"></a>
+Is there a &quot;post_controller&quot; hook?
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$EXT-&gt;call_hook(<span class="hljs-string">'post_controller'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="send-the-final-rendered-output-to-the-browser">
+  <h2>
+    <a href="#send-the-final-rendered-output-to-the-browser" name="send-the-final-rendered-output-to-the-browser" class="pilcrow"></a>
+Send the final rendered output to the browser
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> ($EXT-&gt;call_hook(<span class="hljs-string">'display_override'</span>) === <span class="hljs-keyword">FALSE</span>)
+	{
+		$OUT-&gt;_display();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="dox">
+<div class="summary">
+<hr>
+<div class="pilwrap" id="is-there-a-post_system-hook">
+  <h2>
+    <a href="#is-there-a-post_system-hook" name="is-there-a-post_system-hook" class="pilcrow"></a>
+Is there a &quot;post_system&quot; hook?
+  </h2>
+</div>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$EXT-&gt;call_hook(<span class="hljs-string">'post_system'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

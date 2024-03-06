@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lang.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Lang.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Lang.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Language Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Lang</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of translations</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $language =	<span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>List of loaded language files</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $is_loaded =	<span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class constructor</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span>
+	</span>{
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Language Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Load a language file</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$langfile Language file name
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$idiom Language name (english, etc.)
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$return Whether to return the loaded array of translations
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$add_suffix Whether to add suffix to $langfile
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$alt_path Alternative path to look for the language file
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void|string[] Array containing translations, if $return is set to TRUE
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">load</span><span class="hljs-params">($langfile, $idiom = <span class="hljs-string">''</span>, $return = FALSE, $add_suffix = TRUE, $alt_path = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_array($langfile))
+		{
+			<span class="hljs-keyword">foreach</span> ($langfile <span class="hljs-keyword">as</span> $value)
+			{
+				<span class="hljs-keyword">$this</span>-&gt;load($value, $idiom, $return, $add_suffix, $alt_path);
+			}
+
+			<span class="hljs-keyword">return</span>;
+		}
+
+		$langfile = str_replace(<span class="hljs-string">'.php'</span>, <span class="hljs-string">''</span>, $langfile);
+
+		<span class="hljs-keyword">if</span> ($add_suffix === <span class="hljs-keyword">TRUE</span>)
+		{
+			$langfile = preg_replace(<span class="hljs-string">'/_lang$/'</span>, <span class="hljs-string">''</span>, $langfile).<span class="hljs-string">'_lang'</span>;
+		}
+
+		$langfile .= <span class="hljs-string">'.php'</span>;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($idiom) <span class="hljs-keyword">OR</span> ! preg_match(<span class="hljs-string">'/^[a-z_-]+$/i'</span>, $idiom))
+		{
+			$config =&amp; get_config();
+			$idiom = <span class="hljs-keyword">empty</span>($config[<span class="hljs-string">'language'</span>]) ? <span class="hljs-string">'english'</span> : $config[<span class="hljs-string">'language'</span>];
+		}
+
+		<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">FALSE</span> &amp;&amp; <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;is_loaded[$langfile]) &amp;&amp; <span class="hljs-keyword">$this</span>-&gt;is_loaded[$langfile] === $idiom)
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Load the base file, so any others found can override it</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$basepath = BASEPATH.<span class="hljs-string">'language/'</span>.$idiom.<span class="hljs-string">'/'</span>.$langfile;
+		<span class="hljs-keyword">if</span> (($found = file_exists($basepath)) === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">include</span>($basepath);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Do we have an alternative path to look in?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($alt_path !== <span class="hljs-string">''</span>)
+		{
+			$alt_path .= <span class="hljs-string">'language/'</span>.$idiom.<span class="hljs-string">'/'</span>.$langfile;
+			<span class="hljs-keyword">if</span> (file_exists($alt_path))
+			{
+				<span class="hljs-keyword">include</span>($alt_path);
+				$found = <span class="hljs-keyword">TRUE</span>;
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">foreach</span> (get_instance()-&gt;load-&gt;get_package_paths(<span class="hljs-keyword">TRUE</span>) <span class="hljs-keyword">as</span> $package_path)
+			{
+				$package_path .= <span class="hljs-string">'language/'</span>.$idiom.<span class="hljs-string">'/'</span>.$langfile;
+				<span class="hljs-keyword">if</span> ($basepath !== $package_path &amp;&amp; file_exists($package_path))
+				{
+					<span class="hljs-keyword">include</span>($package_path);
+					$found = <span class="hljs-keyword">TRUE</span>;
+					<span class="hljs-keyword">break</span>;
+				}
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ($found !== <span class="hljs-keyword">TRUE</span>)
+		{
+			show_error(<span class="hljs-string">'Unable to load the requested language file: language/'</span>.$idiom.<span class="hljs-string">'/'</span>.$langfile);
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($lang) <span class="hljs-keyword">OR</span> ! is_array($lang))
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Language file contains no data: language/'</span>.$idiom.<span class="hljs-string">'/'</span>.$langfile);
+
+			<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">TRUE</span>)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">array</span>();
+			}
+			<span class="hljs-keyword">return</span>;
+		}
+
+		<span class="hljs-keyword">if</span> ($return === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">return</span> $lang;
+		}
+
+		<span class="hljs-keyword">$this</span>-&gt;is_loaded[$langfile] = $idiom;
+		<span class="hljs-keyword">$this</span>-&gt;language = array_merge(<span class="hljs-keyword">$this</span>-&gt;language, $lang);
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Language file loaded: language/'</span>.$idiom.<span class="hljs-string">'/'</span>.$langfile);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Language line</p>
+</div>
+<div class="body">
+<p>Fetches a single line of text from the language array</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$line Language line key
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$log_errors Whether to log an error message if the line is not found
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string Translation
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">line</span><span class="hljs-params">($line, $log_errors = TRUE)</span>
+	</span>{
+		$value = <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;language[$line]) ? <span class="hljs-keyword">$this</span>-&gt;language[$line] : <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Because killer robots like unicorns!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($value === <span class="hljs-keyword">FALSE</span> &amp;&amp; $log_errors === <span class="hljs-keyword">TRUE</span>)
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Could not find the language line "'</span>.$line.<span class="hljs-string">'"'</span>);
+		}
+
+		<span class="hljs-keyword">return</span> $value;
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

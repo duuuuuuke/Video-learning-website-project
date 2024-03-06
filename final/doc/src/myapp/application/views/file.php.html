@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>file.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\application\\views\\file.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>file.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">&lt;div class="container my-5"&gt;
+    &lt;?php echo form_open_multipart(base_url() . 'index.php?/upload/uploadFile'); ?&gt;
+
+    &lt;div class="form-group"&gt;
+        &lt;input type="text" class="form-control" placeholder="Title" required="required" name="title"&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Please write the description" required="required" name="description"&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+
+    &lt;div class="row justify-content-center"&gt;
+
+        &lt;div class="col-md-4 col-md-offset-6 centered"&gt;
+            &lt;?php if ($this-&gt;session-&gt;flashdata('upload_result')) : ?&gt;
+                &lt;div class="alert alert-primary" role="alert"&gt;
+                    &lt;?php echo $this-&gt;session-&gt;flashdata('upload_result'); ?&gt;
+                &lt;/div&gt;
+            &lt;?php endif ?&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label&gt;Drag or select files here&lt;/label&gt;
+                &lt;input type="file" name="userfiles[]" multiple&gt;
+            &lt;/div&gt;
+            &lt;div class="form-group"&gt;
+                &lt;input type="submit" class="btn btn-primary" value="Upload"&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;?php echo form_close(); ?&gt;
+    &lt;h3&gt;&lt;/h3&gt;
+&lt;/div&gt;
+&lt;div class="main"&gt; &lt;/div&gt;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DB.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\database\\DB.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>DB.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Initialize the database</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string|string[]</span>
+<span>$params
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$query_builder_override 				Determines if query builder should be used or not
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">DB</span><span class="hljs-params">($params = <span class="hljs-string">''</span>, $query_builder_override = NULL)</span>
+</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Load the DB config file if a DSN string wasn't passed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> (is_string($params) &amp;&amp; strpos($params, <span class="hljs-string">'://'</span>) === <span class="hljs-keyword">FALSE</span>)
+	{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Is the config file in the environment folder?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! file_exists($file_path = APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/database.php'</span>)
+			&amp;&amp; ! file_exists($file_path = APPPATH.<span class="hljs-string">'config/database.php'</span>))
+		{
+			show_error(<span class="hljs-string">'The configuration file database.php does not exist.'</span>);
+		}
+
+		<span class="hljs-keyword">include</span>($file_path);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Make packages contain database config files,
+given that the controller instance already exists</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (class_exists(<span class="hljs-string">'CI_Controller'</span>, <span class="hljs-keyword">FALSE</span>))
+		{
+			<span class="hljs-keyword">foreach</span> (get_instance()-&gt;load-&gt;get_package_paths() <span class="hljs-keyword">as</span> $path)
+			{
+				<span class="hljs-keyword">if</span> ($path !== APPPATH)
+				{
+					<span class="hljs-keyword">if</span> (file_exists($file_path = $path.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/database.php'</span>))
+					{
+						<span class="hljs-keyword">include</span>($file_path);
+					}
+					<span class="hljs-keyword">elseif</span> (file_exists($file_path = $path.<span class="hljs-string">'config/database.php'</span>))
+					{
+						<span class="hljs-keyword">include</span>($file_path);
+					}
+				}
+			}
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($db) <span class="hljs-keyword">OR</span> count($db) === <span class="hljs-number">0</span>)
+		{
+			show_error(<span class="hljs-string">'No database connection settings were found in the database config file.'</span>);
+		}
+
+		<span class="hljs-keyword">if</span> ($params !== <span class="hljs-string">''</span>)
+		{
+			$active_group = $params;
+		}
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($active_group))
+		{
+			show_error(<span class="hljs-string">'You have not specified a database connection group via $active_group in your config/database.php file.'</span>);
+		}
+		<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">isset</span>($db[$active_group]))
+		{
+			show_error(<span class="hljs-string">'You have specified an invalid database connection group ('</span>.$active_group.<span class="hljs-string">') in your config/database.php file.'</span>);
+		}
+
+		$params = $db[$active_group];
+	}
+	<span class="hljs-keyword">elseif</span> (is_string($params))
+	{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Parse the URL from the DSN string
+Database settings can be passed as discreet
+parameters or as a data source name in the first
+parameter. DSNs must have this prototype:
+$dsn = 'driver://username:password@hostname/database';</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (($dsn = @parse_url($params)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			show_error(<span class="hljs-string">'Invalid DB Connection String'</span>);
+		}
+
+		$params = <span class="hljs-keyword">array</span>(
+			<span class="hljs-string">'dbdriver'</span>	=&gt; $dsn[<span class="hljs-string">'scheme'</span>],
+			<span class="hljs-string">'hostname'</span>	=&gt; <span class="hljs-keyword">isset</span>($dsn[<span class="hljs-string">'host'</span>]) ? rawurldecode($dsn[<span class="hljs-string">'host'</span>]) : <span class="hljs-string">''</span>,
+			<span class="hljs-string">'port'</span>		=&gt; <span class="hljs-keyword">isset</span>($dsn[<span class="hljs-string">'port'</span>]) ? rawurldecode($dsn[<span class="hljs-string">'port'</span>]) : <span class="hljs-string">''</span>,
+			<span class="hljs-string">'username'</span>	=&gt; <span class="hljs-keyword">isset</span>($dsn[<span class="hljs-string">'user'</span>]) ? rawurldecode($dsn[<span class="hljs-string">'user'</span>]) : <span class="hljs-string">''</span>,
+			<span class="hljs-string">'password'</span>	=&gt; <span class="hljs-keyword">isset</span>($dsn[<span class="hljs-string">'pass'</span>]) ? rawurldecode($dsn[<span class="hljs-string">'pass'</span>]) : <span class="hljs-string">''</span>,
+			<span class="hljs-string">'database'</span>	=&gt; <span class="hljs-keyword">isset</span>($dsn[<span class="hljs-string">'path'</span>]) ? rawurldecode(substr($dsn[<span class="hljs-string">'path'</span>], <span class="hljs-number">1</span>)) : <span class="hljs-string">''</span>
+		);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Were additional config items set?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($dsn[<span class="hljs-string">'query'</span>]))
+		{
+			parse_str($dsn[<span class="hljs-string">'query'</span>], $extra);
+
+			<span class="hljs-keyword">foreach</span> ($extra <span class="hljs-keyword">as</span> $key =&gt; $val)
+			{
+				<span class="hljs-keyword">if</span> (is_string($val) &amp;&amp; in_array(strtoupper($val), <span class="hljs-keyword">array</span>(<span class="hljs-string">'TRUE'</span>, <span class="hljs-string">'FALSE'</span>, <span class="hljs-string">'NULL'</span>)))
+				{
+					$val = var_export($val, <span class="hljs-keyword">TRUE</span>);
+				}
+
+				$params[$key] = $val;
+			}
+		}
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>No DB specified yet? Beat them senseless...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($params[<span class="hljs-string">'dbdriver'</span>]))
+	{
+		show_error(<span class="hljs-string">'You have not selected a database type to connect to.'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Load the DB classes. Note: Since the query builder class is optional
+we need to dynamically create a class that extends proper parent class
+based on whether we're using the query builder class or not.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> ($query_builder_override !== <span class="hljs-keyword">NULL</span>)
+	{
+		$query_builder = $query_builder_override;
+	}
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>Backwards compatibility work-around for keeping the
+$active_record config variable working. Should be
+removed in v3.1</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">isset</span>($query_builder) &amp;&amp; <span class="hljs-keyword">isset</span>($active_record))
+	{
+		$query_builder = $active_record;
+	}
+
+	<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'database/DB_driver.php'</span>);
+
+	<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($query_builder) <span class="hljs-keyword">OR</span> $query_builder === <span class="hljs-keyword">TRUE</span>)
+	{
+		<span class="hljs-keyword">require_once</span>(BASEPATH.<span class="hljs-string">'database/DB_query_builder.php'</span>);
+		<span class="hljs-keyword">if</span> ( ! class_exists(<span class="hljs-string">'CI_DB'</span>, <span class="hljs-keyword">FALSE</span>))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CI_DB</p>
+</div>
+<div class="body">
+<p>Acts as an alias for both CI_DB_driver and CI_DB_query_builder.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_DB_query_builder</span>
+</div>
+<div class="dox_tag_title">See</div>
+<div class="dox_tag_detail">
+<span class="dox_type">CI_DB_driver</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_DB</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_DB_query_builder</span> </span>{ }
+		}
+	}
+	<span class="hljs-keyword">elseif</span> ( ! class_exists(<span class="hljs-string">'CI_DB'</span>, <span class="hljs-keyword">FALSE</span>))
+	{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<div class="dox">
+<div class="summary">
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_DB</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CI_DB_driver</span> </span>{ }
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Load the DB driver</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$driver_file = BASEPATH.<span class="hljs-string">'database/drivers/'</span>.$params[<span class="hljs-string">'dbdriver'</span>].<span class="hljs-string">'/'</span>.$params[<span class="hljs-string">'dbdriver'</span>].<span class="hljs-string">'_driver.php'</span>;
+
+	file_exists($driver_file) <span class="hljs-keyword">OR</span> show_error(<span class="hljs-string">'Invalid DB driver'</span>);
+	<span class="hljs-keyword">require_once</span>($driver_file);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Instantiate the DB adapter</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	$driver = <span class="hljs-string">'CI_DB_'</span>.$params[<span class="hljs-string">'dbdriver'</span>].<span class="hljs-string">'_driver'</span>;
+	$DB = <span class="hljs-keyword">new</span> $driver($params);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Check for a subdriver</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($DB-&gt;subdriver))
+	{
+		$driver_file = BASEPATH.<span class="hljs-string">'database/drivers/'</span>.$DB-&gt;dbdriver.<span class="hljs-string">'/subdrivers/'</span>.$DB-&gt;dbdriver.<span class="hljs-string">'_'</span>.$DB-&gt;subdriver.<span class="hljs-string">'_driver.php'</span>;
+
+		<span class="hljs-keyword">if</span> (file_exists($driver_file))
+		{
+			<span class="hljs-keyword">require_once</span>($driver_file);
+			$driver = <span class="hljs-string">'CI_DB_'</span>.$DB-&gt;dbdriver.<span class="hljs-string">'_'</span>.$DB-&gt;subdriver.<span class="hljs-string">'_driver'</span>;
+			$DB = <span class="hljs-keyword">new</span> $driver($params);
+		}
+	}
+
+	$DB-&gt;initialize();
+	<span class="hljs-keyword">return</span> $DB;
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

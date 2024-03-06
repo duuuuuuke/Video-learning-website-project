@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>email_lang.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../../doc-style.css" />
+  <script src="../../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../../";
+    var thisFile = "src\\myapp\\system\\language\\english\\email_lang.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>email_lang.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+$lang[<span class="hljs-string">'email_must_be_array'</span>] = <span class="hljs-string">'The email validation method must be passed an array.'</span>;
+$lang[<span class="hljs-string">'email_invalid_address'</span>] = <span class="hljs-string">'Invalid email address: %s'</span>;
+$lang[<span class="hljs-string">'email_attachment_missing'</span>] = <span class="hljs-string">'Unable to locate the following email attachment: %s'</span>;
+$lang[<span class="hljs-string">'email_attachment_unreadable'</span>] = <span class="hljs-string">'Unable to open this attachment: %s'</span>;
+$lang[<span class="hljs-string">'email_no_from'</span>] = <span class="hljs-string">'Cannot send mail with no "From" header.'</span>;
+$lang[<span class="hljs-string">'email_no_recipients'</span>] = <span class="hljs-string">'You must include recipients: To, Cc, or Bcc'</span>;
+$lang[<span class="hljs-string">'email_send_failure_phpmail'</span>] = <span class="hljs-string">'Unable to send email using PHP mail(). Your server might not be configured to send mail using this method.'</span>;
+$lang[<span class="hljs-string">'email_send_failure_sendmail'</span>] = <span class="hljs-string">'Unable to send email using PHP Sendmail. Your server might not be configured to send mail using this method.'</span>;
+$lang[<span class="hljs-string">'email_send_failure_smtp'</span>] = <span class="hljs-string">'Unable to send email using PHP SMTP. Your server might not be configured to send mail using this method.'</span>;
+$lang[<span class="hljs-string">'email_sent'</span>] = <span class="hljs-string">'Your message has been successfully sent using the following protocol: %s'</span>;
+$lang[<span class="hljs-string">'email_no_socket'</span>] = <span class="hljs-string">'Unable to open a socket to Sendmail. Please check settings.'</span>;
+$lang[<span class="hljs-string">'email_no_hostname'</span>] = <span class="hljs-string">'You did not specify a SMTP hostname.'</span>;
+$lang[<span class="hljs-string">'email_smtp_error'</span>] = <span class="hljs-string">'The following SMTP error was encountered: %s'</span>;
+$lang[<span class="hljs-string">'email_no_smtp_unpw'</span>] = <span class="hljs-string">'Error: You must assign a SMTP username and password.'</span>;
+$lang[<span class="hljs-string">'email_failed_smtp_login'</span>] = <span class="hljs-string">'Failed to send AUTH LOGIN command. Error: %s'</span>;
+$lang[<span class="hljs-string">'email_smtp_auth_un'</span>] = <span class="hljs-string">'Failed to authenticate username. Error: %s'</span>;
+$lang[<span class="hljs-string">'email_smtp_auth_pw'</span>] = <span class="hljs-string">'Failed to authenticate password. Error: %s'</span>;
+$lang[<span class="hljs-string">'email_smtp_data_failure'</span>] = <span class="hljs-string">'Unable to send data: %s'</span>;
+$lang[<span class="hljs-string">'email_exit_status'</span>] = <span class="hljs-string">'Exit status code: %s'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

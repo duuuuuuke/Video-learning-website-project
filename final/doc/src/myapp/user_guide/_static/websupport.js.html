@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>websupport.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\user_guide\\_static\\websupport.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>websupport.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>websupport.js</p>
+<pre><code></code></pre>
+</div>
+<div class="body">
+<p>sphinx.websupport utilities for all documentation.</p>
+<p>:copyright: Copyright 2007-2017 by the Sphinx team, see AUTHORS.
+:license: BSD, see LICENSE for details.</p>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$</span>) </span>{
+  $.fn.autogrow = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> textarea = <span class="hljs-keyword">this</span>;
+
+    $.fn.autogrow.resize(textarea);
+
+    $(textarea)
+      .focus(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        textarea.interval = setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+          $.fn.autogrow.resize(textarea);
+        }, <span class="hljs-number">500</span>);
+      })
+      .blur(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        clearInterval(textarea.interval);
+      });
+    });
+  };
+
+  $.fn.autogrow.resize = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">textarea</span>) </span>{
+    <span class="hljs-keyword">var</span> lineHeight = <span class="hljs-built_in">parseInt</span>($(textarea).css(<span class="hljs-string">'line-height'</span>), <span class="hljs-number">10</span>);
+    <span class="hljs-keyword">var</span> lines = textarea.value.split(<span class="hljs-string">'\n'</span>);
+    <span class="hljs-keyword">var</span> columns = textarea.cols;
+    <span class="hljs-keyword">var</span> lineCount = <span class="hljs-number">0</span>;
+    $.each(lines, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      lineCount += <span class="hljs-built_in">Math</span>.ceil(<span class="hljs-keyword">this</span>.length / columns) || <span class="hljs-number">1</span>;
+    });
+    <span class="hljs-keyword">var</span> height = lineHeight * (lineCount + <span class="hljs-number">1</span>);
+    $(textarea).css(<span class="hljs-string">'height'</span>, height);
+  };
+})(jQuery);
+
+(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$</span>) </span>{
+  <span class="hljs-keyword">var</span> comp, by;
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">init</span>(<span class="hljs-params"></span>) </span>{
+    initEvents();
+    initComparator();
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initEvents</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.comment-close'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      hide($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.vote'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      handleVote($(<span class="hljs-keyword">this</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.reply'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      openReply($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.close-reply'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      closeReply($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.sort-option'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      handleReSort($(<span class="hljs-keyword">this</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.show-proposal'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      showProposal($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.hide-proposal'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      hideProposal($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.show-propose-change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      showProposeChange($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.hide-propose-change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      hideProposeChange($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.accept-comment'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      acceptComment($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.delete-comment'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      deleteComment($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+    $(<span class="hljs-built_in">document</span>).on(<span class="hljs-string">"click"</span>, <span class="hljs-string">'a.comment-markup'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      toggleCommentMarkupBox($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set comp, which is a comparator function used for sorting and
+inserting comments into the list.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setComparator</span>(<span class="hljs-params"></span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>If the first three letters are &quot;asc&quot;, sort in ascending order
+and remove the prefix.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (by.substring(<span class="hljs-number">0</span>,<span class="hljs-number">3</span>) == <span class="hljs-string">'asc'</span>) {
+      <span class="hljs-keyword">var</span> i = by.substring(<span class="hljs-number">3</span>);
+      comp = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) </span>{ <span class="hljs-keyword">return</span> a[i] - b[i]; };
+    } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Otherwise sort in descending order.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      comp = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>) </span>{ <span class="hljs-keyword">return</span> b[by] - a[by]; };
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Reset link styles and format the selected sort option.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $(<span class="hljs-string">'a.sel'</span>).attr(<span class="hljs-string">'href'</span>, <span class="hljs-string">'#'</span>).removeClass(<span class="hljs-string">'sel'</span>);
+    $(<span class="hljs-string">'a.by'</span> + by).removeAttr(<span class="hljs-string">'href'</span>).addClass(<span class="hljs-string">'sel'</span>);
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Create a comp function. If the user has preferences stored in
+the sortBy cookie, use those, otherwise use the default.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initComparator</span>(<span class="hljs-params"></span>) </span>{
+    by = <span class="hljs-string">'rating'</span>; <span class="hljs-comment">// Default to sort by rating.</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>If the sortBy cookie is set, use that instead.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.cookie.length &gt; <span class="hljs-number">0</span>) {
+      <span class="hljs-keyword">var</span> start = <span class="hljs-built_in">document</span>.cookie.indexOf(<span class="hljs-string">'sortBy='</span>);
+      <span class="hljs-keyword">if</span> (start != <span class="hljs-number">-1</span>) {
+        start = start + <span class="hljs-number">7</span>;
+        <span class="hljs-keyword">var</span> end = <span class="hljs-built_in">document</span>.cookie.indexOf(<span class="hljs-string">";"</span>, start);
+        <span class="hljs-keyword">if</span> (end == <span class="hljs-number">-1</span>) {
+          end = <span class="hljs-built_in">document</span>.cookie.length;
+          by = <span class="hljs-built_in">unescape</span>(<span class="hljs-built_in">document</span>.cookie.substring(start, end));
+        }
+      }
+    }
+    setComparator();
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Show a comment div.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show</span>(<span class="hljs-params">id</span>) </span>{
+    $(<span class="hljs-string">'#ao'</span> + id).hide();
+    $(<span class="hljs-string">'#ah'</span> + id).show();
+    <span class="hljs-keyword">var</span> context = $.extend({<span class="hljs-attr">id</span>: id}, opts);
+    <span class="hljs-keyword">var</span> popup = $(renderTemplate(popupTemplate, context)).hide();
+    popup.find(<span class="hljs-string">'textarea[name="proposal"]'</span>).hide();
+    popup.find(<span class="hljs-string">'a.by'</span> + by).addClass(<span class="hljs-string">'sel'</span>);
+    <span class="hljs-keyword">var</span> form = popup.find(<span class="hljs-string">'#cf'</span> + id);
+    form.submit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+      event.preventDefault();
+      addComment(form);
+    });
+    $(<span class="hljs-string">'#s'</span> + id).after(popup);
+    popup.slideDown(<span class="hljs-string">'fast'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      getComments(id);
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Hide a comment div.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hide</span>(<span class="hljs-params">id</span>) </span>{
+    $(<span class="hljs-string">'#ah'</span> + id).hide();
+    $(<span class="hljs-string">'#ao'</span> + id).show();
+    <span class="hljs-keyword">var</span> div = $(<span class="hljs-string">'#sc'</span> + id);
+    div.slideUp(<span class="hljs-string">'fast'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      div.remove();
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Perform an ajax request to get comments for a node
+and insert the comments into the comments tree.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getComments</span>(<span class="hljs-params">id</span>) </span>{
+    $.ajax({
+     <span class="hljs-attr">type</span>: <span class="hljs-string">'GET'</span>,
+     <span class="hljs-attr">url</span>: opts.getCommentsURL,
+     <span class="hljs-attr">data</span>: {<span class="hljs-attr">node</span>: id},
+     <span class="hljs-attr">success</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data, textStatus, request</span>) </span>{
+       <span class="hljs-keyword">var</span> ul = $(<span class="hljs-string">'#cl'</span> + id);
+       <span class="hljs-keyword">var</span> speed = <span class="hljs-number">100</span>;
+       $(<span class="hljs-string">'#cf'</span> + id)
+         .find(<span class="hljs-string">'textarea[name="proposal"]'</span>)
+         .data(<span class="hljs-string">'source'</span>, data.source);
+
+       <span class="hljs-keyword">if</span> (data.comments.length === <span class="hljs-number">0</span>) {
+         ul.html(<span class="hljs-string">'&lt;li&gt;No comments yet.&lt;/li&gt;'</span>);
+         ul.data(<span class="hljs-string">'empty'</span>, <span class="hljs-literal">true</span>);
+       } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>If there are comments, sort them and put them in the list.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">         <span class="hljs-keyword">var</span> comments = sortComments(data.comments);
+         speed = data.comments.length * <span class="hljs-number">100</span>;
+         appendComments(comments, ul);
+         ul.data(<span class="hljs-string">'empty'</span>, <span class="hljs-literal">false</span>);
+       }
+       $(<span class="hljs-string">'#cn'</span> + id).slideUp(speed + <span class="hljs-number">200</span>);
+       ul.slideDown(speed);
+     },
+     <span class="hljs-attr">error</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request, textStatus, error</span>) </span>{
+       showError(<span class="hljs-string">'Oops, there was a problem retrieving the comments.'</span>);
+     },
+     <span class="hljs-attr">dataType</span>: <span class="hljs-string">'json'</span>
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Add a comment via ajax and insert the comment into the comment tree.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addComment</span>(<span class="hljs-params">form</span>) </span>{
+    <span class="hljs-keyword">var</span> node_id = form.find(<span class="hljs-string">'input[name="node"]'</span>).val();
+    <span class="hljs-keyword">var</span> parent_id = form.find(<span class="hljs-string">'input[name="parent"]'</span>).val();
+    <span class="hljs-keyword">var</span> text = form.find(<span class="hljs-string">'textarea[name="comment"]'</span>).val();
+    <span class="hljs-keyword">var</span> proposal = form.find(<span class="hljs-string">'textarea[name="proposal"]'</span>).val();
+
+    <span class="hljs-keyword">if</span> (text == <span class="hljs-string">''</span>) {
+      showError(<span class="hljs-string">'Please enter a comment.'</span>);
+      <span class="hljs-keyword">return</span>;
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Disable the form that is being submitted.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    form.find(<span class="hljs-string">'textarea,input'</span>).attr(<span class="hljs-string">'disabled'</span>, <span class="hljs-string">'disabled'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Send the comment to the server.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $.ajax({
+      <span class="hljs-attr">type</span>: <span class="hljs-string">"POST"</span>,
+      <span class="hljs-attr">url</span>: opts.addCommentURL,
+      <span class="hljs-attr">dataType</span>: <span class="hljs-string">'json'</span>,
+      <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">node</span>: node_id,
+        <span class="hljs-attr">parent</span>: parent_id,
+        <span class="hljs-attr">text</span>: text,
+        <span class="hljs-attr">proposal</span>: proposal
+      },
+      <span class="hljs-attr">success</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data, textStatus, error</span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Reset the form.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">if</span> (node_id) {
+          hideProposeChange(node_id);
+        }
+        form.find(<span class="hljs-string">'textarea'</span>)
+          .val(<span class="hljs-string">''</span>)
+          .add(form.find(<span class="hljs-string">'input'</span>))
+          .removeAttr(<span class="hljs-string">'disabled'</span>);
+	<span class="hljs-keyword">var</span> ul = $(<span class="hljs-string">'#cl'</span> + (node_id || parent_id));
+        <span class="hljs-keyword">if</span> (ul.data(<span class="hljs-string">'empty'</span>)) {
+          $(ul).empty();
+          ul.data(<span class="hljs-string">'empty'</span>, <span class="hljs-literal">false</span>);
+        }
+        insertComment(data.comment);
+        <span class="hljs-keyword">var</span> ao = $(<span class="hljs-string">'#ao'</span> + node_id);
+        ao.find(<span class="hljs-string">'img'</span>).attr({<span class="hljs-string">'src'</span>: opts.commentBrightImage});
+        <span class="hljs-keyword">if</span> (node_id) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>if this was a &quot;root&quot; comment, remove the commenting box
+(the user can get it back by reopening the comment popup)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          $(<span class="hljs-string">'#ca'</span> + node_id).slideUp();
+        }
+      },
+      <span class="hljs-attr">error</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request, textStatus, error</span>) </span>{
+        form.find(<span class="hljs-string">'textarea,input'</span>).removeAttr(<span class="hljs-string">'disabled'</span>);
+        showError(<span class="hljs-string">'Oops, there was a problem adding the comment.'</span>);
+      }
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Recursively append comments to the main comment list and children
+lists, creating the comment tree.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">appendComments</span>(<span class="hljs-params">comments, ul</span>) </span>{
+    $.each(comments, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> div = createCommentDiv(<span class="hljs-keyword">this</span>);
+      ul.append($(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'li'</span>)).html(div));
+      appendComments(<span class="hljs-keyword">this</span>.children, div.find(<span class="hljs-string">'ul.comment-children'</span>));
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>To avoid stagnating data, don't store the comments children in data.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">this</span>.children = <span class="hljs-literal">null</span>;
+      div.data(<span class="hljs-string">'comment'</span>, <span class="hljs-keyword">this</span>);
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>After adding a new comment, it must be inserted in the correct
+location in the comment tree.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">insertComment</span>(<span class="hljs-params">comment</span>) </span>{
+    <span class="hljs-keyword">var</span> div = createCommentDiv(comment);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>To avoid stagnating data, don't store the comments children in data.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    comment.children = <span class="hljs-literal">null</span>;
+    div.data(<span class="hljs-string">'comment'</span>, comment);
+
+    <span class="hljs-keyword">var</span> ul = $(<span class="hljs-string">'#cl'</span> + (comment.node || comment.parent));
+    <span class="hljs-keyword">var</span> siblings = getChildren(ul);
+
+    <span class="hljs-keyword">var</span> li = $(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'li'</span>));
+    li.hide();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<p>Determine where in the parents children list to insert this comment.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i &lt; siblings.length; i++) {
+      <span class="hljs-keyword">if</span> (comp(comment, siblings[i]) &lt;= <span class="hljs-number">0</span>) {
+        $(<span class="hljs-string">'#cd'</span> + siblings[i].id)
+          .parent()
+          .before(li.html(div));
+        li.slideDown(<span class="hljs-string">'fast'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>If we get here, this comment rates lower than all the others,
+or it is the only comment in the list.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    ul.append(li.html(div));
+    li.slideDown(<span class="hljs-string">'fast'</span>);
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">acceptComment</span>(<span class="hljs-params">id</span>) </span>{
+    $.ajax({
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'POST'</span>,
+      <span class="hljs-attr">url</span>: opts.acceptCommentURL,
+      <span class="hljs-attr">data</span>: {<span class="hljs-attr">id</span>: id},
+      <span class="hljs-attr">success</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data, textStatus, request</span>) </span>{
+        $(<span class="hljs-string">'#cm'</span> + id).fadeOut(<span class="hljs-string">'fast'</span>);
+        $(<span class="hljs-string">'#cd'</span> + id).removeClass(<span class="hljs-string">'moderate'</span>);
+      },
+      <span class="hljs-attr">error</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request, textStatus, error</span>) </span>{
+        showError(<span class="hljs-string">'Oops, there was a problem accepting the comment.'</span>);
+      }
+    });
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deleteComment</span>(<span class="hljs-params">id</span>) </span>{
+    $.ajax({
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'POST'</span>,
+      <span class="hljs-attr">url</span>: opts.deleteCommentURL,
+      <span class="hljs-attr">data</span>: {<span class="hljs-attr">id</span>: id},
+      <span class="hljs-attr">success</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data, textStatus, request</span>) </span>{
+        <span class="hljs-keyword">var</span> div = $(<span class="hljs-string">'#cd'</span> + id);
+        <span class="hljs-keyword">if</span> (data == <span class="hljs-string">'delete'</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>Moderator mode: remove the comment and all children immediately</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          div.slideUp(<span class="hljs-string">'fast'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            div.remove();
+          });
+          <span class="hljs-keyword">return</span>;
+        }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>User mode: only mark the comment as deleted</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        div
+          .find(<span class="hljs-string">'span.user-id:first'</span>)
+          .text(<span class="hljs-string">'[deleted]'</span>).end()
+          .find(<span class="hljs-string">'div.comment-text:first'</span>)
+          .text(<span class="hljs-string">'[deleted]'</span>).end()
+          .find(<span class="hljs-string">'#cm'</span> + id + <span class="hljs-string">', #dc'</span> + id + <span class="hljs-string">', #ac'</span> + id + <span class="hljs-string">', #rc'</span> + id +
+                <span class="hljs-string">', #sp'</span> + id + <span class="hljs-string">', #hp'</span> + id + <span class="hljs-string">', #cr'</span> + id + <span class="hljs-string">', #rl'</span> + id)
+          .remove();
+        <span class="hljs-keyword">var</span> comment = div.data(<span class="hljs-string">'comment'</span>);
+        comment.username = <span class="hljs-string">'[deleted]'</span>;
+        comment.text = <span class="hljs-string">'[deleted]'</span>;
+        div.data(<span class="hljs-string">'comment'</span>, comment);
+      },
+      <span class="hljs-attr">error</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request, textStatus, error</span>) </span>{
+        showError(<span class="hljs-string">'Oops, there was a problem deleting the comment.'</span>);
+      }
+    });
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showProposal</span>(<span class="hljs-params">id</span>) </span>{
+    $(<span class="hljs-string">'#sp'</span> + id).hide();
+    $(<span class="hljs-string">'#hp'</span> + id).show();
+    $(<span class="hljs-string">'#pr'</span> + id).slideDown(<span class="hljs-string">'fast'</span>);
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hideProposal</span>(<span class="hljs-params">id</span>) </span>{
+    $(<span class="hljs-string">'#hp'</span> + id).hide();
+    $(<span class="hljs-string">'#sp'</span> + id).show();
+    $(<span class="hljs-string">'#pr'</span> + id).slideUp(<span class="hljs-string">'fast'</span>);
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showProposeChange</span>(<span class="hljs-params">id</span>) </span>{
+    $(<span class="hljs-string">'#pc'</span> + id).hide();
+    $(<span class="hljs-string">'#hc'</span> + id).show();
+    <span class="hljs-keyword">var</span> textarea = $(<span class="hljs-string">'#pt'</span> + id);
+    textarea.val(textarea.data(<span class="hljs-string">'source'</span>));
+    $.fn.autogrow.resize(textarea[<span class="hljs-number">0</span>]);
+    textarea.slideDown(<span class="hljs-string">'fast'</span>);
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hideProposeChange</span>(<span class="hljs-params">id</span>) </span>{
+    $(<span class="hljs-string">'#hc'</span> + id).hide();
+    $(<span class="hljs-string">'#pc'</span> + id).show();
+    <span class="hljs-keyword">var</span> textarea = $(<span class="hljs-string">'#pt'</span> + id);
+    textarea.val(<span class="hljs-string">''</span>).removeAttr(<span class="hljs-string">'disabled'</span>);
+    textarea.slideUp(<span class="hljs-string">'fast'</span>);
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toggleCommentMarkupBox</span>(<span class="hljs-params">id</span>) </span>{
+    $(<span class="hljs-string">'#mb'</span> + id).toggle();
+  }
+
+  <span class="hljs-comment">/** Handle when the user clicks on a sort by link. */</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleReSort</span>(<span class="hljs-params">link</span>) </span>{
+    <span class="hljs-keyword">var</span> classes = link.attr(<span class="hljs-string">'class'</span>).split(<span class="hljs-regexp">/\s+/</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;classes.length; i++) {
+      <span class="hljs-keyword">if</span> (classes[i] != <span class="hljs-string">'sort-option'</span>) {
+	by = classes[i].substring(<span class="hljs-number">2</span>);
+      }
+    }
+    setComparator();
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<p>Save/update the sortBy cookie.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> expiration = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    expiration.setDate(expiration.getDate() + <span class="hljs-number">365</span>);
+    <span class="hljs-built_in">document</span>.cookie= <span class="hljs-string">'sortBy='</span> + <span class="hljs-built_in">escape</span>(by) +
+                     <span class="hljs-string">';expires='</span> + expiration.toUTCString();
+    $(<span class="hljs-string">'ul.comment-ul'</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">index, ul</span>) </span>{
+      <span class="hljs-keyword">var</span> comments = getChildren($(ul), <span class="hljs-literal">true</span>);
+      comments = sortComments(comments);
+      appendComments(comments, $(ul).empty());
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Function to process a vote when a user clicks an arrow.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleVote</span>(<span class="hljs-params">link</span>) </span>{
+    <span class="hljs-keyword">if</span> (!opts.voting) {
+      showError(<span class="hljs-string">"You'll need to login to vote."</span>);
+      <span class="hljs-keyword">return</span>;
+    }
+
+    <span class="hljs-keyword">var</span> id = link.attr(<span class="hljs-string">'id'</span>);
+    <span class="hljs-keyword">if</span> (!id) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>Didn't click on one of the voting arrows.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">return</span>;
+    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>If it is an unvote, the new vote value is 0,
+Otherwise it's 1 for an upvote, or -1 for a downvote.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> value = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (id.charAt(<span class="hljs-number">1</span>) != <span class="hljs-string">'u'</span>) {
+      value = id.charAt(<span class="hljs-number">0</span>) == <span class="hljs-string">'u'</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>;
+    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<p>The data to be sent to the server.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> d = {
+      <span class="hljs-attr">comment_id</span>: id.substring(<span class="hljs-number">2</span>),
+      <span class="hljs-attr">value</span>: value
+    };
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>Swap the vote and unvote links.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    link.hide();
+    $(<span class="hljs-string">'#'</span> + id.charAt(<span class="hljs-number">0</span>) + (id.charAt(<span class="hljs-number">1</span>) == <span class="hljs-string">'u'</span> ? <span class="hljs-string">'v'</span> : <span class="hljs-string">'u'</span>) + d.comment_id)
+      .show();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<p>The div the comment is displayed in.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> div = $(<span class="hljs-string">'div#cd'</span> + d.comment_id);
+    <span class="hljs-keyword">var</span> data = div.data(<span class="hljs-string">'comment'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<p>If this is not an unvote, and the other vote arrow has
+already been pressed, unpress it.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> ((d.value !== <span class="hljs-number">0</span>) &amp;&amp; (data.vote === d.value * <span class="hljs-number">-1</span>)) {
+      $(<span class="hljs-string">'#'</span> + (d.value == <span class="hljs-number">1</span> ? <span class="hljs-string">'d'</span> : <span class="hljs-string">'u'</span>) + <span class="hljs-string">'u'</span> + d.comment_id).hide();
+      $(<span class="hljs-string">'#'</span> + (d.value == <span class="hljs-number">1</span> ? <span class="hljs-string">'d'</span> : <span class="hljs-string">'u'</span>) + <span class="hljs-string">'v'</span> + d.comment_id).show();
+    }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<p>Update the comments rating in the local data.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    data.rating += (data.vote === <span class="hljs-number">0</span>) ? d.value : (d.value - data.vote);
+    data.vote = d.value;
+    div.data(<span class="hljs-string">'comment'</span>, data);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<p>Change the rating text.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    div.find(<span class="hljs-string">'.rating:first'</span>)
+      .text(data.rating + <span class="hljs-string">' point'</span> + (data.rating == <span class="hljs-number">1</span> ? <span class="hljs-string">''</span> : <span class="hljs-string">'s'</span>));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<p>Send the vote information to the server.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $.ajax({
+      <span class="hljs-attr">type</span>: <span class="hljs-string">"POST"</span>,
+      <span class="hljs-attr">url</span>: opts.processVoteURL,
+      <span class="hljs-attr">data</span>: d,
+      <span class="hljs-attr">error</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">request, textStatus, error</span>) </span>{
+        showError(<span class="hljs-string">'Oops, there was a problem casting that vote.'</span>);
+      }
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Open a reply form used to reply to an existing comment.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">openReply</span>(<span class="hljs-params">id</span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<p>Swap out the reply link for the hide link</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $(<span class="hljs-string">'#rl'</span> + id).hide();
+    $(<span class="hljs-string">'#cr'</span> + id).show();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<p>Add the reply li to the children ul.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> div = $(renderTemplate(replyTemplate, {<span class="hljs-attr">id</span>: id})).hide();
+    $(<span class="hljs-string">'#cl'</span> + id)
+      .prepend(div)
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<p>Setup the submit handler for the reply form.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      .find(<span class="hljs-string">'#rf'</span> + id)
+      .submit(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+        event.preventDefault();
+        addComment($(<span class="hljs-string">'#rf'</span> + id));
+        closeReply(id);
+      })
+      .find(<span class="hljs-string">'input[type=button]'</span>)
+      .click(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        closeReply(id);
+      });
+    div.slideDown(<span class="hljs-string">'fast'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      $(<span class="hljs-string">'#rf'</span> + id).find(<span class="hljs-string">'textarea'</span>).focus();
+    });
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Close the reply form opened with openReply.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">closeReply</span>(<span class="hljs-params">id</span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<p>Remove the reply div from the DOM.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $(<span class="hljs-string">'#rd'</span> + id).slideUp(<span class="hljs-string">'fast'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      $(<span class="hljs-keyword">this</span>).remove();
+    });
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<p>Swap out the hide link for the reply link</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    $(<span class="hljs-string">'#cr'</span> + id).hide();
+    $(<span class="hljs-string">'#rl'</span> + id).show();
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Recursively sort a tree of comments using the comp comparator.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sortComments</span>(<span class="hljs-params">comments</span>) </span>{
+    comments.sort(comp);
+    $.each(comments, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">this</span>.children = sortComments(<span class="hljs-keyword">this</span>.children);
+    });
+    <span class="hljs-keyword">return</span> comments;
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get the children comments from a ul. If recursive is true,
+recursively include childrens' children.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getChildren</span>(<span class="hljs-params">ul, recursive</span>) </span>{
+    <span class="hljs-keyword">var</span> children = [];
+    ul.children().children(<span class="hljs-string">"[id^='cd']"</span>)
+      .each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> comment = $(<span class="hljs-keyword">this</span>).data(<span class="hljs-string">'comment'</span>);
+        <span class="hljs-keyword">if</span> (recursive)
+          comment.children = getChildren($(<span class="hljs-keyword">this</span>).find(<span class="hljs-string">'#cl'</span> + comment.id), <span class="hljs-literal">true</span>);
+        children.push(comment);
+      });
+    <span class="hljs-keyword">return</span> children;
+  }
+
+  <span class="hljs-comment">/** Create a div to display a comment in. */</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createCommentDiv</span>(<span class="hljs-params">comment</span>) </span>{
+    <span class="hljs-keyword">if</span> (!comment.displayed &amp;&amp; !opts.moderator) {
+      <span class="hljs-keyword">return</span> $(<span class="hljs-string">'&lt;div class="moderate"&gt;Thank you!  Your comment will show up '</span>
+               + <span class="hljs-string">'once it is has been approved by a moderator.&lt;/div&gt;'</span>);
+    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<p>Prettify the comment rating.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    comment.pretty_rating = comment.rating + <span class="hljs-string">' point'</span> +
+      (comment.rating == <span class="hljs-number">1</span> ? <span class="hljs-string">''</span> : <span class="hljs-string">'s'</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<p>Make a class (for displaying not yet moderated comments differently)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    comment.css_class = comment.displayed ? <span class="hljs-string">''</span> : <span class="hljs-string">' moderate'</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<p>Create a div for this comment.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">var</span> context = $.extend({}, opts, comment);
+    <span class="hljs-keyword">var</span> div = $(renderTemplate(commentTemplate, context));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<p>If the user has voted on this comment, highlight the correct arrow.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (comment.vote) {
+      <span class="hljs-keyword">var</span> direction = (comment.vote == <span class="hljs-number">1</span>) ? <span class="hljs-string">'u'</span> : <span class="hljs-string">'d'</span>;
+      div.find(<span class="hljs-string">'#'</span> + direction + <span class="hljs-string">'v'</span> + comment.id).hide();
+      div.find(<span class="hljs-string">'#'</span> + direction + <span class="hljs-string">'u'</span> + comment.id).show();
+    }
+
+    <span class="hljs-keyword">if</span> (opts.moderator || comment.text != <span class="hljs-string">'[deleted]'</span>) {
+      div.find(<span class="hljs-string">'a.reply'</span>).show();
+      <span class="hljs-keyword">if</span> (comment.proposal_diff)
+        div.find(<span class="hljs-string">'#sp'</span> + comment.id).show();
+      <span class="hljs-keyword">if</span> (opts.moderator &amp;&amp; !comment.displayed)
+        div.find(<span class="hljs-string">'#cm'</span> + comment.id).show();
+      <span class="hljs-keyword">if</span> (opts.moderator || (opts.username == comment.username))
+        div.find(<span class="hljs-string">'#dc'</span> + comment.id).show();
+    }
+    <span class="hljs-keyword">return</span> div;
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>A simple template renderer. Placeholders such as &lt;%id%&gt; are replaced
+by context['id'] with items being escaped. Placeholders such as &lt;#id#&gt;
+are not escaped.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">renderTemplate</span>(<span class="hljs-params">template, context</span>) </span>{
+    <span class="hljs-keyword">var</span> esc = $(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>));
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params">ph, escape</span>) </span>{
+      <span class="hljs-keyword">var</span> cur = context;
+      $.each(ph.split(<span class="hljs-string">'.'</span>), <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        cur = cur[<span class="hljs-keyword">this</span>];
+      });
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">escape</span> ? esc.text(cur || <span class="hljs-string">""</span>).html() : cur;
+    }
+
+    <span class="hljs-keyword">return</span> template.replace(<span class="hljs-regexp">/&lt;([%#])([\w\.]*)\1&gt;/g</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">return</span> handle(<span class="hljs-built_in">arguments</span>[<span class="hljs-number">2</span>], <span class="hljs-built_in">arguments</span>[<span class="hljs-number">1</span>] == <span class="hljs-string">'%'</span> ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>);
+    });
+  }
+
+  <span class="hljs-comment">/** Flash an error message briefly. */</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showError</span>(<span class="hljs-params">message</span>) </span>{
+    $(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>)).attr({<span class="hljs-string">'class'</span>: <span class="hljs-string">'popup-error'</span>})
+      .append($(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>))
+               .attr({<span class="hljs-string">'class'</span>: <span class="hljs-string">'error-message'</span>}).text(message))
+      .appendTo(<span class="hljs-string">'body'</span>)
+      .fadeIn(<span class="hljs-string">"slow"</span>)
+      .delay(<span class="hljs-number">2000</span>)
+      .fadeOut(<span class="hljs-string">"slow"</span>);
+  }
+
+  <span class="hljs-comment">/** Add a link the user uses to open the comments popup. */</span>
+  $.fn.comment = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> id = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">1</span>);
+      <span class="hljs-keyword">var</span> count = COMMENT_METADATA[id];
+      <span class="hljs-keyword">var</span> title = count + <span class="hljs-string">' comment'</span> + (count == <span class="hljs-number">1</span> ? <span class="hljs-string">''</span> : <span class="hljs-string">'s'</span>);
+      <span class="hljs-keyword">var</span> image = count &gt; <span class="hljs-number">0</span> ? opts.commentBrightImage : opts.commentImage;
+      <span class="hljs-keyword">var</span> addcls = count == <span class="hljs-number">0</span> ? <span class="hljs-string">' nocomment'</span> : <span class="hljs-string">''</span>;
+      $(<span class="hljs-keyword">this</span>)
+        .append(
+          $(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'a'</span>)).attr({
+            <span class="hljs-attr">href</span>: <span class="hljs-string">'#'</span>,
+            <span class="hljs-string">'class'</span>: <span class="hljs-string">'sphinx-comment-open'</span> + addcls,
+            <span class="hljs-attr">id</span>: <span class="hljs-string">'ao'</span> + id
+          })
+            .append($(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'img'</span>)).attr({
+              <span class="hljs-attr">src</span>: image,
+              <span class="hljs-attr">alt</span>: <span class="hljs-string">'comment'</span>,
+              <span class="hljs-attr">title</span>: title
+            }))
+            .click(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+              event.preventDefault();
+              show($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+            })
+        )
+        .append(
+          $(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'a'</span>)).attr({
+            <span class="hljs-attr">href</span>: <span class="hljs-string">'#'</span>,
+            <span class="hljs-string">'class'</span>: <span class="hljs-string">'sphinx-comment-close hidden'</span>,
+            <span class="hljs-attr">id</span>: <span class="hljs-string">'ah'</span> + id
+          })
+            .append($(<span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'img'</span>)).attr({
+              <span class="hljs-attr">src</span>: opts.closeCommentImage,
+              <span class="hljs-attr">alt</span>: <span class="hljs-string">'close'</span>,
+              <span class="hljs-attr">title</span>: <span class="hljs-string">'close'</span>
+            }))
+            .click(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+              event.preventDefault();
+              hide($(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'id'</span>).substring(<span class="hljs-number">2</span>));
+            })
+        );
+    });
+  };
+
+  <span class="hljs-keyword">var</span> opts = {
+    <span class="hljs-attr">processVoteURL</span>: <span class="hljs-string">'/_process_vote'</span>,
+    <span class="hljs-attr">addCommentURL</span>: <span class="hljs-string">'/_add_comment'</span>,
+    <span class="hljs-attr">getCommentsURL</span>: <span class="hljs-string">'/_get_comments'</span>,
+    <span class="hljs-attr">acceptCommentURL</span>: <span class="hljs-string">'/_accept_comment'</span>,
+    <span class="hljs-attr">deleteCommentURL</span>: <span class="hljs-string">'/_delete_comment'</span>,
+    <span class="hljs-attr">commentImage</span>: <span class="hljs-string">'/static/_static/comment.png'</span>,
+    <span class="hljs-attr">closeCommentImage</span>: <span class="hljs-string">'/static/_static/comment-close.png'</span>,
+    <span class="hljs-attr">loadingImage</span>: <span class="hljs-string">'/static/_static/ajax-loader.gif'</span>,
+    <span class="hljs-attr">commentBrightImage</span>: <span class="hljs-string">'/static/_static/comment-bright.png'</span>,
+    <span class="hljs-attr">upArrow</span>: <span class="hljs-string">'/static/_static/up.png'</span>,
+    <span class="hljs-attr">downArrow</span>: <span class="hljs-string">'/static/_static/down.png'</span>,
+    <span class="hljs-attr">upArrowPressed</span>: <span class="hljs-string">'/static/_static/up-pressed.png'</span>,
+    <span class="hljs-attr">downArrowPressed</span>: <span class="hljs-string">'/static/_static/down-pressed.png'</span>,
+    <span class="hljs-attr">voting</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">moderator</span>: <span class="hljs-literal">false</span>
+  };
+
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> COMMENT_OPTIONS != <span class="hljs-string">"undefined"</span>) {
+    opts = jQuery.extend(opts, COMMENT_OPTIONS);
+  }
+
+  <span class="hljs-keyword">var</span> popupTemplate = <span class="hljs-string">'\
+    &lt;div class="sphinx-comments" id="sc&lt;%id%&gt;"&gt;\
+      &lt;p class="sort-options"&gt;\
+        Sort by:\
+        &lt;a href="#" class="sort-option byrating"&gt;best rated&lt;/a&gt;\
+        &lt;a href="#" class="sort-option byascage"&gt;newest&lt;/a&gt;\
+        &lt;a href="#" class="sort-option byage"&gt;oldest&lt;/a&gt;\
+      &lt;/p&gt;\
+      &lt;div class="comment-header"&gt;Comments&lt;/div&gt;\
+      &lt;div class="comment-loading" id="cn&lt;%id%&gt;"&gt;\
+        loading comments... &lt;img src="&lt;%loadingImage%&gt;" alt="" /&gt;&lt;/div&gt;\
+      &lt;ul id="cl&lt;%id%&gt;" class="comment-ul"&gt;&lt;/ul&gt;\
+      &lt;div id="ca&lt;%id%&gt;"&gt;\
+      &lt;p class="add-a-comment"&gt;Add a comment\
+        (&lt;a href="#" class="comment-markup" id="ab&lt;%id%&gt;"&gt;markup&lt;/a&gt;):&lt;/p&gt;\
+      &lt;div class="comment-markup-box" id="mb&lt;%id%&gt;"&gt;\
+        reStructured text markup: &lt;i&gt;*emph*&lt;/i&gt;, &lt;b&gt;**strong**&lt;/b&gt;, \
+        &lt;code&gt;``code``&lt;/code&gt;, \
+        code blocks: &lt;code&gt;::&lt;/code&gt; and an indented block after blank line&lt;/div&gt;\
+      &lt;form method="post" id="cf&lt;%id%&gt;" class="comment-form" action=""&gt;\
+        &lt;textarea name="comment" cols="80"&gt;&lt;/textarea&gt;\
+        &lt;p class="propose-button"&gt;\
+          &lt;a href="#" id="pc&lt;%id%&gt;" class="show-propose-change"&gt;\
+            Propose a change &amp;#9657;\
+          &lt;/a&gt;\
+          &lt;a href="#" id="hc&lt;%id%&gt;" class="hide-propose-change"&gt;\
+            Propose a change &amp;#9663;\
+          &lt;/a&gt;\
+        &lt;/p&gt;\
+        &lt;textarea name="proposal" id="pt&lt;%id%&gt;" cols="80"\
+                  spellcheck="false"&gt;&lt;/textarea&gt;\
+        &lt;input type="submit" value="Add comment" /&gt;\
+        &lt;input type="hidden" name="node" value="&lt;%id%&gt;" /&gt;\
+        &lt;input type="hidden" name="parent" value="" /&gt;\
+      &lt;/form&gt;\
+      &lt;/div&gt;\
+    &lt;/div&gt;'</span>;
+
+  <span class="hljs-keyword">var</span> commentTemplate = <span class="hljs-string">'\
+    &lt;div id="cd&lt;%id%&gt;" class="sphinx-comment&lt;%css_class%&gt;"&gt;\
+      &lt;div class="vote"&gt;\
+        &lt;div class="arrow"&gt;\
+          &lt;a href="#" id="uv&lt;%id%&gt;" class="vote" title="vote up"&gt;\
+            &lt;img src="&lt;%upArrow%&gt;" /&gt;\
+          &lt;/a&gt;\
+          &lt;a href="#" id="uu&lt;%id%&gt;" class="un vote" title="vote up"&gt;\
+            &lt;img src="&lt;%upArrowPressed%&gt;" /&gt;\
+          &lt;/a&gt;\
+        &lt;/div&gt;\
+        &lt;div class="arrow"&gt;\
+          &lt;a href="#" id="dv&lt;%id%&gt;" class="vote" title="vote down"&gt;\
+            &lt;img src="&lt;%downArrow%&gt;" id="da&lt;%id%&gt;" /&gt;\
+          &lt;/a&gt;\
+          &lt;a href="#" id="du&lt;%id%&gt;" class="un vote" title="vote down"&gt;\
+            &lt;img src="&lt;%downArrowPressed%&gt;" /&gt;\
+          &lt;/a&gt;\
+        &lt;/div&gt;\
+      &lt;/div&gt;\
+      &lt;div class="comment-content"&gt;\
+        &lt;p class="tagline comment"&gt;\
+          &lt;span class="user-id"&gt;&lt;%username%&gt;&lt;/span&gt;\
+          &lt;span class="rating"&gt;&lt;%pretty_rating%&gt;&lt;/span&gt;\
+          &lt;span class="delta"&gt;&lt;%time.delta%&gt;&lt;/span&gt;\
+        &lt;/p&gt;\
+        &lt;div class="comment-text comment"&gt;&lt;#text#&gt;&lt;/div&gt;\
+        &lt;p class="comment-opts comment"&gt;\
+          &lt;a href="#" class="reply hidden" id="rl&lt;%id%&gt;"&gt;reply &amp;#9657;&lt;/a&gt;\
+          &lt;a href="#" class="close-reply" id="cr&lt;%id%&gt;"&gt;reply &amp;#9663;&lt;/a&gt;\
+          &lt;a href="#" id="sp&lt;%id%&gt;" class="show-proposal"&gt;proposal &amp;#9657;&lt;/a&gt;\
+          &lt;a href="#" id="hp&lt;%id%&gt;" class="hide-proposal"&gt;proposal &amp;#9663;&lt;/a&gt;\
+          &lt;a href="#" id="dc&lt;%id%&gt;" class="delete-comment hidden"&gt;delete&lt;/a&gt;\
+          &lt;span id="cm&lt;%id%&gt;" class="moderation hidden"&gt;\
+            &lt;a href="#" id="ac&lt;%id%&gt;" class="accept-comment"&gt;accept&lt;/a&gt;\
+          &lt;/span&gt;\
+        &lt;/p&gt;\
+        &lt;pre class="proposal" id="pr&lt;%id%&gt;"&gt;\
+&lt;#proposal_diff#&gt;\
+        &lt;/pre&gt;\
+          &lt;ul class="comment-children" id="cl&lt;%id%&gt;"&gt;&lt;/ul&gt;\
+        &lt;/div&gt;\
+        &lt;div class="clearleft"&gt;&lt;/div&gt;\
+      &lt;/div&gt;\
+    &lt;/div&gt;'</span>;
+
+  <span class="hljs-keyword">var</span> replyTemplate = <span class="hljs-string">'\
+    &lt;li&gt;\
+      &lt;div class="reply-div" id="rd&lt;%id%&gt;"&gt;\
+        &lt;form id="rf&lt;%id%&gt;"&gt;\
+          &lt;textarea name="comment" cols="80"&gt;&lt;/textarea&gt;\
+          &lt;input type="submit" value="Add reply" /&gt;\
+          &lt;input type="button" value="Cancel" /&gt;\
+          &lt;input type="hidden" name="parent" value="&lt;%id%&gt;" /&gt;\
+          &lt;input type="hidden" name="node" value="" /&gt;\
+        &lt;/form&gt;\
+      &lt;/div&gt;\
+    &lt;/li&gt;'</span>;
+
+  $(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    init();
+  });
+})(jQuery);
+
+$(<span class="hljs-built_in">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<p>add comment anchors for all paragraphs that are commentable</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  $(<span class="hljs-string">'.sphinx-has-comment'</span>).comment();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<p>highlight search words in search results</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  $(<span class="hljs-string">"div.context"</span>).each(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> params = $.getQueryParameters();
+    <span class="hljs-keyword">var</span> terms = (params.q) ? params.q[<span class="hljs-number">0</span>].split(<span class="hljs-regexp">/\s+/</span>) : [];
+    <span class="hljs-keyword">var</span> result = $(<span class="hljs-keyword">this</span>);
+    $.each(terms, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      result.highlightText(<span class="hljs-keyword">this</span>.toLowerCase(), <span class="hljs-string">'highlighted'</span>);
+    });
+  });
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<p>directly open comment window if requested</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-keyword">var</span> anchor = <span class="hljs-built_in">document</span>.location.hash;
+  <span class="hljs-keyword">if</span> (anchor.substring(<span class="hljs-number">0</span>, <span class="hljs-number">9</span>) == <span class="hljs-string">'#comment-'</span>) {
+    $(<span class="hljs-string">'#ao'</span> + anchor.substring(<span class="hljs-number">9</span>)).click();
+    <span class="hljs-built_in">document</span>.location.hash = <span class="hljs-string">'#s'</span> + anchor.substring(<span class="hljs-number">9</span>);
+  }
+});
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

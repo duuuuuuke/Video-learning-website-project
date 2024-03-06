@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\libraries\\Cart.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Cart.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Shopping Cart Class</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CI_Cart</span> </span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>These are the regular expression rules that we use to validate the product ID and product name
+alpha-numeric, dashes, underscores, or periods</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $product_id_rules = <span class="hljs-string">'\.a-z0-9_-'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>These are the regular expression rules that we use to validate the product ID and product name
+alpha-numeric, dashes, underscores, colons or periods</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $product_name_rules = <span class="hljs-string">'\w \-\.\:'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>only allow safe product names</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> $product_name_safe = <span class="hljs-keyword">TRUE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Reference to CodeIgniter instance</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $CI;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Contents of the cart</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> $_cart_contents = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Shopping Class Constructor</p>
+</div>
+<div class="body">
+<p>The constructor loads the Session class, used to store the shopping cart contents.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($params = array<span class="hljs-params">()</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>Set the super object to a local variable for use later</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;CI =&amp; get_instance();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>Are any config settings being passed manually?  If so, set them</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$config = is_array($params) ? $params : <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Load the Sessions class</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;CI-&gt;load-&gt;driver(<span class="hljs-string">'session'</span>, $config);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Grab the shopping cart array from the session table</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_cart_contents = <span class="hljs-keyword">$this</span>-&gt;CI-&gt;session-&gt;userdata(<span class="hljs-string">'cart_contents'</span>);
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_cart_contents === <span class="hljs-keyword">NULL</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>No cart exists so we'll set some base values</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">$this</span>-&gt;_cart_contents = <span class="hljs-keyword">array</span>(<span class="hljs-string">'cart_total'</span> =&gt; <span class="hljs-number">0</span>, <span class="hljs-string">'total_items'</span> =&gt; <span class="hljs-number">0</span>);
+		}
+
+		log_message(<span class="hljs-string">'info'</span>, <span class="hljs-string">'Cart Class Initialized'</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Insert items into the cart and save it to the session table</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">insert</span><span class="hljs-params">($items = array<span class="hljs-params">()</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<p>Was any cart data passed? No? Bah...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_array($items) <span class="hljs-keyword">OR</span> count($items) === <span class="hljs-number">0</span>)
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'The insert method must be passed an array containing data.'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<p>You can either insert a single product using a one-dimensional array,
+or multiple products using a multi-dimensional one. The way we
+determine the array type is by looking for a required array key named &quot;id&quot;
+at the top level. If it's not found, we will assume it's a multi-dimensional array.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+		$save_cart = <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($items[<span class="hljs-string">'id'</span>]))
+		{
+			<span class="hljs-keyword">if</span> (($rowid = <span class="hljs-keyword">$this</span>-&gt;_insert($items)))
+			{
+				$save_cart = <span class="hljs-keyword">TRUE</span>;
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">foreach</span> ($items <span class="hljs-keyword">as</span> $val)
+			{
+				<span class="hljs-keyword">if</span> (is_array($val) &amp;&amp; <span class="hljs-keyword">isset</span>($val[<span class="hljs-string">'id'</span>]))
+				{
+					<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_insert($val))
+					{
+						$save_cart = <span class="hljs-keyword">TRUE</span>;
+					}
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<p>Save the cart data if the insert was successful</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($save_cart === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_save_cart();
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($rowid) ? $rowid : <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Insert</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_insert</span><span class="hljs-params">($items = array<span class="hljs-params">()</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>Was any cart data passed? No? Bah...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_array($items) <span class="hljs-keyword">OR</span> count($items) === <span class="hljs-number">0</span>)
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'The insert method must be passed an array containing data.'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<p>Does the $items array contain an id, quantity, price, and name?  These are required</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($items[<span class="hljs-string">'id'</span>], $items[<span class="hljs-string">'qty'</span>], $items[<span class="hljs-string">'price'</span>], $items[<span class="hljs-string">'name'</span>]))
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'The cart array must contain a product ID, quantity, price, and name.'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>Prep the quantity. It can only be a number.  Duh... also trim any leading zeros</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$items[<span class="hljs-string">'qty'</span>] = (float) $items[<span class="hljs-string">'qty'</span>];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<p>If the quantity is zero or blank there's nothing for us to do</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($items[<span class="hljs-string">'qty'</span>] == <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<p>Validate the product ID. It can only be alpha-numeric, dashes, underscores or periods
+Not totally sure we should impose this rule, but it seems prudent to standardize IDs.
+Note: These can be user-specified by setting the $this-&gt;product_id_rules variable.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! preg_match(<span class="hljs-string">'/^['</span>.<span class="hljs-keyword">$this</span>-&gt;product_id_rules.<span class="hljs-string">']+$/i'</span>, $items[<span class="hljs-string">'id'</span>]))
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Invalid product ID.  The product ID can only contain alpha-numeric characters, dashes, and underscores'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<p>Validate the product name. It can only be alpha-numeric, dashes, underscores, colons or periods.
+Note: These can be user-specified by setting the $this-&gt;product_name_rules variable.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;product_name_safe &amp;&amp; ! preg_match(<span class="hljs-string">'/^['</span>.<span class="hljs-keyword">$this</span>-&gt;product_name_rules.<span class="hljs-string">']+$/i'</span>.(UTF8_ENABLED ? <span class="hljs-string">'u'</span> : <span class="hljs-string">''</span>), $items[<span class="hljs-string">'name'</span>]))
+		{
+			log_message(<span class="hljs-string">'error'</span>, <span class="hljs-string">'An invalid name was submitted as the product name: '</span>.$items[<span class="hljs-string">'name'</span>].<span class="hljs-string">' The name can only contain alpha-numeric characters, dashes, underscores, colons, and spaces'</span>);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<p>Prep the price. Remove leading zeros and anything that isn't a number or decimal point.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$items[<span class="hljs-string">'price'</span>] = (float) $items[<span class="hljs-string">'price'</span>];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<p>We now need to create a unique identifier for the item being inserted into the cart.
+Every time something is added to the cart it is stored in the master cart array.
+Each row in the cart array, however, must have a unique index that identifies not only
+a particular product, but makes it possible to store identical products with different options.
+For example, what if someone buys two identical t-shirts (same product ID), but in
+different sizes?  The product ID (and other attributes, like the name) will be identical for
+both sizes because it's the same shirt. The only difference will be the size.
+Internally, we need to treat identical submissions, but with different options, as a unique product.
+Our solution is to convert the options array to a string and MD5 it along with the product ID.
+This becomes the unique &quot;row ID&quot;</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($items[<span class="hljs-string">'options'</span>]) &amp;&amp; count($items[<span class="hljs-string">'options'</span>]) &gt; <span class="hljs-number">0</span>)
+		{
+			$rowid = md5($items[<span class="hljs-string">'id'</span>].serialize($items[<span class="hljs-string">'options'</span>]));
+		}
+		<span class="hljs-keyword">else</span>
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<p>No options were submitted so we simply MD5 the product ID.
+Technically, we don't need to MD5 the ID in this case, but it makes
+sense to standardize the format of array indexes for both conditions</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$rowid = md5($items[<span class="hljs-string">'id'</span>]);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<p>Now that we have our unique &quot;row ID&quot;, we'll add our cart items to the master array
+grab quantity if it's already there and add it on</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$old_quantity = <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$rowid][<span class="hljs-string">'qty'</span>]) ? (int) <span class="hljs-keyword">$this</span>-&gt;_cart_contents[$rowid][<span class="hljs-string">'qty'</span>] : <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<p>Re-create the entry, just to make sure our index contains only the data from this submission</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$items[<span class="hljs-string">'rowid'</span>] = $rowid;
+		$items[<span class="hljs-string">'qty'</span>] += $old_quantity;
+		<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$rowid] = $items;
+
+		<span class="hljs-keyword">return</span> $rowid;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Update the cart</p>
+</div>
+<div class="body">
+<p>This function permits the quantity of a given item to be changed.
+Typically it is called from the &quot;view cart&quot; page if a user makes
+changes to the quantity before checkout. That array must contain the
+product ID and quantity for each item.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update</span><span class="hljs-params">($items = array<span class="hljs-params">()</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<p>Was any cart data passed?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! is_array($items) <span class="hljs-keyword">OR</span> count($items) === <span class="hljs-number">0</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<p>You can either update a single product using a one-dimensional array,
+or multiple products using a multi-dimensional one.  The way we
+determine the array type is by looking for a required array key named &quot;rowid&quot;.
+If it's not found we assume it's a multi-dimensional array</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$save_cart = <span class="hljs-keyword">FALSE</span>;
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($items[<span class="hljs-string">'rowid'</span>]))
+		{
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_update($items) === <span class="hljs-keyword">TRUE</span>)
+			{
+				$save_cart = <span class="hljs-keyword">TRUE</span>;
+			}
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			<span class="hljs-keyword">foreach</span> ($items <span class="hljs-keyword">as</span> $val)
+			{
+				<span class="hljs-keyword">if</span> (is_array($val) &amp;&amp; <span class="hljs-keyword">isset</span>($val[<span class="hljs-string">'rowid'</span>]))
+				{
+					<span class="hljs-keyword">if</span> (<span class="hljs-keyword">$this</span>-&gt;_update($val) === <span class="hljs-keyword">TRUE</span>)
+					{
+						$save_cart = <span class="hljs-keyword">TRUE</span>;
+					}
+				}
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<p>Save the cart data if the insert was successful</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($save_cart === <span class="hljs-keyword">TRUE</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_save_cart();
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Update the cart</p>
+</div>
+<div class="body">
+<p>This function permits changing item properties.
+Typically it is called from the &quot;view cart&quot; page if a user makes
+changes to the quantity before checkout. That array must contain the
+rowid and quantity for each item.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_update</span><span class="hljs-params">($items = array<span class="hljs-params">()</span>)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<p>Without these array indexes there is nothing we can do</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($items[<span class="hljs-string">'rowid'</span>], <span class="hljs-keyword">$this</span>-&gt;_cart_contents[$items[<span class="hljs-string">'rowid'</span>]]))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<p>Prep the quantity</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($items[<span class="hljs-string">'qty'</span>]))
+		{
+			$items[<span class="hljs-string">'qty'</span>] = (float) $items[<span class="hljs-string">'qty'</span>];
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<p>Is the quantity zero?  If so we will remove the item from the cart.
+If the quantity is greater than zero we are updating</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ($items[<span class="hljs-string">'qty'</span>] == <span class="hljs-number">0</span>)
+			{
+				<span class="hljs-keyword">unset</span>(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$items[<span class="hljs-string">'rowid'</span>]]);
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<p>find updatable keys</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$keys = array_intersect(array_keys(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$items[<span class="hljs-string">'rowid'</span>]]), array_keys($items));
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<p>if a price was passed, make sure it contains valid data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($items[<span class="hljs-string">'price'</span>]))
+		{
+			$items[<span class="hljs-string">'price'</span>] = (float) $items[<span class="hljs-string">'price'</span>];
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<p>product id &amp; name shouldn't be changed</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (array_diff($keys, <span class="hljs-keyword">array</span>(<span class="hljs-string">'id'</span>, <span class="hljs-string">'name'</span>)) <span class="hljs-keyword">as</span> $key)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$items[<span class="hljs-string">'rowid'</span>]][$key] = $items[$key];
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Save the cart array to the session DB</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">protected</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_save_cart</span><span class="hljs-params">()</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<p>Let's add up the individual prices and set the cart sub-total</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;_cart_contents[<span class="hljs-string">'total_items'</span>] = <span class="hljs-keyword">$this</span>-&gt;_cart_contents[<span class="hljs-string">'cart_total'</span>] = <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">$this</span>-&gt;_cart_contents <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<p>We make sure the array contains the proper indexes</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ( ! is_array($val) <span class="hljs-keyword">OR</span> ! <span class="hljs-keyword">isset</span>($val[<span class="hljs-string">'price'</span>], $val[<span class="hljs-string">'qty'</span>]))
+			{
+				<span class="hljs-keyword">continue</span>;
+			}
+
+			<span class="hljs-keyword">$this</span>-&gt;_cart_contents[<span class="hljs-string">'cart_total'</span>] += ($val[<span class="hljs-string">'price'</span>] * $val[<span class="hljs-string">'qty'</span>]);
+			<span class="hljs-keyword">$this</span>-&gt;_cart_contents[<span class="hljs-string">'total_items'</span>] += $val[<span class="hljs-string">'qty'</span>];
+			<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$key][<span class="hljs-string">'subtotal'</span>] = (<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$key][<span class="hljs-string">'price'</span>] * <span class="hljs-keyword">$this</span>-&gt;_cart_contents[$key][<span class="hljs-string">'qty'</span>]);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<p>Is our cart empty? If so we delete it from the session</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (count(<span class="hljs-keyword">$this</span>-&gt;_cart_contents) &lt;= <span class="hljs-number">2</span>)
+		{
+			<span class="hljs-keyword">$this</span>-&gt;CI-&gt;session-&gt;unset_userdata(<span class="hljs-string">'cart_contents'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<p>Nothing more to do... coffee time!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<p>If we made it this far it means that our cart has data.
+Let's pass it to the Session class so it can be stored</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">$this</span>-&gt;CI-&gt;session-&gt;set_userdata(<span class="hljs-keyword">array</span>(<span class="hljs-string">'cart_contents'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;_cart_contents));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<p>Woot!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Cart Total</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">total</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_cart_contents[<span class="hljs-string">'cart_total'</span>];
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-63" id="section-63"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-64" id="section-64"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Remove Item</p>
+</div>
+<div class="body">
+<p>Removes an item from the cart</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	 <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove</span><span class="hljs-params">($rowid)</span>
+	 </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-65" id="section-65"></a>
+</div>
+<p>unset &amp; save</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">unset</span>(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$rowid]);
+		<span class="hljs-keyword">$this</span>-&gt;_save_cart();
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	 }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-66" id="section-66"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-67" id="section-67"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Total Items</p>
+</div>
+<div class="body">
+<p>Returns the total item count</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>int
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">total_items</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;_cart_contents[<span class="hljs-string">'total_items'</span>];
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-68" id="section-68"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-69" id="section-69"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Cart Contents</p>
+</div>
+<div class="body">
+<p>Returns the entire cart array</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">contents</span><span class="hljs-params">($newest_first = FALSE)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-70" id="section-70"></a>
+</div>
+<p>do we want the newest first?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		$cart = ($newest_first) ? array_reverse(<span class="hljs-keyword">$this</span>-&gt;_cart_contents) : <span class="hljs-keyword">$this</span>-&gt;_cart_contents;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-71" id="section-71"></a>
+</div>
+<p>Remove these so they don't create a problem when showing the cart table</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">unset</span>($cart[<span class="hljs-string">'total_items'</span>]);
+		<span class="hljs-keyword">unset</span>($cart[<span class="hljs-string">'cart_total'</span>]);
+
+		<span class="hljs-keyword">return</span> $cart;
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-72" id="section-72"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-73" id="section-73"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get cart item</p>
+</div>
+<div class="body">
+<p>Returns the details of a specific item in the cart</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$row_id
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get_item</span><span class="hljs-params">($row_id)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (in_array($row_id, <span class="hljs-keyword">array</span>(<span class="hljs-string">'total_items'</span>, <span class="hljs-string">'cart_total'</span>), <span class="hljs-keyword">TRUE</span>) <span class="hljs-keyword">OR</span> ! <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$row_id]))
+			? <span class="hljs-keyword">FALSE</span>
+			: <span class="hljs-keyword">$this</span>-&gt;_cart_contents[$row_id];
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-74" id="section-74"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-75" id="section-75"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Has options</p>
+</div>
+<div class="body">
+<p>Returns TRUE if the rowid passed to this function correlates to an item
+that has options associated with it.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$row_id = ''
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">has_options</span><span class="hljs-params">($row_id = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (<span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$row_id][<span class="hljs-string">'options'</span>]) &amp;&amp; count(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$row_id][<span class="hljs-string">'options'</span>]) !== <span class="hljs-number">0</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-76" id="section-76"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-77" id="section-77"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Product options</p>
+</div>
+<div class="body">
+<p>Returns the an array of options, for a particular product row ID</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$row_id = ''
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">product_options</span><span class="hljs-params">($row_id = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>(<span class="hljs-keyword">$this</span>-&gt;_cart_contents[$row_id][<span class="hljs-string">'options'</span>]) ? <span class="hljs-keyword">$this</span>-&gt;_cart_contents[$row_id][<span class="hljs-string">'options'</span>] : <span class="hljs-keyword">array</span>();
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-78" id="section-78"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-79" id="section-79"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Format Number</p>
+</div>
+<div class="body">
+<p>Returns the supplied number with commas and a decimal point.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">float</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">format_number</span><span class="hljs-params">($n = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">return</span> ($n === <span class="hljs-string">''</span>) ? <span class="hljs-string">''</span> : number_format( (float) $n, <span class="hljs-number">2</span>, <span class="hljs-string">'.'</span>, <span class="hljs-string">','</span>);
+	}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-80" id="section-80"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-81" id="section-81"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Destroy the cart</p>
+</div>
+<div class="body">
+<p>Empties the cart and kills the session</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">destroy</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">$this</span>-&gt;_cart_contents = <span class="hljs-keyword">array</span>(<span class="hljs-string">'cart_total'</span> =&gt; <span class="hljs-number">0</span>, <span class="hljs-string">'total_items'</span> =&gt; <span class="hljs-number">0</span>);
+		<span class="hljs-keyword">$this</span>-&gt;CI-&gt;session-&gt;unset_userdata(<span class="hljs-string">'cart_contents'</span>);
+	}
+
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

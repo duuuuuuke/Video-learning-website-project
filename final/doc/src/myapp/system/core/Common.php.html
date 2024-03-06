@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Common.php</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../../doc-style.css" />
+  <script src="../../../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../../../";
+    var thisFile = "src\\myapp\\system\\core\\Common.php";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>Common.php</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php"><span class="hljs-meta">&lt;?php</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>CodeIgniter</p>
+</div>
+<div class="body">
+<p>An open source application development framework for PHP</p>
+<p>This content is released under the MIT License (MIT)</p>
+<p>Copyright (c) 2014 - 2019, British Columbia Institute of Technology</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">defined(<span class="hljs-string">'BASEPATH'</span>) <span class="hljs-keyword">OR</span> <span class="hljs-keyword">exit</span>(<span class="hljs-string">'No direct script access allowed'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Common Functions</p>
+</div>
+<div class="body">
+<p>Loads the base classes and executes the request.</p>
+</div>
+<div class="details">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'is_php'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Determines if the current version of PHP is equal to or greater than the supplied value</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool TRUE if the current version is $version or higher
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_php</span><span class="hljs-params">($version)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_is_php;
+		$version = (string) $version;
+
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($_is_php[$version]))
+		{
+			$_is_php[$version] = version_compare(PHP_VERSION, $version, <span class="hljs-string">'&gt;='</span>);
+		}
+
+		<span class="hljs-keyword">return</span> $_is_php[$version];
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'is_really_writable'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Tests for file writability</p>
+</div>
+<div class="body">
+<p>is_writable() returns TRUE on Windows servers when you really can't write to
+the file, based on the read-only attribute. is_writable() is also unreliable
+on Unix servers if safe_mode is on.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_really_writable</span><span class="hljs-params">($file)</span>
+	</span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>If we're on a Unix server with safe_mode off we call is_writable</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (DIRECTORY_SEPARATOR === <span class="hljs-string">'/'</span> &amp;&amp; (is_php(<span class="hljs-string">'5.4'</span>) <span class="hljs-keyword">OR</span> ! ini_get(<span class="hljs-string">'safe_mode'</span>)))
+		{
+			<span class="hljs-keyword">return</span> is_writable($file);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>For Windows servers and safe_mode &quot;on&quot; installations we'll actually
+write a file then read it. Bah...</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (is_dir($file))
+		{
+			$file = rtrim($file, <span class="hljs-string">'/'</span>).<span class="hljs-string">'/'</span>.md5(mt_rand());
+			<span class="hljs-keyword">if</span> (($fp = @fopen($file, <span class="hljs-string">'ab'</span>)) === <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+			}
+
+			fclose($fp);
+			@chmod($file, <span class="hljs-number">0777</span>);
+			@unlink($file);
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ( ! is_file($file) <span class="hljs-keyword">OR</span> ($fp = @fopen($file, <span class="hljs-string">'ab'</span>)) === <span class="hljs-keyword">FALSE</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+		}
+
+		fclose($fp);
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'load_class'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Class registry</p>
+</div>
+<div class="body">
+<p>This function acts as a singleton. If the requested class does not
+exist it is instantiated and set to a static variable. If it has
+previously been instantiated the variable is returned.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the class name being requested
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the directory where the class should be found
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>an optional argument to pass to the class constructor
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>object
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">load_class</span><span class="hljs-params">($class, $directory = <span class="hljs-string">'libraries'</span>, $param = NULL)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_classes = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>Does the class exist? If so, we're done...</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($_classes[$class]))
+		{
+			<span class="hljs-keyword">return</span> $_classes[$class];
+		}
+
+		$name = <span class="hljs-keyword">FALSE</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Look for the class first in the local application/libraries folder
+then in the native system/libraries folder</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">array</span>(APPPATH, BASEPATH) <span class="hljs-keyword">as</span> $path)
+		{
+			<span class="hljs-keyword">if</span> (file_exists($path.$directory.<span class="hljs-string">'/'</span>.$class.<span class="hljs-string">'.php'</span>))
+			{
+				$name = <span class="hljs-string">'CI_'</span>.$class;
+
+				<span class="hljs-keyword">if</span> (class_exists($name, <span class="hljs-keyword">FALSE</span>) === <span class="hljs-keyword">FALSE</span>)
+				{
+					<span class="hljs-keyword">require_once</span>($path.$directory.<span class="hljs-string">'/'</span>.$class.<span class="hljs-string">'.php'</span>);
+				}
+
+				<span class="hljs-keyword">break</span>;
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Is the request a class extension? If so we load it too</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (file_exists(APPPATH.$directory.<span class="hljs-string">'/'</span>.config_item(<span class="hljs-string">'subclass_prefix'</span>).$class.<span class="hljs-string">'.php'</span>))
+		{
+			$name = config_item(<span class="hljs-string">'subclass_prefix'</span>).$class;
+
+			<span class="hljs-keyword">if</span> (class_exists($name, <span class="hljs-keyword">FALSE</span>) === <span class="hljs-keyword">FALSE</span>)
+			{
+				<span class="hljs-keyword">require_once</span>(APPPATH.$directory.<span class="hljs-string">'/'</span>.$name.<span class="hljs-string">'.php'</span>);
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Did we find the class?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($name === <span class="hljs-keyword">FALSE</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-16" id="section-16"></a>
+</div>
+<p>Note: We use exit() rather than show_error() in order to avoid a
+self-referencing loop with the Exceptions class</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			set_status_header(<span class="hljs-number">503</span>);
+			<span class="hljs-keyword">echo</span> <span class="hljs-string">'Unable to locate the specified class: '</span>.$class.<span class="hljs-string">'.php'</span>;
+			<span class="hljs-keyword">exit</span>(<span class="hljs-number">5</span>); <span class="hljs-comment">// EXIT_UNK_CLASS</span>
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-17" id="section-17"></a>
+</div>
+<p>Keep track of what we just loaded</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		is_loaded($class);
+
+		$_classes[$class] = <span class="hljs-keyword">isset</span>($param)
+			? <span class="hljs-keyword">new</span> $name($param)
+			: <span class="hljs-keyword">new</span> $name();
+		<span class="hljs-keyword">return</span> $_classes[$class];
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-18" id="section-18"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'is_loaded'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-19" id="section-19"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Keeps track of which libraries have been loaded. This function is
+called by the load_class() function above</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">is_loaded</span><span class="hljs-params">($class = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_is_loaded = <span class="hljs-keyword">array</span>();
+
+		<span class="hljs-keyword">if</span> ($class !== <span class="hljs-string">''</span>)
+		{
+			$_is_loaded[strtolower($class)] = $class;
+		}
+
+		<span class="hljs-keyword">return</span> $_is_loaded;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-20" id="section-20"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'get_config'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-21" id="section-21"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Loads the main config.php file</p>
+</div>
+<div class="body">
+<p>This function lets us grab the config file even if the Config class
+hasn't been instantiated yet</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">array</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">get_config</span><span class="hljs-params">(Array $replace = array<span class="hljs-params">()</span>)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $config;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($config))
+		{
+			$file_path = APPPATH.<span class="hljs-string">'config/config.php'</span>;
+			$found = <span class="hljs-keyword">FALSE</span>;
+			<span class="hljs-keyword">if</span> (file_exists($file_path))
+			{
+				$found = <span class="hljs-keyword">TRUE</span>;
+				<span class="hljs-keyword">require</span>($file_path);
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-22" id="section-22"></a>
+</div>
+<p>Is the config file in the environment folder?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> (file_exists($file_path = APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/config.php'</span>))
+			{
+				<span class="hljs-keyword">require</span>($file_path);
+			}
+			<span class="hljs-keyword">elseif</span> ( ! $found)
+			{
+				set_status_header(<span class="hljs-number">503</span>);
+				<span class="hljs-keyword">echo</span> <span class="hljs-string">'The configuration file does not exist.'</span>;
+				<span class="hljs-keyword">exit</span>(<span class="hljs-number">3</span>); <span class="hljs-comment">// EXIT_CONFIG</span>
+			}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-23" id="section-23"></a>
+</div>
+<p>Does the $config array exist in the file?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($config) <span class="hljs-keyword">OR</span> ! is_array($config))
+			{
+				set_status_header(<span class="hljs-number">503</span>);
+				<span class="hljs-keyword">echo</span> <span class="hljs-string">'Your config file does not appear to be formatted correctly.'</span>;
+				<span class="hljs-keyword">exit</span>(<span class="hljs-number">3</span>); <span class="hljs-comment">// EXIT_CONFIG</span>
+			}
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-24" id="section-24"></a>
+</div>
+<p>Are any values being dynamically added or replaced?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">foreach</span> ($replace <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			$config[$key] = $val;
+		}
+
+		<span class="hljs-keyword">return</span> $config;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-25" id="section-25"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'config_item'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-26" id="section-26"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Returns the specified config item</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">config_item</span><span class="hljs-params">($item)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_config;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($_config))
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-27" id="section-27"></a>
+</div>
+<p>references cannot be directly assigned to static variables, so we use an array</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$_config[<span class="hljs-number">0</span>] =&amp; get_config();
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">isset</span>($_config[<span class="hljs-number">0</span>][$item]) ? $_config[<span class="hljs-number">0</span>][$item] : <span class="hljs-keyword">NULL</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-28" id="section-28"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'get_mimes'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-29" id="section-29"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Returns the MIME types array from config/mimes.php</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>array
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> &amp;<span class="hljs-title">get_mimes</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_mimes;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($_mimes))
+		{
+			$_mimes = file_exists(APPPATH.<span class="hljs-string">'config/mimes.php'</span>)
+				? <span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/mimes.php'</span>)
+				: <span class="hljs-keyword">array</span>();
+
+			<span class="hljs-keyword">if</span> (file_exists(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/mimes.php'</span>))
+			{
+				$_mimes = array_merge($_mimes, <span class="hljs-keyword">include</span>(APPPATH.<span class="hljs-string">'config/'</span>.ENVIRONMENT.<span class="hljs-string">'/mimes.php'</span>));
+			}
+		}
+
+		<span class="hljs-keyword">return</span> $_mimes;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-30" id="section-30"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'is_https'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-31" id="section-31"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is HTTPS?</p>
+</div>
+<div class="body">
+<p>Determines if the application is accessed via an encrypted
+(HTTPS) connection.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_https</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">empty</span>($_SERVER[<span class="hljs-string">'HTTPS'</span>]) &amp;&amp; strtolower($_SERVER[<span class="hljs-string">'HTTPS'</span>]) !== <span class="hljs-string">'off'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> (<span class="hljs-keyword">isset</span>($_SERVER[<span class="hljs-string">'HTTP_X_FORWARDED_PROTO'</span>]) &amp;&amp; strtolower($_SERVER[<span class="hljs-string">'HTTP_X_FORWARDED_PROTO'</span>]) === <span class="hljs-string">'https'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+		<span class="hljs-keyword">elseif</span> ( ! <span class="hljs-keyword">empty</span>($_SERVER[<span class="hljs-string">'HTTP_FRONT_END_HTTPS'</span>]) &amp;&amp; strtolower($_SERVER[<span class="hljs-string">'HTTP_FRONT_END_HTTPS'</span>]) !== <span class="hljs-string">'off'</span>)
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-keyword">TRUE</span>;
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-32" id="section-32"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'is_cli'</span>))
+{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-33" id="section-33"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Is CLI?</p>
+</div>
+<div class="body">
+<p>Test to see if a request was made from the command line.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">is_cli</span><span class="hljs-params">()</span>
+	</span>{
+		<span class="hljs-keyword">return</span> (PHP_SAPI === <span class="hljs-string">'cli'</span> <span class="hljs-keyword">OR</span> defined(<span class="hljs-string">'STDIN'</span>));
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-34" id="section-34"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'show_error'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-35" id="section-35"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error Handler</p>
+</div>
+<div class="body">
+<p>This function lets us invoke the exception class and
+display errors using the standard error template located
+in application/views/errors/error_general.php
+This function will send the error page directly to the
+browser and exit.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show_error</span><span class="hljs-params">($message, $status_code = <span class="hljs-number">500</span>, $heading = <span class="hljs-string">'An Error Was Encountered'</span>)</span>
+	</span>{
+		$status_code = abs($status_code);
+		<span class="hljs-keyword">if</span> ($status_code &lt; <span class="hljs-number">100</span>)
+		{
+			$exit_status = $status_code + <span class="hljs-number">9</span>; <span class="hljs-comment">// 9 is EXIT__AUTO_MIN</span>
+			$status_code = <span class="hljs-number">500</span>;
+		}
+		<span class="hljs-keyword">else</span>
+		{
+			$exit_status = <span class="hljs-number">1</span>; <span class="hljs-comment">// EXIT_ERROR</span>
+		}
+
+		$_error =&amp; load_class(<span class="hljs-string">'Exceptions'</span>, <span class="hljs-string">'core'</span>);
+		<span class="hljs-keyword">echo</span> $_error-&gt;show_error($heading, $message, <span class="hljs-string">'error_general'</span>, $status_code);
+		<span class="hljs-keyword">exit</span>($exit_status);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-36" id="section-36"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'show_404'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-37" id="section-37"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>404 Page Handler</p>
+</div>
+<div class="body">
+<p>This function is similar to the show_error() function above
+However, instead of the standard error template it displays
+404 errors.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">show_404</span><span class="hljs-params">($page = <span class="hljs-string">''</span>, $log_error = TRUE)</span>
+	</span>{
+		$_error =&amp; load_class(<span class="hljs-string">'Exceptions'</span>, <span class="hljs-string">'core'</span>);
+		$_error-&gt;show_404($page, $log_error);
+		<span class="hljs-keyword">exit</span>(<span class="hljs-number">4</span>); <span class="hljs-comment">// EXIT_UNKNOWN_FILE</span>
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-38" id="section-38"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'log_message'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-39" id="section-39"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error Logging Interface</p>
+</div>
+<div class="body">
+<p>We use this as a simple mechanism to access the logging
+class and send messages to be logged.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the error level: 'error', 'debug' or 'info'
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>the error message
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">log_message</span><span class="hljs-params">($level, $message)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_log;
+
+		<span class="hljs-keyword">if</span> ($_log === <span class="hljs-keyword">NULL</span>)
+		{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-40" id="section-40"></a>
+</div>
+<p>references cannot be directly assigned to static variables, so we use an array</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">			$_log[<span class="hljs-number">0</span>] =&amp; load_class(<span class="hljs-string">'Log'</span>, <span class="hljs-string">'core'</span>);
+		}
+
+		$_log[<span class="hljs-number">0</span>]-&gt;write_log($level, $message);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-41" id="section-41"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'set_status_header'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-42" id="section-42"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Set HTTP Status Header</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>the status code
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">set_status_header</span><span class="hljs-params">($code = <span class="hljs-number">200</span>, $text = <span class="hljs-string">''</span>)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (is_cli())
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($code) <span class="hljs-keyword">OR</span> ! is_numeric($code))
+		{
+			show_error(<span class="hljs-string">'Status codes must be numeric'</span>, <span class="hljs-number">500</span>);
+		}
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($text))
+		{
+			is_int($code) <span class="hljs-keyword">OR</span> $code = (int) $code;
+			$stati = <span class="hljs-keyword">array</span>(
+				<span class="hljs-number">100</span>	=&gt; <span class="hljs-string">'Continue'</span>,
+				<span class="hljs-number">101</span>	=&gt; <span class="hljs-string">'Switching Protocols'</span>,
+
+				<span class="hljs-number">200</span>	=&gt; <span class="hljs-string">'OK'</span>,
+				<span class="hljs-number">201</span>	=&gt; <span class="hljs-string">'Created'</span>,
+				<span class="hljs-number">202</span>	=&gt; <span class="hljs-string">'Accepted'</span>,
+				<span class="hljs-number">203</span>	=&gt; <span class="hljs-string">'Non-Authoritative Information'</span>,
+				<span class="hljs-number">204</span>	=&gt; <span class="hljs-string">'No Content'</span>,
+				<span class="hljs-number">205</span>	=&gt; <span class="hljs-string">'Reset Content'</span>,
+				<span class="hljs-number">206</span>	=&gt; <span class="hljs-string">'Partial Content'</span>,
+
+				<span class="hljs-number">300</span>	=&gt; <span class="hljs-string">'Multiple Choices'</span>,
+				<span class="hljs-number">301</span>	=&gt; <span class="hljs-string">'Moved Permanently'</span>,
+				<span class="hljs-number">302</span>	=&gt; <span class="hljs-string">'Found'</span>,
+				<span class="hljs-number">303</span>	=&gt; <span class="hljs-string">'See Other'</span>,
+				<span class="hljs-number">304</span>	=&gt; <span class="hljs-string">'Not Modified'</span>,
+				<span class="hljs-number">305</span>	=&gt; <span class="hljs-string">'Use Proxy'</span>,
+				<span class="hljs-number">307</span>	=&gt; <span class="hljs-string">'Temporary Redirect'</span>,
+
+				<span class="hljs-number">400</span>	=&gt; <span class="hljs-string">'Bad Request'</span>,
+				<span class="hljs-number">401</span>	=&gt; <span class="hljs-string">'Unauthorized'</span>,
+				<span class="hljs-number">402</span>	=&gt; <span class="hljs-string">'Payment Required'</span>,
+				<span class="hljs-number">403</span>	=&gt; <span class="hljs-string">'Forbidden'</span>,
+				<span class="hljs-number">404</span>	=&gt; <span class="hljs-string">'Not Found'</span>,
+				<span class="hljs-number">405</span>	=&gt; <span class="hljs-string">'Method Not Allowed'</span>,
+				<span class="hljs-number">406</span>	=&gt; <span class="hljs-string">'Not Acceptable'</span>,
+				<span class="hljs-number">407</span>	=&gt; <span class="hljs-string">'Proxy Authentication Required'</span>,
+				<span class="hljs-number">408</span>	=&gt; <span class="hljs-string">'Request Timeout'</span>,
+				<span class="hljs-number">409</span>	=&gt; <span class="hljs-string">'Conflict'</span>,
+				<span class="hljs-number">410</span>	=&gt; <span class="hljs-string">'Gone'</span>,
+				<span class="hljs-number">411</span>	=&gt; <span class="hljs-string">'Length Required'</span>,
+				<span class="hljs-number">412</span>	=&gt; <span class="hljs-string">'Precondition Failed'</span>,
+				<span class="hljs-number">413</span>	=&gt; <span class="hljs-string">'Request Entity Too Large'</span>,
+				<span class="hljs-number">414</span>	=&gt; <span class="hljs-string">'Request-URI Too Long'</span>,
+				<span class="hljs-number">415</span>	=&gt; <span class="hljs-string">'Unsupported Media Type'</span>,
+				<span class="hljs-number">416</span>	=&gt; <span class="hljs-string">'Requested Range Not Satisfiable'</span>,
+				<span class="hljs-number">417</span>	=&gt; <span class="hljs-string">'Expectation Failed'</span>,
+				<span class="hljs-number">422</span>	=&gt; <span class="hljs-string">'Unprocessable Entity'</span>,
+				<span class="hljs-number">426</span>	=&gt; <span class="hljs-string">'Upgrade Required'</span>,
+				<span class="hljs-number">428</span>	=&gt; <span class="hljs-string">'Precondition Required'</span>,
+				<span class="hljs-number">429</span>	=&gt; <span class="hljs-string">'Too Many Requests'</span>,
+				<span class="hljs-number">431</span>	=&gt; <span class="hljs-string">'Request Header Fields Too Large'</span>,
+
+				<span class="hljs-number">500</span>	=&gt; <span class="hljs-string">'Internal Server Error'</span>,
+				<span class="hljs-number">501</span>	=&gt; <span class="hljs-string">'Not Implemented'</span>,
+				<span class="hljs-number">502</span>	=&gt; <span class="hljs-string">'Bad Gateway'</span>,
+				<span class="hljs-number">503</span>	=&gt; <span class="hljs-string">'Service Unavailable'</span>,
+				<span class="hljs-number">504</span>	=&gt; <span class="hljs-string">'Gateway Timeout'</span>,
+				<span class="hljs-number">505</span>	=&gt; <span class="hljs-string">'HTTP Version Not Supported'</span>,
+				<span class="hljs-number">511</span>	=&gt; <span class="hljs-string">'Network Authentication Required'</span>,
+			);
+
+			<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($stati[$code]))
+			{
+				$text = $stati[$code];
+			}
+			<span class="hljs-keyword">else</span>
+			{
+				show_error(<span class="hljs-string">'No status text available. Please check your status code number or supply your own message text.'</span>, <span class="hljs-number">500</span>);
+			}
+		}
+
+		<span class="hljs-keyword">if</span> (strpos(PHP_SAPI, <span class="hljs-string">'cgi'</span>) === <span class="hljs-number">0</span>)
+		{
+			header(<span class="hljs-string">'Status: '</span>.$code.<span class="hljs-string">' '</span>.$text, <span class="hljs-keyword">TRUE</span>);
+			<span class="hljs-keyword">return</span>;
+		}
+
+		$server_protocol = (<span class="hljs-keyword">isset</span>($_SERVER[<span class="hljs-string">'SERVER_PROTOCOL'</span>]) &amp;&amp; in_array($_SERVER[<span class="hljs-string">'SERVER_PROTOCOL'</span>], <span class="hljs-keyword">array</span>(<span class="hljs-string">'HTTP/1.0'</span>, <span class="hljs-string">'HTTP/1.1'</span>, <span class="hljs-string">'HTTP/2'</span>), <span class="hljs-keyword">TRUE</span>))
+			? $_SERVER[<span class="hljs-string">'SERVER_PROTOCOL'</span>] : <span class="hljs-string">'HTTP/1.1'</span>;
+		header($server_protocol.<span class="hljs-string">' '</span>.$code.<span class="hljs-string">' '</span>.$text, <span class="hljs-keyword">TRUE</span>, $code);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-43" id="section-43"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_error_handler'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-44" id="section-44"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Error Handler</p>
+</div>
+<div class="body">
+<p>This is the custom error handler that is declared at the (relative)
+top of CodeIgniter.php. The main reason we use this is to permit
+PHP errors to be logged in our own log files since the user may
+not have access to server logs. Since this function effectively
+intercepts PHP errors, however, we also need to display errors
+based on the current error_reporting level.
+We do that with the use of a PHP error template.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$severity
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$message
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$filepath
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">int</span>
+<span>$line
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_error_handler</span><span class="hljs-params">($severity, $message, $filepath, $line)</span>
+	</span>{
+		$is_error = (((E_ERROR | E_PARSE | E_COMPILE_ERROR | E_CORE_ERROR | E_USER_ERROR) &amp; $severity) === $severity);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-45" id="section-45"></a>
+</div>
+<p>When an error occurred, set the status header to '500 Internal Server Error'
+to indicate to the client something went wrong.
+This can't be done within the $_error-&gt;show_php_error method because
+it is only called when the display_errors flag is set (which isn't usually
+the case in a production environment) or when errors are ignored because
+they are above the error_reporting threshold.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($is_error)
+		{
+			set_status_header(<span class="hljs-number">500</span>);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-46" id="section-46"></a>
+</div>
+<p>Should we ignore the error? We'll get the current error_reporting
+level and add its bits with the severity bits to find out.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (($severity &amp; error_reporting()) !== $severity)
+		{
+			<span class="hljs-keyword">return</span>;
+		}
+
+		$_error =&amp; load_class(<span class="hljs-string">'Exceptions'</span>, <span class="hljs-string">'core'</span>);
+		$_error-&gt;log_exception($severity, $message, $filepath, $line);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-47" id="section-47"></a>
+</div>
+<p>Should we display the error?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (str_ireplace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'off'</span>, <span class="hljs-string">'none'</span>, <span class="hljs-string">'no'</span>, <span class="hljs-string">'false'</span>, <span class="hljs-string">'null'</span>), <span class="hljs-string">''</span>, ini_get(<span class="hljs-string">'display_errors'</span>)))
+		{
+			$_error-&gt;show_php_error($severity, $message, $filepath, $line);
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-48" id="section-48"></a>
+</div>
+<p>If the error is fatal, the execution of the script should be stopped because
+errors can't be recovered from. Halting the script conforms with PHP's
+default error handling. See http://www.php.net/manual/en/errorfunc.constants.php</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($is_error)
+		{
+			<span class="hljs-keyword">exit</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// EXIT_ERROR</span>
+		}
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-49" id="section-49"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_exception_handler'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-50" id="section-50"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Exception Handler</p>
+</div>
+<div class="body">
+<p>Sends uncaught exceptions to the logger and displays them
+only if display_errors is On so that they don't show up in
+production environments.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">Exception</span>
+<span>$exception
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_exception_handler</span><span class="hljs-params">($exception)</span>
+	</span>{
+		$_error =&amp; load_class(<span class="hljs-string">'Exceptions'</span>, <span class="hljs-string">'core'</span>);
+		$_error-&gt;log_exception(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Exception: '</span>.$exception-&gt;getMessage(), $exception-&gt;getFile(), $exception-&gt;getLine());
+
+		is_cli() <span class="hljs-keyword">OR</span> set_status_header(<span class="hljs-number">500</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-51" id="section-51"></a>
+</div>
+<p>Should we display the error?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> (str_ireplace(<span class="hljs-keyword">array</span>(<span class="hljs-string">'off'</span>, <span class="hljs-string">'none'</span>, <span class="hljs-string">'no'</span>, <span class="hljs-string">'false'</span>, <span class="hljs-string">'null'</span>), <span class="hljs-string">''</span>, ini_get(<span class="hljs-string">'display_errors'</span>)))
+		{
+			$_error-&gt;show_exception($exception);
+		}
+
+		<span class="hljs-keyword">exit</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// EXIT_ERROR</span>
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-52" id="section-52"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_shutdown_handler'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-53" id="section-53"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Shutdown Handler</p>
+</div>
+<div class="body">
+<p>This is the shutdown handler that is declared at the top
+of CodeIgniter.php. The main reason we use this is to simulate
+a complete custom exception handler.</p>
+<p>E_STRICT is purposively neglected because such events may have
+been caught. Duplication or none? None is preferred for now.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>void
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_shutdown_handler</span><span class="hljs-params">()</span>
+	</span>{
+		$last_error = error_get_last();
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">isset</span>($last_error) &amp;&amp;
+			($last_error[<span class="hljs-string">'type'</span>] &amp; (E_ERROR | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING)))
+		{
+			_error_handler($last_error[<span class="hljs-string">'type'</span>], $last_error[<span class="hljs-string">'message'</span>], $last_error[<span class="hljs-string">'file'</span>], $last_error[<span class="hljs-string">'line'</span>]);
+		}
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-54" id="section-54"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'remove_invisible_characters'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-55" id="section-55"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Remove Invisible Characters</p>
+</div>
+<div class="body">
+<p>This prevents sandwiching null characters
+between ascii characters, like Java\0script.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove_invisible_characters</span><span class="hljs-params">($str, $url_encoded = TRUE)</span>
+	</span>{
+		$non_displayables = <span class="hljs-keyword">array</span>();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-56" id="section-56"></a>
+</div>
+<p>every control character except newline (dec 10),
+carriage return (dec 13) and horizontal tab (dec 09)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">		<span class="hljs-keyword">if</span> ($url_encoded)
+		{
+			$non_displayables[] = <span class="hljs-string">'/%0[0-8bcef]/i'</span>;	<span class="hljs-comment">// url encoded 00-08, 11, 12, 14, 15</span>
+			$non_displayables[] = <span class="hljs-string">'/%1[0-9a-f]/i'</span>;	<span class="hljs-comment">// url encoded 16-31</span>
+			$non_displayables[] = <span class="hljs-string">'/%7f/i'</span>;	<span class="hljs-comment">// url encoded 127</span>
+		}
+
+		$non_displayables[] = <span class="hljs-string">'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]+/S'</span>;	<span class="hljs-comment">// 00-08, 11, 12, 14-31, 127</span>
+
+		<span class="hljs-keyword">do</span>
+		{
+			$str = preg_replace($non_displayables, <span class="hljs-string">''</span>, $str, <span class="hljs-number">-1</span>, $count);
+		}
+		<span class="hljs-keyword">while</span> ($count);
+
+		<span class="hljs-keyword">return</span> $str;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-57" id="section-57"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'html_escape'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-58" id="section-58"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Returns HTML escaped variable.</p>
+</div>
+<div class="body">
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>$var The input string or array of strings to be escaped.
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+<span>$double_encode $double_encode set to FALSE prevents escaping twice.
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>mixed The escaped string or array of strings as a result.
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">html_escape</span><span class="hljs-params">($var, $double_encode = TRUE)</span>
+	</span>{
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($var))
+		{
+			<span class="hljs-keyword">return</span> $var;
+		}
+
+		<span class="hljs-keyword">if</span> (is_array($var))
+		{
+			<span class="hljs-keyword">foreach</span> (array_keys($var) <span class="hljs-keyword">as</span> $key)
+			{
+				$var[$key] = html_escape($var[$key], $double_encode);
+			}
+
+			<span class="hljs-keyword">return</span> $var;
+		}
+
+		<span class="hljs-keyword">return</span> htmlspecialchars($var, ENT_QUOTES, config_item(<span class="hljs-string">'charset'</span>), $double_encode);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-59" id="section-59"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'_stringify_attributes'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-60" id="section-60"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Stringify attributes for use in HTML tags.</p>
+</div>
+<div class="body">
+<p>Helper function used to convert a string, array, or object
+of attributes to a string.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">mixed</span>
+<span>string, array, object
+</span>
+</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">bool</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>string
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">_stringify_attributes</span><span class="hljs-params">($attributes, $js = FALSE)</span>
+	</span>{
+		$atts = <span class="hljs-keyword">NULL</span>;
+
+		<span class="hljs-keyword">if</span> (<span class="hljs-keyword">empty</span>($attributes))
+		{
+			<span class="hljs-keyword">return</span> $atts;
+		}
+
+		<span class="hljs-keyword">if</span> (is_string($attributes))
+		{
+			<span class="hljs-keyword">return</span> <span class="hljs-string">' '</span>.$attributes;
+		}
+
+		$attributes = (<span class="hljs-keyword">array</span>) $attributes;
+
+		<span class="hljs-keyword">foreach</span> ($attributes <span class="hljs-keyword">as</span> $key =&gt; $val)
+		{
+			$atts .= ($js) ? $key.<span class="hljs-string">'='</span>.$val.<span class="hljs-string">','</span> : <span class="hljs-string">' '</span>.$key.<span class="hljs-string">'="'</span>.$val.<span class="hljs-string">'"'</span>;
+		}
+
+		<span class="hljs-keyword">return</span> rtrim($atts, <span class="hljs-string">','</span>);
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-61" id="section-61"></a>
+</div>
+<hr>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">
+<span class="hljs-keyword">if</span> ( ! function_exists(<span class="hljs-string">'function_usable'</span>))
+{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-62" id="section-62"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Function usable</p>
+</div>
+<div class="body">
+<p>Executes a function_exists() check, and if the Suhosin PHP
+extension is loaded - checks whether the function that is
+checked might be disabled in there as well.</p>
+<p>This is useful as function_exists() will return FALSE for
+functions disabled via the <em>disable_functions</em> php.ini
+setting, but not for <em>suhosin.executor.func.blacklist</em> and
+<em>suhosin.executor.disable_eval</em>. These settings will just
+terminate script execution if a disabled function is executed.</p>
+<p>The above described behavior turned out to be a bug in Suhosin,
+but even though a fix was committed for 0.9.34 on 2012-02-12,
+that version is yet to be released. This function will therefore
+be just temporary, but would probably be kept for a few years.</p>
+</div>
+<div class="details">
+<div class="dox_tag_title">Params</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name">string</span>
+<span>$function_name Function to check for
+</span>
+</div>
+<div class="dox_tag_title">Returns</div>
+<div class="dox_tag_detail">
+<span class="dox_tag_name"></span>
+<span>bool TRUE if the function exists and is safe to call, 			FALSE otherwise.
+</span>
+</div>
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="php">	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">function_usable</span><span class="hljs-params">($function_name)</span>
+	</span>{
+		<span class="hljs-keyword">static</span> $_suhosin_func_blacklist;
+
+		<span class="hljs-keyword">if</span> (function_exists($function_name))
+		{
+			<span class="hljs-keyword">if</span> ( ! <span class="hljs-keyword">isset</span>($_suhosin_func_blacklist))
+			{
+				$_suhosin_func_blacklist = extension_loaded(<span class="hljs-string">'suhosin'</span>)
+					? explode(<span class="hljs-string">','</span>, trim(ini_get(<span class="hljs-string">'suhosin.executor.func.blacklist'</span>)))
+					: <span class="hljs-keyword">array</span>();
+			}
+
+			<span class="hljs-keyword">return</span> ! in_array($function_name, $_suhosin_func_blacklist, <span class="hljs-keyword">TRUE</span>);
+		}
+
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">FALSE</span>;
+	}
+}
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>
