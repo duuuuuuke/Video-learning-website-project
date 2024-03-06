@@ -1,4 +1,7 @@
-# Deployment Instruction
+# Full-stack project with Docker
+
+A video learning website with CodeIgnitor, HTML, CSS, Bootstrap, JavaScript, jQuery, PHP, and Docker, where you can upload videos, buy courses,  like courses, and more.
+This project will be remade with modern tools in the future.
 
 ## Deployment steps
 
